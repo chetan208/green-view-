@@ -1,4 +1,5 @@
 import HeroSection from "@/components/home/HeroSection";
+import CategoryBar from "@/components/home/CategoryBar";
 import StatsSection from "@/components/home/StatsSection";
 import WelcomeSection from "@/components/home/WelcomeSection";
 import BoardNotices from "@/components/home/NoticeSection";
@@ -15,6 +16,7 @@ export default function Home() {
   return (
     <div className="w-full flex flex-col overflow-x-hidden">
       <HeroSection />
+      <CategoryBar />
       <StatsSection />
       <WelcomeSection />
       <BoardNotices />

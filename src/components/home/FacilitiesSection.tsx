@@ -1,86 +1,75 @@
 import React from "react";
-import { Laptop, Dumbbell, BookOpen, Atom } from "lucide-react";
+import Link from "next/link";
+import { ChevronRight } from "lucide-react";
 
 export default function FacilitiesSection() {
-  const facilities = [
+  const cards = [
     {
-      title: "Smart Classes",
-      description: "Interactive flat panels and digital resources to make learning engaging.",
-      icon: Laptop,
-      image: "https://images.unsplash.com/photo-1580582932707-520aed937b7b?auto=format&fit=crop&q=80&w=600",
+      title: "Holistic Education",
+      image: "https://images.unsplash.com/photo-1577896851231-70ee18881754?auto=format&fit=crop&q=80&w=500",
     },
     {
-      title: "Sports Complex",
-      description: "A vast playground and indoor facilities promoting active and healthy lifestyles.",
-      icon: Dumbbell,
-      image: "https://images.unsplash.com/photo-1587280501635-68a0e82cd5ff?auto=format&fit=crop&q=80&w=600",
+      title: "Smart Classrooms",
+      image: "https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&q=80&w=500",
     },
     {
-      title: "Digital Library",
-      description: "Thousands of books, journals, and digital media archives to explore.",
-      icon: BookOpen,
-      image: "https://images.unsplash.com/photo-1568667256549-094345857637?auto=format&fit=crop&q=80&w=600",
+      title: "Global Curriculum",
+      image: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&q=80&w=500",
     },
     {
-      title: "Science Lab",
-      description: "Modern labs equipped for physics, chemistry, and biology research.",
-      icon: Atom,
-      image: "https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&q=80&w=600",
+      title: "Future Ready Skills",
+      image: "https://images.unsplash.com/photo-1568667256549-094345857637?auto=format&fit=crop&q=80&w=500",
     },
   ];
 
   return (
-    <section id="facilities" className="w-full py-20 px-6 md:px-12 lg:px-24 bg-emerald-50/30 flex justify-center">
-      <div className="max-w-7xl w-full flex flex-col items-center">
+    <section id="facilities" className="w-full py-10 px-6 md:px-12 lg:px-24 bg-[#d5f0e3] flex justify-center">
+      <div className="max-w-7xl w-full flex flex-col">
         
-        {/* Section Title */}
-        <div className="flex flex-col items-center text-center mb-16">
-          <div className="flex items-center gap-2 mb-4">
-            <span className="h-px w-8 bg-emerald-600" />
-            <span className="text-xs font-black text-emerald-600 uppercase tracking-widest">
-              Our Features
-            </span>
-            <span className="h-px w-8 bg-emerald-600" />
-          </div>
-          <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
+        {/* Subtitle */}
+        <span className="text-[10px] md:text-xs font-black text-slate-800 uppercase tracking-[0.25em] text-center mb-3">
+          Choose Green View?
+        </span>
+
+        {/* Title and See All row */}
+        <div className="flex items-center justify-between mb-8 relative">
+          {/* Empty spacer on the left to help centering on desktop */}
+          <div className="hidden md:block w-20" />
+          
+          <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight text-center flex-1">
             Why Learn With Us?
           </h2>
-          <p className="text-slate-500 font-medium mt-4 max-w-lg">
-            We provide world-class facilities and student support systems to enhance learning outcomes.
-          </p>
+
+          <Link
+            href="#events"
+            className="flex items-center gap-1 font-bold text-slate-900 hover:text-emerald-700 text-sm md:text-base transition-colors"
+          >
+            See All
+            <span className="text-xs">▸</span>
+          </Link>
         </div>
 
-        {/* Facilities Grid */}
+        {/* Cards Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 w-full">
-          {facilities.map((fac, idx) => (
+          {cards.map((card, idx) => (
             <div
               key={idx}
-              className="group relative h-96 rounded-3xl overflow-hidden shadow-lg border border-slate-100 cursor-pointer"
+              className="group flex flex-col bg-[#1e293b] rounded-3xl overflow-hidden shadow-lg border border-emerald-800/10 hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
             >
-              {/* Background Image */}
-              <img
-                src={fac.image}
-                alt={fac.title}
-                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-              />
-              
-              {/* Overlays */}
-              <div className="absolute inset-0 bg-slate-950/40 group-hover:bg-emerald-950/60 transition-colors duration-500" />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent" />
-
-              {/* Icon Badge */}
-              <div className="absolute top-6 left-6 bg-white/20 backdrop-blur-md p-3 rounded-2xl text-white">
-                <fac.icon className="w-6 h-6" />
+              {/* Image Container */}
+              <div className="relative aspect-[3/2] w-full overflow-hidden bg-slate-800">
+                <img
+                  src={card.image}
+                  alt={card.title}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                />
               </div>
 
-              {/* Content Panel */}
-              <div className="absolute bottom-6 left-6 right-6 text-white flex flex-col">
-                <h3 className="font-extrabold text-xl tracking-tight mb-2 group-hover:text-emerald-400 transition-colors">
-                  {fac.title}
-                </h3>
-                <p className="text-xs text-slate-200 leading-relaxed font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  {fac.description}
-                </p>
+              {/* Text Container */}
+              <div className="py-4 px-4 text-center">
+                <span className="text-white font-extrabold text-sm md:text-base tracking-tight block">
+                  {card.title}
+                </span>
               </div>
             </div>
           ))}
