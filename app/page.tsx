@@ -1,8 +1,31 @@
-import BoardNotices from "@/src/components/home/NoticeSection";
-import Image from "next/image";
+import HeroSection from "@/components/home/HeroSection";
+import StatsSection from "@/components/home/StatsSection";
+import WelcomeSection from "@/components/home/WelcomeSection";
+import BoardNotices from "@/components/home/NoticeSection";
+import PrincipalMessage from "@/components/home/PrincipalMessage";
+import FacilitiesSection from "@/components/home/FacilitiesSection";
+import AcademicCalendar from "@/components/home/AcademicCalendar";
+import GallerySection from "@/components/home/GallerySection";
+import AdmissionSection from "@/components/home/AdmissionSection";
+import TestimonialsSection from "@/components/home/TestimonialsSection";
+import FaqSection from "@/components/home/FaqSection";
+import MapSection from "@/components/home/MapSection";
 
 export default function Home() {
   return (
-   <BoardNotices/>
+    <div className="w-full flex flex-col overflow-x-hidden">
+      <HeroSection />
+      <StatsSection />
+      <WelcomeSection />
+      <BoardNotices />
+      <PrincipalMessage />
+      <FacilitiesSection />
+      <AcademicCalendar />
+      <GallerySection />
+      <AdmissionSection />
+      <TestimonialsSection />
+      <FaqSection />
+      <MapSection />
+    </div>
   );
 }
