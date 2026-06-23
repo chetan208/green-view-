@@ -47,10 +47,10 @@ export default function PrincipalMessage() {
         >
           <div className="relative group select-none">
             {/* Background green decorative offset border */}
-            <div className="absolute -inset-4 rounded-3xl border-2 border-emerald-500/20 transform translate-x-2 translate-y-2 -z-10 group-hover:translate-x-1 group-hover:translate-y-1 transition-transform duration-300" />
+            <div className="absolute -inset-4 rounded-2xl md:rounded-3xl border-2 border-emerald-500/20 transform translate-x-2 translate-y-2 -z-10 group-hover:translate-x-1 group-hover:translate-y-1 transition-transform duration-300" />
             
             {/* Main Image Container */}
-            <div className="w-72 h-96 rounded-3xl overflow-hidden shadow-xl border border-slate-100 bg-slate-100">
+            <div className="w-72 h-96 rounded-2xl md:rounded-3xl overflow-hidden shadow-xl border border-slate-100 bg-slate-100">
               <img
                 src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=600&h=800"
                 alt="Principal Portrait"

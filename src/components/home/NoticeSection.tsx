@@ -143,14 +143,12 @@ export default function BoardNotices() {
               Desk Updates
             </motion.div>
             
-            {/* Serif Heading */}
+            {/* Uppercase Serif Heading */}
             <motion.h2 
               variants={itemVariants}
-              className="text-4xl md:text-5xl font-bold font-serif tracking-tight leading-[1.1] mb-8 text-slate-800"
+              className="text-3xl md:text-4xl font-black font-serif tracking-wider leading-tight uppercase mb-8 text-slate-800"
             >
-              Official <br />
-              <span className="text-[#0fa958] my-1 inline-block">Board</span> <br />
-              Notices
+              Official <span className="text-[#0fa958]">Board</span> Notices
             </motion.h2>
           </div>
 

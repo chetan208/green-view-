@@ -4,17 +4,33 @@ import React from "react";
 import { motion } from "framer-motion";
 
 export default function GallerySection() {
-  const images = [
+  const allImages = [
     { src: "/images/classroom.png", alt: "Smart Classroom Activity" },
-    { src: "/images/classroom.png", alt: "Smart Classroom Activity (Alt View)" },
     { src: "/images/robotics.png", alt: "Classroom Activity" },
     { src: "/images/library.png", alt: "Modern Computer Lab" },
-    { src: "/images/library.png", alt: "Modern Computer Lab (Alt View)" },
     { src: "/images/study.png", alt: "Students Study Hall" },
     { src: "/images/art.png", alt: "Art and Craft Room" },
+    // Fillers for desktop to complete a 3x3 grid
+    { src: "/images/classroom.png", alt: "Smart Classroom Activity (Alt View)" },
+    { src: "/images/library.png", alt: "Modern Computer Lab (Alt View)" },
     { src: "/images/art.png", alt: "Art and Craft Room (Alt View)" },
     { src: "/images/study.png", alt: "Students Study Hall (Alt View)" },
   ];
+
+  const [images, setImages] = React.useState(allImages);
+
+  React.useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 768) {
+        setImages(allImages.slice(0, 5));
+      } else {
+        setImages(allImages);
+      }
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const gridVariants = {
     hidden: { opacity: 0 },
@@ -71,7 +87,7 @@ export default function GallerySection() {
               variants={imageCardVariants}
               whileHover={{ scale: 1.025, y: -4 }}
               transition={{ duration: 0.3 }}
-              className="relative aspect-[1.85] w-full rounded-[20px] overflow-hidden shadow-sm border border-slate-100/80 hover:shadow-md cursor-pointer bg-slate-50"
+              className="relative aspect-[1.85] w-full rounded-xl md:rounded-[20px] overflow-hidden shadow-sm border border-slate-100/80 hover:shadow-md cursor-pointer bg-slate-50"
             >
               <img
                 src={img.src}

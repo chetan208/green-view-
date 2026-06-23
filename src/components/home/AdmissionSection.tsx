@@ -345,16 +345,16 @@ export default function AdmissionSection() {
                 </motion.div>
 
                 {/* Bottom Actions Row */}
-                <motion.div variants={itemVariants} className="flex items-center justify-between gap-4 mt-3">
+                <motion.div variants={itemVariants} className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mt-3">
                   <motion.button
                     type="submit"
                     whileHover={{ scale: 1.03 }}
                     whileTap={{ scale: 0.97 }}
-                    className="bg-[#0fa958] hover:bg-[#0c8e4a] text-white px-7 py-3 rounded-full font-bold text-xs tracking-wide transition-all shadow-md shadow-emerald-950/10 flex items-center justify-center shrink-0"
+                    className="bg-[#0fa958] hover:bg-[#0c8e4a] text-white px-7 py-3 rounded-full font-bold text-xs tracking-wide transition-all shadow-md shadow-emerald-950/10 flex items-center justify-center shrink-0 w-full sm:w-auto text-center"
                   >
                     Send Enquiry
                   </motion.button>
-                  <span className="text-[10px] md:text-xs font-semibold text-slate-400/90 leading-tight text-right select-none">
+                  <span className="text-[10px] md:text-xs font-semibold text-slate-400/90 leading-tight text-left sm:text-right select-none">
                     Your details will be shared with the school office only.
                   </span>
                 </motion.div>

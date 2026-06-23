@@ -71,7 +71,7 @@ export default function WelcomeSection() {
           </motion.div>
 
           {/* Classroom Image Container */}
-          <div className="w-full max-w-lg aspect-[4/3.2] rounded-[2.2rem] overflow-hidden border border-slate-100 shadow-xl bg-slate-50 relative group mb-6">
+          <div className="w-full max-w-lg aspect-[4/3.2] rounded-[1.25rem] md:rounded-[2.2rem] overflow-hidden border border-slate-100 shadow-xl bg-slate-50 relative group mb-6">
             <img
               src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&q=80&w=800"
               alt="Green View Classroom Lecture"

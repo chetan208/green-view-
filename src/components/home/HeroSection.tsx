@@ -2,15 +2,17 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { ArrowRight, Star, Laptop, FileText, Pencil } from "lucide-react";
+import { ArrowRight, Star, Laptop } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function HeroSection() {
   const images = [
-    "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&q=80&w=800",
-    "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&q=80&w=800",
-    "https://images.unsplash.com/photo-1516534775068-ba3e84589d90?auto=format&fit=crop&q=80&w=800",
-    "https://images.unsplash.com/photo-1497633762265-9d179a990aa6?auto=format&fit=crop&q=80&w=800",
+    "/images/hero.png",
+    "/images/classroom.png",
+    "/images/robotics.png",
+    "/images/library.png",
+    "/images/study.png",
+    "/images/art.png",
   ];
 
   const [currentImageIdx, setCurrentImageIdx] = useState(0);
@@ -39,7 +41,7 @@ export default function HeroSection() {
   } as const;
 
   return (
-    <section className="w-full pt-28 pb-16 px-6 md:px-12 lg:px-24 bg-white flex justify-center overflow-hidden">
+    <section className="w-full pt-20 md:pt-28 pb-16 px-6 md:px-12 lg:px-24 bg-white flex justify-center overflow-hidden">
       <div className="max-w-6xl w-full flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-16">
         
         {/* Left Information Column */}
@@ -47,25 +49,21 @@ export default function HeroSection() {
           variants={containerVariants}
           initial="hidden"
           animate="show"
-          className="flex-1 flex flex-col items-center lg:items-start text-center lg:text-left py-4"
+          className="flex-1 flex flex-col items-center lg:items-start text-center lg:text-left pt-0 pb-4 lg:py-4"
         >
           
-          {/* Badge: Established 1996 */}
+          {/* Badge: Inspiring Excellence Since 1986 */}
           <motion.div 
             variants={itemVariants}
-            className="inline-flex items-center gap-2 bg-emerald-50 border border-emerald-100 px-4.5 py-2 rounded-full mb-6 shadow-sm select-none"
+            className="text-[10px] md:text-xs font-bold text-[#0fa958] uppercase tracking-[0.2em] mb-4.5 select-none"
           >
-            <span className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse" />
-            <span className="text-[10px] uppercase font-extrabold tracking-widest text-[#0fa958]">
-              Established 1996
-            </span>
-            <FileText className="w-5 h-5 text-emerald-600" />
+            Inspiring Excellence Since 1986
           </motion.div>
 
           {/* Main Title */}
           <motion.h1 
             variants={itemVariants}
-            className="text-5xl md:text-6xl font-black text-slate-900 tracking-tight leading-[1.05] mb-6"
+            className="text-4xl md:text-5xl lg:text-6xl font-black text-slate-900 tracking-tight leading-[1.05] mb-6"
           >
             <span className="text-[#0fa958]">Green view</span> <br />
             Sr. Sec. School
@@ -81,21 +79,21 @@ export default function HeroSection() {
           {/* Action Buttons */}
           <motion.div 
             variants={itemVariants}
-            className="flex flex-row items-center gap-4 mb-10 w-full sm:w-auto"
+            className="flex flex-wrap items-center justify-center lg:justify-start gap-4 mb-10 w-full sm:w-auto"
           >
-            <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
+            <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }} className="w-full sm:w-auto">
               <Link
                 href="#admission"
-                className="inline-flex items-center gap-2 bg-[#0fa958] text-white hover:bg-emerald-700 px-6 md:px-8 py-3.5 rounded-full font-bold text-sm tracking-wide transition-all duration-300 shadow-md shadow-emerald-600/10 block"
+                className="inline-flex items-center justify-center gap-2 bg-[#0fa958] text-white hover:bg-emerald-700 px-6 md:px-8 py-3.5 rounded-full font-bold text-xs md:text-sm tracking-wide transition-all duration-300 shadow-md shadow-emerald-600/10 w-full sm:w-auto"
               >
                 Admission Enquiry
                 <ArrowRight className="w-4 h-4" />
               </Link>
             </motion.div>
-            <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
+            <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }} className="w-full sm:w-auto">
               <Link
                 href="#about"
-                className="bg-white border border-slate-200 text-slate-700 hover:border-emerald-600 hover:text-emerald-600 px-6 md:px-8 py-3.5 rounded-full font-bold text-sm tracking-wide transition-all duration-300 text-center block"
+                className="inline-flex items-center justify-center bg-white border border-slate-200 hover:bg-slate-50 text-slate-800 px-6 md:px-8 py-3.5 rounded-full font-bold text-xs md:text-sm tracking-wide transition-all duration-300 text-center w-full sm:w-auto"
               >
                 About Us
               </Link>
@@ -159,7 +157,7 @@ export default function HeroSection() {
             initial={{ scale: 0.95, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="relative w-full max-w-lg aspect-[4/3] rounded-[2.5rem] overflow-hidden border-[12px] border-white shadow-xl bg-slate-50"
+            className="relative w-full max-w-lg aspect-[4/3] rounded-[1.5rem] md:rounded-[2.5rem] overflow-hidden border-8 md:border-[12px] border-white shadow-xl bg-slate-50"
           >
             <AnimatePresence mode="wait">
               <motion.img
@@ -181,15 +179,15 @@ export default function HeroSection() {
             animate={{ scale: 1, rotate: 0 }}
             transition={{ type: "spring", stiffness: 260, damping: 20, delay: 0.5 }}
             whileHover={{ scale: 1.05 }}
-            className="absolute bottom-6 left-2 md:-left-6 z-20 bg-[#0fa958] text-white w-24 h-24 md:w-28 md:h-28 rounded-full flex flex-col items-center justify-center text-center shadow-lg border-[6px] border-white select-none cursor-pointer"
+            className="absolute bottom-6 left-2 md:-left-6 z-20 bg-[#0fa958] text-white w-20 h-20 md:w-28 md:h-28 rounded-full flex flex-col items-center justify-center text-center shadow-lg border-4 md:border-[6px] border-white select-none cursor-pointer"
           >
-            <span className="text-xs md:text-sm font-black tracking-tight leading-none">
+            <span className="text-[10px] md:text-sm font-black tracking-tight leading-none">
               2026-27
             </span>
-            <span className="text-[7px] md:text-[8px] font-black uppercase tracking-wider mt-1 leading-none text-emerald-100">
+            <span className="text-[6px] md:text-[8px] font-black uppercase tracking-wider mt-1 leading-none text-emerald-100">
               Admissions
             </span>
-            <span className="text-[7px] md:text-[8px] font-black uppercase tracking-wider leading-none text-emerald-100">
+            <span className="text-[6px] md:text-[8px] font-black uppercase tracking-wider leading-none text-emerald-100">
               Open Now
             </span>
           </motion.div>
@@ -200,15 +198,15 @@ export default function HeroSection() {
             animate={{ x: 0, opacity: 1 }}
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: 0.6 }}
             whileHover={{ y: -3 }}
-            className="absolute -bottom-8 right-2 md:-right-6 z-20 bg-white p-4 rounded-3xl shadow-lg border border-slate-100/70 flex flex-col max-w-[170px] select-none cursor-pointer"
+            className="absolute -bottom-4 md:-bottom-8 right-2 md:-right-6 z-20 bg-white p-3 md:p-4 rounded-2xl md:rounded-3xl shadow-lg border border-slate-100/70 flex flex-col max-w-[130px] md:max-w-[170px] select-none cursor-pointer"
           >
-            <span className="text-[9px] font-bold text-slate-400 uppercase tracking-wider">
+            <span className="text-[8px] md:text-[9px] font-bold text-slate-400 uppercase tracking-wider">
               Board Results 2024-25
             </span>
-            <span className="text-lg font-black text-emerald-700 mt-1 leading-none">
+            <span className="text-sm md:text-lg font-black text-emerald-700 mt-1 leading-none">
               94.2% avg
             </span>
-            <span className="text-[9px] font-bold text-slate-400 uppercase mt-1">
+            <span className="text-[8px] md:text-[9px] font-bold text-slate-400 uppercase mt-1">
               Class X & XII
             </span>
           </motion.div>

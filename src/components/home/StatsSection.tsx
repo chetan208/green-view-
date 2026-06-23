@@ -40,7 +40,7 @@ export default function StatsSection() {
             key={i}
             variants={itemVariants}
             whileHover={{ scale: 1.03 }}
-            className="flex flex-col items-center justify-center py-2 px-4 border-r last:border-r-0 border-white/20 max-md:[&:nth-child(even)]:border-r-0 max-md:border-r"
+            className="flex flex-col items-center justify-center py-3 px-4 border-white/20 md:border-r last:border-r-0 max-md:border-b max-md:[&:nth-child(even)]:border-r-0 max-md:[&:nth-child(odd)]:border-r max-md:[&:nth-child(3)]:border-b-0 max-md:[&:nth-child(4)]:border-b-0"
           >
             <span className="text-2xl md:text-3xl lg:text-4xl font-black text-white tracking-tight mb-1">
               {stat.value}

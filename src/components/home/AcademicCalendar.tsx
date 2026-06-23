@@ -67,7 +67,8 @@ export default function AcademicCalendar() {
 
   // Helper to generate calendar days for the current month
   const getDaysInMonth = (y: number, m: number) => {
-    const firstDay = new Date(y, m, 1).getDay(); // 0 = Sun, 1 = Mon...
+    const dayOfFirst = new Date(y, m, 1).getDay(); // 0 = Sun, 1 = Mon...
+    const firstDay = dayOfFirst === 0 ? 6 : dayOfFirst - 1; // Start week on Monday!
     const totalDays = new Date(y, m + 1, 0).getDate();
     
     const days: (number | null)[] = [];
@@ -119,7 +120,7 @@ export default function AcademicCalendar() {
           Academic <span className="text-[#0fa958]">Calendar</span>
         </h2>
       </motion.div>
-
+ 
       {/* Main Container Card */}
       <motion.div 
         initial={{ opacity: 0, y: 40 }}
@@ -158,13 +159,13 @@ export default function AcademicCalendar() {
 
           {/* Weekday Names Header */}
           <div className="grid grid-cols-7 gap-y-4 text-center text-xs md:text-sm font-bold text-slate-400 mb-4 select-none">
-            <span>Sun</span>
-            <span>Mon</span>
-            <span>Tue</span>
-            <span>Wed</span>
-            <span>Thu</span>
-            <span>Fri</span>
-            <span>Sat</span>
+            <span>M</span>
+            <span>T</span>
+            <span>W</span>
+            <span>T</span>
+            <span>F</span>
+            <span>S</span>
+            <span>S</span>
           </div>
 
           {/* Days Grid with Slide Transition */}

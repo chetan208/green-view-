@@ -94,7 +94,7 @@ export default function FacilitiesSection() {
               variants={cardVariants}
               whileHover={{ y: -8, scale: 1.01 }}
               transition={{ duration: 0.3 }}
-              className="group flex flex-col bg-[#1e293b] rounded-3xl overflow-hidden shadow-lg border border-emerald-800/10 hover:shadow-xl cursor-pointer"
+              className="group flex flex-col bg-[#1e293b] rounded-2xl md:rounded-3xl overflow-hidden shadow-lg border border-emerald-800/10 hover:shadow-xl cursor-pointer"
             >
               {/* Image Container */}
               <div className="relative aspect-[3/2] w-full overflow-hidden bg-slate-800">

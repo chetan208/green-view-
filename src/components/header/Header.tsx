@@ -50,7 +50,7 @@ export default function Header() {
   return (
     <header
       className={`fixed left-0 right-0 z-50 transition-all duration-300 px-4 md:px-8 ${
-        isScrolled ? "top-2" : "top-6"
+        isScrolled ? "top-2" : "top-2 md:top-6"
       }`}
     >
       <motion.div
@@ -113,7 +113,7 @@ export default function Header() {
             <motion.button 
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="relative w-9 h-9 rounded-full bg-slate-50 border border-slate-100 flex items-center justify-center text-slate-500 hover:text-slate-800 transition-colors"
+              className="hidden lg:flex relative w-9 h-9 rounded-full bg-slate-50 border border-slate-100 items-center justify-center text-slate-500 hover:text-slate-800 transition-colors"
             >
               <Bell className="w-4 h-4" />
               <motion.span 
@@ -126,7 +126,7 @@ export default function Header() {
             </motion.button>
 
             {/* Login Button */}
-            <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+            <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="hidden lg:block">
               <Link
                 href="#login"
                 className="bg-[#34d399] text-white hover:bg-emerald-600 px-6 py-2 rounded-full font-bold text-xs tracking-wide transition-all shadow-sm block"
@@ -138,7 +138,7 @@ export default function Header() {
             {/* Mobile Hamburger menu toggle */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="lg:hidden p-2 rounded-full text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-colors focus:outline-none"
+              className="lg:hidden p-2 rounded-full text-[#0fa958] hover:bg-[#0fa958]/5 transition-colors focus:outline-none"
               aria-label="Toggle Menu"
             >
               {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
