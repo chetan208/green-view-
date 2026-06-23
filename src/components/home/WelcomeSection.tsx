@@ -1,104 +1,109 @@
+"use client";
+
 import React from "react";
-import { Check, Calendar, Trophy, GraduationCap, Play } from "lucide-react";
+import Link from "next/link";
+import { Quote } from "lucide-react";
 
 export default function WelcomeSection() {
-  const highlights = [
-    "Holistic development focus with co-curricular excellence",
-    "Smart interactive classrooms & modern science labs",
-    "Expert mentors committed to individual student care",
-  ];
-
-  const subStats = [
-    { icon: Trophy, value: "50+", label: "National Awards" },
-    { icon: Calendar, value: "60+", label: "Creative Courses" },
-    { icon: GraduationCap, value: "1,400+", label: "Active Students" },
+  const stats = [
+    { value: "27+", label: "Years in education" },
+    { value: "68", label: "Qualified teachers" },
+    { value: "1:25", label: "Average class ratio" },
   ];
 
   return (
-    <section id="about" className="w-full py-20 px-6 md:px-12 lg:px-24 bg-white flex justify-center">
-      <div className="max-w-7xl w-full flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
+    <section id="about" className="w-full py-12 md:py-16 px-6 md:px-12 lg:px-24 bg-white flex justify-center items-center min-h-[90vh]">
+      <div className="max-w-7xl w-full flex flex-col lg:flex-row items-center gap-10 lg:gap-16">
         
-        {/* Left Side: Images & Floating Badges */}
-        <div className="flex-1 w-full relative flex justify-center">
-          <div className="relative w-full max-w-lg aspect-[4/3] rounded-3xl overflow-hidden shadow-xl border border-slate-100">
-            <img
-              src="https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?auto=format&fit=crop&q=80&w=800"
-              alt="Students in classroom"
-              className="w-full h-full object-cover"
-            />
-            {/* Play video overlay button */}
-            <div className="absolute inset-0 bg-slate-900/10 flex items-center justify-center">
-              <button className="bg-white text-emerald-600 hover:bg-emerald-50 w-16 h-16 rounded-full flex items-center justify-center shadow-2xl transition-all duration-300 hover:scale-110">
-                <Play className="w-6 h-6 fill-emerald-600 ml-1" />
-              </button>
-            </div>
-          </div>
+        {/* Left Side Column: Image, Established Badge & View More */}
+        <div className="flex-1 w-full flex flex-col items-center relative">
           
-          {/* Badge */}
-          <div className="absolute -bottom-6 right-4 md:-right-6 bg-emerald-500 text-white px-6 py-4 rounded-2xl shadow-xl flex items-center gap-3 border border-emerald-400">
-            <Trophy className="w-8 h-8" />
-            <div className="flex flex-col">
-              <span className="text-xl font-black leading-none">Top Rank</span>
-              <span className="text-[10px] uppercase font-bold tracking-widest mt-1 text-emerald-100">
-                In School Education
-              </span>
-            </div>
-          </div>
-        </div>
-
-        {/* Right Side: Text details */}
-        <div className="flex-1 flex flex-col">
-          <div className="flex items-center gap-2 mb-4">
-            <span className="h-px w-8 bg-emerald-600" />
-            <span className="text-xs font-black text-emerald-600 uppercase tracking-widest">
-              Who We Are
+          {/* Established Floating Badge */}
+          <div className="absolute top-4 left-4 md:-left-4 z-20 bg-white/95 backdrop-blur-sm p-3 px-4 rounded-2xl shadow-md border border-slate-100/80 flex flex-col">
+            <span className="text-[8px] font-bold text-slate-400 uppercase tracking-widest leading-none">
+              Established
+            </span>
+            <span className="text-sm font-black text-slate-800 mt-1 leading-none">
+              1998 <span className="text-[#0fa958]">•</span> <span className="text-[#0fa958]">Kangra</span>
             </span>
           </div>
 
-          <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight mb-6">
-            Welcome to <span className="text-emerald-600">Greenview</span> <br />
+          {/* Classroom Image Container */}
+          <div className="w-full max-w-lg aspect-[4/3.2] rounded-[2.2rem] overflow-hidden border border-slate-100 shadow-xl bg-slate-50 relative group mb-6">
+            <img
+              src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&q=80&w=800"
+              alt="Green View Classroom Lecture"
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            />
+          </div>
+
+          {/* View More pill button */}
+          <button className="bg-[#0fa958] text-white hover:bg-emerald-700 px-6 py-2.5 rounded-full font-bold text-xs tracking-wide transition-all shadow-md">
+            View More
+          </button>
+        </div>
+
+        {/* Right Side Column: Story Content */}
+        <div className="flex-[1.2] flex flex-col items-start text-left w-full">
+          
+          {/* Subtitle */}
+          <span className="text-[10px] md:text-xs font-black text-slate-400 uppercase tracking-[0.2em] mb-3">
+            Our Story
+          </span>
+
+          {/* Main Heading */}
+          <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight mb-4">
+            Welcome to <span className="text-[#0fa958]">Green View</span> <br />
             Sr. Sec. School
           </h2>
 
-          <p className="text-slate-600 mb-6 leading-relaxed font-medium">
-            Since our establishment, we have been dedicated to providing a high-quality education that inspires students to achieve their full potential. Our balanced approach fosters intellectual curiosity, physical strength, and ethical value.
+          {/* Description */}
+          <p className="text-slate-500 text-xs md:text-sm font-semibold leading-relaxed mb-6">
+            Green View Senior Secondary School was established in ___ by ______ with a vision to provide quality education in a nurturing environment. Affiliated with HPBOSE, the school has grown into a trusted institution for students from Nursery to XII. With experienced faculty, well-equipped labs, sports facilities, and a strong focus on academics and values, Green View has been shaping confident and responsible learners for over 27 years.
           </p>
 
-          {/* Highlights List */}
-          <ul className="flex flex-col gap-3 mb-8">
-            {highlights.map((h, index) => (
-              <li key={index} className="flex items-start gap-3">
-                <div className="bg-emerald-100 rounded-full p-1 mt-0.5">
-                  <Check className="w-3.5 h-3.5 text-emerald-700 stroke-[3]" />
-                </div>
-                <span className="text-slate-700 font-semibold text-sm md:text-base leading-relaxed">
-                  {h}
-                </span>
-              </li>
-            ))}
-          </ul>
+          {/* Testimonial Quote Box */}
+          <div className="w-full bg-[#f8fafc] border border-slate-100 p-5 rounded-3xl mb-6 relative">
+            <Quote className="w-8 h-8 text-emerald-500/10 absolute top-4 left-4" />
+            <div className="pl-6">
+              <p className="text-slate-600 font-semibold italic text-xs md:text-sm leading-relaxed mb-3">
+                &quot;Green view didn&apos;t just teach you how to study — it taught you how to think, how to lead, and how to stay grounded.&quot;
+              </p>
+              <span className="block font-black text-slate-700 text-[10px] md:text-xs">
+                Chetan kumar - <span className="text-slate-400 font-semibold">Head Boy, 2025-26</span>
+              </span>
+            </div>
+          </div>
 
-          {/* Mini Stats Card Grid */}
-          <div className="grid grid-cols-3 gap-4 border-t border-slate-100 pt-6 mb-8">
-            {subStats.map((item, index) => (
-              <div key={index} className="flex flex-col items-center sm:items-start">
-                <div className="flex items-center gap-2 mb-1">
-                  <item.icon className="w-4 h-4 text-emerald-600" />
-                  <span className="text-lg md:text-xl font-black text-slate-800">
-                    {item.value}
-                  </span>
-                </div>
-                <span className="text-[10px] md:text-xs font-bold text-slate-500 uppercase tracking-wider text-center sm:text-left">
-                  {item.label}
+          {/* Stats Bar Container */}
+          <div className="w-full grid grid-cols-3 gap-4 border border-slate-100 rounded-3xl p-4 bg-slate-50/50 mb-6 text-center">
+            {stats.map((s, idx) => (
+              <div key={idx} className="flex flex-col items-center justify-center">
+                <span className="text-lg md:text-xl font-black text-slate-800 leading-none mb-1">
+                  {s.value}
+                </span>
+                <span className="text-[9px] md:text-[10px] font-bold text-slate-400 uppercase tracking-wide">
+                  {s.label}
                 </span>
               </div>
             ))}
           </div>
 
-          {/* Read More button */}
-          <button className="w-fit bg-emerald-600 text-white hover:bg-emerald-700 px-8 py-3.5 rounded-full font-bold text-sm tracking-wide transition-all duration-300 shadow-md shadow-emerald-600/10">
-            Read More About Us
-          </button>
+          {/* CTA Buttons */}
+          <div className="flex items-center gap-4 w-full sm:w-auto">
+            <Link
+              href="#admission"
+              className="bg-[#0fa958] text-white hover:bg-emerald-700 px-6 py-3 rounded-full font-bold text-xs tracking-wide transition-all shadow-md"
+            >
+              Talk to Admissions
+            </Link>
+            <Link
+              href="#academics"
+              className="bg-white border border-slate-200 text-slate-600 hover:border-emerald-600 hover:text-emerald-600 px-6 py-3 rounded-full font-bold text-xs tracking-wide transition-all"
+            >
+              See Academics
+            </Link>
+          </div>
 
         </div>
 

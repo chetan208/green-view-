@@ -2,106 +2,168 @@
 
 import React from "react";
 import Link from "next/link";
+import { ArrowUpRight, Bell, ArrowRight } from "lucide-react";
 
 export default function BoardNotices() {
   const scrollingNotices = [
-    { day: "22", month: "JUN", text: "Admissions Open for Session 2026-27" },
-    { day: "22", month: "JUL", text: "Early Bird Registrations End" },
-    { day: "22", month: "AUG", text: "Final Application Deadline" },
+    "Admissions Open for Session 2026-27 — Register online today!",
+    "Hiring started for academic session 2026 — Check careers section",
+    "Notice: Mid-term examinations schedule has been uploaded on the portal",
   ];
+
+  // Repeat scrolling notices for infinite seamless effect
+  const repeatedScrollNotices = [...scrollingNotices, ...scrollingNotices, ...scrollingNotices];
 
   const mainNotices = [
-    { id: 1, day: "22", month: "JUN", text: "Admissions Open for Session 2026-27" },
-    { id: 2, day: "22", month: "JUN", text: "Admissions Open for Session 2026-27" },
-    { id: 3, day: "22", month: "JUN", text: "Admissions Open for Session 2026-27" },
-    { id: 4, day: "22", month: "JUN", text: "Admissions Open for Session 2026-27" },
+    {
+      title: "hiring started for the 2026",
+      date: "18 Jun 2026",
+      isHighlight: true,
+    },
+    {
+      title: "Holiday: holidays",
+      date: "18 Jun 2026",
+      isHighlight: false,
+    },
+    {
+      title: "Exam: Mid sem exams",
+      date: "18 Jun 2026",
+      isHighlight: false,
+    },
+    {
+      title: "Admissions Open for Session 2026-27",
+      date: "18 Jun 2026",
+      isHighlight: false,
+    },
   ];
 
-  // Duplicate scrolling list to ensure a seamless infinite loop
-  const doubleScrollingNotices = [...scrollingNotices, ...scrollingNotices, ...scrollingNotices, ...scrollingNotices];
+  const stats = [
+    { value: "1", label: "URGENT", color: "text-red-500" },
+    { value: "9", label: "ACADEMIC", color: "text-emerald-700" },
+    { value: "0", label: "CAREERS", color: "text-slate-600" },
+  ];
 
   return (
-    <section className="w-full bg-white flex flex-col items-center font-sans">
+    <section className="w-full py-20 px-6 bg-slate-50/50 flex flex-col items-center font-sans">
       
-      {/* 1. Top Horizontal Scrolling Marquee Bar */}
-      <div className="w-full bg-[#c6eed9] py-3.5 overflow-hidden flex relative border-b border-emerald-100 shadow-sm">
-        {/* CSS Keyframe Animation Style */}
-        <style dangerouslySetInnerHTML={{ __html: `
-          @keyframes marquee {
-            0% { transform: translateX(0%); }
-            100% { transform: translateX(-33.33%); }
-          }
-          .animate-marquee-infinite {
-            animation: marquee 25s linear infinite;
-          }
-          .animate-marquee-infinite:hover {
-            animation-play-state: paused;
-          }
-        `}} />
-        
-        {/* Scrolling Inner Container */}
-        <div className="flex gap-8 whitespace-nowrap animate-marquee-infinite pl-4">
-          {doubleScrollingNotices.map((notice, idx) => (
-            <div
-              key={idx}
-              className="inline-flex items-center gap-3 bg-white py-1.5 px-4 rounded-xl shadow-sm border border-emerald-50 cursor-pointer hover:border-emerald-200 transition-colors"
-            >
-              <div className="flex items-center gap-1.5">
-                <span className="text-xs font-black text-emerald-700">{notice.day}</span>
-                <span className="text-[10px] font-black text-emerald-700 uppercase">{notice.month}</span>
-              </div>
-              <span className="h-3 w-px bg-slate-200" />
-              <span className="text-xs font-bold text-slate-700">{notice.text}</span>
+      {/* CSS Animation Keyframes for Marquee */}
+      <style dangerouslySetInnerHTML={{ __html: `
+        @keyframes marquee {
+          0% { transform: translateX(0%); }
+          100% { transform: translateX(-33.33%); }
+        }
+        .animate-marquee-infinite {
+          animation: marquee 25s linear infinite;
+        }
+        .animate-marquee-infinite:hover {
+          animation-play-state: paused;
+        }
+      `}} />
+
+      {/* 1. Top Horizontal Scrolling Live Notice Bar */}
+      <div className="w-full max-w-6xl mb-12">
+        <div className="bg-white border border-slate-100 shadow-sm rounded-full p-2.5 px-6 flex items-center overflow-hidden gap-4">
+          {/* Live indicator badge */}
+          <div className="flex items-center gap-1.5 bg-[#0fa958] text-white text-[9px] font-black px-3.5 py-1.5 rounded-full shrink-0">
+            <span className="w-1.5 h-1.5 bg-white rounded-full animate-ping" />
+            <span>LIVE</span>
+          </div>
+          {/* Scrolling Container */}
+          <div className="w-full overflow-hidden relative flex">
+            <div className="flex gap-16 whitespace-nowrap animate-marquee-infinite text-xs font-bold text-slate-600">
+              {repeatedScrollNotices.map((text, idx) => (
+                <span key={idx} className="hover:text-emerald-600 cursor-pointer transition-colors">
+                  {text}
+                </span>
+              ))}
             </div>
-          ))}
+          </div>
         </div>
       </div>
 
       {/* 2. Main Notice Board Content */}
-      <div className="max-w-6xl w-full py-20 px-6 flex flex-col lg:flex-row items-center justify-between gap-16">
+      <div className="max-w-6xl w-full flex flex-col lg:flex-row items-stretch justify-between gap-12 lg:gap-16">
         
-        {/* Left Headline: Elegant Serif Font matching Mockup */}
-        <div className="flex flex-col text-5xl md:text-6xl lg:text-7xl font-bold font-serif tracking-tight leading-[1.1] text-center lg:text-left">
-          <span className="text-slate-900">OFFICIAL</span>
-          <span className="text-[#0fa958] my-1">
-            BOARD
-          </span>
-          <span className="text-slate-900">NOTICES</span>
+        {/* Left Column: Heading & Count Cards */}
+        <div className="flex-1 flex flex-col justify-between items-center lg:items-start text-center lg:text-left py-2">
+          
+          <div className="flex flex-col">
+            {/* Small Title with Bell icon */}
+            <div className="flex items-center gap-1.5 text-emerald-600 font-extrabold text-[10px] md:text-xs tracking-wider uppercase mb-4 justify-center lg:justify-start">
+              <Bell className="w-4 h-4 text-emerald-500 fill-emerald-500/10" />
+              Desk Updates
+            </div>
+            
+            {/* Serif Heading */}
+            <h2 className="text-4xl md:text-5xl font-bold font-serif tracking-tight leading-[1.1] mb-8">
+              Official <br />
+              <span className="text-[#0fa958] my-1 inline-block">Board</span> <br />
+              Notices
+            </h2>
+          </div>
+
+          {/* Counts Cards Grid */}
+          <div className="flex items-center gap-4 mt-4 lg:mt-0">
+            {stats.map((stat, idx) => (
+              <div
+                key={idx}
+                className="bg-white border border-slate-100 rounded-2xl shadow-sm p-4 w-24 flex flex-col items-center justify-center"
+              >
+                <span className={`text-2xl font-black ${stat.color}`}>
+                  {stat.value}
+                </span>
+                <span className="text-[8px] font-black text-slate-400 tracking-wider uppercase mt-2">
+                  {stat.label}
+                </span>
+              </div>
+            ))}
+          </div>
+
         </div>
 
-        {/* Right List: Pill-shaped cards */}
-        <div className="flex flex-col w-full lg:w-[620px] gap-5 items-center lg:items-start">
+        {/* Right Column: Notice Lists & View Button */}
+        <div className="flex-[1.5] flex flex-col items-center lg:items-start gap-6 w-full">
           <div className="flex flex-col w-full gap-4">
-            {mainNotices.map((notice) => (
+            {mainNotices.map((notice, idx) => (
               <div
-                key={notice.id}
-                className="group flex items-center bg-white p-3 px-6 rounded-full border border-slate-100 shadow-md shadow-slate-100/40 hover:shadow-lg hover:border-emerald-100 transition-all duration-300 hover:-translate-y-0.5 cursor-pointer w-full"
+                key={idx}
+                className={`group flex items-center justify-between bg-white p-4 px-6 rounded-2xl border transition-all duration-300 hover:shadow-md cursor-pointer ${
+                  notice.isHighlight
+                    ? "border-[#0fa958] shadow-sm shadow-emerald-50"
+                    : "border-slate-100 shadow-sm shadow-slate-100/40"
+                }`}
               >
-                {/* Date indicator */}
-                <div className="flex items-center gap-1.5 shrink-0">
-                  <span className="text-sm font-black text-emerald-700">{notice.day}</span>
-                  <span className="text-[10px] font-black text-emerald-700 uppercase">{notice.month}</span>
-                </div>
-                
-                <span className="h-4 w-px bg-slate-200 mx-4 shrink-0" />
-
-                {/* Blinking/Flashing NEW tag + Title */}
-                <div className="flex items-center gap-2 overflow-hidden w-full">
+                <div className="flex items-center gap-3 overflow-hidden">
+                  {/* Flashing tag */}
                   <span className="bg-red-500 text-white text-[8px] font-black px-1.5 py-0.5 rounded uppercase tracking-wider animate-pulse shrink-0">
                     NEW
                   </span>
-                  <p className="text-slate-700 font-bold text-xs md:text-sm group-hover:text-[#0fa958] transition-colors truncate">
-                    {notice.text}
+                  {/* Notice Title */}
+                  <p className="text-slate-800 font-bold text-xs md:text-sm group-hover:text-[#0fa958] transition-colors truncate">
+                    {notice.title}
                   </p>
+                </div>
+
+                <div className="flex items-center gap-4 shrink-0 pl-4">
+                  {/* Date */}
+                  <span className="text-[10px] font-bold text-slate-400">
+                    {notice.date}
+                  </span>
+                  {/* Arrow Indicator */}
+                  <ArrowUpRight className="w-4 h-4 text-[#0fa958] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                 </div>
               </div>
             ))}
           </div>
 
           {/* View All Button */}
-          <button className="mt-4 bg-[#0fa958] text-white hover:bg-emerald-700 px-8 py-3.5 rounded-full font-bold text-sm tracking-wide transition-all duration-300 shadow-lg shadow-emerald-600/20 hover:shadow-emerald-600/30">
-            View All Notices
-          </button>
+          <Link
+            href="#all-notices"
+            className="mt-2 inline-flex items-center gap-2 bg-[#0a4d2e] hover:bg-emerald-950 text-white py-3 px-8 rounded-full text-xs font-black tracking-wide transition-all shadow-md shadow-emerald-900/10"
+          >
+            View All Board Notices
+            <ArrowRight className="w-4 h-4" />
+          </Link>
         </div>
 
       </div>
