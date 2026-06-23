@@ -1,4 +1,7 @@
+"use client";
+
 import React from "react";
+import { motion } from "framer-motion";
 
 export default function StatsSection() {
   const stats = [
@@ -8,23 +11,46 @@ export default function StatsSection() {
     { value: "96%", label: "Passing Rate" },
   ];
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+      },
+    },
+  } as const;
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 15 },
+    show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
+  } as const;
+
   return (
-    <section className="w-full bg-emerald-800 py-10 px-6 flex justify-center border-y border-emerald-900 shadow-inner">
+    <motion.section 
+      initial="hidden"
+      whileInView="show"
+      viewport={{ once: true, margin: "-50px" }}
+      variants={containerVariants}
+      className="w-full bg-[#10b981] py-5 px-6 flex justify-center border-y border-emerald-400/20 shadow-inner overflow-hidden"
+    >
       <div className="max-w-7xl w-full grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-4 text-center">
         {stats.map((stat, i) => (
-          <div
+          <motion.div
             key={i}
-            className="flex flex-col items-center justify-center p-4 border-r last:border-r-0 border-emerald-700/50 max-md:[&:nth-child(even)]:border-r-0 max-md:border-r"
+            variants={itemVariants}
+            whileHover={{ scale: 1.03 }}
+            className="flex flex-col items-center justify-center py-2 px-4 border-r last:border-r-0 border-white/20 max-md:[&:nth-child(even)]:border-r-0 max-md:border-r"
           >
-            <span className="text-3xl md:text-4xl lg:text-5xl font-black text-white tracking-tight mb-2">
+            <span className="text-2xl md:text-3xl lg:text-4xl font-black text-white tracking-tight mb-1">
               {stat.value}
             </span>
-            <span className="text-xs md:text-sm font-bold text-emerald-100 uppercase tracking-widest">
+            <span className="text-[10px] md:text-xs font-bold text-emerald-50 uppercase tracking-widest">
               {stat.label}
             </span>
-          </div>
+          </motion.div>
         ))}
       </div>
-    </section>
+    </motion.section>
   );
 }

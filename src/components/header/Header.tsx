@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { ChevronDown, Bell, Menu, X } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -30,13 +31,32 @@ export default function Header() {
     { name: "MORE", href: "#more", hasDropdown: true },
   ];
 
+  const navContainerVariants = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.04,
+        delayChildren: 0.15,
+      },
+    },
+  } as const;
+
+  const navItemVariants = {
+    hidden: { opacity: 0, y: -8 },
+    show: { opacity: 1, y: 0, transition: { duration: 0.4, ease: "easeOut" } },
+  } as const;
+
   return (
     <header
       className={`fixed left-0 right-0 z-50 transition-all duration-300 px-4 md:px-8 ${
         isScrolled ? "top-2" : "top-6"
       }`}
     >
-      <div
+      <motion.div
+        initial={{ y: -40, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
         className="mx-auto bg-white/95 backdrop-blur-md border border-slate-100 shadow-md transition-all duration-300 max-w-7xl rounded-full py-2.5 px-6 md:px-8"
       >
         <div className="flex items-center justify-between">
@@ -44,12 +64,16 @@ export default function Header() {
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3 shrink-0">
             {/* GV Circular Logo Icon */}
-            <div className="w-10 h-10 rounded-full bg-slate-50 border border-slate-100 flex items-center justify-center shrink-0">
+            <motion.div 
+              whileHover={{ rotate: 15 }}
+              transition={{ type: "spring", stiffness: 300, damping: 15 }}
+              className="w-10 h-10 rounded-full bg-slate-50 border border-slate-100 flex items-center justify-center shrink-0"
+            >
               <svg className="w-7 h-7" viewBox="0 0 100 100" fill="none">
                 <circle cx="50" cy="50" r="45" stroke="#10b981" strokeWidth="6" />
                 <path d="M30 45 L45 65 L70 30" stroke="#ef4444" strokeWidth="8" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
-            </div>
+            </motion.div>
             <div className="flex flex-col">
               <span className="font-extrabold text-slate-800 text-lg md:text-xl leading-none tracking-tight">
                 Green view
@@ -61,37 +85,55 @@ export default function Header() {
           </Link>
 
           {/* Desktop Navigation Links */}
-          <nav className="hidden lg:flex items-center gap-6 xl:gap-8 font-extrabold text-slate-600 text-xs tracking-wider">
+          <motion.nav 
+            variants={navContainerVariants}
+            initial="hidden"
+            animate="show"
+            className="hidden lg:flex items-center gap-6 xl:gap-8 font-extrabold text-slate-600 text-xs tracking-wider"
+          >
             {navItems.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                className="flex items-center gap-1 hover:text-[#0fa958] transition-colors"
-              >
-                {item.name}
-                {item.hasDropdown && <ChevronDown className="w-3 h-3 text-slate-400" />}
-              </Link>
+              <motion.div key={item.name} variants={navItemVariants} whileHover={{ y: -1 }}>
+                <Link
+                  href={item.href}
+                  className="flex items-center gap-1 hover:text-[#0fa958] transition-colors relative group py-1"
+                >
+                  {item.name}
+                  {item.hasDropdown && <ChevronDown className="w-3 h-3 text-slate-400" />}
+                  {/* Subtle underline hover effect */}
+                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#0fa958] transition-all duration-300 group-hover:w-full" />
+                </Link>
+              </motion.div>
             ))}
-          </nav>
+          </motion.nav>
 
           {/* Right Controls: Bell notification & Login */}
           <div className="flex items-center gap-4">
             
             {/* Notification Bell */}
-            <button className="relative w-9 h-9 rounded-full bg-slate-50 border border-slate-100 flex items-center justify-center text-slate-500 hover:text-slate-800 transition-colors">
+            <motion.button 
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="relative w-9 h-9 rounded-full bg-slate-50 border border-slate-100 flex items-center justify-center text-slate-500 hover:text-slate-800 transition-colors"
+            >
               <Bell className="w-4 h-4" />
-              <span className="absolute top-1 right-1 w-3.5 h-3.5 bg-emerald-500 border-2 border-white rounded-full flex items-center justify-center text-[7px] font-black text-white">
+              <motion.span 
+                animate={{ scale: [1, 1.2, 1] }}
+                transition={{ repeat: Infinity, duration: 2, repeatDelay: 3 }}
+                className="absolute top-1 right-1 w-3.5 h-3.5 bg-emerald-500 border-2 border-white rounded-full flex items-center justify-center text-[7px] font-black text-white"
+              >
                 1
-              </span>
-            </button>
+              </motion.span>
+            </motion.button>
 
             {/* Login Button */}
-            <Link
-              href="#login"
-              className="bg-[#34d399] text-white hover:bg-emerald-600 px-6 py-2 rounded-full font-bold text-xs tracking-wide transition-all shadow-sm"
-            >
-              Login
-            </Link>
+            <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+              <Link
+                href="#login"
+                className="bg-[#34d399] text-white hover:bg-emerald-600 px-6 py-2 rounded-full font-bold text-xs tracking-wide transition-all shadow-sm block"
+              >
+                Login
+              </Link>
+            </motion.div>
 
             {/* Mobile Hamburger menu toggle */}
             <button
@@ -107,22 +149,37 @@ export default function Header() {
         </div>
 
         {/* Mobile Navigation Drawer */}
-        {isMobileMenuOpen && (
-          <div className="lg:hidden border-t border-slate-50 px-4 py-6 bg-white flex flex-col gap-4 animate-in slide-in-from-top-5 duration-200">
-            {navItems.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="text-xs font-black text-slate-700 hover:text-[#0fa958] py-2 border-b border-slate-50 transition-colors uppercase tracking-wider"
-              >
-                {item.name}
-              </Link>
-            ))}
-          </div>
-        )}
+        <AnimatePresence>
+          {isMobileMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+              className="lg:hidden border-t border-slate-50 px-4 py-6 bg-white flex flex-col gap-4 overflow-hidden"
+            >
+              {navItems.map((item, idx) => (
+                <motion.div
+                  key={item.name}
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: idx * 0.03, duration: 0.2 }}
+                >
+                  <Link
+                    key={item.name}
+                    href={item.href}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="text-xs font-black text-slate-700 hover:text-[#0fa958] py-2 border-b border-slate-50 transition-colors uppercase tracking-wider block"
+                  >
+                    {item.name}
+                  </Link>
+                </motion.div>
+              ))}
+            </motion.div>
+          )}
+        </AnimatePresence>
 
-      </div>
+      </motion.div>
     </header>
   );
 }

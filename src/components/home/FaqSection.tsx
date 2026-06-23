@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { ChevronDown, ChevronUp, HelpCircle } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function FaqSection() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
@@ -33,35 +34,75 @@ export default function FaqSection() {
     setOpenIndex(openIndex === index ? null : index);
   };
 
+  const listVariants = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.08,
+      },
+    },
+  } as const;
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 15 },
+    show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
+  } as const;
+
   return (
-    <section className="w-full py-20 px-6 md:px-12 lg:px-24 bg-white flex justify-center">
+    <section className="w-full py-16 md:py-20 px-6 md:px-12 lg:px-24 bg-white flex justify-center overflow-hidden">
       <div className="max-w-4xl w-full flex flex-col items-center">
         
         {/* Section Header */}
-        <div className="flex flex-col items-center text-center mb-16">
-          <div className="flex items-center gap-2 mb-4">
+        <div className="flex flex-col items-center text-center mb-12 select-none">
+          <motion.div 
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="flex items-center gap-2 mb-4"
+          >
             <span className="h-px w-8 bg-emerald-600" />
             <span className="text-xs font-black text-emerald-600 uppercase tracking-widest">
               Have Questions?
             </span>
             <span className="h-px w-8 bg-emerald-600" />
-          </div>
-          <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
+          </motion.div>
+          <motion.h2 
+            initial={{ opacity: 0, y: 15 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight"
+          >
             Frequently Asked <span className="text-emerald-600">Questions</span>
-          </h2>
-          <p className="text-slate-500 font-medium mt-4 max-w-lg">
+          </motion.h2>
+          <motion.p 
+            initial={{ opacity: 0, y: 15 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, ease: "easeOut", delay: 0.1 }}
+            className="text-slate-500 font-medium mt-4 max-w-lg text-xs md:text-sm"
+          >
             Quickly find answers to common queries regarding admissions, schedules, fees, and campus guidelines.
-          </p>
+          </motion.p>
         </div>
 
-        {/* Accordions List */}
-        <div className="w-full flex flex-col gap-4">
+        {/* Accordions List with Staggered Scroll Reveal */}
+        <motion.div 
+          variants={listVariants}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: "-100px" }}
+          className="w-full flex flex-col gap-4"
+        >
           {faqs.map((faq, idx) => {
             const isOpen = openIndex === idx;
             return (
-              <div
+              <motion.div
                 key={idx}
-                className={`border rounded-3xl overflow-hidden transition-all duration-300 ${
+                variants={itemVariants}
+                className={`border rounded-3xl overflow-hidden transition-colors duration-300 ${
                   isOpen
                     ? "bg-emerald-50/30 border-emerald-200 shadow-sm"
                     : "bg-white border-slate-100 shadow-sm hover:border-slate-200"
@@ -69,30 +110,43 @@ export default function FaqSection() {
               >
                 <button
                   onClick={() => toggleFaq(idx)}
-                  className="w-full flex items-center justify-between p-6 text-left font-bold text-slate-800 hover:text-emerald-700 transition-colors focus:outline-none"
+                  className="w-full flex items-center justify-between p-5 md:p-6 text-left font-bold text-slate-800 hover:text-emerald-700 transition-colors focus:outline-none cursor-pointer"
                 >
-                  <span className="text-sm md:text-base leading-snug flex items-center gap-3">
+                  <span className="text-sm md:text-base leading-snug flex items-center gap-3 pr-4">
                     <HelpCircle className={`w-5 h-5 shrink-0 ${isOpen ? "text-emerald-600" : "text-slate-400"}`} />
                     {faq.q}
                   </span>
-                  {isOpen ? (
-                    <ChevronUp className="w-5 h-5 text-emerald-600 shrink-0 ml-4" />
-                  ) : (
-                    <ChevronDown className="w-5 h-5 text-slate-400 shrink-0 ml-4" />
-                  )}
+                  <motion.div
+                    animate={{ rotate: isOpen ? 180 : 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="shrink-0"
+                  >
+                    <ChevronDown className={`w-5 h-5 ${isOpen ? "text-emerald-600" : "text-slate-400"}`} />
+                  </motion.div>
                 </button>
                 
-                {isOpen && (
-                  <div className="px-6 pb-6 pt-2 border-t border-emerald-100/50 bg-white/40">
-                    <p className="text-slate-600 text-xs md:text-sm font-medium leading-relaxed pl-8">
-                      {faq.a}
-                    </p>
-                  </div>
-                )}
-              </div>
+                {/* Framer Motion Height collapse/expand animation */}
+                <AnimatePresence initial={false}>
+                  {isOpen && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.3, ease: "easeInOut" }}
+                      className="overflow-hidden"
+                    >
+                      <div className="px-5 md:px-6 pb-5 md:pb-6 pt-2 border-t border-emerald-100/50 bg-white/40">
+                        <p className="text-slate-600 text-xs md:text-sm font-medium leading-relaxed pl-8">
+                          {faq.a}
+                        </p>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </motion.div>
             );
           })}
-        </div>
+        </motion.div>
 
       </div>
     </section>

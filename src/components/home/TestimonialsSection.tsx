@@ -1,96 +1,126 @@
+"use client";
+
 import React from "react";
-import { Star, Quote } from "lucide-react";
+import { motion } from "framer-motion";
 
 export default function TestimonialsSection() {
   const testimonials = [
     {
-      stars: 5,
-      quote: "The academic standards at Green View are outstanding, but what truly sets it apart is the focus on holistic growth. My daughter has become incredibly confident, expressive, and responsible.",
-      name: "Manisha Sharma",
-      role: "Parent of Khushi (Grade VIII)",
-      image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=150&h=150",
+      quote: "Green view shaped my future. The values and education I received here are priceless. Now pursuing my PhD at IIT Delhi.",
+      name: "Rahul Mehta",
+      role: "Alumni, Batch 2018",
+      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=120&h=120",
     },
     {
-      stars: 5,
-      quote: "We relocated from Delhi and were worried about my son's adjustment. The teachers were incredibly supportive, welcoming him with personal care. The sports facilities are fantastic too!",
-      name: "Amit Singhal",
-      role: "Parent of Aarav (Grade X)",
-      image: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=150&h=150",
+      quote: "The best decision we made was enrolling our children here. The teachers genuinely care about each student's growth.",
+      name: "Mrs. Kavita Joshi",
+      role: "Parent",
+      image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=120&h=120",
     },
     {
-      stars: 5,
-      quote: "Highly recommended school for anyone searching for quality values, disciplined environment, and premium teaching methods. The smart classrooms and computer labs are exceptional.",
-      name: "Karan Gupta",
-      role: "Parent of Diya (Grade V)",
-      image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=150&h=150",
+      quote: "The holistic development approach here is exceptional. I gained confidence, skills, and lifelong friendships.",
+      name: "Priya Verma",
+      role: "Alumni, Batch 2020",
+      image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=120&h=120",
     },
   ];
 
+  const gridVariants = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+      },
+    },
+  } as const;
+
+  const cardVariants = {
+    hidden: { opacity: 0, y: 30, scale: 0.98 },
+    show: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } },
+  } as const;
+
   return (
-    <section className="w-full py-20 px-6 md:px-12 lg:px-24 bg-slate-50 flex justify-center">
-      <div className="max-w-7xl w-full flex flex-col items-center">
+    <section className="w-full py-16 md:py-20 px-6 md:px-12 bg-slate-50/50 flex justify-center overflow-hidden">
+      <div className="max-w-6xl w-full flex flex-col items-center">
         
         {/* Section Header */}
-        <div className="flex flex-col items-center text-center mb-16">
-          <div className="flex items-center gap-2 mb-4">
-            <span className="h-px w-8 bg-emerald-600" />
-            <span className="text-xs font-black text-emerald-600 uppercase tracking-widest">
-              Reviews
-            </span>
-            <span className="h-px w-8 bg-emerald-600" />
-          </div>
-          <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
-            What Parents Say About Us
-          </h2>
-          <p className="text-slate-500 font-medium mt-4 max-w-lg">
-            Read stories and feedback from parents about their child&apos;s growth and experiences at our school.
-          </p>
+        <div className="flex flex-col items-center text-center mb-12 select-none">
+          <motion.span 
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="text-[10px] md:text-xs font-bold text-[#0fa958] uppercase tracking-[0.25em] mb-2.5"
+          >
+            Testimonials
+          </motion.span>
+          <motion.h2 
+            initial={{ opacity: 0, y: 15 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            className="text-3xl md:text-4xl font-extrabold text-slate-800 tracking-tight leading-tight"
+          >
+            What Parents <span className="text-[#0fa958]">Say About Us</span>
+          </motion.h2>
         </div>
 
-        {/* Testimonials Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-6xl">
+        {/* Testimonials Grid with Staggered Slide In */}
+        <motion.div 
+          variants={gridVariants}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: "-100px" }}
+          className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 w-full"
+        >
           {testimonials.map((t, idx) => (
-            <div
+            <motion.div
               key={idx}
-              className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between relative group hover:-translate-y-1"
+              variants={cardVariants}
+              whileHover={{ y: -6 }}
+              className="bg-white p-7 md:p-8 rounded-[20px] shadow-sm border border-slate-100/50 flex flex-col justify-between relative group hover:shadow-md transition-shadow duration-300 cursor-pointer"
             >
-              {/* Large quote icon watermark */}
-              <Quote className="w-12 h-12 text-slate-50 absolute top-6 right-6 -z-0 opacity-80 group-hover:text-emerald-50 transition-colors" />
+              {/* Soft coral quote icon watermark */}
+              <motion.span 
+                initial={{ scale: 0.8, opacity: 0 }}
+                whileInView={{ scale: 1, opacity: 0.1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: idx * 0.1 }}
+                className="absolute top-4 right-6 text-red-500 text-7xl font-serif leading-none select-none"
+              >
+                &ldquo;
+              </motion.span>
 
-              <div className="relative z-10">
-                {/* Stars */}
-                <div className="flex items-center gap-1 mb-6">
-                  {Array.from({ length: t.stars }).map((_, i) => (
-                    <Star key={i} className="w-4 h-4 text-amber-500 fill-amber-500" />
-                  ))}
-                </div>
-                {/* Quote Text */}
-                <p className="text-slate-600 text-sm md:text-base leading-relaxed font-semibold italic mb-8">
-                  &quot;{t.quote}&quot;
+              {/* Quote Text */}
+              <div className="relative z-10 pr-4 mb-6">
+                <p className="text-slate-600 text-sm md:text-base leading-relaxed font-medium">
+                  {t.quote}
                 </p>
               </div>
 
               {/* Author Info */}
-              <div className="flex items-center gap-4 border-t border-slate-100 pt-6 relative z-10">
-                <div className="w-12 h-12 rounded-full overflow-hidden border border-slate-100 bg-slate-100">
+              <div className="flex items-center gap-3.5 relative z-10">
+                <div className="w-10 h-10 md:w-11 md:h-11 rounded-full overflow-hidden border border-slate-100 bg-slate-100 shrink-0">
                   <img
                     src={t.image}
                     alt={t.name}
                     className="w-full h-full object-cover"
+                    loading="lazy"
                   />
                 </div>
-                <div>
-                  <span className="font-extrabold text-slate-800 text-sm block">
+                <div className="flex flex-col">
+                  <span className="font-extrabold text-slate-800 text-sm md:text-base leading-none">
                     {t.name}
                   </span>
-                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1 block">
+                  <span className="text-[10px] md:text-xs font-bold text-slate-400 mt-1.5 leading-none">
                     {t.role}
                   </span>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
 
       </div>
     </section>
