@@ -27,7 +27,7 @@ export default function Header() {
     { name: "ACADEMICS", href: "#academics" },
     { name: "ADMISSIONS", href: "#admission" },
     { name: "FACILITIES", href: "#facilities" },
-    { name: "CONTACT", href: "contact" },
+    { name: "CONTACT", href: "/contact" },
     { name: "MORE", href: "#more", hasDropdown: true },
   ];
 
