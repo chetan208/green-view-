@@ -30,9 +30,9 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${poppins.variable} h-full antialiased`}
+      className={`${inter.variable} ${poppins.variable} h-full antialiased overflow-x-hidden`}
     >
-      <body className="min-h-full flex flex-col font-sans bg-[#fcfcfc] text-zinc-900 selection:bg-emerald-500 selection:text-white">
+      <body className="min-h-full flex flex-col font-sans bg-[#fcfcfc] text-zinc-900 selection:bg-emerald-500 selection:text-white overflow-x-hidden">
         <Header />
         <main className="flex-grow pt-24">{children}</main>
         <Footer />

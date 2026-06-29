@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
@@ -194,8 +194,8 @@ export default function HeroSection() {
 
           {/* Offset Badge: Board Results (Bottom-Right) */}
           <motion.div 
-            initial={{ x: 50, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: 0.6 }}
             whileHover={{ y: -3 }}
             className="absolute -bottom-4 md:-bottom-8 right-2 md:-right-6 z-20 bg-white p-3 md:p-4 rounded-2xl md:rounded-3xl shadow-lg border border-slate-100/70 flex flex-col max-w-[130px] md:max-w-[170px] select-none cursor-pointer"
