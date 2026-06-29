@@ -32,7 +32,7 @@ export default function RootLayout({
       lang="en"
       className={`${inter.variable} ${poppins.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col font-sans bg-zinc-50 text-zinc-900 selection:bg-emerald-500 selection:text-white">
+      <body className="min-h-full flex flex-col font-sans bg-[#fcfcfc] text-zinc-900 selection:bg-emerald-500 selection:text-white">
         <Header />
         <main className="flex-grow pt-24">{children}</main>
         <Footer />

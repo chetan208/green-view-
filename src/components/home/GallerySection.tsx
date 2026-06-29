@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import React from "react";
 import { motion } from "framer-motion";
@@ -48,7 +48,7 @@ export default function GallerySection() {
   } as const;
 
   return (
-    <section id="gallery" className="w-full py-8 md:py-10 px-6 md:px-12 bg-white flex justify-center overflow-hidden">
+    <section id="gallery" className="w-full py-8 md:py-10 px-6 md:px-12  flex justify-center overflow-hidden">
       <div className="max-w-6xl w-full flex flex-col items-center">
         
         {/* Section Header */}
@@ -103,3 +103,4 @@ export default function GallerySection() {
     </section>
   );
 }
+

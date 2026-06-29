@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import { Leaf, Mail, Phone, MapPin } from "lucide-react";
+import { Mail, Phone, MapPin } from "lucide-react";
 
 const FacebookIcon = () => (
   <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
@@ -32,27 +32,7 @@ export default function Footer() {
   return (
     <footer className="w-full bg-slate-950 text-slate-400 mt-auto">
       
-      {/* Top CTA Banner */}
-      <div className="w-full bg-emerald-800 py-12 px-6 md:px-12 flex justify-center text-center md:text-left relative overflow-hidden border-b border-emerald-900">
-        <div className="absolute top-0 left-0 w-full h-full opacity-10 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px]" />
-        
-        <div className="max-w-7xl w-full flex flex-col md:flex-row items-center justify-between gap-8 relative z-10">
-          <div>
-            <h3 className="text-2xl md:text-3xl font-extrabold text-white mb-2">
-              Let&apos;s Secure Your Child&apos;s Future
-            </h3>
-            <p className="text-emerald-100 text-sm font-semibold">
-              Join us today to experience quality, modern, and value-based schooling.
-            </p>
-          </div>
-          <Link
-            href="#admission"
-            className="bg-white text-emerald-800 hover:bg-emerald-50 px-8 py-3.5 rounded-full font-black text-sm tracking-wide transition-all duration-300 shadow-lg text-center whitespace-nowrap"
-          >
-            Apply Online Now
-          </Link>
-        </div>
-      </div>
+
 
       {/* Main Footer Content */}
       <div className="w-full py-16 px-6 md:px-12 lg:px-24 flex justify-center border-b border-slate-900">
@@ -60,15 +40,19 @@ export default function Footer() {
           
           {/* Logo & Description */}
           <div className="flex flex-col gap-6">
-            <Link href="/" className="flex items-center gap-2 group w-fit">
-              <div className="bg-emerald-900/50 p-2 rounded-full border border-emerald-800/30">
-                <Leaf className="w-5 h-5 text-emerald-400 fill-emerald-400/10" />
+            <Link href="/" className="flex items-center gap-3 group w-fit">
+              <div className="w-10 h-10 relative shrink-0">
+                <img
+                  src="/images/logo.png"
+                  alt="Green View Logo"
+                  className="w-full h-full object-contain"
+                />
               </div>
               <div className="flex flex-col">
                 <span className="font-black text-white text-lg leading-none tracking-tight">
                   Green view
                 </span>
-                <span className="text-[10px] text-emerald-400 font-bold tracking-widest uppercase mt-0.5">
+                <span className="text-[10px] text-emerald-400 font-bold tracking-widest uppercase mt-1 leading-none">
                   Sr. Sec. School
                 </span>
               </div>

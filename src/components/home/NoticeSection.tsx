@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import React from "react";
 import Link from "next/link";
@@ -7,8 +7,8 @@ import { motion } from "framer-motion";
 
 export default function BoardNotices() {
   const scrollingNotices = [
-    "Admissions Open for Session 2026-27 — Register online today!",
-    "Hiring started for academic session 2026 — Check careers section",
+    "Admissions Open for Session 2026-27 â€” Register online today!",
+    "Hiring started for academic session 2026 â€” Check careers section",
     "Notice: Mid-term examinations schedule has been uploaded on the portal",
   ];
 
@@ -78,7 +78,7 @@ export default function BoardNotices() {
   } as const;
 
   return (
-    <section className="w-full py-16 md:py-20 px-6 bg-slate-50/50 flex flex-col items-center font-sans overflow-hidden">
+    <section className="w-full py-16 md:py-20 px-6 /50 flex flex-col items-center font-sans overflow-hidden">
       
       {/* CSS Animation Keyframes for Marquee */}
       <style dangerouslySetInnerHTML={{ __html: `

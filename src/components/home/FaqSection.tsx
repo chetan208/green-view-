@@ -1,11 +1,11 @@
-"use client";
+﻿"use client";
 
 import React, { useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function FaqSection() {
-  const [openIndex, setOpenIndex] = useState<number | null>(0);
+  const [openIndices, setOpenIndices] = useState<number[]>([0]);
 
   const faqs = [
     {
@@ -31,7 +31,9 @@ export default function FaqSection() {
   ];
 
   const toggleFaq = (index: number) => {
-    setOpenIndex(openIndex === index ? null : index);
+    setOpenIndices((prev) => 
+      prev.includes(index) ? prev.filter((i) => i !== index) : [...prev, index]
+    );
   };
 
   const listVariants = {
@@ -50,7 +52,7 @@ export default function FaqSection() {
   } as const;
 
   return (
-    <section className="w-full py-12 md:py-16 px-6 md:px-12 bg-white flex justify-center overflow-hidden">
+    <section className="w-full py-12 md:py-16 px-6 md:px-12  flex justify-center overflow-hidden">
       <div className="max-w-4xl w-full flex flex-col items-center">
         
         {/* Section Header */}
@@ -84,7 +86,7 @@ export default function FaqSection() {
           className="w-full flex flex-col gap-3"
         >
           {faqs.map((faq, idx) => {
-            const isOpen = openIndex === idx;
+            const isOpen = openIndices.includes(idx);
             return (
               <motion.div
                 key={idx}
@@ -134,3 +136,4 @@ export default function FaqSection() {
     </section>
   );
 }
+

@@ -7,10 +7,11 @@ import PrincipalMessage from "@/components/home/PrincipalMessage";
 import FacilitiesSection from "@/components/home/FacilitiesSection";
 import AcademicCalendar from "@/components/home/AcademicCalendar";
 import GallerySection from "@/components/home/GallerySection";
-import AdmissionSection from "@/components/home/AdmissionSection";
+
 import TestimonialsSection from "@/components/home/TestimonialsSection";
 import FaqSection from "@/components/home/FaqSection";
-import MapSection from "@/components/home/MapSection";
+import CtaSection from "@/components/home/CtaSection";
+
 
 export default function Home() {
   return (
@@ -24,10 +25,11 @@ export default function Home() {
       <FacilitiesSection />
       <AcademicCalendar />
       <GallerySection />
-      <AdmissionSection />
+
       <TestimonialsSection />
       <FaqSection />
-      <MapSection />
+      <CtaSection />
+  
     </div>
   );
 }

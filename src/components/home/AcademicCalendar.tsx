@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import React, { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
@@ -106,7 +106,7 @@ export default function AcademicCalendar() {
   };
 
   return (
-    <section className="w-full py-12 md:py-16 px-4 md:px-6 bg-white flex flex-col items-center justify-center min-h-[90vh] overflow-hidden">
+    <section className="w-full py-12 md:py-16 px-4 md:px-6  flex flex-col items-center justify-center min-h-[90vh] overflow-hidden">
       
       {/* Title */}
       <motion.div 
@@ -276,3 +276,4 @@ export default function AcademicCalendar() {
     </section>
   );
 }
+

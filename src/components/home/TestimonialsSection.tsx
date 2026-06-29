@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import React from "react";
 import { motion } from "framer-motion";
@@ -41,7 +41,7 @@ export default function TestimonialsSection() {
   } as const;
 
   return (
-    <section className="w-full py-16 md:py-20 px-6 md:px-12 bg-slate-50/50 flex justify-center overflow-hidden">
+    <section className="w-full py-16 md:py-20 px-6 md:px-12 /50 flex justify-center overflow-hidden">
       <div className="max-w-6xl w-full flex flex-col items-center">
         
         {/* Section Header */}
@@ -126,3 +126,4 @@ export default function TestimonialsSection() {
     </section>
   );
 }
+

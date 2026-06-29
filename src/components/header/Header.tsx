@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { ChevronDown, Bell, Menu, X } from "lucide-react";
+import { ChevronDown, Menu, X, Mail, Phone } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function Header() {
@@ -27,7 +27,7 @@ export default function Header() {
     { name: "ACADEMICS", href: "#academics" },
     { name: "ADMISSIONS", href: "#admission" },
     { name: "FACILITIES", href: "#facilities" },
-    { name: "CONTACT", href: "#contact" },
+    { name: "CONTACT", href: "contact" },
     { name: "MORE", href: "#more", hasDropdown: true },
   ];
 
@@ -48,138 +48,126 @@ export default function Header() {
   } as const;
 
   return (
-    <header
-      className={`fixed left-0 right-0 z-50 transition-all duration-300 px-4 md:px-8 ${
-        isScrolled ? "top-2" : "top-2 md:top-6"
-      }`}
+    <motion.header
+      initial={{ y: -50, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.5, ease: "easeOut" }}
+      className={`fixed top-0 left-0 right-0 z-50 bg-white border-b border-slate-100 shadow-sm transition-all duration-300 flex flex-col`}
     >
-      <motion.div
-        initial={{ y: -40, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-        className="mx-auto bg-white/95 backdrop-blur-md border border-slate-100 shadow-md transition-all duration-300 max-w-7xl rounded-full py-2.5 px-6 md:px-8"
-      >
-        <div className="flex items-center justify-between">
-          
-          {/* Logo */}
-          <Link href="/" className="flex items-center gap-3 shrink-0">
-            {/* GV Circular Logo Icon */}
-            <motion.div 
-              whileHover={{ rotate: 15 }}
-              transition={{ type: "spring", stiffness: 300, damping: 15 }}
-              className="w-10 h-10 rounded-full bg-slate-50 border border-slate-100 flex items-center justify-center shrink-0"
-            >
-              <svg className="w-7 h-7" viewBox="0 0 100 100" fill="none">
-                <circle cx="50" cy="50" r="45" stroke="#10b981" strokeWidth="6" />
-                <path d="M30 45 L45 65 L70 30" stroke="#ef4444" strokeWidth="8" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </motion.div>
-            <div className="flex flex-col">
-              <span className="font-extrabold text-slate-800 text-lg md:text-xl leading-none tracking-tight">
-                Green view
-              </span>
-              <span className="text-[7px] text-[#0fa958] font-black tracking-wider uppercase mt-1 leading-none">
-                A Senior Secondary School
-              </span>
-            </div>
-          </Link>
+      {/* Top Bar */}
+      <div className={`w-full bg-[#0fa958] text-white flex justify-center transition-all duration-300 overflow-hidden ${isScrolled ? "h-0 opacity-0" : "h-7 opacity-100 hidden md:flex"}`}>
+        <div className="max-w-7xl w-full px-6 md:px-8 flex justify-between items-center h-full text-[10px] font-bold tracking-wider uppercase">
+          <div className="flex items-center gap-5">
+            <span className="flex items-center gap-1.5"><Mail className="w-3 h-3" /> info@greenviewschool.edu.in</span>
+            <span className="flex items-center gap-1.5"><Phone className="w-3 h-3" /> +91 98765 43210</span>
+          </div>
+          <div className="flex items-center gap-5">
+            <Link href="#alumni" className="hover:text-emerald-200 transition-colors">Alumni</Link>
+            <Link href="#careers" className="hover:text-emerald-200 transition-colors">Careers</Link>
+            <Link href="#portal" className="hover:text-emerald-200 transition-colors">Student Portal</Link>
+          </div>
+        </div>
+      </div>
 
-          {/* Desktop Navigation Links */}
-          <motion.nav 
-            variants={navContainerVariants}
-            initial="hidden"
-            animate="show"
-            className="hidden lg:flex items-center gap-6 xl:gap-8 font-extrabold text-slate-600 text-xs tracking-wider"
-          >
-            {navItems.map((item) => (
-              <motion.div key={item.name} variants={navItemVariants} whileHover={{ y: -1 }}>
-                <Link
-                  href={item.href}
-                  className="flex items-center gap-1 hover:text-[#0fa958] transition-colors relative group py-1"
-                >
-                  {item.name}
-                  {item.hasDropdown && <ChevronDown className="w-3 h-3 text-slate-400" />}
-                  {/* Subtle underline hover effect */}
-                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#0fa958] transition-all duration-300 group-hover:w-full" />
-                </Link>
-              </motion.div>
-            ))}
-          </motion.nav>
+      <div className={`max-w-7xl mx-auto w-full px-6 md:px-8 flex items-center justify-between transition-all duration-300 ${isScrolled ? "py-2.5" : "py-4"}`}>
+        
+        {/* Logo */}
+        <Link href="/" className="flex items-center gap-3 shrink-0">
+          {/* GV Logo Image */}
+          <div className="w-10 h-10 relative shrink-0">
+            <img
+              src="/images/logo.png"
+              alt="Green View Logo"
+              className="w-full h-full object-contain"
+            />
+          </div>
+          <div className="flex flex-col">
+            <span className="font-black text-[#0c3c86] text-base md:text-lg leading-none tracking-tight">
+              Green view
+            </span>
+            <span className="text-[7px] text-[#0c3c86] font-black tracking-widest uppercase mt-1.5 leading-none">
+              A Senior Secondary School
+            </span>
+          </div>
+        </Link>
 
-          {/* Right Controls: Bell notification & Login */}
-          <div className="flex items-center gap-4">
-            
-            {/* Notification Bell */}
-            <motion.button 
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="hidden lg:flex relative w-9 h-9 rounded-full bg-slate-50 border border-slate-100 items-center justify-center text-slate-500 hover:text-slate-800 transition-colors"
-            >
-              <Bell className="w-4 h-4" />
-              <motion.span 
-                animate={{ scale: [1, 1.2, 1] }}
-                transition={{ repeat: Infinity, duration: 2, repeatDelay: 3 }}
-                className="absolute top-1 right-1 w-3.5 h-3.5 bg-emerald-500 border-2 border-white rounded-full flex items-center justify-center text-[7px] font-black text-white"
-              >
-                1
-              </motion.span>
-            </motion.button>
-
-            {/* Login Button */}
-            <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="hidden lg:block">
+        {/* Desktop Navigation Links */}
+        <motion.nav 
+          variants={navContainerVariants}
+          initial="hidden"
+          animate="show"
+          className="hidden lg:flex items-center gap-6 xl:gap-8 font-bold text-slate-700 text-xs tracking-wider"
+        >
+          {navItems.map((item) => (
+            <motion.div key={item.name} variants={navItemVariants} whileHover={{ y: -1 }}>
               <Link
-                href="#login"
-                className="bg-[#34d399] text-white hover:bg-emerald-600 px-6 py-2 rounded-full font-bold text-xs tracking-wide transition-all shadow-sm block"
+                href={item.href}
+                className="flex items-center gap-1 hover:text-[#0c3c86] transition-colors relative group py-1"
               >
-                Login
+                {item.name}
+                {item.hasDropdown && <ChevronDown className="w-3 h-3 text-slate-400" />}
+                {/* Subtle underline hover effect */}
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#0fa958] transition-all duration-300 group-hover:w-full" />
               </Link>
             </motion.div>
+          ))}
+        </motion.nav>
 
-            {/* Mobile Hamburger menu toggle */}
-            <button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="lg:hidden p-2 rounded-full text-[#0fa958] hover:bg-[#0fa958]/5 transition-colors focus:outline-none"
-              aria-label="Toggle Menu"
+        {/* Right Controls: Login & Hamburger */}
+        <div className="flex items-center gap-4">
+          
+          {/* Login Button */}
+          <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="hidden lg:block">
+            <Link
+              href="#login"
+              className="bg-gradient-to-r from-[#10b981] to-[#059669] hover:from-[#059669] hover:to-[#047857] text-white px-6 py-2 rounded-full font-bold text-xs md:text-sm tracking-wide transition-all shadow-sm block text-center"
             >
-              {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-            </button>
+              Login
+            </Link>
+          </motion.div>
 
-          </div>
+          {/* Mobile Hamburger menu toggle */}
+          <button
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="lg:hidden p-2 rounded-full text-[#0fa958] hover:bg-[#0fa958]/5 transition-colors focus:outline-none"
+            aria-label="Toggle Menu"
+          >
+            {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+          </button>
 
         </div>
 
-        {/* Mobile Navigation Drawer */}
-        <AnimatePresence>
-          {isMobileMenuOpen && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.3, ease: "easeInOut" }}
-              className="lg:hidden border-t border-slate-50 px-4 py-6 bg-white flex flex-col gap-4 overflow-hidden"
-            >
-              {navItems.map((item, idx) => (
-                <motion.div
-                  key={item.name}
-                  initial={{ opacity: 0, x: -10 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: idx * 0.03, duration: 0.2 }}
-                >
-                  <Link
-                    key={item.name}
-                    href={item.href}
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className="text-xs font-black text-slate-700 hover:text-[#0fa958] py-2 border-b border-slate-50 transition-colors uppercase tracking-wider block"
-                  >
-                    {item.name}
-                  </Link>
-                </motion.div>
-              ))}
-            </motion.div>
-          )}
-        </AnimatePresence>
+      </div>
 
-      </motion.div>
-    </header>
+      {/* Mobile Navigation Drawer */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            className="lg:hidden border-t border-slate-100 px-6 py-6 bg-white flex flex-col gap-4 overflow-hidden"
+          >
+            {navItems.map((item, idx) => (
+              <motion.div
+                key={item.name}
+                initial={{ opacity: 0, x: -10 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: idx * 0.03, duration: 0.2 }}
+              >
+                <Link
+                  href={item.href}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="text-xs font-black text-slate-700 hover:text-[#0fa958] py-2 border-b border-slate-50 transition-colors uppercase tracking-wider block"
+                >
+                  {item.name}
+                </Link>
+              </motion.div>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.header>
   );
 }
