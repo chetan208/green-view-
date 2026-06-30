@@ -193,10 +193,10 @@ export default function NoticesList() {
             <div
               key={notice.id}
               onClick={() => setSelectedNotice(notice)}
-              className="group bg-white border border-slate-100 rounded-xl p-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:border-brand-green/30 hover:shadow-[0_4px_15px_-5px_rgba(0,0,0,0.02)] transition-all duration-200 cursor-pointer"
+              className="group bg-white border border-slate-100 rounded-xl p-3 md:p-4 flex flex-row items-center justify-between gap-4 hover:border-brand-green/30 hover:shadow-[0_4px_15px_-5px_rgba(0,0,0,0.02)] transition-all duration-200 cursor-pointer min-w-0 w-full"
             >
               {/* Left Column: Badge, Title & New Tag */}
-              <div className="flex items-center gap-3.5 min-w-0 flex-1">
+              <div className="flex items-center gap-3 min-w-0 flex-1">
                 {getCategoryBadge(notice.category)}
                 
                 <h3 className="font-extrabold text-slate-850 text-xs md:text-sm truncate group-hover:text-brand-green transition-colors">
@@ -211,7 +211,7 @@ export default function NoticesList() {
               </div>
 
               {/* Right Column: Date & View Action */}
-              <div className="flex items-center gap-5 shrink-0 justify-between sm:justify-end text-[10px] md:text-xs">
+              <div className="flex items-center gap-4 md:gap-5 shrink-0 justify-end text-[10px] md:text-xs">
                 <span className="flex items-center gap-1.5 font-bold text-slate-400">
                   <Clock className="w-3.5 h-3.5 text-slate-300 stroke-[2]" />
                   {notice.date}
