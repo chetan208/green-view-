@@ -16,7 +16,7 @@ export default function FormNavigation({ currentStep, totalSteps, onNext, onPrev
       <button 
         onClick={onPrev}
         disabled={currentStep === 1}
-        className={`flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-sm transition-colors ${
+        className={`flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold md:font-bold text-sm transition-colors ${
           currentStep === 1 
             ? "text-slate-300 bg-slate-50 cursor-not-allowed" 
             : "text-slate-600 bg-slate-100 hover:bg-slate-200"
@@ -28,7 +28,7 @@ export default function FormNavigation({ currentStep, totalSteps, onNext, onPrev
 
       <button 
         onClick={onNext}
-        className="flex items-center gap-2 px-6 py-2.5 rounded-xl font-bold text-sm bg-[#0fa958] text-white hover:bg-emerald-600 transition-colors shadow-md shadow-emerald-500/20"
+        className="flex items-center gap-2 px-6 py-2.5 rounded-xl font-semibold md:font-bold text-sm bg-[#0fa958] text-white hover:bg-emerald-600 transition-colors shadow-md shadow-emerald-500/20"
       >
         {currentStep === totalSteps ? "Complete Submission" : "Next Step"}
         {currentStep !== totalSteps && <ArrowRight className="w-4 h-4" />}

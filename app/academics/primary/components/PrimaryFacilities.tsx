@@ -49,7 +49,7 @@ export default function PrimaryFacilities() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="text-[10px] md:text-xs font-black text-slate-800 uppercase tracking-[0.25em] text-center mb-3 select-none"
+          className="text-[10px] md:text-xs font-semibold md:font-black text-slate-800 uppercase tracking-[0.25em] text-center mb-3 select-none"
         >
           CHOOSE GREEN VIEW?
         </motion.span>
@@ -64,7 +64,7 @@ export default function PrimaryFacilities() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, ease: "easeOut" }}
-            className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight text-center flex-1"
+            className="text-3xl md:text-4xl font-semibold md:font-extrabold text-slate-900 tracking-tight text-center flex-1"
           >
             FACILITIES
           </motion.h2>
@@ -72,7 +72,7 @@ export default function PrimaryFacilities() {
           <motion.div whileHover={{ scale: 1.05 }}>
             <Link
               href="#facilities"
-              className="flex items-center gap-1 font-bold text-slate-900 hover:text-emerald-700 text-sm md:text-xl transition-colors"
+              className="flex items-center gap-1 font-semibold md:font-bold text-slate-900 hover:text-emerald-700 text-sm md:text-xl transition-colors"
             >
               See All
               <span className="text-sm">▸</span>
@@ -107,7 +107,7 @@ export default function PrimaryFacilities() {
 
               {/* Text Container */}
               <div className="py-5 px-4 text-center select-none bg-white">
-                <span className="text-slate-900 font-extrabold text-sm md:text-base tracking-wide block">
+                <span className="text-slate-900 font-semibold md:font-extrabold text-sm md:text-base tracking-wide block">
                   {card.title}
                 </span>
               </div>

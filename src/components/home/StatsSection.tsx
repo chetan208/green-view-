@@ -42,10 +42,10 @@ export default function StatsSection() {
             whileHover={{ scale: 1.03 }}
             className="flex flex-col items-center justify-center py-3 px-4 border-white/20 md:border-r last:border-r-0 max-md:border-b max-md:[&:nth-child(even)]:border-r-0 max-md:[&:nth-child(odd)]:border-r max-md:[&:nth-child(3)]:border-b-0 max-md:[&:nth-child(4)]:border-b-0"
           >
-            <span className="text-2xl md:text-3xl lg:text-4xl font-black text-white tracking-tight mb-1">
+            <span className="text-2xl md:text-3xl lg:text-4xl font-semibold md:font-black text-white tracking-tight mb-1">
               {stat.value}
             </span>
-            <span className="text-[10px] md:text-xs font-bold text-emerald-50 uppercase tracking-widest">
+            <span className="text-[10px] md:text-xs font-semibold md:font-bold text-emerald-50 uppercase tracking-widest">
               {stat.label}
             </span>
           </motion.div>

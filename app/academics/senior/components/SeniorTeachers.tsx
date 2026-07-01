@@ -56,7 +56,7 @@ export default function SeniorTeachers() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}
         transition={{ duration: 0.5 }}
-        className="text-3xl md:text-4xl font-bold text-center text-slate-900 mb-12"
+        className="text-3xl md:text-4xl font-semibold md:font-bold text-center text-slate-900 mb-12"
       >
         Senior Secondary Faculty
       </motion.h2>
@@ -74,12 +74,12 @@ export default function SeniorTeachers() {
             <div className="w-40 h-40 sm:w-32 sm:h-32 md:w-40 md:h-40 mb-4 overflow-hidden rounded-2xl border-[4px] border-slate-50 group-hover:border-emerald-50 transition-colors duration-300">
               <img src={teacher.image} alt={teacher.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
             </div>
-            <h3 className="text-lg font-extrabold text-slate-900 mb-2">{teacher.name}</h3>
+            <h3 className="text-lg font-semibold md:font-extrabold text-slate-900 mb-2">{teacher.name}</h3>
             <div className="flex flex-wrap justify-center items-center gap-1.5 mb-3">
-              <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full">{teacher.role}</span>
-              <span className="text-[10px] font-bold text-slate-600 bg-slate-100 px-2.5 py-0.5 rounded-full">{teacher.experience}</span>
+              <span className="text-[10px] font-semibold md:font-bold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full">{teacher.role}</span>
+              <span className="text-[10px] font-semibold md:font-bold text-slate-600 bg-slate-100 px-2.5 py-0.5 rounded-full">{teacher.experience}</span>
             </div>
-            <p className="text-xs font-semibold text-slate-500">
+            <p className="text-xs font-normal md:font-semibold text-slate-500">
               Subjects: <span className="text-slate-700">{teacher.subjects}</span>
             </p>
           </motion.div>

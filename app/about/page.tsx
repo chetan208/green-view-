@@ -17,7 +17,7 @@ export default function AboutPage() {
           <div className="text-sm font-medium text-slate-500">
             <Link href="/" className="text-[#0fa958] hover:underline">Home</Link> / <span>About</span>
           </div>
-          <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight" style={{ fontFamily: "Georgia, serif" }}>
+          <h1 className="text-3xl md:text-4xl font-semibold md:font-extrabold text-slate-900 tracking-tight" style={{ fontFamily: "Georgia, serif" }}>
             About <span className="text-[#147a42]">Us</span>
           </h1>
           <p className="text-slate-600 font-medium text-sm md:text-base">
@@ -53,7 +53,7 @@ export default function AboutPage() {
               transition={{ duration: 0.6, delay: 0.1 }}
               className="w-full bg-[#10a856] text-white py-3 md:py-4 rounded-2xl text-center shadow-lg shadow-emerald-600/20 hover:bg-[#0e964d] transition-colors"
             >
-              <span className="font-bold tracking-wide text-sm md:text-base lg:text-lg">
+              <span className="font-semibold md:font-bold tracking-wide text-sm md:text-base lg:text-lg">
                 UDISE CODE - 02021601708
               </span>
             </motion.div>
@@ -66,11 +66,11 @@ export default function AboutPage() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="flex flex-col gap-6 pt-2 lg:pt-8"
           >
-            <span className="text-[#10a856] font-bold text-xs md:text-sm uppercase tracking-[0.2em]">
+            <span className="text-[#10a856] font-semibold md:font-bold text-xs md:text-sm uppercase tracking-[0.2em]">
               INSPIRING EXCELLENCE SINCE 1986
             </span>
             
-            <h2 className="text-2xl md:text-3xl font-bold text-slate-900 leading-[1.3] tracking-tight">
+            <h2 className="text-2xl md:text-3xl font-semibold md:font-bold text-slate-900 leading-[1.3] tracking-tight">
               A school committed to academic excellence, discipline, values, and overall student development.
             </h2>
             

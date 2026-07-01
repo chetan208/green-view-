@@ -54,7 +54,7 @@ export default function TimelineSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.5 }}
             transition={{ duration: 0.5 }}
-            className="text-[#10a856] font-bold text-xs md:text-sm uppercase tracking-[0.2em] mb-4"
+            className="text-[#10a856] font-semibold md:font-bold text-xs md:text-sm uppercase tracking-[0.2em] mb-4"
           >
             OUR JOURNEY
           </motion.span>
@@ -63,7 +63,7 @@ export default function TimelineSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.5 }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight"
+            className="text-3xl md:text-4xl font-semibold md:font-extrabold text-slate-900 tracking-tight"
           >
             MILESTONES IN OUR <span className="text-[#10a856]">HISTORY</span>
           </motion.h2>
@@ -106,7 +106,7 @@ export default function TimelineSection() {
                         transition={{ duration: 0.4 }}
                         className="flex items-center justify-end h-full"
                       >
-                        <h3 className="text-xl lg:text-2xl font-bold text-[#10a856] uppercase tracking-wider">{item.title}</h3>
+                        <h3 className="text-xl lg:text-2xl font-semibold md:font-bold text-[#10a856] uppercase tracking-wider">{item.title}</h3>
                       </motion.div>
                     ) : (
                       <motion.div 
@@ -116,7 +116,7 @@ export default function TimelineSection() {
                         transition={{ duration: 0.4 }}
                         className="bg-white p-5 lg:p-6 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 w-full max-w-lg"
                       >
-                        <div className="font-extrabold text-2xl text-slate-900 mb-2">{item.year}</div>
+                        <div className="font-semibold md:font-extrabold text-2xl text-slate-900 mb-2">{item.year}</div>
                         <p className="text-slate-600 font-medium text-sm lg:text-base leading-relaxed">
                           {item.description}
                         </p>
@@ -134,7 +134,7 @@ export default function TimelineSection() {
                         transition={{ duration: 0.4 }}
                         className="bg-white p-5 lg:p-6 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 w-full max-w-lg"
                       >
-                        <div className="font-extrabold text-2xl text-slate-900 mb-2">{item.year}</div>
+                        <div className="font-semibold md:font-extrabold text-2xl text-slate-900 mb-2">{item.year}</div>
                         <p className="text-slate-600 font-medium text-sm lg:text-base leading-relaxed">
                           {item.description}
                         </p>
@@ -147,7 +147,7 @@ export default function TimelineSection() {
                         transition={{ duration: 0.4 }}
                         className="flex items-center justify-start h-full"
                       >
-                        <h3 className="text-xl lg:text-2xl font-bold text-[#10a856] uppercase tracking-wider">{item.title}</h3>
+                        <h3 className="text-xl lg:text-2xl font-semibold md:font-bold text-[#10a856] uppercase tracking-wider">{item.title}</h3>
                       </motion.div>
                     )}
                   </div>
@@ -162,7 +162,7 @@ export default function TimelineSection() {
                       transition={{ duration: 0.4 }}
                       className="mb-2 mt-4"
                     >
-                      <h3 className="text-lg font-bold text-[#10a856] uppercase tracking-wider">{item.title}</h3>
+                      <h3 className="text-lg font-semibold md:font-bold text-[#10a856] uppercase tracking-wider">{item.title}</h3>
                     </motion.div>
                     <motion.div 
                       initial={{ opacity: 0.3, y: 15 }}
@@ -171,7 +171,7 @@ export default function TimelineSection() {
                       transition={{ duration: 0.4 }}
                       className="bg-white p-5 rounded-2xl shadow-[0_4px_20px_rgb(0,0,0,0.04)] border border-slate-100 w-full"
                     >
-                      <div className="font-extrabold text-xl text-slate-900 mb-2">{item.year}</div>
+                      <div className="font-semibold md:font-extrabold text-xl text-slate-900 mb-2">{item.year}</div>
                       <p className="text-slate-600 font-medium text-sm leading-relaxed">
                         {item.description}
                       </p>

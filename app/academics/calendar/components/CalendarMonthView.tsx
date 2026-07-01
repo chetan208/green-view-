@@ -129,7 +129,7 @@ export default function CalendarMonthView() {
             >
               <ChevronLeft className="w-5 h-5 stroke-[2.5]" />
             </motion.button>
-            <h2 className="text-xl md:text-2xl font-black text-slate-800 tracking-tight flex-1 text-center flex items-center justify-center gap-2">
+            <h2 className="text-xl md:text-2xl font-semibold md:font-black text-slate-800 tracking-tight flex-1 text-center flex items-center justify-center gap-2">
               <span>{monthName}</span>
               <span className="text-brand-green">{year}</span>
             </h2>
@@ -143,7 +143,7 @@ export default function CalendarMonthView() {
             </motion.button>
           </div>
 
-          <div className="grid grid-cols-7 gap-y-4 text-center text-xs md:text-sm font-bold text-slate-400 mb-6 select-none">
+          <div className="grid grid-cols-7 gap-y-4 text-center text-xs md:text-sm font-semibold md:font-bold text-slate-400 mb-6 select-none">
             <span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span>
           </div>
 
@@ -170,7 +170,7 @@ export default function CalendarMonthView() {
                       onClick={() => setSelectedDay(dayNum)}
                       whileHover={{ scale: 1.08 }}
                       whileTap={{ scale: 0.92 }}
-                      className={`w-10 h-10 md:w-11 md:h-11 flex items-center justify-center font-bold text-sm rounded-full transition-colors select-none ${
+                      className={`w-10 h-10 md:w-11 md:h-11 flex items-center justify-center font-semibold md:font-bold text-sm rounded-full transition-colors select-none ${
                         isSelected
                           ? "bg-brand-green text-white shadow-md shadow-emerald-500/20"
                           : hasEvent
@@ -191,7 +191,7 @@ export default function CalendarMonthView() {
           
           <div className="flex items-center gap-2 mt-4 md:mt-6 border-b border-slate-100 pb-3">
             <span className="w-2 h-6 bg-brand-green rounded-full inline-block"></span>
-            <h3 className="font-extrabold text-slate-800 text-sm md:text-base tracking-tight uppercase">Monthly Events</h3>
+            <h3 className="font-semibold md:font-extrabold text-slate-800 text-sm md:text-base tracking-tight uppercase">Monthly Events</h3>
           </div>
 
           <div className="relative overflow-hidden flex-1 mt-6">
@@ -216,13 +216,13 @@ export default function CalendarMonthView() {
                           isEventSelected ? "bg-white border-emerald-100 shadow-sm" : "bg-transparent border-transparent hover:bg-white hover:border-slate-100"
                         }`}
                       >
-                        <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 transition-colors font-bold text-sm ${
+                        <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 transition-colors font-semibold md:font-bold text-sm ${
                           isEventSelected ? "bg-brand-green text-white" : "bg-slate-100 text-slate-500 group-hover:bg-emerald-50 group-hover:text-brand-green"
                         }`}>
                           {event.day}
                         </div>
                         <div className="flex flex-col justify-center">
-                          <h4 className={`text-xs md:text-sm font-extrabold transition-colors leading-snug ${
+                          <h4 className={`text-xs md:text-sm font-semibold md:font-extrabold transition-colors leading-snug ${
                             isEventSelected ? "text-slate-900" : "text-slate-700 group-hover:text-brand-green"
                           }`}>
                             {event.title}

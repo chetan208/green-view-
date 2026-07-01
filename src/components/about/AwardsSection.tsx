@@ -43,10 +43,10 @@ export default function AwardsSection() {
         
         {/* Header */}
         <div className="flex flex-col items-center text-center gap-4">
-          <span className="text-[#0fa958] font-bold text-[10px] md:text-xs uppercase tracking-[0.25em]">
+          <span className="text-[#0fa958] font-semibold md:font-bold text-[10px] md:text-xs uppercase tracking-[0.25em]">
             RECOGNITION
           </span>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold md:font-extrabold text-slate-900 tracking-tight leading-tight">
             Awards & <span className="text-[#0fa958]">Achievements</span>
           </h2>
           <p className="text-slate-500 font-medium max-w-2xl mt-2 text-sm md:text-base leading-relaxed">
@@ -67,7 +67,7 @@ export default function AwardsSection() {
                   <Icon className="w-5 h-5 md:w-6 md:h-6 stroke-[1.5]" />
                 </div>
                 <div className="flex flex-col gap-2">
-                  <h4 className="text-slate-900 font-bold text-sm md:text-base leading-snug">
+                  <h4 className="text-slate-900 font-semibold md:font-bold text-sm md:text-base leading-snug">
                     {award.title}
                   </h4>
                   <p className="text-slate-500 text-xs md:text-sm font-medium leading-relaxed">

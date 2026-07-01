@@ -100,17 +100,17 @@ export function Navbar() {
             />
           </div>
           <div className="flex flex-col">
-            <span className="font-poppins font-bold text-lg md:text-xl text-zinc-900 leading-tight">
+            <span className="font-poppins font-semibold md:font-bold text-lg md:text-xl text-zinc-900 leading-tight">
               Green view
             </span>
-            <span className="font-sans font-bold text-[9.6px] text-[#0B9E50] tracking-[0.1em] uppercase leading-none">
+            <span className="font-sans font-semibold md:font-bold text-[9.6px] text-[#0B9E50] tracking-[0.1em] uppercase leading-none">
               A Senior Secondary School
             </span>
           </div>
         </a>
 
         {/* Center: Desktop Links */}
-        <div className="hidden lg:flex items-center gap-6 font-sans font-bold text-[11.5px] text-[#374151] tracking-[0.1em] uppercase">
+        <div className="hidden lg:flex items-center gap-6 font-sans font-semibold md:font-bold text-[11.5px] text-[#374151] tracking-[0.1em] uppercase">
           <a href="#" className="text-[#0B9E50] transition-colors">Home</a>
           
           <div className="relative group cursor-pointer py-2">
@@ -140,7 +140,7 @@ export function Navbar() {
               className="w-[38px] h-[38px] bg-zinc-100 hover:bg-zinc-200 text-zinc-600 rounded-full flex items-center justify-center transition-colors relative"
             >
               <Bell className="w-[18px] h-[18px]" />
-              <span className="absolute -top-1 -right-1 w-[18px] h-[18px] bg-[#0B9E50] border-2 border-white rounded-full flex items-center justify-center text-[9.6px] font-poppins font-extrabold text-white">
+              <span className="absolute -top-1 -right-1 w-[18px] h-[18px] bg-[#0B9E50] border-2 border-white rounded-full flex items-center justify-center text-[9.6px] font-poppins font-semibold md:font-extrabold text-white">
                 1
               </span>
             </button>
@@ -149,32 +149,32 @@ export function Navbar() {
             {showNotifications && (
               <div className="absolute right-0 mt-3 w-[307px] bg-white/95 backdrop-blur-md shadow-[0px_20px_60px_-8px_rgba(0,0,0,0.18),0px_0px_0px_1px_rgba(0,0,0,0.06)] rounded-[18px] py-4 border border-zinc-100 animate-in fade-in slide-in-from-top-2 duration-200">
                 <div className="flex justify-between items-center px-4 pb-3 border-b border-zinc-100">
-                  <div className="flex items-center gap-1.5 font-poppins font-bold text-[13px] text-zinc-950">
+                  <div className="flex items-center gap-1.5 font-poppins font-semibold md:font-bold text-[13px] text-zinc-950">
                     <Bell className="w-4 h-4 text-[#0B9E50]" />
                     <span>Notifications</span>
                   </div>
-                  <button className="text-[10.5px] font-sans font-semibold text-[#0B9E50] hover:underline">
+                  <button className="text-[10.5px] font-sans font-normal md:font-semibold text-[#0B9E50] hover:underline">
                     Mark all read
                   </button>
                 </div>
                 <div className="px-3 py-4 bg-gradient-to-r from-red-50/50 via-orange-50/50 to-red-50/50 border-l-[3px] border-[#0B9E50] flex gap-3 my-2">
                   <div className="w-[34px] h-[34px] bg-red-100 rounded-[10px] flex items-center justify-center shrink-0">
-                    <span className="text-[#0B9E50] font-sans font-bold text-lg">📢</span>
+                    <span className="text-[#0B9E50] font-sans font-semibold md:font-bold text-lg">📢</span>
                   </div>
                   <div className="flex flex-col gap-1.5">
-                    <span className="font-poppins font-bold text-[12.3px] text-zinc-900 leading-tight">
+                    <span className="font-poppins font-semibold md:font-bold text-[12.3px] text-zinc-900 leading-tight">
                       Admissions Open 2026-27!
                     </span>
                     <span className="font-sans font-normal text-xs text-zinc-600 leading-normal">
                       Admissions open for LKG to Class 9 and Class 11 in Kangra.
                     </span>
-                    <a href="#" className="w-fit bg-red-150 px-2.5 py-1 rounded-full font-sans font-bold text-[11px] text-[#0B9E50] hover:bg-red-200 transition-colors mt-1">
+                    <a href="#" className="w-fit bg-red-150 px-2.5 py-1 rounded-full font-sans font-semibold md:font-bold text-[11px] text-[#0B9E50] hover:bg-red-200 transition-colors mt-1">
                       Apply Now
                     </a>
                   </div>
                 </div>
                 <div className="px-4 pt-2 border-t border-zinc-100 text-center">
-                  <a href="#" className="font-sans font-semibold text-[11.5px] text-[#0B9E50] hover:underline block">
+                  <a href="#" className="font-sans font-normal md:font-semibold text-[11.5px] text-[#0B9E50] hover:underline block">
                     View all announcements →
                   </a>
                 </div>
@@ -185,7 +185,7 @@ export function Navbar() {
           {/* Desktop Login Button */}
           <a 
             href="#" 
-            className="hidden sm:inline-flex h-[38px] px-6 items-center justify-center bg-gradient-to-r from-[#0B9E50] to-[#36A57E] hover:from-[#098744] hover:to-[#2e936e] text-white font-poppins font-bold text-[12px] tracking-[0.04em] uppercase rounded-full shadow-[0px_8px_20px_0px_rgba(11,158,80,0.25)] transition-all duration-300"
+            className="hidden sm:inline-flex h-[38px] px-6 items-center justify-center bg-gradient-to-r from-[#0B9E50] to-[#36A57E] hover:from-[#098744] hover:to-[#2e936e] text-white font-poppins font-semibold md:font-bold text-[12px] tracking-[0.04em] uppercase rounded-full shadow-[0px_8px_20px_0px_rgba(11,158,80,0.25)] transition-all duration-300"
           >
             Login
           </a>
@@ -202,7 +202,7 @@ export function Navbar() {
 
       {/* Mobile Menu Dropdown */}
       {isOpen && (
-        <div className="absolute top-24 left-4 right-4 bg-white/95 backdrop-blur-md border border-zinc-100 shadow-2xl rounded-3xl p-6 flex flex-col gap-4 font-sans font-bold text-[13px] text-zinc-800 uppercase tracking-wider animate-in fade-in slide-in-from-top-5 duration-200 lg:hidden">
+        <div className="absolute top-24 left-4 right-4 bg-white/95 backdrop-blur-md border border-zinc-100 shadow-2xl rounded-3xl p-6 flex flex-col gap-4 font-sans font-semibold md:font-bold text-[13px] text-zinc-800 uppercase tracking-wider animate-in fade-in slide-in-from-top-5 duration-200 lg:hidden">
           <a href="#" onClick={() => setIsOpen(false)} className="text-[#0B9E50] pb-2 border-b border-zinc-50">Home</a>
           <a href="#" onClick={() => setIsOpen(false)} className="hover:text-[#0B9E50] pb-2 border-b border-zinc-50">About Us</a>
           <a href="#" onClick={() => setIsOpen(false)} className="hover:text-[#0B9E50] pb-2 border-b border-zinc-50">Academics</a>
@@ -212,7 +212,7 @@ export function Navbar() {
           <a 
             href="#" 
             onClick={() => setIsOpen(false)} 
-            className="mt-2 w-full h-11 bg-gradient-to-r from-[#0B9E50] to-[#36A57E] hover:from-[#098744] hover:to-[#2e936e] text-white font-poppins font-bold text-[12px] tracking-[0.04em] uppercase rounded-full flex items-center justify-center shadow-lg shadow-[#0B9E50]/20"
+            className="mt-2 w-full h-11 bg-gradient-to-r from-[#0B9E50] to-[#36A57E] hover:from-[#098744] hover:to-[#2e936e] text-white font-poppins font-semibold md:font-bold text-[12px] tracking-[0.04em] uppercase rounded-full flex items-center justify-center shadow-lg shadow-[#0B9E50]/20"
           >
             Login
           </a>
@@ -257,13 +257,13 @@ export function Hero() {
           
           {/* Tagline */}
           <div>
-            <span className="font-sans font-bold text-[10px] md:text-xs text-[#0B9E50] tracking-[0.4em] uppercase">
+            <span className="font-sans font-semibold md:font-bold text-[10px] md:text-xs text-[#0B9E50] tracking-[0.4em] uppercase">
               Inspiring Excellence Since 2001
             </span>
           </div>
 
           {/* Headline */}
-          <h1 className="font-poppins font-extrabold text-[44px] md:text-5xl lg:text-[72px] text-zinc-900 leading-[1.1] tracking-tight">
+          <h1 className="font-poppins font-semibold md:font-extrabold text-[44px] md:text-5xl lg:text-[72px] text-zinc-900 leading-[1.1] tracking-tight">
             <span className="text-[#0B9E50]">Green view</span> <br className="hidden sm:inline" />
             Sr. Sec. School
           </h1>
@@ -277,7 +277,7 @@ export function Hero() {
           <div className="flex flex-wrap items-center gap-4 mt-2">
             <a 
               href="#" 
-              className="inline-flex h-[52px] px-8 items-center justify-center gap-2 bg-[#0B9E50] hover:bg-[#098744] text-white font-sans font-semibold text-[14px] rounded-full shadow-[0px_8px_20px_0px_rgba(11,158,80,0.25)] transition-all duration-300 group"
+              className="inline-flex h-[52px] px-8 items-center justify-center gap-2 bg-[#0B9E50] hover:bg-[#098744] text-white font-sans font-normal md:font-semibold text-[14px] rounded-full shadow-[0px_8px_20px_0px_rgba(11,158,80,0.25)] transition-all duration-300 group"
             >
               Admission Enquiry
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -285,7 +285,7 @@ export function Hero() {
             
             <a 
               href="#" 
-              className="inline-flex h-[52px] px-8 items-center justify-center bg-white hover:bg-zinc-50 text-[#111827] font-sans font-semibold text-[14px] border border-zinc-200 rounded-full shadow-sm transition-colors"
+              className="inline-flex h-[52px] px-8 items-center justify-center bg-white hover:bg-zinc-50 text-[#111827] font-sans font-normal md:font-semibold text-[14px] border border-zinc-200 rounded-full shadow-sm transition-colors"
             >
               About Us
             </a>
@@ -295,19 +295,19 @@ export function Hero() {
           <div className="flex items-center gap-4 mt-4 flex-wrap sm:flex-nowrap">
             {/* Avatars */}
             <div className="flex items-center -space-x-2.5">
-              <div className="w-[34px] h-[34px] rounded-full bg-gradient-to-br from-amber-500 to-red-500 border-2 border-white flex items-center justify-center text-[11.2px] font-poppins font-bold text-white shadow-md">
+              <div className="w-[34px] h-[34px] rounded-full bg-gradient-to-br from-amber-500 to-red-500 border-2 border-white flex items-center justify-center text-[11.2px] font-poppins font-semibold md:font-bold text-white shadow-md">
                 A
               </div>
-              <div className="w-[34px] h-[34px] rounded-full bg-gradient-to-br from-blue-500 to-indigo-700 border-2 border-white flex items-center justify-center text-[11.2px] font-poppins font-bold text-white shadow-md">
+              <div className="w-[34px] h-[34px] rounded-full bg-gradient-to-br from-blue-500 to-indigo-700 border-2 border-white flex items-center justify-center text-[11.2px] font-poppins font-semibold md:font-bold text-white shadow-md">
                 R
               </div>
-              <div className="w-[34px] h-[34px] rounded-full bg-gradient-to-br from-emerald-500 to-teal-700 border-2 border-white flex items-center justify-center text-[11.2px] font-poppins font-bold text-white shadow-md">
+              <div className="w-[34px] h-[34px] rounded-full bg-gradient-to-br from-emerald-500 to-teal-700 border-2 border-white flex items-center justify-center text-[11.2px] font-poppins font-semibold md:font-bold text-white shadow-md">
                 P
               </div>
-              <div className="w-[34px] h-[34px] rounded-full bg-gradient-to-br from-violet-500 to-purple-700 border-2 border-white flex items-center justify-center text-[11.2px] font-poppins font-bold text-white shadow-md">
+              <div className="w-[34px] h-[34px] rounded-full bg-gradient-to-br from-violet-500 to-purple-700 border-2 border-white flex items-center justify-center text-[11.2px] font-poppins font-semibold md:font-bold text-white shadow-md">
                 N
               </div>
-              <div className="w-[34px] h-[34px] rounded-full bg-gradient-to-br from-emerald-600 to-[#026135] border-2 border-white flex items-center justify-center text-[10px] font-poppins font-bold text-white shadow-md">
+              <div className="w-[34px] h-[34px] rounded-full bg-gradient-to-br from-emerald-600 to-[#026135] border-2 border-white flex items-center justify-center text-[10px] font-poppins font-semibold md:font-bold text-white shadow-md">
                 +5k
               </div>
             </div>
@@ -318,12 +318,12 @@ export function Hero() {
                 {[...Array(5)].map((_, i) => (
                   <Star key={i} className="w-3.5 h-3.5 fill-[#FBBF24] text-[#FBBF24]" />
                 ))}
-                <span className="font-poppins font-bold text-[13px] text-zinc-900 ml-1.5">
+                <span className="font-poppins font-semibold md:font-bold text-[13px] text-zinc-900 ml-1.5">
                   4.9
                 </span>
               </div>
               <span className="font-sans font-normal text-[11px] md:text-[12px] text-[#4B5563]">
-                Trusted by <strong className="font-bold text-zinc-900">5,000+ families</strong> across HP since 2001
+                Trusted by <strong className="font-semibold md:font-bold text-zinc-900">5,000+ families</strong> across HP since 2001
               </span>
             </div>
           </div>
@@ -343,10 +343,10 @@ export function Hero() {
 
           {/* Overlay Badge 1: Admissions Open Now */}
           <div className="absolute bottom-[-20px] left-[-10px] md:bottom-[-24px] md:left-[-20px] z-20 w-[95px] h-[95px] md:w-[120px] md:h-[120px] bg-[#0B9E50] rounded-full border-4 border-white flex flex-col justify-center items-center text-center text-white shadow-[0px_12px_32px_0px_rgba(11,158,80,0.25)] scale-90 sm:scale-100 animate-pulse duration-[3000ms]">
-            <span className="font-poppins font-bold text-[11px] md:text-[13px] tracking-wide uppercase leading-tight">
+            <span className="font-poppins font-semibold md:font-bold text-[11px] md:text-[13px] tracking-wide uppercase leading-tight">
               2026-27
             </span>
-            <span className="font-poppins font-bold text-[8px] md:text-[10px] tracking-wider uppercase leading-snug mt-1">
+            <span className="font-poppins font-semibold md:font-bold text-[8px] md:text-[10px] tracking-wider uppercase leading-snug mt-1">
               Admissions<br />Open Now
             </span>
           </div>
@@ -356,7 +356,7 @@ export function Hero() {
             <span className="font-sans font-medium text-[9px] md:text-[11px] text-[#64748B] leading-none">
               Board Results 2024-25
             </span>
-            <span className="font-poppins font-extrabold text-lg md:text-[22px] text-[#026135] leading-none mt-1">
+            <span className="font-poppins font-semibold md:font-extrabold text-lg md:text-[22px] text-[#026135] leading-none mt-1">
               94.2% avg
             </span>
             <span className="font-sans font-normal text-[9px] md:text-[11px] text-[#64748B] leading-none">
@@ -417,7 +417,7 @@ export function FeatureScroll() {
                 />
               </div>
               {/* Feature Title */}
-              <span className="font-poppins font-bold text-[12px] md:text-[13px] text-zinc-800 leading-tight">
+              <span className="font-poppins font-semibold md:font-bold text-[12px] md:text-[13px] text-zinc-800 leading-tight">
                 {feature.name}
               </span>
             </div>
@@ -449,12 +449,12 @@ export function CTA() {
       {/* Content Area */}
       <div className="max-w-[650px] mx-auto relative z-10 flex flex-col items-center gap-5">
         {/* Tagline */}
-        <span className="font-sans font-semibold text-xs md:text-[13.6px] text-white/60 tracking-[0.25em] uppercase">
+        <span className="font-sans font-normal md:font-semibold text-xs md:text-[13.6px] text-white/60 tracking-[0.25em] uppercase">
           Work Together
         </span>
         
         {/* Title */}
-        <h2 className="font-poppins font-semibold text-4xl md:text-5xl lg:text-[48px] text-white leading-[1.1] tracking-tight">
+        <h2 className="font-poppins font-normal md:font-semibold text-4xl md:text-5xl lg:text-[48px] text-white leading-[1.1] tracking-tight">
           Let&apos;s Secure Your <br className="sm:hidden" />
           <span className="text-[#50F49D]">Child&apos;s Future</span>
         </h2>
@@ -467,7 +467,7 @@ export function CTA() {
         {/* Action Button */}
         <a 
           href="#" 
-          className="inline-flex h-[50.8px] px-9 items-center justify-center gap-2 bg-[#0B9E50] hover:bg-[#098744] text-white font-sans font-semibold text-[14px] rounded-full shadow-[0px_8px_20px_0px_rgba(11,158,80,0.3)] transition-all duration-300 group mt-3"
+          className="inline-flex h-[50.8px] px-9 items-center justify-center gap-2 bg-[#0B9E50] hover:bg-[#098744] text-white font-sans font-normal md:font-semibold text-[14px] rounded-full shadow-[0px_8px_20px_0px_rgba(11,158,80,0.3)] transition-all duration-300 group mt-3"
         >
           Apply Now
           <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -500,10 +500,10 @@ export function Footer() {
                 />
               </div>
               <div className="flex flex-col">
-                <span className="font-poppins font-extrabold text-[16px] text-white leading-tight uppercase tracking-wider">
+                <span className="font-poppins font-semibold md:font-extrabold text-[16px] text-white leading-tight uppercase tracking-wider">
                   Green View
                 </span>
-                <span className="font-sans font-bold text-[11px] text-emerald-300 tracking-[0.14em] uppercase leading-none">
+                <span className="font-sans font-semibold md:font-bold text-[11px] text-emerald-300 tracking-[0.14em] uppercase leading-none">
                   Sr. Sec. School
                 </span>
               </div>
@@ -515,7 +515,7 @@ export function Footer() {
 
           {/* Col 2: Quick Links */}
           <div className="lg:col-span-2.5 flex flex-col gap-4">
-            <h4 className="font-sans font-extrabold text-[13px] md:text-sm uppercase tracking-wider text-emerald-300">
+            <h4 className="font-sans font-semibold md:font-extrabold text-[13px] md:text-sm uppercase tracking-wider text-emerald-300">
               Quick Links
             </h4>
             <div className="flex flex-col gap-2 font-sans font-normal text-xs md:text-sm text-zinc-300 hover:text-white">
@@ -528,7 +528,7 @@ export function Footer() {
 
           {/* Col 3: Important info */}
           <div className="lg:col-span-2.5 flex flex-col gap-4">
-            <h4 className="font-sans font-extrabold text-[13px] md:text-sm uppercase tracking-wider text-emerald-300">
+            <h4 className="font-sans font-semibold md:font-extrabold text-[13px] md:text-sm uppercase tracking-wider text-emerald-300">
               Important
             </h4>
             <div className="flex flex-col gap-2 font-sans font-normal text-xs md:text-sm text-zinc-300 hover:text-white">
@@ -541,11 +541,11 @@ export function Footer() {
 
           {/* Col 4: Contact details */}
           <div className="lg:col-span-3 flex flex-col gap-4">
-            <h4 className="font-sans font-extrabold text-[13px] md:text-sm uppercase tracking-wider text-emerald-300">
+            <h4 className="font-sans font-semibold md:font-extrabold text-[13px] md:text-sm uppercase tracking-wider text-emerald-300">
               Contact
             </h4>
             <div className="flex flex-col gap-2 font-sans font-normal text-xs md:text-sm text-zinc-300">
-              <p className="font-semibold text-white">Green View Sr. Sec. School</p>
+              <p className="font-normal md:font-semibold text-white">Green View Sr. Sec. School</p>
               <p>Plot 18, near Helipad, Dadh, Tambar,</p>
               <p>Kangra, HP - 176052</p>
               <p className="mt-1 text-emerald-400">+91 99XXXXXX80</p>
@@ -619,24 +619,24 @@ export function AboutUs() {
               className="object-cover"
             />
             {/* View More Badge */}
-            <div className="absolute bottom-6 left-1/2 -translate-x-1/2 bg-white/20 backdrop-blur-md text-white px-6 py-3 rounded-full shadow-lg font-sans font-semibold text-sm cursor-pointer hover:bg-white/30 transition-colors border border-white/30 whitespace-nowrap">
+            <div className="absolute bottom-6 left-1/2 -translate-x-1/2 bg-white/20 backdrop-blur-md text-white px-6 py-3 rounded-full shadow-lg font-sans font-normal md:font-semibold text-sm cursor-pointer hover:bg-white/30 transition-colors border border-white/30 whitespace-nowrap">
               View More
             </div>
           </div>
           {/* Floating Card */}
           <div className="absolute -bottom-8 -left-4 md:-left-8 bg-white/95 backdrop-blur shadow-lg rounded-xl p-3 md:p-4 border border-zinc-100 flex flex-col items-center">
-            <span className="font-sans text-[10px] text-zinc-500 uppercase tracking-widest font-semibold mb-1">Established</span>
-            <span className="font-poppins font-extrabold text-[#0B9E50] text-sm md:text-lg">2001 • Kangra</span>
+            <span className="font-sans text-[10px] text-zinc-500 uppercase tracking-widest font-normal md:font-semibold mb-1">Established</span>
+            <span className="font-poppins font-semibold md:font-extrabold text-[#0B9E50] text-sm md:text-lg">2001 • Kangra</span>
           </div>
         </div>
 
         {/* Right Content (Text) */}
         <div className="flex flex-col gap-6 text-left max-w-[615px]">
           <div>
-            <span className="font-sans font-bold text-xs text-[#898989] uppercase tracking-widest">
+            <span className="font-sans font-semibold md:font-bold text-xs text-[#898989] uppercase tracking-widest">
               Our Story
             </span>
-            <h2 className="font-poppins font-extrabold text-[38px] md:text-[44px] text-zinc-900 leading-[1.2] tracking-tight mt-2">
+            <h2 className="font-poppins font-semibold md:font-extrabold text-[38px] md:text-[44px] text-zinc-900 leading-[1.2] tracking-tight mt-2">
               Welcome to <span className="text-[#0B9E50]">Green View</span> <br className="hidden sm:block" />
               Sr. Sec School
             </h2>
@@ -660,25 +660,25 @@ export function AboutUs() {
           {/* Stats */}
           <div className="flex gap-0 bg-gradient-to-b from-white to-[#FBFAF7] shadow-[0px_18px_40px_-28px_rgba(17,24,39,0.25)] rounded-2xl border border-zinc-200/50 py-4 px-6 mt-4 divide-x divide-zinc-200/60 items-center justify-between">
             <div className="flex flex-col items-center justify-center flex-1 px-2">
-              <span className="font-poppins font-extrabold text-[28px] text-zinc-900">25+</span>
+              <span className="font-poppins font-semibold md:font-extrabold text-[28px] text-zinc-900">25+</span>
               <span className="font-sans text-[13px] text-zinc-500 mt-1 text-center font-medium">Years in education</span>
             </div>
             <div className="flex flex-col items-center justify-center flex-1 px-2">
-              <span className="font-poppins font-extrabold text-[28px] text-zinc-900">68</span>
+              <span className="font-poppins font-semibold md:font-extrabold text-[28px] text-zinc-900">68</span>
               <span className="font-sans text-[13px] text-zinc-500 mt-1 text-center font-medium">Qualified teachers</span>
             </div>
             <div className="flex flex-col items-center justify-center flex-1 px-2">
-              <span className="font-poppins font-extrabold text-[28px] text-zinc-900">1:25</span>
+              <span className="font-poppins font-semibold md:font-extrabold text-[28px] text-zinc-900">1:25</span>
               <span className="font-sans text-[13px] text-zinc-500 mt-1 text-center font-medium">Average class ratio</span>
             </div>
           </div>
 
           {/* Buttons */}
           <div className="flex items-center gap-4 mt-6">
-            <a href="#" className="inline-flex h-[44px] px-6 items-center justify-center bg-[#0B9E50] hover:bg-[#098744] text-white font-sans font-semibold text-[13px] rounded-full shadow-[0px_8px_20px_0px_rgba(11,158,80,0.25)] transition-all duration-300">
+            <a href="#" className="inline-flex h-[44px] px-6 items-center justify-center bg-[#0B9E50] hover:bg-[#098744] text-white font-sans font-normal md:font-semibold text-[13px] rounded-full shadow-[0px_8px_20px_0px_rgba(11,158,80,0.25)] transition-all duration-300">
               Talk to Admissions
             </a>
-            <a href="#" className="inline-flex h-[44px] px-6 items-center justify-center bg-white hover:bg-zinc-50 text-zinc-900 font-sans font-semibold text-[13px] border border-zinc-200 rounded-full shadow-sm transition-colors">
+            <a href="#" className="inline-flex h-[44px] px-6 items-center justify-center bg-white hover:bg-zinc-50 text-zinc-900 font-sans font-normal md:font-semibold text-[13px] border border-zinc-200 rounded-full shadow-sm transition-colors">
               See Academics
             </a>
           </div>
@@ -705,7 +705,7 @@ export function NoticeBoard() {
         
         {/* Left Side: Notice Board Title */}
         <div className="flex-shrink-0 flex flex-col text-left max-w-[400px]">
-          <h2 className="font-serif font-bold text-5xl md:text-[64px] text-zinc-900 uppercase leading-[1.1] tracking-wide">
+          <h2 className="font-serif font-semibold md:font-bold text-5xl md:text-[64px] text-zinc-900 uppercase leading-[1.1] tracking-wide">
             Official <br/>
             <span className="text-[#0B9E50]">Board</span> <br/>
             Notices
@@ -724,14 +724,14 @@ export function NoticeBoard() {
                 className="flex items-center gap-4 md:gap-6 px-6 py-4 rounded-[10px] bg-white shadow-sm border border-zinc-100 hover:shadow-md hover:border-zinc-200 transition-all group cursor-pointer"
               >
                 <div className="bg-[#0B9E50]/10 text-[#0B9E50] flex flex-col items-center justify-center rounded-[8px] w-[55px] h-[55px] shrink-0">
-                  <span className="font-sans font-bold text-[11px] leading-none mb-1">{notice.month}</span>
-                  <span className="font-poppins font-bold text-[20px] leading-none">{notice.day}</span>
+                  <span className="font-sans font-semibold md:font-bold text-[11px] leading-none mb-1">{notice.month}</span>
+                  <span className="font-poppins font-semibold md:font-bold text-[20px] leading-none">{notice.day}</span>
                 </div>
                 <p className="font-poppins font-medium text-[15px] text-zinc-800 flex-1 group-hover:text-[#0B9E50] transition-colors">
                   {notice.text}
                 </p>
                 {notice.isNew && (
-                  <span className="hidden sm:block bg-red-100 text-red-600 font-sans font-bold text-[10px] uppercase px-2 py-1 rounded">
+                  <span className="hidden sm:block bg-red-100 text-red-600 font-sans font-semibold md:font-bold text-[10px] uppercase px-2 py-1 rounded">
                     New
                   </span>
                 )}
@@ -743,7 +743,7 @@ export function NoticeBoard() {
           </div>
           
           <div className="flex justify-start mt-4 z-10 pl-2">
-            <a href="#" className="inline-flex h-[44px] px-6 items-center justify-center bg-[#0B9E50] hover:bg-[#098744] text-white font-sans font-semibold text-[13px] rounded-full shadow-[0px_8px_20px_0px_rgba(11,158,80,0.25)] transition-all duration-300">
+            <a href="#" className="inline-flex h-[44px] px-6 items-center justify-center bg-[#0B9E50] hover:bg-[#098744] text-white font-sans font-normal md:font-semibold text-[13px] rounded-full shadow-[0px_8px_20px_0px_rgba(11,158,80,0.25)] transition-all duration-300">
               View All Notices
             </a>
           </div>

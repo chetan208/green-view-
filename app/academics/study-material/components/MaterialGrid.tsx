@@ -150,12 +150,12 @@ export default function MaterialGrid() {
           >
             <ArrowLeft className="w-4 h-4" />
           </button>
-          <div className="text-xs md:text-sm font-bold text-slate-500 flex items-center gap-2">
+          <div className="text-xs md:text-sm font-semibold md:font-bold text-slate-500 flex items-center gap-2">
             <span>Classes</span>
             {selectedClass && (
               <>
                 <span className="text-slate-300">/</span>
-                <span className={`${!selectedSubject ? "text-slate-800 font-extrabold" : "text-brand-green cursor-pointer hover:underline"}`} onClick={() => selectedSubject && handleBack()}>
+                <span className={`${!selectedSubject ? "text-slate-800 font-semibold md:font-extrabold" : "text-brand-green cursor-pointer hover:underline"}`} onClick={() => selectedSubject && handleBack()}>
                   {selectedClass.name}
                 </span>
               </>
@@ -163,7 +163,7 @@ export default function MaterialGrid() {
             {selectedSubject && (
               <>
                 <span className="text-slate-300">/</span>
-                <span className="text-slate-800 font-extrabold">{selectedSubject.name}</span>
+                <span className="text-slate-800 font-semibold md:font-extrabold">{selectedSubject.name}</span>
               </>
             )}
           </div>
@@ -181,8 +181,8 @@ export default function MaterialGrid() {
             transition={{ duration: 0.3 }}
             className="flex flex-col gap-6"
           >
-            <h2 className="text-xl font-extrabold text-slate-800 tracking-tight">Select Class:</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <h2 className="text-xl font-semibold md:font-extrabold text-slate-800 tracking-tight">Select Class:</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
               {studyData.map((cls, idx) => {
                 const IconComponent = cls.icon;
                 return (
@@ -194,8 +194,8 @@ export default function MaterialGrid() {
                     <div className="w-14 h-14 rounded-2xl bg-emerald-50 text-brand-green flex items-center justify-center mb-5 group-hover:scale-105 transition-transform duration-300">
                       <IconComponent className="w-7 h-7 stroke-[1.5]" />
                     </div>
-                    <h3 className="text-lg font-extrabold text-slate-800 mb-2 group-hover:text-brand-green transition-colors">{cls.name}</h3>
-                    <p className="text-slate-500 text-xs md:text-sm font-semibold leading-relaxed">{cls.desc}</p>
+                    <h3 className="text-lg font-semibold md:font-extrabold text-slate-800 mb-2 group-hover:text-brand-green transition-colors">{cls.name}</h3>
+                    <p className="text-slate-500 text-xs md:text-sm font-normal md:font-semibold leading-relaxed">{cls.desc}</p>
                   </button>
                 );
               })}
@@ -213,7 +213,7 @@ export default function MaterialGrid() {
             transition={{ duration: 0.3 }}
             className="flex flex-col gap-6"
           >
-            <h2 className="text-xl font-extrabold text-slate-800 tracking-tight">
+            <h2 className="text-xl font-semibold md:font-extrabold text-slate-800 tracking-tight">
               Select Subject for <span className="text-brand-green">{selectedClass.name}</span>:
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
@@ -227,8 +227,8 @@ export default function MaterialGrid() {
                     <BookMarked className="w-5 h-5 stroke-[1.5]" />
                   </div>
                   <div className="flex flex-col">
-                    <span className="text-base font-extrabold text-slate-800 group-hover:text-brand-green transition-colors">{sub.name}</span>
-                    <span className="text-[10px] text-slate-400 font-bold uppercase mt-1 tracking-wider">
+                    <span className="text-base font-semibold md:font-extrabold text-slate-800 group-hover:text-brand-green transition-colors">{sub.name}</span>
+                    <span className="text-[10px] text-slate-400 font-semibold md:font-bold uppercase mt-1 tracking-wider">
                       {sub.chapters.length} Chapters Available
                     </span>
                   </div>
@@ -254,7 +254,7 @@ export default function MaterialGrid() {
                 {/* Notes Tab */}
                 <button
                   onClick={() => { setActiveTab("notes"); setActiveVideoId(null); }}
-                  className={`flex items-center gap-1.5 px-4 py-2.5 md:px-6 md:py-3 rounded-xl font-bold text-[10px] md:text-sm transition-all cursor-pointer whitespace-nowrap ${
+                  className={`flex items-center gap-1.5 px-4 py-2.5 md:px-6 md:py-3 rounded-xl font-semibold md:font-bold text-[10px] md:text-sm transition-all cursor-pointer whitespace-nowrap ${
                     activeTab === "notes"
                       ? "bg-white text-brand-green shadow-sm"
                       : "text-slate-600 hover:text-slate-800"
@@ -266,7 +266,7 @@ export default function MaterialGrid() {
                 {/* Video Lectures Tab */}
                 <button
                   onClick={() => { setActiveTab("lectures"); setActiveVideoId(null); }}
-                  className={`flex items-center gap-1.5 px-4 py-2.5 md:px-6 md:py-3 rounded-xl font-bold text-[10px] md:text-sm transition-all cursor-pointer whitespace-nowrap ${
+                  className={`flex items-center gap-1.5 px-4 py-2.5 md:px-6 md:py-3 rounded-xl font-semibold md:font-bold text-[10px] md:text-sm transition-all cursor-pointer whitespace-nowrap ${
                     activeTab === "lectures"
                       ? "bg-white text-brand-green shadow-sm"
                       : "text-slate-600 hover:text-slate-800"
@@ -278,7 +278,7 @@ export default function MaterialGrid() {
                 {/* Question Papers Tab */}
                 <button
                   onClick={() => { setActiveTab("papers"); setActiveVideoId(null); }}
-                  className={`flex items-center gap-1.5 px-4 py-2.5 md:px-6 md:py-3 rounded-xl font-bold text-[10px] md:text-sm transition-all cursor-pointer whitespace-nowrap ${
+                  className={`flex items-center gap-1.5 px-4 py-2.5 md:px-6 md:py-3 rounded-xl font-semibold md:font-bold text-[10px] md:text-sm transition-all cursor-pointer whitespace-nowrap ${
                     activeTab === "papers"
                       ? "bg-white text-brand-green shadow-sm"
                       : "text-slate-600 hover:text-slate-800"
@@ -291,7 +291,7 @@ export default function MaterialGrid() {
 
             {/* Hub Material Content Grid */}
             <div className="flex flex-col gap-4">
-              <h2 className="text-lg font-extrabold text-slate-800 tracking-tight flex items-center gap-2 capitalize">
+              <h2 className="text-lg font-semibold md:font-extrabold text-slate-800 tracking-tight flex items-center gap-2 capitalize">
                 {activeTab === "notes" && "Chapter Notes"}
                 {activeTab === "lectures" && "Video Lectures"}
                 {activeTab === "papers" && "Chapter Practice Papers"}
@@ -307,10 +307,10 @@ export default function MaterialGrid() {
                       className="bg-white border border-slate-100 rounded-2xl p-5 md:p-6 shadow-[0_2px_10px_-3px_rgba(0,0,0,0.01)] hover:shadow-[0_8px_30px_-4px_rgba(0,0,0,0.05)] transition-all duration-300 flex flex-col justify-between gap-4"
                     >
                       <div className="flex flex-col gap-1">
-                        <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">
+                        <span className="text-[10px] text-slate-400 font-semibold md:font-bold uppercase tracking-wider">
                           {selectedSubject.name} — Chapter {chapter.id % 10}
                         </span>
-                        <h3 className="font-extrabold text-slate-800 text-sm md:text-base leading-snug">
+                        <h3 className="font-semibold md:font-extrabold text-slate-800 text-sm md:text-base leading-snug">
                           {chapter.name}
                         </h3>
                       </div>
@@ -318,12 +318,12 @@ export default function MaterialGrid() {
                       {/* Dynamic Content based on Active Tab */}
                       {activeTab === "notes" && (
                         <div className="flex items-center justify-between border-t border-slate-50 pt-4 mt-1">
-                          <span className="text-[10px] font-bold text-slate-400 uppercase">
+                          <span className="text-[10px] font-semibold md:font-bold text-slate-400 uppercase">
                             File Size: {chapter.materials.notesSize}
                           </span>
                           <button
                             onClick={() => alert(`Downloading Notes: ${chapter.name}`)}
-                            className="inline-flex items-center gap-1.5 bg-brand-green/10 hover:bg-brand-green text-brand-green hover:text-white px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer"
+                            className="inline-flex items-center gap-1.5 bg-brand-green/10 hover:bg-brand-green text-brand-green hover:text-white px-4 py-2 rounded-xl text-xs font-semibold md:font-bold transition-all cursor-pointer"
                           >
                             <Download className="w-3.5 h-3.5" /> Download Notes
                           </button>
@@ -332,12 +332,12 @@ export default function MaterialGrid() {
 
                       {activeTab === "papers" && (
                         <div className="flex items-center justify-between border-t border-slate-50 pt-4 mt-1">
-                          <span className="text-[10px] font-bold text-slate-400 uppercase">
+                          <span className="text-[10px] font-semibold md:font-bold text-slate-400 uppercase">
                             File Size: {chapter.materials.paperSize}
                           </span>
                           <button
                             onClick={() => alert(`Downloading Question Paper: ${chapter.name}`)}
-                            className="inline-flex items-center gap-1.5 bg-brand-green/10 hover:bg-brand-green text-brand-green hover:text-white px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer"
+                            className="inline-flex items-center gap-1.5 bg-brand-green/10 hover:bg-brand-green text-brand-green hover:text-white px-4 py-2 rounded-xl text-xs font-semibold md:font-bold transition-all cursor-pointer"
                           >
                             <Download className="w-3.5 h-3.5" /> Download Paper
                           </button>
@@ -347,12 +347,12 @@ export default function MaterialGrid() {
                       {activeTab === "lectures" && (
                         <div className="flex flex-col border-t border-slate-50 pt-4 mt-1 gap-3">
                           <div className="flex items-center justify-between">
-                            <span className="text-[9px] font-bold text-slate-400 uppercase truncate max-w-[150px]">
+                            <span className="text-[9px] font-semibold md:font-bold text-slate-400 uppercase truncate max-w-[150px]">
                               {chapter.materials.videoTitle}
                             </span>
                             <button
                               onClick={() => setActiveVideoId(isVideoActive ? null : chapter.id)}
-                              className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold border transition-all cursor-pointer ${
+                              className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold md:font-bold border transition-all cursor-pointer ${
                                 isVideoActive
                                   ? "bg-red-50 text-red-600 border-red-100"
                                   : "bg-red-50/50 hover:bg-red-500 text-red-600 hover:text-white border-transparent"
@@ -374,10 +374,10 @@ export default function MaterialGrid() {
                               >
                                 <div className="bg-slate-900 aspect-video w-full rounded-xl flex flex-col items-center justify-center text-white p-4 border border-slate-800 shadow-inner relative">
                                   <Video className="w-8 h-8 text-red-500 mb-2 animate-pulse" />
-                                  <h4 className="font-extrabold text-xs text-center leading-snug px-2 mb-1">
+                                  <h4 className="font-semibold md:font-extrabold text-xs text-center leading-snug px-2 mb-1">
                                     {chapter.materials.videoTitle}
                                   </h4>
-                                  <p className="text-[8px] text-slate-400 font-bold uppercase tracking-wider text-center">
+                                  <p className="text-[8px] text-slate-400 font-semibold md:font-bold uppercase tracking-wider text-center">
                                     Demo Stream Player
                                   </p>
                                 </div>

@@ -30,7 +30,7 @@ export default function PrimaryHero() {
         <div className="text-sm font-medium text-slate-500">
           <Link href="/" className="text-brand-green hover:underline">Home</Link> / <span>Primary</span>
         </div>
-        <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight" style={{ fontFamily: "Georgia, serif" }}>
+        <h1 className="text-3xl md:text-4xl font-semibold md:font-extrabold text-slate-900 tracking-tight" style={{ fontFamily: "Georgia, serif" }}>
           Nursey - class <span className="text-brand-green-dark">V</span>
         </h1>
         <p className="text-slate-500 font-medium text-xs md:text-sm">
@@ -43,7 +43,7 @@ export default function PrimaryHero() {
         
         {/* Left Content Column */}
         <div className="flex flex-col items-start text-left">
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-slate-900 tracking-tight leading-[1.1] mb-4">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-semibold md:font-black text-slate-900 tracking-tight leading-[1.1] mb-4">
             Your child&apos;s <br />
             story <br />
             <span className="text-brand-green relative inline-block pb-2">
@@ -54,7 +54,7 @@ export default function PrimaryHero() {
             </span>
           </h2>
 
-          <p className="text-slate-500 text-xs md:text-sm font-semibold max-w-lg mb-6 leading-relaxed">
+          <p className="text-slate-500 text-xs md:text-sm font-normal md:font-semibold max-w-lg mb-6 leading-relaxed">
             Limited seats available for Session 2026–27. Apply online in minutes, schedule a campus visit, and meet the team that will shape your child&apos;s next chapter.
           </p>
 
@@ -63,7 +63,7 @@ export default function PrimaryHero() {
             <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="w-full sm:w-auto">
               <Link
                 href="#admission"
-                className="inline-flex items-center justify-center gap-2 bg-brand-green text-white hover:bg-brand-green-dark px-6 md:px-7 py-3 rounded-full font-bold text-xs md:text-sm tracking-wide transition-all duration-300 shadow-md shadow-emerald-500/10 w-full sm:w-auto"
+                className="inline-flex items-center justify-center gap-2 bg-brand-green text-white hover:bg-brand-green-dark px-6 md:px-7 py-3 rounded-full font-semibold md:font-bold text-xs md:text-sm tracking-wide transition-all duration-300 shadow-md shadow-emerald-500/10 w-full sm:w-auto"
               >
                 Apply Now <ArrowRight className="w-4 h-4" />
               </Link>
@@ -71,7 +71,7 @@ export default function PrimaryHero() {
             <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="w-full sm:w-auto">
               <a
                 href="#material"
-                className="inline-flex items-center justify-center gap-2 bg-white border border-slate-200 hover:bg-slate-50 text-slate-800 px-6 md:px-7 py-3 rounded-full font-bold text-xs md:text-sm tracking-wide transition-all duration-300 w-full sm:w-auto shadow-sm"
+                className="inline-flex items-center justify-center gap-2 bg-white border border-slate-200 hover:bg-slate-50 text-slate-800 px-6 md:px-7 py-3 rounded-full font-semibold md:font-bold text-xs md:text-sm tracking-wide transition-all duration-300 w-full sm:w-auto shadow-sm"
               >
                 View Study Material
                 <Download className="w-4 h-4 text-slate-500" />
@@ -90,7 +90,7 @@ export default function PrimaryHero() {
               ].map((av, idx) => (
                 <div
                   key={idx}
-                  className={`w-7 h-7 rounded-full border-2 border-white flex items-center justify-center text-[9px] font-black text-white cursor-default select-none ${av.bg}`}
+                  className={`w-7 h-7 rounded-full border-2 border-white flex items-center justify-center text-[9px] font-semibold md:font-black text-white cursor-default select-none ${av.bg}`}
                 >
                   {av.name}
                 </div>
@@ -99,9 +99,9 @@ export default function PrimaryHero() {
             <div className="flex flex-col">
               <div className="flex items-center gap-0.5 text-amber-500 text-[10px]">
                 <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
-                <span className="text-slate-800 font-extrabold ml-1 text-xs">4.9</span>
+                <span className="text-slate-800 font-semibold md:font-extrabold ml-1 text-xs">4.9</span>
               </div>
-              <span className="text-[9px] text-slate-400 font-bold mt-0.5">
+              <span className="text-[9px] text-slate-400 font-semibold md:font-bold mt-0.5">
                 Trusted by 5,000+ families · CBSE since 1986
               </span>
             </div>

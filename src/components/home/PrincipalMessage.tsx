@@ -33,10 +33,10 @@ export default function LeadershipMessages() {
         >
           {/* Header Area (Above Image and Quotes) */}
           <motion.div variants={itemVariants} className="mb-6 md:mb-8 select-none">
-            <span className="text-[9px] md:text-[10px] font-black text-[#0fa958] uppercase tracking-[0.2em] block mb-2">
+            <span className="text-[9px] md:text-[10px] font-semibold md:font-black text-[#0fa958] uppercase tracking-[0.2em] block mb-2">
               FROM THE DESK
             </span>
-            <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight leading-none">
+            <h2 className="text-3xl md:text-4xl font-semibold md:font-extrabold text-slate-900 tracking-tight leading-none">
               MD&apos;s <span className="text-[#0fa958]">Message</span>
             </h2>
           </motion.div>
@@ -77,10 +77,10 @@ export default function LeadershipMessages() {
 
               {/* Signature Name & Role */}
               <motion.div variants={itemVariants} className="pl-6 select-none border-l-2 border-transparent">
-                <span className="block font-black text-slate-800 text-sm md:text-base">
+                <span className="block font-semibold md:font-black text-slate-800 text-sm md:text-base">
                   Sh. Devraj Sharma
                 </span>
-                <span className="block text-xs font-semibold text-[#0fa958] mt-1">
+                <span className="block text-xs font-normal md:font-semibold text-[#0fa958] mt-1">
                   Managing Director, Green view SR. SEC. School, Kangra
                 </span>
               </motion.div>
@@ -98,10 +98,10 @@ export default function LeadershipMessages() {
         >
           {/* Header Area (Above Image and Quotes) */}
           <motion.div variants={itemVariants} className="mb-6 md:mb-8 select-none">
-            <span className="text-[9px] md:text-[10px] font-black text-[#0fa958] uppercase tracking-[0.2em] block mb-2">
+            <span className="text-[9px] md:text-[10px] font-semibold md:font-black text-[#0fa958] uppercase tracking-[0.2em] block mb-2">
               FROM THE DESK
             </span>
-            <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight leading-none">
+            <h2 className="text-3xl md:text-4xl font-semibold md:font-extrabold text-slate-900 tracking-tight leading-none">
               Principals <span className="text-[#0fa958]">Message</span>
             </h2>
           </motion.div>
@@ -142,10 +142,10 @@ export default function LeadershipMessages() {
 
               {/* Signature Name & Role */}
               <motion.div variants={itemVariants} className="pl-6 select-none border-l-2 border-transparent">
-                <span className="block font-black text-slate-800 text-sm md:text-base">
+                <span className="block font-semibold md:font-black text-slate-800 text-sm md:text-base">
                   Mr. Sandeep Sharma
                 </span>
-                <span className="block text-xs font-semibold text-[#0fa958] mt-1">
+                <span className="block text-xs font-normal md:font-semibold text-[#0fa958] mt-1">
                   Principal, Green view SR. SEC. School, Kangra
                 </span>
               </motion.div>

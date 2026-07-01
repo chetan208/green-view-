@@ -28,7 +28,7 @@ export default function ContactDetails() {
       transition={{ duration: 0.6 }}
       className="flex flex-col gap-8"
     >
-      <h2 className="text-2xl font-bold text-[#1f2937]" style={{ fontFamily: "Georgia, serif" }}>
+      <h2 className="text-2xl font-semibold md:font-bold text-[#1f2937]" style={{ fontFamily: "Georgia, serif" }}>
         Get in Touch
       </h2>
       
@@ -39,7 +39,7 @@ export default function ContactDetails() {
             <MapPin className="w-5 h-5 text-[#147a42]" strokeWidth={2.5} />
           </div>
           <div className="flex flex-col pt-1">
-            <h3 className="font-bold text-slate-800 text-sm md:text-base">Address</h3>
+            <h3 className="font-semibold md:font-bold text-slate-800 text-sm md:text-base">Address</h3>
             <p className="text-slate-500 text-sm mt-0.5">Knowledge Park, Education Lane, New Delhi - 110001</p>
           </div>
         </div>
@@ -50,7 +50,7 @@ export default function ContactDetails() {
             <Phone className="w-5 h-5 text-[#147a42]" strokeWidth={2.5} />
           </div>
           <div className="flex flex-col pt-1">
-            <h3 className="font-bold text-slate-800 text-sm md:text-base">Phone</h3>
+            <h3 className="font-semibold md:font-bold text-slate-800 text-sm md:text-base">Phone</h3>
             <p className="text-slate-500 text-sm mt-0.5">+91 11 2345 6789</p>
           </div>
         </div>
@@ -61,7 +61,7 @@ export default function ContactDetails() {
             <Mail className="w-5 h-5 text-[#147a42]" strokeWidth={2.5} />
           </div>
           <div className="flex flex-col pt-1">
-            <h3 className="font-bold text-slate-800 text-sm md:text-base">Email</h3>
+            <h3 className="font-semibold md:font-bold text-slate-800 text-sm md:text-base">Email</h3>
             <p className="text-slate-500 text-sm mt-0.5">info@greenview.edu.in</p>
           </div>
         </div>
@@ -72,7 +72,7 @@ export default function ContactDetails() {
             <Clock className="w-5 h-5 text-[#147a42]" strokeWidth={2.5} />
           </div>
           <div className="flex flex-col pt-1">
-            <h3 className="font-bold text-slate-800 text-sm md:text-base">School Timings</h3>
+            <h3 className="font-semibold md:font-bold text-slate-800 text-sm md:text-base">School Timings</h3>
             <p className="text-slate-500 text-sm mt-0.5">Monday - Saturday: 8:00 AM - 2:30 PM</p>
           </div>
         </div>
@@ -80,7 +80,7 @@ export default function ContactDetails() {
 
       {/* Follow Us */}
       <div className="bg-[#f8fafc] rounded-2xl p-6 mt-4">
-        <h3 className="font-bold text-slate-800 text-sm mb-4">Follow Us</h3>
+        <h3 className="font-semibold md:font-bold text-slate-800 text-sm mb-4">Follow Us</h3>
         <div className="flex gap-3">
           <a href="#" className="w-10 h-10 bg-white rounded-lg flex items-center justify-center text-slate-600 hover:text-[#147a42] hover:shadow-sm transition-all border border-slate-100">
             <FacebookIcon className="w-4 h-4" />

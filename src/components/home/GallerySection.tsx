@@ -58,7 +58,7 @@ export default function GallerySection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="text-[10px] md:text-xs font-bold text-[#0fa958] uppercase tracking-[0.25em] mb-1.5"
+            className="text-[10px] md:text-xs font-semibold md:font-bold text-[#0fa958] uppercase tracking-[0.25em] mb-1.5"
           >
             Our Campus
           </motion.span>
@@ -67,7 +67,7 @@ export default function GallerySection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, ease: "easeOut" }}
-            className="text-2xl md:text-3xl font-extrabold text-slate-800 tracking-tight leading-tight"
+            className="text-2xl md:text-3xl font-semibold md:font-extrabold text-slate-800 tracking-tight leading-tight"
           >
             Explore Our <span className="text-[#0fa958]">World-Class Campus</span>
           </motion.h2>

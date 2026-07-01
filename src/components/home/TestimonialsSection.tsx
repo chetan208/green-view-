@@ -51,7 +51,7 @@ export default function TestimonialsSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="text-[10px] md:text-xs font-bold text-[#0fa958] uppercase tracking-[0.25em] mb-2.5"
+            className="text-[10px] md:text-xs font-semibold md:font-bold text-[#0fa958] uppercase tracking-[0.25em] mb-2.5"
           >
             Testimonials
           </motion.span>
@@ -60,7 +60,7 @@ export default function TestimonialsSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, ease: "easeOut" }}
-            className="text-3xl md:text-4xl font-extrabold text-slate-800 tracking-tight leading-tight"
+            className="text-3xl md:text-4xl font-semibold md:font-extrabold text-slate-800 tracking-tight leading-tight"
           >
             What Parents <span className="text-[#0fa958]">Say About Us</span>
           </motion.h2>
@@ -72,7 +72,7 @@ export default function TestimonialsSection() {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, margin: "-100px" }}
-          className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 w-full"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 w-full"
         >
           {testimonials.map((t, idx) => (
             <motion.div
@@ -110,10 +110,10 @@ export default function TestimonialsSection() {
                   />
                 </div>
                 <div className="flex flex-col">
-                  <span className="font-extrabold text-slate-800 text-sm md:text-base leading-none">
+                  <span className="font-semibold md:font-extrabold text-slate-800 text-sm md:text-base leading-none">
                     {t.name}
                   </span>
-                  <span className="text-[10px] md:text-xs font-bold text-slate-400 mt-1.5 leading-none">
+                  <span className="text-[10px] md:text-xs font-semibold md:font-bold text-slate-400 mt-1.5 leading-none">
                     {t.role}
                   </span>
                 </div>

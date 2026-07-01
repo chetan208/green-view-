@@ -51,8 +51,8 @@ export default function AdmissionCards() {
                     <Icon className={`w-8 h-8 ${card.iconColor}`} strokeWidth={1.5} />
                   </div>
                   <div>
-                    <h3 className="text-2xl font-black text-slate-900 tracking-tight">{card.title}</h3>
-                    <p className="text-sm font-bold text-slate-500 mt-1">{card.subtitle}</p>
+                    <h3 className="text-2xl font-semibold md:font-black text-slate-900 tracking-tight">{card.title}</h3>
+                    <p className="text-sm font-semibold md:font-bold text-slate-500 mt-1">{card.subtitle}</p>
                   </div>
                 </div>
 
@@ -74,7 +74,7 @@ export default function AdmissionCards() {
                 {/* CTA Button */}
                 <Link
                   href={card.href}
-                  className={`group w-full py-4 rounded-2xl bg-gradient-to-r ${card.color} text-white font-bold text-center flex items-center justify-center gap-2 hover:opacity-90 hover:shadow-xl transition-all shadow-md`}
+                  className={`group w-full py-4 rounded-2xl bg-gradient-to-r ${card.color} text-white font-semibold md:font-bold text-center flex items-center justify-center gap-2 hover:opacity-90 hover:shadow-xl transition-all shadow-md`}
                 >
                   <ClipboardList className="w-5 h-5" />
                   Proceed to Application

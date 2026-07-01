@@ -40,7 +40,7 @@ export default function Stepper({ currentStep }: StepperProps) {
             return (
               <div key={step.id} className="flex flex-col items-center gap-3 relative z-10 w-24">
                 <div 
-                  className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold transition-colors duration-300 ${
+                  className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-semibold md:font-bold transition-colors duration-300 ${
                     isActive 
                       ? "bg-[#0fa958] text-white shadow-md shadow-emerald-500/20" 
                       : isCompleted 
@@ -50,7 +50,7 @@ export default function Stepper({ currentStep }: StepperProps) {
                 >
                   {isCompleted ? <Check className="w-5 h-5" /> : step.id}
                 </div>
-                <span className={`text-xs font-semibold text-center leading-tight ${
+                <span className={`text-xs font-normal md:font-semibold text-center leading-tight ${
                   isActive ? "text-[#0fa958]" : isCompleted ? "text-slate-700" : "text-slate-400"
                 }`}>
                   {step.title}
@@ -65,14 +65,14 @@ export default function Stepper({ currentStep }: StepperProps) {
       <div className="md:hidden w-full bg-white rounded-2xl border border-slate-200 p-5 shadow-sm mb-4">
         <div className="flex items-center justify-between mb-3">
           <div className="flex flex-col">
-            <span className="text-[10px] font-black text-[#0fa958] tracking-wider uppercase mb-1">
+            <span className="text-[10px] font-semibold md:font-black text-[#0fa958] tracking-wider uppercase mb-1">
               Step {currentStep} of {steps.length}
             </span>
-            <h2 className="text-lg font-black text-slate-800">
+            <h2 className="text-lg font-semibold md:font-black text-slate-800">
               {steps[currentStep - 1].title}
             </h2>
           </div>
-          <div className="bg-emerald-50 text-[#0fa958] px-3 py-1.5 rounded-full text-xs font-bold border border-emerald-100 flex items-center gap-1.5">
+          <div className="bg-emerald-50 text-[#0fa958] px-3 py-1.5 rounded-full text-xs font-semibold md:font-bold border border-emerald-100 flex items-center gap-1.5">
             <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
               <line x1="8" y1="6" x2="21" y2="6"></line>
               <line x1="8" y1="12" x2="21" y2="12"></line>

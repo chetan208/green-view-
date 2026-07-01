@@ -49,10 +49,10 @@ export default function Footer() {
                 />
               </div>
               <div className="flex flex-col">
-                <span className="font-black text-white text-lg leading-none tracking-tight">
-                  Green view
+                <span className="font-serif font-semibold md:font-black text-white text-xl leading-none tracking-tight">
+                  Green View
                 </span>
-                <span className="text-[10px] text-emerald-400 font-bold tracking-widest uppercase mt-1 leading-none">
+                <span className="text-[10px] text-emerald-400 font-semibold md:font-bold tracking-widest uppercase mt-1 leading-none">
                   Sr. Sec. School
                 </span>
               </div>
@@ -85,10 +85,10 @@ export default function Footer() {
 
           {/* Quick Links */}
           <div className="flex flex-col gap-6">
-            <h4 className="font-extrabold text-white text-sm uppercase tracking-widest relative pb-2 border-b border-slate-900 w-fit">
+            <h4 className="font-semibold md:font-extrabold text-white text-sm uppercase tracking-widest relative pb-2 border-b border-slate-900 w-fit">
               Quick Links
             </h4>
-            <ul className="flex flex-col gap-3 font-semibold text-xs md:text-sm">
+            <ul className="flex flex-col gap-3 font-normal md:font-semibold text-xs md:text-sm">
               <li>
                 <Link href="/" className="hover:text-emerald-400 transition-colors">Home Page</Link>
               </li>
@@ -109,10 +109,10 @@ export default function Footer() {
 
           {/* Academics Links */}
           <div className="flex flex-col gap-6">
-            <h4 className="font-extrabold text-white text-sm uppercase tracking-widest relative pb-2 border-b border-slate-900 w-fit">
+            <h4 className="font-semibold md:font-extrabold text-white text-sm uppercase tracking-widest relative pb-2 border-b border-slate-900 w-fit">
               Academics
             </h4>
-            <ul className="flex flex-col gap-3 font-semibold text-xs md:text-sm">
+            <ul className="flex flex-col gap-3 font-normal md:font-semibold text-xs md:text-sm">
               <li>
                 <Link href="#admission" className="hover:text-emerald-400 transition-colors">Admission Form</Link>
               </li>
@@ -133,10 +133,10 @@ export default function Footer() {
 
           {/* Contact Details */}
           <div className="flex flex-col gap-6">
-            <h4 className="font-extrabold text-white text-sm uppercase tracking-widest relative pb-2 border-b border-slate-900 w-fit">
+            <h4 className="font-semibold md:font-extrabold text-white text-sm uppercase tracking-widest relative pb-2 border-b border-slate-900 w-fit">
               Have Questions?
             </h4>
-            <div className="flex flex-col gap-4 font-semibold text-xs md:text-sm">
+            <div className="flex flex-col gap-4 font-normal md:font-semibold text-xs md:text-sm">
               <div className="flex items-start gap-3">
                 <MapPin className="w-4 h-4 text-emerald-400 shrink-0 mt-1" />
                 <span className="leading-relaxed text-slate-500">
@@ -162,7 +162,7 @@ export default function Footer() {
       </div>
 
       {/* Footer Bottom copyright bar */}
-      <div className="w-full py-6 px-6 text-center text-[10px] md:text-xs font-bold text-slate-600">
+      <div className="w-full py-6 px-6 text-center text-[10px] md:text-xs font-semibold md:font-bold text-slate-600">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
           <span>
             © 2026 Green View Sr. Sec. School. All rights reserved.

@@ -32,7 +32,7 @@ export default function CalendarGrid() {
           <button
             key={cat}
             onClick={() => setActiveTab(cat)}
-            className={`px-4 py-2 rounded-full font-bold text-xs md:text-sm transition-all ${
+            className={`px-4 py-2 rounded-full font-semibold md:font-bold text-xs md:text-sm transition-all ${
               activeTab === cat
                 ? "bg-brand-green text-white shadow-sm"
                 : "bg-slate-100 text-slate-600 hover:bg-slate-200"
@@ -57,16 +57,16 @@ export default function CalendarGrid() {
             >
               <div className="flex flex-col md:flex-row md:items-center gap-6">
                 {/* Date Box */}
-                <div className="w-24 bg-emerald-50 text-brand-green font-bold p-3 rounded-xl flex flex-col items-center justify-center text-center shrink-0 border border-emerald-100/50">
+                <div className="w-24 bg-emerald-50 text-brand-green font-semibold md:font-bold p-3 rounded-xl flex flex-col items-center justify-center text-center shrink-0 border border-emerald-100/50">
                   <span className="text-[9px] uppercase tracking-wider mb-0.5 leading-none">Date</span>
-                  <span className="text-xs font-extrabold leading-normal whitespace-nowrap">{dateParts[0]} {dateParts[1]}</span>
-                  <span className="text-[9px] text-emerald-600 font-extrabold mt-0.5 leading-none">{dateParts[2]}</span>
+                  <span className="text-xs font-semibold md:font-extrabold leading-normal whitespace-nowrap">{dateParts[0]} {dateParts[1]}</span>
+                  <span className="text-[9px] text-emerald-600 font-semibold md:font-extrabold mt-0.5 leading-none">{dateParts[2]}</span>
                 </div>
                 
                 {/* Details */}
                 <div className="flex flex-col">
                   <div className="flex items-center gap-2 mb-1.5">
-                    <span className={`text-[9px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md ${
+                    <span className={`text-[9px] font-semibold md:font-black uppercase tracking-wider px-2 py-0.5 rounded-md ${
                       ev.category === "Exams" ? "bg-red-50 text-red-600 border border-red-100/50" :
                       ev.category === "Holidays" ? "bg-amber-50 text-amber-600 border border-amber-100/50" :
                       ev.category === "Events" ? "bg-blue-50 text-blue-600 border border-blue-100/50" :
@@ -74,11 +74,11 @@ export default function CalendarGrid() {
                     }`}>
                       {ev.category}
                     </span>
-                    <span className="flex items-center gap-1 text-[10px] font-bold text-slate-400">
+                    <span className="flex items-center gap-1 text-[10px] font-semibold md:font-bold text-slate-400">
                       <Clock className="w-3 h-3" /> {ev.time}
                     </span>
                   </div>
-                  <h3 className="font-extrabold text-slate-800 text-sm md:text-base group-hover:text-brand-green transition-colors leading-snug">
+                  <h3 className="font-semibold md:font-extrabold text-slate-800 text-sm md:text-base group-hover:text-brand-green transition-colors leading-snug">
                     {ev.title}
                   </h3>
                   <p className="text-slate-500 text-xs md:text-sm font-medium mt-1 leading-relaxed max-w-xl">

@@ -41,7 +41,7 @@ export default function HeroSection() {
   } as const;
 
   return (
-    <section className="w-full pt-6 md:pt-10 pb-16 px-6 md:px-12 lg:px-24  flex justify-center overflow-hidden">
+    <section className="w-full min-h-[95svh] pt-12 md:pt-20 pb-16 px-6 md:px-12 lg:px-24 flex items-start justify-center overflow-hidden">
       <div className="max-w-6xl w-full flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-16">
         
         {/* Left Information Column */}
@@ -55,7 +55,7 @@ export default function HeroSection() {
           {/* Badge: Inspiring Excellence Since 1986 */}
           <motion.div 
             variants={itemVariants}
-            className="text-[10px] md:text-xs font-bold text-[#0fa958] uppercase tracking-[0.2em] mb-4.5 select-none"
+            className="text-[10px] md:text-xs font-semibold md:font-bold text-[#0fa958] uppercase tracking-[0.2em] mb-4.5 select-none"
           >
             Inspiring Excellence Since 1986
           </motion.div>
@@ -63,7 +63,7 @@ export default function HeroSection() {
           {/* Main Title */}
           <motion.h1 
             variants={itemVariants}
-            className="text-4xl md:text-5xl lg:text-6xl font-black text-slate-900 tracking-tight leading-[1.05] mb-6"
+            className="text-4xl md:text-5xl lg:text-6xl font-semibold md:font-black text-slate-900 tracking-tight leading-[1.05] mb-6"
           >
             <span className="text-[#0fa958]">Green view</span> <br />
             Sr. Sec. School
@@ -71,7 +71,7 @@ export default function HeroSection() {
 
           <motion.p 
             variants={itemVariants}
-            className="text-slate-500 text-sm md:text-base max-w-md mb-8 leading-relaxed font-semibold"
+            className="text-slate-500 text-sm md:text-base max-w-md mb-8 leading-relaxed font-normal md:font-semibold"
           >
             A trusted private senior secondary school focused on academic excellence, discipline, values and modern parent communication.
           </motion.p>
@@ -84,7 +84,7 @@ export default function HeroSection() {
             <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }} className="w-full sm:w-auto">
               <Link
                 href="#admission"
-                className="inline-flex items-center justify-center gap-2 bg-[#0fa958] text-white hover:bg-emerald-700 px-6 md:px-8 py-3.5 rounded-full font-bold text-xs md:text-sm tracking-wide transition-all duration-300 shadow-md shadow-emerald-600/10 w-full sm:w-auto"
+                className="inline-flex items-center justify-center gap-2 bg-[#0fa958] text-white hover:bg-emerald-700 px-6 md:px-8 py-3.5 rounded-full font-semibold md:font-bold text-xs md:text-sm tracking-wide transition-all duration-300 shadow-md shadow-emerald-600/10 w-full sm:w-auto"
               >
                 Admission Enquiry
                 <ArrowRight className="w-4 h-4" />
@@ -93,7 +93,7 @@ export default function HeroSection() {
             <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }} className="w-full sm:w-auto">
               <Link
                 href="#about"
-                className="inline-flex items-center justify-center bg-white border border-slate-200 hover:bg-slate-50 text-slate-800 px-6 md:px-8 py-3.5 rounded-full font-bold text-xs md:text-sm tracking-wide transition-all duration-300 text-center w-full sm:w-auto"
+                className="inline-flex items-center justify-center bg-white border border-slate-200 hover:bg-slate-50 text-slate-800 px-6 md:px-8 py-3.5 rounded-full font-semibold md:font-bold text-xs md:text-sm tracking-wide transition-all duration-300 text-center w-full sm:w-auto"
               >
                 About Us
               </Link>
@@ -126,7 +126,7 @@ export default function HeroSection() {
                 <motion.div
                   key={idx}
                   whileHover={{ y: -3, zIndex: 10 }}
-                  className={`w-8 h-8 rounded-full border-2 border-white flex items-center justify-center text-[10px] font-black text-white cursor-default select-none ${av.bg}`}
+                  className={`w-8 h-8 rounded-full border-2 border-white flex items-center justify-center text-[10px] font-semibold md:font-black text-white cursor-default select-none ${av.bg}`}
                 >
                   {av.name}
                 </motion.div>
@@ -139,10 +139,10 @@ export default function HeroSection() {
                 {[1, 2, 3, 4, 5].map((s) => (
                   <Star key={s} className="w-3.5 h-3.5 text-amber-500 fill-amber-500" />
                 ))}
-                <span className="text-xs font-black text-slate-800 ml-1">4.9</span>
+                <span className="text-xs font-semibold md:font-black text-slate-800 ml-1">4.9</span>
               </div>
-              <span className="text-[10px] text-slate-400 font-bold mt-0.5">
-                Trusted by <span className="text-slate-800 font-extrabold">5,000+ families</span> across HP since 1986
+              <span className="text-[10px] text-slate-400 font-semibold md:font-bold mt-0.5">
+                Trusted by <span className="text-slate-800 font-semibold md:font-extrabold">5,000+ families</span> across HP since 1986
               </span>
             </div>
           </motion.div>
@@ -181,13 +181,13 @@ export default function HeroSection() {
             whileHover={{ scale: 1.05 }}
             className="absolute bottom-6 left-2 md:-left-6 z-20 bg-[#0fa958] text-white w-20 h-20 md:w-28 md:h-28 rounded-full flex flex-col items-center justify-center text-center shadow-lg border-4 md:border-[6px] border-white select-none cursor-pointer"
           >
-            <span className="text-[10px] md:text-sm font-black tracking-tight leading-none">
+            <span className="text-[10px] md:text-sm font-semibold md:font-black tracking-tight leading-none">
               2026-27
             </span>
-            <span className="text-[6px] md:text-[8px] font-black uppercase tracking-wider mt-1 leading-none text-emerald-100">
+            <span className="text-[6px] md:text-[8px] font-semibold md:font-black uppercase tracking-wider mt-1 leading-none text-emerald-100">
               Admissions
             </span>
-            <span className="text-[6px] md:text-[8px] font-black uppercase tracking-wider leading-none text-emerald-100">
+            <span className="text-[6px] md:text-[8px] font-semibold md:font-black uppercase tracking-wider leading-none text-emerald-100">
               Open Now
             </span>
           </motion.div>
@@ -198,15 +198,15 @@ export default function HeroSection() {
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: 0.6 }}
             whileHover={{ y: -3 }}
-            className="absolute -bottom-4 md:-bottom-8 right-2 md:-right-6 z-20 bg-white p-3 md:p-4 rounded-2xl md:rounded-3xl shadow-lg border border-slate-100/70 flex flex-col max-w-[130px] md:max-w-[170px] select-none cursor-pointer"
+            className="absolute -bottom-4 md:-bottom-8 right-2 md:-right-6 z-20 bg-white p-3 md:p-4 rounded-2xl md:rounded-3xl shadow-lg border border-slate-100/70 flex flex-col max-w-[130px] md:max-w-[170px] select-none cursor-pointer hidden md:flex"
           >
-            <span className="text-[8px] md:text-[9px] font-bold text-slate-400 uppercase tracking-wider">
+            <span className="text-[8px] md:text-[9px] font-semibold md:font-bold text-slate-400 uppercase tracking-wider">
               Board Results 2024-25
             </span>
-            <span className="text-sm md:text-lg font-black text-emerald-700 mt-1 leading-none">
+            <span className="text-sm md:text-lg font-semibold md:font-black text-emerald-700 mt-1 leading-none">
               94.2% avg
             </span>
-            <span className="text-[8px] md:text-[9px] font-bold text-slate-400 uppercase mt-1">
+            <span className="text-[8px] md:text-[9px] font-semibold md:font-bold text-slate-400 uppercase mt-1">
               Class X & XII
             </span>
           </motion.div>

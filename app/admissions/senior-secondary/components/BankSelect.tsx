@@ -237,8 +237,8 @@ export default function BankSelect({ value, onChange, errorClass = "" }: BankSel
                 }}
                 className="w-full px-3 py-2.5 text-sm text-blue-700 hover:bg-blue-50 rounded-lg cursor-pointer flex items-center gap-2 border-b border-slate-100 mb-1"
               >
-                <span className="font-bold">Use "{search.trim().toUpperCase()}"</span>
-                <span className="text-[10px] font-bold bg-blue-100 px-1.5 py-0.5 rounded text-blue-800">Custom Bank</span>
+                <span className="font-semibold md:font-bold">Use "{search.trim().toUpperCase()}"</span>
+                <span className="text-[10px] font-semibold md:font-bold bg-blue-100 px-1.5 py-0.5 rounded text-blue-800">Custom Bank</span>
               </div>
             )}
             
@@ -252,7 +252,7 @@ export default function BankSelect({ value, onChange, errorClass = "" }: BankSel
                 }}
                 className="w-full px-3 py-2 text-sm text-slate-700 hover:bg-emerald-50 hover:text-emerald-900 rounded-lg cursor-pointer flex items-center justify-between transition-colors"
               >
-                <span className={value === bank ? "font-bold text-emerald-700" : ""}>{bank}</span>
+                <span className={value === bank ? "font-semibold md:font-bold text-emerald-700" : ""}>{bank}</span>
                 {value === bank && <Check className="w-4 h-4 text-[#0fa958]" />}
               </div>
             ))}

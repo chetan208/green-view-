@@ -78,7 +78,7 @@ function SeniorSecondaryAdmissionContent() {
             {currentStep === 1 ? (
               <Link 
                 href="/admissions" 
-                className="inline-flex items-center gap-2 text-sm font-bold text-slate-500 hover:text-[#0fa958] transition-colors"
+                className="inline-flex items-center gap-2 text-sm font-semibold md:font-bold text-slate-500 hover:text-[#0fa958] transition-colors"
               >
                 <ArrowLeft className="w-4 h-4" />
                 Back to Admissions
@@ -86,7 +86,7 @@ function SeniorSecondaryAdmissionContent() {
             ) : (
               <button 
                 onClick={handlePrev}
-                className="inline-flex items-center gap-2 text-sm font-bold text-slate-500 hover:text-[#0fa958] transition-colors"
+                className="inline-flex items-center gap-2 text-sm font-semibold md:font-bold text-slate-500 hover:text-[#0fa958] transition-colors"
               >
                 <ArrowLeft className="w-4 h-4" />
                 Back to Previous Step
@@ -127,7 +127,7 @@ function SeniorSecondaryAdmissionContent() {
               <div className="w-20 h-20 bg-emerald-100 rounded-full flex items-center justify-center mb-6">
                 <CheckCircle2 className="w-10 h-10 text-emerald-600" />
               </div>
-              <h2 className="text-2xl md:text-3xl font-black text-slate-800 tracking-tight mb-3">
+              <h2 className="text-2xl md:text-3xl font-semibold md:font-black text-slate-800 tracking-tight mb-3">
                 Application Submitted Successfully!
               </h2>
               <p className="text-slate-500 font-medium max-w-md mb-8">
@@ -136,7 +136,7 @@ function SeniorSecondaryAdmissionContent() {
               
               <button 
                 onClick={() => window.print()}
-                className="flex items-center justify-center gap-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-8 py-4 rounded-xl text-sm font-black shadow-lg shadow-blue-500/30 transition-all hover:-translate-y-1 print:hidden"
+                className="flex items-center justify-center gap-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-8 py-4 rounded-xl text-sm font-semibold md:font-black shadow-lg shadow-blue-500/30 transition-all hover:-translate-y-1 print:hidden"
               >
                 <Download className="w-5 h-5 animate-bounce" /> 
                 <span>DOWNLOAD APPLICATION</span>

@@ -104,13 +104,13 @@ export default function BoardNotices() {
       >
         <div className="bg-white border border-slate-100 shadow-sm rounded-full p-2.5 px-6 flex items-center overflow-hidden gap-4">
           {/* Live indicator badge */}
-          <div className="flex items-center gap-1.5 bg-[#0fa958] text-white text-[9px] font-black px-3.5 py-1.5 rounded-full shrink-0">
+          <div className="flex items-center gap-1.5 bg-[#0fa958] text-white text-[9px] font-semibold md:font-black px-3.5 py-1.5 rounded-full shrink-0">
             <span className="w-1.5 h-1.5 bg-white rounded-full animate-ping" />
             <span>LIVE</span>
           </div>
           {/* Scrolling Container */}
           <div className="w-full overflow-hidden relative flex">
-            <div className="flex gap-16 whitespace-nowrap animate-marquee-infinite text-xs font-bold text-slate-600">
+            <div className="flex gap-16 whitespace-nowrap animate-marquee-infinite text-xs font-semibold md:font-bold text-slate-600">
               {repeatedScrollNotices.map((text, idx) => (
                 <span key={idx} className="hover:text-emerald-600 cursor-pointer transition-colors">
                   {text}
@@ -137,7 +137,7 @@ export default function BoardNotices() {
             {/* Small Title with Bell icon */}
             <motion.div 
               variants={itemVariants}
-              className="flex items-center gap-1.5 text-emerald-600 font-extrabold text-[10px] md:text-xs tracking-wider uppercase mb-4 justify-center lg:justify-start"
+              className="flex items-center gap-1.5 text-emerald-600 font-semibold md:font-extrabold text-[10px] md:text-xs tracking-wider uppercase mb-4 justify-center lg:justify-start"
             >
               <Bell className="w-4 h-4 text-emerald-500 fill-emerald-500/10 animate-bounce" />
               Desk Updates
@@ -146,7 +146,7 @@ export default function BoardNotices() {
             {/* Uppercase Serif Heading */}
             <motion.h2 
               variants={itemVariants}
-              className="text-3xl md:text-4xl font-black font-serif tracking-wider leading-tight uppercase mb-8 text-slate-800"
+              className="text-3xl md:text-4xl font-semibold md:font-black font-serif tracking-wider leading-tight uppercase mb-8 text-slate-800"
             >
               Official <span className="text-[#0fa958]">Board</span> Notices
             </motion.h2>
@@ -164,10 +164,10 @@ export default function BoardNotices() {
                 transition={{ type: "spring", stiffness: 300, damping: 15 }}
                 className="bg-white border border-slate-100 rounded-2xl shadow-sm p-4 w-24 flex flex-col items-center justify-center cursor-default select-none"
               >
-                <span className={`text-2xl font-black ${stat.color}`}>
+                <span className={`text-2xl font-semibold md:font-black ${stat.color}`}>
                   {stat.value}
                 </span>
-                <span className="text-[8px] font-black text-slate-400 tracking-wider uppercase mt-2">
+                <span className="text-[8px] font-semibold md:font-black text-slate-400 tracking-wider uppercase mt-2">
                   {stat.label}
                 </span>
               </motion.div>
@@ -198,18 +198,18 @@ export default function BoardNotices() {
               >
                 <div className="flex items-center gap-3 overflow-hidden">
                   {/* Flashing tag */}
-                  <span className="bg-red-500 text-white text-[8px] font-black px-1.5 py-0.5 rounded uppercase tracking-wider animate-pulse shrink-0">
+                  <span className="bg-red-500 text-white text-[8px] font-semibold md:font-black px-1.5 py-0.5 rounded uppercase tracking-wider animate-pulse shrink-0">
                     NEW
                   </span>
                   {/* Notice Title */}
-                  <p className="text-slate-800 font-bold text-xs md:text-sm group-hover:text-[#0fa958] transition-colors truncate">
+                  <p className="text-slate-800 font-semibold md:font-bold text-xs md:text-sm group-hover:text-[#0fa958] transition-colors truncate">
                     {notice.title}
                   </p>
                 </div>
 
                 <div className="flex items-center gap-4 shrink-0 pl-4">
                   {/* Date */}
-                  <span className="text-[10px] font-bold text-slate-400">
+                  <span className="text-[10px] font-semibold md:font-bold text-slate-400">
                     {notice.date}
                   </span>
                   {/* Arrow Indicator */}
@@ -228,7 +228,7 @@ export default function BoardNotices() {
           >
             <Link
               href="#all-notices"
-              className="mt-2 inline-flex items-center gap-2 bg-[#0a4d2e] hover:bg-emerald-950 text-white py-3.5 px-8 rounded-full text-xs font-black tracking-wide transition-all shadow-md shadow-emerald-900/10 w-full sm:w-auto justify-center"
+              className="mt-2 inline-flex items-center gap-2 bg-[#0a4d2e] hover:bg-emerald-950 text-white py-3.5 px-8 rounded-full text-xs font-semibold md:font-black tracking-wide transition-all shadow-md shadow-emerald-900/10 w-full sm:w-auto justify-center"
             >
               View All Board Notices
               <ArrowRight className="w-4 h-4" />

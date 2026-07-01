@@ -24,7 +24,7 @@ export default function Step3AddressBank() {
           <MapPin className="w-6 h-6 text-[#0fa958]" />
         </div>
         <div>
-          <h2 className="text-xl md:text-2xl font-black text-slate-800 tracking-tight">
+          <h2 className="text-xl md:text-2xl font-semibold md:font-black text-slate-800 tracking-tight">
             Address & Banking Details
           </h2>
           <p className="text-sm text-slate-500 font-medium mt-1">
@@ -37,10 +37,10 @@ export default function Step3AddressBank() {
         
         {/* Left Column: Permanent Residential Address */}
         <div className="flex flex-col gap-6">
-          <h3 className="text-sm font-black text-emerald-900 tracking-tight mb-2">Permanent Residential Address</h3>
+          <h3 className="text-sm font-semibold md:font-black text-emerald-900 tracking-tight mb-2">Permanent Residential Address</h3>
           
           <div className="flex flex-col">
-            <label className="text-[11px] font-bold text-slate-800 mb-2 uppercase tracking-wider">Village / House No. / Street *</label>
+            <label className="text-[11px] font-semibold md:font-bold text-slate-800 mb-2 uppercase tracking-wider">Village / House No. / Street *</label>
             <input 
               type="text" 
               placeholder="Village or Local Area Name" 
@@ -52,7 +52,7 @@ export default function Step3AddressBank() {
 
           <div className="grid grid-cols-2 gap-4">
             <div className="flex flex-col">
-              <label className="text-[11px] font-bold text-slate-800 mb-2 uppercase tracking-wider">Post Office *</label>
+              <label className="text-[11px] font-semibold md:font-bold text-slate-800 mb-2 uppercase tracking-wider">Post Office *</label>
               <input 
                 type="text" 
                 placeholder="P.O. Name" 
@@ -62,7 +62,7 @@ export default function Step3AddressBank() {
               />
             </div>
             <div className="flex flex-col">
-              <label className="text-[11px] font-bold text-slate-800 mb-2 uppercase tracking-wider">Tehsil *</label>
+              <label className="text-[11px] font-semibold md:font-bold text-slate-800 mb-2 uppercase tracking-wider">Tehsil *</label>
               <input 
                 type="text" 
                 placeholder="Tehsil / Sub-district" 
@@ -75,7 +75,7 @@ export default function Step3AddressBank() {
 
           <div className="grid grid-cols-2 gap-4">
             <div className="flex flex-col">
-              <label className="text-[11px] font-bold text-slate-800 mb-2 uppercase tracking-wider">District *</label>
+              <label className="text-[11px] font-semibold md:font-bold text-slate-800 mb-2 uppercase tracking-wider">District *</label>
               <input 
                 type="text" 
                 placeholder="District Name" 
@@ -85,7 +85,7 @@ export default function Step3AddressBank() {
               />
             </div>
             <div className="flex flex-col">
-              <label className="text-[11px] font-bold text-slate-800 mb-2 uppercase tracking-wider">State *</label>
+              <label className="text-[11px] font-semibold md:font-bold text-slate-800 mb-2 uppercase tracking-wider">State *</label>
               <input 
                 type="text" 
                 placeholder="Himachal Pradesh" 
@@ -97,7 +97,7 @@ export default function Step3AddressBank() {
           </div>
 
           <div className="flex flex-col">
-            <label className="text-[11px] font-bold text-slate-800 mb-2 uppercase tracking-wider">Postal PIN Code *</label>
+            <label className="text-[11px] font-semibold md:font-bold text-slate-800 mb-2 uppercase tracking-wider">Postal PIN Code *</label>
             <input 
               type="text" 
               placeholder="6-digit ZIP code" 
@@ -105,7 +105,7 @@ export default function Step3AddressBank() {
               onChange={(e) => updateData({ pinCode: e.target.value })}
               className={`w-full px-4 py-3 rounded-xl border outline-none transition-all text-sm font-medium placeholder:text-slate-400 tracking-widest ${getErrorClass(data.pinCode)}`}
             />
-            {data.showErrors && !data.pinCode && <span className="text-[10px] font-bold text-red-500 mt-1.5">Pin Code is mandatory.</span>}
+            {data.showErrors && !data.pinCode && <span className="text-[10px] font-semibold md:font-bold text-red-500 mt-1.5">Pin Code is mandatory.</span>}
           </div>
         </div>
 
@@ -113,11 +113,11 @@ export default function Step3AddressBank() {
         <div className="flex flex-col gap-6">
           <div className="flex items-center gap-2 mb-2">
             <Building2 className="w-4 h-4 text-[#0fa958]" />
-            <h3 className="text-sm font-black text-emerald-900 tracking-tight">Student/Parent Bank Details (For Scholarships)</h3>
+            <h3 className="text-sm font-semibold md:font-black text-emerald-900 tracking-tight">Student/Parent Bank Details (For Scholarships)</h3>
           </div>
           
           <div className="flex flex-col">
-            <label className="text-[11px] font-bold text-slate-800 mb-2 uppercase tracking-wider">Bank Account Number *</label>
+            <label className="text-[11px] font-semibold md:font-bold text-slate-800 mb-2 uppercase tracking-wider">Bank Account Number *</label>
             <input 
               type="text" 
               placeholder="Ex: 34182901923" 
@@ -128,7 +128,7 @@ export default function Step3AddressBank() {
           </div>
 
           <div className="flex flex-col">
-            <label className="text-[11px] font-bold text-slate-800 mb-2 uppercase tracking-wider">Confirm Bank Account Number *</label>
+            <label className="text-[11px] font-semibold md:font-bold text-slate-800 mb-2 uppercase tracking-wider">Confirm Bank Account Number *</label>
             <input 
               type="password" 
               placeholder="Retype Account Number" 
@@ -137,7 +137,7 @@ export default function Step3AddressBank() {
               className={`w-full px-4 py-3 rounded-xl border outline-none transition-all text-sm font-medium tracking-widest font-mono ${isBankAccMismatch ? "border-red-400 focus:border-red-500 focus:ring-2 focus:ring-red-500/20 text-red-600" : "border-slate-200 focus:border-[#0fa958] focus:ring-2 focus:ring-emerald-500/20 placeholder:text-slate-400"}`}
             />
             {isBankAccMismatch && (
-              <div className="flex items-center gap-1.5 mt-2 text-red-500 text-[10px] font-bold">
+              <div className="flex items-center gap-1.5 mt-2 text-red-500 text-[10px] font-semibold md:font-bold">
                 <AlertCircle className="w-3.5 h-3.5" />
                 <span>Account numbers do not match!</span>
               </div>
@@ -146,16 +146,16 @@ export default function Step3AddressBank() {
 
           <div className="grid grid-cols-2 gap-4">
             <div className="flex flex-col">
-              <label className="text-[11px] font-bold text-slate-800 mb-2 uppercase tracking-wider">Bank Name *</label>
+              <label className="text-[11px] font-semibold md:font-bold text-slate-800 mb-2 uppercase tracking-wider">Bank Name *</label>
               <BankSelect 
                 value={data.bankName}
                 onChange={(val) => updateData({ bankName: val })}
                 errorClass={getErrorClass(data.bankName).includes("border-red-400") ? "border-red-400 bg-red-50" : ""}
               />
-              {data.showErrors && !data.bankName && <span className="text-[10px] font-bold text-red-500 mt-1.5">Required</span>}
+              {data.showErrors && !data.bankName && <span className="text-[10px] font-semibold md:font-bold text-red-500 mt-1.5">Required</span>}
             </div>
             <div className="flex flex-col">
-              <label className="text-[11px] font-bold text-slate-800 mb-2 uppercase tracking-wider">Branch Name *</label>
+              <label className="text-[11px] font-semibold md:font-bold text-slate-800 mb-2 uppercase tracking-wider">Branch Name *</label>
               <input 
                 type="text" 
                 placeholder="Branch Name" 
@@ -168,7 +168,7 @@ export default function Step3AddressBank() {
 
           <div className="flex flex-col">
             <div className="flex items-center justify-between mb-2">
-              <label className="text-[11px] font-bold text-slate-800 uppercase tracking-wider">IFSC Code *</label>
+              <label className="text-[11px] font-semibold md:font-bold text-slate-800 uppercase tracking-wider">IFSC Code *</label>
             </div>
             <input 
               type="text" 

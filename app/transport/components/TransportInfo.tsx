@@ -46,7 +46,7 @@ export default function TransportInfo() {
       
       {/* 1. Bus Photo Showcase Section */}
       <div className="flex flex-col gap-6">
-        <h2 className="text-xl md:text-2xl font-extrabold text-slate-800 tracking-tight">
+        <h2 className="text-xl md:text-2xl font-semibold md:font-bold text-slate-800 tracking-tight">
           School Bus Fleet
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -58,8 +58,8 @@ export default function TransportInfo() {
               className="w-full h-full object-cover group-hover:scale-103 transition-transform duration-700"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-slate-900/10 to-transparent flex flex-col justify-end p-6 md:p-8">
-              <span className="text-brand-green font-bold text-xs uppercase tracking-wider mb-2">School Transport</span>
-              <h3 className="text-white text-lg md:text-xl font-extrabold leading-tight">GPS & Camera-Enabled Safe Transit Busses</h3>
+              <span className="text-brand-green font-semibold md:font-bold text-xs uppercase tracking-wider mb-2">School Transport</span>
+              <h3 className="text-white text-lg md:text-xl font-semibold md:font-bold leading-tight">GPS & Camera-Enabled Safe Transit Busses</h3>
             </div>
           </div>
 
@@ -68,21 +68,21 @@ export default function TransportInfo() {
             <div className="w-12 h-12 rounded-2xl bg-emerald-50 text-brand-green flex items-center justify-center">
               <Bus className="w-6 h-6 stroke-[1.5]" />
             </div>
-            <h3 className="text-lg md:text-xl font-extrabold text-slate-800 tracking-tight leading-tight">
+            <h3 className="text-lg md:text-xl font-semibold md:font-bold text-slate-800 tracking-tight leading-tight">
               Safety-Centric Fleet Monitoring
             </h3>
-            <p className="text-slate-500 text-xs md:text-sm font-semibold leading-relaxed">
+            <p className="text-slate-500 text-xs md:text-sm font-normal md:font-semibold leading-relaxed">
               Our transportation system operates fully GPS-tracked, speed-regulated school buses. Regular inspections and certified drivers guarantee a secure transit cycle for all students.
             </p>
             <div className="flex items-center gap-4 mt-2">
               <div className="flex flex-col">
-                <span className="text-xs font-black text-slate-850">03 Active Routes</span>
-                <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Covering All Sectors</span>
+                <span className="text-xs font-semibold md:font-bold text-slate-850">03 Active Routes</span>
+                <span className="text-[10px] text-slate-400 font-semibold md:font-bold uppercase tracking-wider">Covering All Sectors</span>
               </div>
               <div className="w-[1px] h-8 bg-slate-200" />
               <div className="flex flex-col">
-                <span className="text-xs font-black text-slate-850">GPS Tracker v2</span>
-                <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Live Parents App Link</span>
+                <span className="text-xs font-semibold md:font-bold text-slate-850">GPS Tracker v2</span>
+                <span className="text-[10px] text-slate-400 font-semibold md:font-bold uppercase tracking-wider">Live Parents App Link</span>
               </div>
             </div>
           </div>
@@ -91,7 +91,7 @@ export default function TransportInfo() {
 
       {/* 2. Routes and Stations Showcase Section */}
       <div className="flex flex-col gap-6">
-        <h2 className="text-xl md:text-2xl font-extrabold text-slate-800 tracking-tight">
+        <h2 className="text-xl md:text-2xl font-semibold md:font-bold text-slate-800 tracking-tight">
           Transit Routes & Station Sequences
         </h2>
         <div className="flex flex-col gap-8">
@@ -111,23 +111,23 @@ export default function TransportInfo() {
                     <Bus className="w-5 h-5" />
                   </div>
                   <div className="flex flex-col">
-                    <h3 className="font-extrabold text-slate-850 text-base md:text-lg leading-none">
+                    <h3 className="font-semibold md:font-bold text-slate-850 text-base md:text-lg leading-none">
                       {route.busNo}
                     </h3>
-                    <span className="text-[10px] text-slate-400 font-bold uppercase mt-1 tracking-wider">
+                    <span className="text-[10px] text-slate-400 font-semibold md:font-bold uppercase mt-1 tracking-wider">
                       Reg. Code: {route.busCode}
                     </span>
                   </div>
                 </div>
                 
-                <div className="text-[10px] text-brand-green bg-emerald-50/50 border border-emerald-100/30 px-3 py-1 rounded-full font-bold self-start sm:self-auto select-none">
+                <div className="text-[10px] text-brand-green bg-emerald-50/50 border border-emerald-100/30 px-3 py-1 rounded-full font-semibold md:font-bold self-start sm:self-auto select-none">
                   Fully Operational Route
                 </div>
               </div>
 
               {/* Stations Sequence (Horizontal on Desktop, Vertical on Mobile) */}
               <div className="flex flex-col gap-4">
-                <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">
+                <span className="text-[10px] text-slate-400 font-semibold md:font-bold uppercase tracking-wider">
                   Pickup Stations sequence:
                 </span>
                 
@@ -149,15 +149,15 @@ export default function TransportInfo() {
                           {isLast ? (
                             <MapPin className="w-4 h-4" />
                           ) : (
-                            <span className="text-[10px] font-black">{sIdx + 1}</span>
+                            <span className="text-[10px] font-semibold md:font-bold">{sIdx + 1}</span>
                           )}
                         </div>
                         {/* Name and timing */}
                         <div className="flex flex-col">
-                          <span className={`text-xs font-bold leading-tight ${isLast ? "text-brand-green font-extrabold" : "text-slate-800"}`}>
+                          <span className={`text-xs font-semibold md:font-bold leading-tight ${isLast ? "text-brand-green font-semibold md:font-bold" : "text-slate-800"}`}>
                             {st.name}
                           </span>
-                          <span className="text-[10px] text-slate-400 font-bold mt-0.5 inline-flex items-center gap-1 justify-center">
+                          <span className="text-[10px] text-slate-400 font-semibold md:font-bold mt-0.5 inline-flex items-center gap-1 justify-center">
                             <Clock className="w-3 h-3 text-slate-300" /> {st.time}
                           </span>
                         </div>
@@ -184,15 +184,15 @@ export default function TransportInfo() {
                           {isLast ? (
                             <MapPin className="w-3.5 h-3.5" />
                           ) : (
-                            <span className="text-[9px] font-black">{sIdx + 1}</span>
+                            <span className="text-[9px] font-semibold md:font-bold">{sIdx + 1}</span>
                           )}
                         </div>
                         {/* Name & Timing */}
                         <div className="flex flex-col pt-0.5">
-                          <span className={`text-xs font-bold leading-none ${isLast ? "text-brand-green font-extrabold" : "text-slate-800"}`}>
+                          <span className={`text-xs font-semibold md:font-bold leading-none ${isLast ? "text-brand-green font-semibold md:font-bold" : "text-slate-800"}`}>
                             {st.name}
                           </span>
-                          <span className="text-[10px] text-slate-400 font-bold mt-1.5 flex items-center gap-1">
+                          <span className="text-[10px] text-slate-400 font-semibold md:font-bold mt-1.5 flex items-center gap-1">
                             <Clock className="w-3.5 h-3.5 text-slate-300" /> {st.time}
                           </span>
                         </div>

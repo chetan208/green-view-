@@ -116,7 +116,7 @@ export default function AcademicCalendar() {
         transition={{ duration: 0.6, ease: "easeOut" }}
         className="text-center mb-8 md:mb-10 select-none"
       >
-        <h2 className="text-3xl md:text-4xl font-extrabold text-slate-800 tracking-tight leading-tight">
+        <h2 className="text-3xl md:text-4xl font-semibold md:font-extrabold text-slate-800 tracking-tight leading-tight">
           Academic <span className="text-[#0fa958]">Calendar</span>
         </h2>
       </motion.div>
@@ -143,8 +143,8 @@ export default function AcademicCalendar() {
             >
               <ChevronLeft className="w-4 h-4 stroke-[2.5]" />
             </motion.button>
-            <h3 className="text-base md:text-lg font-extrabold text-slate-700 tracking-tight flex items-center gap-1.5 w-32">
-              <span className="font-semibold text-slate-800">{monthName}</span>
+            <h3 className="text-base md:text-lg font-semibold md:font-extrabold text-slate-700 tracking-tight flex items-center gap-1.5 w-32">
+              <span className="font-normal md:font-semibold text-slate-800">{monthName}</span>
               <span className="text-[#0fa958]">{year}</span>
             </h3>
             <motion.button 
@@ -158,7 +158,7 @@ export default function AcademicCalendar() {
           </div>
 
           {/* Weekday Names Header */}
-          <div className="grid grid-cols-7 gap-y-4 text-center text-xs md:text-sm font-bold text-slate-400 mb-4 select-none">
+          <div className="grid grid-cols-7 gap-y-4 text-center text-xs md:text-sm font-semibold md:font-bold text-slate-400 mb-4 select-none">
             <span>M</span>
             <span>T</span>
             <span>W</span>
@@ -194,7 +194,7 @@ export default function AcademicCalendar() {
                       onClick={() => setSelectedDay(dayNum)}
                       whileHover={{ scale: 1.08 }}
                       whileTap={{ scale: 0.92 }}
-                      className={`w-9 h-9 md:w-10 md:h-10 flex items-center justify-center font-bold text-xs md:text-sm rounded-full transition-colors select-none ${
+                      className={`w-9 h-9 md:w-10 md:h-10 flex items-center justify-center font-semibold md:font-bold text-xs md:text-sm rounded-full transition-colors select-none ${
                         isSelected
                           ? "bg-[#0fa958] text-white shadow-sm"
                           : hasEvent
@@ -215,7 +215,7 @@ export default function AcademicCalendar() {
         {/* Right Column: Events Panel */}
         <div className="w-full md:w-[360px] lg:w-[400px] bg-slate-50/50 p-6 md:p-8 lg:p-10 border-t md:border-t-0 md:border-l border-slate-200/80 shrink-0 flex flex-col justify-start">
           
-          <h3 className="font-bold text-slate-800 text-base md:text-lg tracking-tight select-none">
+          <h3 className="font-semibold md:font-bold text-slate-800 text-base md:text-lg tracking-tight select-none">
             Events
           </h3>
           <div className="w-full h-[2px] bg-[#0fa958] mt-3 mb-6 select-none" />
@@ -248,7 +248,7 @@ export default function AcademicCalendar() {
                           className="w-2 h-2 bg-[#0fa958] rounded-full mt-1.5 shrink-0" 
                         />
                         <div className="flex flex-col">
-                          <span className={`text-slate-700 text-xs md:text-sm font-bold tracking-tight transition-colors ${
+                          <span className={`text-slate-700 text-xs md:text-sm font-semibold md:font-bold tracking-tight transition-colors ${
                             isEventSelected ? "text-[#0fa958]" : "group-hover:text-[#0fa958]"
                           }`}>
                             {event.title}
@@ -261,7 +261,7 @@ export default function AcademicCalendar() {
                     );
                   })
                 ) : (
-                  <div className="text-slate-400 text-xs font-semibold text-center py-8 select-none">
+                  <div className="text-slate-400 text-xs font-normal md:font-semibold text-center py-8 select-none">
                     No events scheduled for this month.
                   </div>
                 )}

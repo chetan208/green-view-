@@ -49,7 +49,7 @@ export default function FacilitiesSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="text-[10px] md:text-xs font-black text-slate-800 uppercase tracking-[0.25em] text-center mb-3 select-none"
+          className="text-[10px] md:text-xs font-semibold md:font-black text-slate-800 uppercase tracking-[0.25em] text-center mb-3 select-none"
         >
           Choose Green View?
         </motion.span>
@@ -64,7 +64,7 @@ export default function FacilitiesSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, ease: "easeOut" }}
-            className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight text-center flex-1"
+            className="text-3xl md:text-4xl font-semibold md:font-extrabold text-slate-900 tracking-tight text-center flex-1"
           >
             Why Learn With Us?
           </motion.h2>
@@ -72,7 +72,7 @@ export default function FacilitiesSection() {
           <motion.div whileHover={{ scale: 1.05 }}>
             <Link
               href="#events"
-              className="flex items-center gap-1 font-bold text-slate-900 hover:text-emerald-700 text-sm md:text-base transition-colors"
+              className="flex items-center gap-1 font-semibold md:font-bold text-slate-900 hover:text-emerald-700 text-sm md:text-base transition-colors"
             >
               See All
               <span className="text-xs">▸</span>
@@ -108,7 +108,7 @@ export default function FacilitiesSection() {
 
               {/* Text Container */}
               <div className="py-4 px-4 text-center select-none">
-                <span className="text-white font-extrabold text-sm md:text-base tracking-tight block">
+                <span className="text-white font-semibold md:font-extrabold text-sm md:text-base tracking-tight block">
                   {card.title}
                 </span>
               </div>

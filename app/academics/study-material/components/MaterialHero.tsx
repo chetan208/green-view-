@@ -9,7 +9,7 @@ export default function MaterialHero() {
       <div className="text-sm font-medium text-slate-500">
         <Link href="/" className="text-[#0fa958] hover:underline">Home</Link> / <span className="text-slate-400">Academics</span> / <span>Study Material</span>
       </div>
-      <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight" style={{ fontFamily: "Georgia, serif" }}>
+      <h1 className="text-4xl md:text-5xl font-semibold md:font-extrabold text-slate-900 tracking-tight" style={{ fontFamily: "Georgia, serif" }}>
         Study <span className="text-[#147a42]">Material</span>
       </h1>
       <p className="text-slate-500 font-medium text-xs md:text-sm max-w-2xl leading-relaxed">

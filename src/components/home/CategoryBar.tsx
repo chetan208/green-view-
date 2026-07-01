@@ -59,7 +59,7 @@ export default function CategoryBar() {
               />
             </div>
             {/* Title */}
-            <span className="font-extrabold text-slate-800 text-xs md:text-sm tracking-tight">
+            <span className="font-semibold md:font-extrabold text-slate-800 text-xs md:text-sm tracking-tight">
               {item.title}
             </span>
           </div>

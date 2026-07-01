@@ -11,14 +11,14 @@ export default function ContactForm() {
       transition={{ duration: 0.6, delay: 0.2 }}
       className="bg-[#f8fafc] rounded-[2rem] p-8 md:p-10 w-full"
     >
-      <h2 className="text-xl md:text-2xl font-bold text-slate-800 mb-8">
+      <h2 className="text-xl md:text-2xl font-semibold md:font-bold text-slate-800 mb-8">
         Send us a Message
       </h2>
       
       <form className="flex flex-col gap-6" onSubmit={(e) => e.preventDefault()}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="flex flex-col gap-2">
-            <label htmlFor="name" className="text-xs font-bold text-slate-600">Name</label>
+            <label htmlFor="name" className="text-xs font-semibold md:font-bold text-slate-600">Name</label>
             <input 
               type="text" 
               id="name" 
@@ -27,7 +27,7 @@ export default function ContactForm() {
             />
           </div>
           <div className="flex flex-col gap-2">
-            <label htmlFor="email" className="text-xs font-bold text-slate-600">Email</label>
+            <label htmlFor="email" className="text-xs font-semibold md:font-bold text-slate-600">Email</label>
             <input 
               type="email" 
               id="email" 
@@ -38,7 +38,7 @@ export default function ContactForm() {
         </div>
         
         <div className="flex flex-col gap-2">
-          <label htmlFor="subject" className="text-xs font-bold text-slate-600">Subject</label>
+          <label htmlFor="subject" className="text-xs font-semibold md:font-bold text-slate-600">Subject</label>
           <input 
             type="text" 
             id="subject" 
@@ -48,7 +48,7 @@ export default function ContactForm() {
         </div>
 
         <div className="flex flex-col gap-2">
-          <label htmlFor="message" className="text-xs font-bold text-slate-600">Message</label>
+          <label htmlFor="message" className="text-xs font-semibold md:font-bold text-slate-600">Message</label>
           <textarea 
             id="message" 
             placeholder="Your message" 
@@ -59,7 +59,7 @@ export default function ContactForm() {
 
         <button 
           type="submit" 
-          className="w-full h-14 bg-[#0a5c32] hover:bg-[#084b28] text-white font-bold rounded-xl mt-2 transition-colors shadow-md shadow-emerald-900/10"
+          className="w-full h-14 bg-[#0a5c32] hover:bg-[#084b28] text-white font-semibold md:font-bold rounded-xl mt-2 transition-colors shadow-md shadow-emerald-900/10"
         >
           Send Message
         </button>

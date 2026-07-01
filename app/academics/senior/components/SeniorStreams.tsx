@@ -47,10 +47,10 @@ export default function SeniorStreams() {
         
         {/* Header */}
         <div className="flex flex-col items-center text-center gap-3">
-          <span className="text-brand-green font-bold text-xs uppercase tracking-[0.25em]">
+          <span className="text-brand-green font-semibold md:font-bold text-xs uppercase tracking-[0.25em]">
             CHOOSE YOUR PATH
           </span>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight max-w-3xl">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold md:font-extrabold text-slate-900 tracking-tight leading-tight max-w-3xl">
             Specialized Streams for Class XI & XII
           </h2>
           <p className="text-slate-500 font-medium text-sm md:text-base max-w-2xl mt-1 leading-relaxed">
@@ -59,7 +59,7 @@ export default function SeniorStreams() {
         </div>
 
         {/* Streams Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {streams.map((stream, index) => {
             const Icon = stream.icon;
             return (
@@ -77,13 +77,13 @@ export default function SeniorStreams() {
                     <div className={`w-12 h-12 rounded-2xl border flex items-center justify-center shrink-0 ${stream.themeColor}`}>
                       <Icon className="w-6 h-6 stroke-[1.5]" />
                     </div>
-                    <h3 className="text-lg md:text-xl font-extrabold text-slate-800 tracking-tight">
+                    <h3 className="text-lg md:text-xl font-semibold md:font-extrabold text-slate-800 tracking-tight">
                       {stream.title}
                     </h3>
                   </div>
 
                   {/* Description */}
-                  <p className="text-slate-500 text-xs md:text-sm font-semibold leading-relaxed">
+                  <p className="text-slate-500 text-xs md:text-sm font-normal md:font-semibold leading-relaxed">
                     {stream.tagline}
                   </p>
 
@@ -91,12 +91,12 @@ export default function SeniorStreams() {
 
                   {/* Core Subjects */}
                   <div className="flex flex-col gap-2.5">
-                    <h4 className="text-slate-800 font-bold text-xs uppercase tracking-wide">
+                    <h4 className="text-slate-800 font-semibold md:font-bold text-xs uppercase tracking-wide">
                       Core Subjects
                     </h4>
                     <div className="flex flex-wrap gap-2">
                       {stream.coreSubjects.map((sub, sIdx) => (
-                        <span key={sIdx} className="bg-slate-50 text-slate-600 text-[10px] md:text-xs font-bold px-3 py-1 rounded-lg border border-slate-100/50">
+                        <span key={sIdx} className="bg-slate-50 text-slate-600 text-[10px] md:text-xs font-semibold md:font-bold px-3 py-1 rounded-lg border border-slate-100/50">
                           {sub}
                         </span>
                       ))}
@@ -105,12 +105,12 @@ export default function SeniorStreams() {
 
                   {/* Elective Options */}
                   <div className="flex flex-col gap-2.5">
-                    <h4 className="text-slate-800 font-bold text-xs uppercase tracking-wide">
+                    <h4 className="text-slate-800 font-semibold md:font-bold text-xs uppercase tracking-wide">
                       Elective Options
                     </h4>
                     <div className="flex flex-wrap gap-2">
                       {stream.electives.map((sub, sIdx) => (
-                        <span key={sIdx} className="bg-slate-50/50 text-slate-500 text-[10px] md:text-xs font-semibold px-2.5 py-0.5 rounded-lg border border-dashed border-slate-200">
+                        <span key={sIdx} className="bg-slate-50/50 text-slate-500 text-[10px] md:text-xs font-normal md:font-semibold px-2.5 py-0.5 rounded-lg border border-dashed border-slate-200">
                           {sub}
                         </span>
                       ))}
@@ -121,7 +121,7 @@ export default function SeniorStreams() {
 
                   {/* Highlights */}
                   <div className="flex flex-col gap-3">
-                    <h4 className="text-slate-800 font-bold text-xs uppercase tracking-wide">
+                    <h4 className="text-slate-800 font-semibold md:font-bold text-xs uppercase tracking-wide">
                       Stream Highlights
                     </h4>
                     <ul className="flex flex-col gap-2">

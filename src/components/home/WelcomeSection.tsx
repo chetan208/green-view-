@@ -83,10 +83,10 @@ export default function WelcomeSection() {
             whileHover={{ y: -2 }}
             className="absolute top-4 left-4 md:-left-4 z-20 bg-white/95 backdrop-blur-sm p-3 px-4 rounded-2xl shadow-md border border-slate-100/80 flex flex-col cursor-pointer select-none"
           >
-            <span className="text-[8px] font-bold text-slate-400 uppercase tracking-widest leading-none">
+            <span className="text-[8px] font-semibold md:font-bold text-slate-400 uppercase tracking-widest leading-none">
               Established
             </span>
-            <span className="text-sm font-black text-slate-800 mt-1 leading-none">
+            <span className="text-sm font-semibold md:font-black text-slate-800 mt-1 leading-none">
               1998 <span className="text-[#0fa958]">â€¢</span> <span className="text-[#0fa958]">Kangra</span>
             </span>
           </motion.div>
@@ -105,7 +105,7 @@ export default function WelcomeSection() {
           <motion.button 
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.97 }}
-            className="bg-[#0fa958] text-white hover:bg-emerald-700 px-6 py-2.5 rounded-full font-bold text-xs tracking-wide transition-all shadow-md"
+            className="bg-[#0fa958] text-white hover:bg-emerald-700 px-6 py-2.5 rounded-full font-semibold md:font-bold text-xs tracking-wide transition-all shadow-md"
           >
             View More
           </motion.button>
@@ -121,24 +121,24 @@ export default function WelcomeSection() {
         >
           
           {/* Subtitle */}
-          <motion.span variants={rightItemVariants} className="text-[10px] md:text-xs font-black text-slate-400 uppercase tracking-[0.2em] mb-3">
+          <motion.span variants={rightItemVariants} className="text-[10px] md:text-xs font-semibold md:font-black text-slate-400 uppercase tracking-[0.2em] mb-3">
             Our Story & Trust
           </motion.span>
 
           {/* Main Heading */}
-          <motion.h2 variants={rightItemVariants} className="text-3xl md:text-4xl font-extrabold text-[#0c3c86] tracking-tight leading-tight mb-4">
+          <motion.h2 variants={rightItemVariants} className="text-3xl md:text-4xl font-semibold md:font-extrabold text-[#0c3c86] tracking-tight leading-tight mb-4">
             Welcome to <span className="text-[#0fa958]">Green View</span> <br />
             Sr. Sec. School
           </motion.h2>
 
           {/* Description */}
-          <motion.p variants={rightItemVariants} className="text-slate-500 text-xs md:text-sm font-semibold leading-relaxed mb-6">
+          <motion.p variants={rightItemVariants} className="text-slate-500 text-xs md:text-sm font-normal md:font-semibold leading-relaxed mb-6">
             Green View Senior Secondary School was established in 1998 with a vision to provide quality education in a nurturing environment. Affiliated with HPBOSE, the school has grown into a trusted institution for students from Nursery to XII. With experienced faculty, well-equipped labs, sports facilities, and a strong focus on academics and values, Green View has been shaping confident and responsible learners for over 27 years.
           </motion.p>
 
           {/* Official Registrations Section */}
           <motion.div variants={rightItemVariants} className="w-full mb-8">
-            <h3 className="text-xs font-bold text-slate-700 uppercase tracking-widest mb-4">
+            <h3 className="text-xs font-semibold md:font-bold text-slate-700 uppercase tracking-widest mb-4">
               Official Registrations & Legal Credentials
             </h3>
             
@@ -155,13 +155,13 @@ export default function WelcomeSection() {
                       {cred.icon}
                     </div>
                     <div>
-                      <h4 className="text-[10px] font-black text-slate-400 uppercase tracking-wider leading-none">
+                      <h4 className="text-[10px] font-semibold md:font-black text-slate-400 uppercase tracking-wider leading-none">
                         {cred.title}
                       </h4>
-                      <p className="text-xs font-extrabold text-[#0c3c86] leading-tight mt-1.5">
+                      <p className="text-xs font-semibold md:font-extrabold text-[#0c3c86] leading-tight mt-1.5">
                         {cred.value}
                       </p>
-                      <p className="text-[9.5px] text-slate-500 font-semibold leading-normal mt-2">
+                      <p className="text-[9.5px] text-slate-500 font-normal md:font-semibold leading-normal mt-2">
                         {cred.description}
                       </p>
                     </div>
@@ -177,7 +177,7 @@ export default function WelcomeSection() {
             <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
               <Link
                 href="#admission"
-                className="bg-[#0fa958] text-white hover:bg-emerald-700 px-6 py-3 rounded-full font-bold text-xs tracking-wide transition-all shadow-md block"
+                className="bg-[#0fa958] text-white hover:bg-emerald-700 px-6 py-3 rounded-full font-semibold md:font-bold text-xs tracking-wide transition-all shadow-md block"
               >
                 Talk to Admissions
               </Link>
@@ -185,7 +185,7 @@ export default function WelcomeSection() {
             <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
               <Link
                 href="#academics"
-                className="bg-white border border-slate-200 text-slate-600 hover:border-emerald-600 hover:text-emerald-600 px-6 py-3 rounded-full font-bold text-xs tracking-wide transition-all block"
+                className="bg-white border border-slate-200 text-slate-600 hover:border-emerald-600 hover:text-emerald-600 px-6 py-3 rounded-full font-semibold md:font-bold text-xs tracking-wide transition-all block"
               >
                 See Academics
               </Link>
