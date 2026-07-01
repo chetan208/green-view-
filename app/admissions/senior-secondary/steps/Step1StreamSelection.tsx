@@ -1,18 +1,21 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { GraduationCap, Camera, Check } from "lucide-react";
+import { useAdmissionContext } from "../context/AdmissionContext";
 
 export default function Step1StreamSelection() {
-  const [selectedClass, setSelectedClass] = useState<string>("Class 11");
-  const [selectedStream, setSelectedStream] = useState<string>("Science");
-  const [isProvisional, setIsProvisional] = useState<boolean>(false);
-  const [photoPreview, setPhotoPreview] = useState<string | null>(null);
+  const { data, updateData } = useAdmissionContext();
+  const { selectedClass, selectedStream, isProvisional, photoPreview, selectedSubjects, showErrors } = data;
+  
+  const hasPhotoError = showErrors && !photoPreview;
+  const hasSubjectError = showErrors && selectedSubjects.length !== 5;
 
   type Subject = { name: string; compulsory: boolean };
 
   const streamSubjects: Record<string, Subject[]> = {
     "Science": [
+      { name: "English (Core)", compulsory: true },
       { name: "Physics", compulsory: true },
       { name: "Chemistry", compulsory: true },
       { name: "Mathematics", compulsory: false },
@@ -21,6 +24,7 @@ export default function Step1StreamSelection() {
       { name: "Physical Education", compulsory: false }
     ],
     "Commerce": [
+      { name: "English (Core)", compulsory: true },
       { name: "Accountancy", compulsory: true },
       { name: "Business Studies", compulsory: true },
       { name: "Economics", compulsory: false },
@@ -29,6 +33,7 @@ export default function Step1StreamSelection() {
       { name: "Physical Education", compulsory: false }
     ],
     "Arts": [
+      { name: "English (Core)", compulsory: true },
       { name: "History", compulsory: true },
       { name: "Political Science", compulsory: true },
       { name: "Geography", compulsory: false },
@@ -38,32 +43,28 @@ export default function Step1StreamSelection() {
     ]
   };
   
-  // Initialize with Science compulsory subjects
-  const [selectedSubjects, setSelectedSubjects] = useState<string[]>(
-    streamSubjects["Science"].filter(s => s.compulsory).map(s => s.name)
-  );
-
   const handleStreamChange = (stream: string) => {
-    setSelectedStream(stream);
-    // Reset subjects to compulsory ones for the new stream
     const defaultSubjects = streamSubjects[stream].filter(s => s.compulsory).map(s => s.name);
-    setSelectedSubjects(defaultSubjects);
+    updateData({ selectedStream: stream, selectedSubjects: defaultSubjects });
   };
 
   const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      const url = URL.createObjectURL(file);
-      setPhotoPreview(url);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        updateData({ photoPreview: reader.result as string });
+      };
+      reader.readAsDataURL(file);
     }
   };
 
   const toggleSubject = (subject: string) => {
     if (selectedSubjects.includes(subject)) {
-      setSelectedSubjects(selectedSubjects.filter(s => s !== subject));
+      updateData({ selectedSubjects: selectedSubjects.filter(s => s !== subject) });
     } else {
-      if (selectedSubjects.length < 4) {
-        setSelectedSubjects([...selectedSubjects, subject]);
+      if (selectedSubjects.length < 5) {
+        updateData({ selectedSubjects: [...selectedSubjects, subject] });
       }
     }
   };
@@ -93,7 +94,7 @@ export default function Step1StreamSelection() {
           <label className="text-sm font-bold text-slate-800 mb-3 block">
             Student Photograph *
           </label>
-          <label className="w-40 h-48 rounded-2xl border-2 border-dashed border-emerald-300 bg-emerald-50/30 flex flex-col items-center justify-center cursor-pointer hover:bg-emerald-50 transition-colors group relative overflow-hidden">
+          <label className={`w-40 h-48 rounded-2xl border-2 border-dashed flex flex-col items-center justify-center cursor-pointer transition-colors group relative overflow-hidden ${hasPhotoError ? 'border-red-400 bg-red-50 hover:bg-red-100' : 'border-emerald-300 bg-emerald-50/30 hover:bg-emerald-50'}`}>
             <input 
               type="file" 
               accept="image/png, image/jpeg" 
@@ -106,13 +107,14 @@ export default function Step1StreamSelection() {
             ) : (
               <>
                 <div className="w-12 h-12 bg-white rounded-full shadow-sm flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
-                  <Camera className="w-5 h-5 text-[#0fa958]" />
+                  <Camera className={`w-5 h-5 ${hasPhotoError ? 'text-red-500' : 'text-[#0fa958]'}`} />
                 </div>
-                <span className="text-sm font-bold text-[#0fa958]">Upload Photo</span>
+                <span className={`text-sm font-bold ${hasPhotoError ? 'text-red-500' : 'text-[#0fa958]'}`}>Upload Photo</span>
                 <span className="text-[10px] font-medium text-slate-400 mt-1">JPG, PNG up to 2MB</span>
               </>
             )}
           </label>
+          {hasPhotoError && <span className="text-[10px] font-bold text-red-500 mt-2">Photo is mandatory</span>}
           <p className="text-[11px] text-slate-400 font-medium text-center md:text-left mt-3 leading-relaxed max-w-[160px]">
             Please upload a recent formal passport-sized photograph.
           </p>
@@ -131,7 +133,7 @@ export default function Step1StreamSelection() {
                 {["Class 11", "Class 12"].map((cls) => (
                   <button
                     key={cls}
-                    onClick={() => setSelectedClass(cls)}
+                    onClick={() => updateData({ selectedClass: cls })}
                     className={`flex-1 flex items-center gap-3 p-3 rounded-xl border transition-all ${
                       selectedClass === cls 
                         ? "border-blue-500 bg-blue-50/30" 
@@ -182,28 +184,47 @@ export default function Step1StreamSelection() {
           </div>
 
           {/* Subject Combinations Card */}
-          <div className="w-full bg-[#f6fcf8] border border-emerald-100 rounded-2xl p-5 md:p-6">
-            <h3 className="text-sm font-black text-emerald-800 mb-5">Subject Combinations</h3>
+          <div className={`w-full border rounded-2xl p-5 md:p-6 transition-colors ${hasSubjectError ? 'bg-red-50/30 border-red-200' : 'bg-[#f6fcf8] border-emerald-100'}`}>
+            <div className="flex justify-between items-center mb-5">
+              <h3 className={`text-sm font-black ${hasSubjectError ? 'text-red-700' : 'text-emerald-800'}`}>Subject Combinations</h3>
+              {hasSubjectError && <span className="text-[10px] font-bold text-red-500">Please select 4 electives</span>}
+            </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-6">
               
-              {/* Compulsory Language */}
-              <div>
-                <label className="text-[10px] font-black text-slate-400 uppercase tracking-wider mb-2 block">
-                  COMPULSORY LANGUAGE
-                </label>
-                <div className="w-full bg-white border border-slate-200 rounded-xl p-3.5 flex items-center justify-between">
-                  <span className="text-sm font-bold text-slate-700">English (Core)</span>
-                  <span className="text-[10px] font-bold text-emerald-700 bg-emerald-100 px-2 py-1 rounded-md">
-                    Mandatory
-                  </span>
-                </div>
+              {/* Selected Subjects Column */}
+              <div className="flex flex-col gap-6">
+                {/* Selected Subjects List */}
+                {selectedSubjects.length > 0 && (
+                  <div>
+                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-wider mb-2 block">
+                      YOUR SELECTED SUBJECTS
+                    </label>
+                    <div className="flex flex-col gap-2">
+                      {selectedSubjects.map((sub, i) => (
+                        <div key={i} className="w-full bg-white border border-blue-100 rounded-xl p-3.5 flex items-center gap-3 shadow-sm transition-all">
+                          <div className="w-2 h-2 rounded-full bg-blue-500 shrink-0" />
+                          <span className="text-sm font-bold text-slate-700 leading-tight">{sub}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+                
+                {/* Remaining Counter */}
+                {selectedSubjects.length < 5 && (
+                  <div className="w-full bg-orange-50/50 border border-orange-200 border-dashed rounded-xl p-3.5 flex items-center justify-center mt-auto">
+                    <span className="text-[11px] font-bold text-orange-600">
+                      Please select {5 - selectedSubjects.length} more subject{5 - selectedSubjects.length > 1 ? 's' : ''} from the list ➔
+                    </span>
+                  </div>
+                )}
               </div>
 
               {/* Select Electives */}
               <div>
                 <label className="text-[10px] font-black text-slate-400 uppercase tracking-wider mb-2 block">
-                  SELECT ELECTIVES (PICK 4) *
+                  AVAILABLE SUBJECTS (PICK 5 TOTAL) *
                 </label>
                 <div className="flex flex-col gap-2">
                   {streamSubjects[selectedStream].map((subject) => {
@@ -239,28 +260,6 @@ export default function Step1StreamSelection() {
           </div>
 
         </div>
-      </div>
-
-      {/* Provisional Admission Toggle */}
-      <div className="mt-8 pt-6 border-t border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div>
-          <h4 className="text-sm font-bold text-slate-800">Provisional Admission Status</h4>
-          <p className="text-xs text-slate-500 font-medium mt-1">
-            Enable this if your previous board class results have not yet been declared.
-          </p>
-        </div>
-        
-        <button 
-          onClick={() => setIsProvisional(!isProvisional)}
-          className="flex items-center gap-3 self-start sm:self-auto"
-        >
-          <div className={`w-12 h-6 rounded-full p-1 transition-colors duration-300 ease-in-out ${isProvisional ? "bg-[#0fa958]" : "bg-slate-200"}`}>
-            <div className={`w-4 h-4 bg-white rounded-full shadow-sm transition-transform duration-300 ease-in-out ${isProvisional ? "translate-x-6" : "translate-x-0"}`} />
-          </div>
-          <span className={`text-sm font-bold ${isProvisional ? "text-[#0fa958]" : "text-slate-600"}`}>
-            {isProvisional ? "Provisional" : "Regular"}
-          </span>
-        </button>
       </div>
 
     </div>

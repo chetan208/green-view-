@@ -15,8 +15,7 @@
   --color-brand-green-forest: #10a856;
   --color-brand-navy: #0c3c86;
   
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-poppins: var(--font-poppins), sans-serif;
+  --font-sans: var(--font-poppins), ui-sans-serif, system-ui, sans-serif;
 }
 
 body {

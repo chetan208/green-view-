@@ -1,11 +1,13 @@
 import React from "react";
+import { useAdmissionContext } from "../context/AdmissionContext";
 
 export default function PrintableForm() {
+  const { data } = useAdmissionContext();
   return (
     <div id="printable-form" className="hidden print:block w-full bg-white text-black text-[12px] font-serif leading-tight">
       <style dangerouslySetInnerHTML={{__html: `
         @media print {
-          @page { size: A4; margin: 15mm; }
+          @page { size: A4; margin: 10mm; }
           body * { visibility: hidden; }
           #printable-form, #printable-form * { visibility: visible; }
           #printable-form { position: absolute; left: 0; top: 0; width: 100%; }
@@ -14,7 +16,7 @@ export default function PrintableForm() {
       `}} />
       
       {/* Page 1 */}
-      <div className="w-full relative mb-10" style={{ pageBreakAfter: 'always' }}>
+      <div className="w-full relative" style={{ pageBreakAfter: 'always' }}>
         <div className="absolute right-0 top-0 text-[10px]">
           Roll . No. Allowed.......................
         </div>
@@ -26,13 +28,18 @@ export default function PrintableForm() {
         </div>
 
         {/* Photo Box */}
-        <div className="absolute right-0 top-12 w-28 h-36 border border-black flex items-center justify-center text-xs text-slate-400">
-          Photo
+        <div className="absolute right-0 top-12 w-28 h-36 border border-black flex items-center justify-center text-xs text-slate-400 overflow-hidden bg-white">
+          {data.photoPreview ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={data.photoPreview} alt="Student" className="w-full h-full object-cover" />
+          ) : (
+            "Photo"
+          )}
         </div>
 
         <div className="flex flex-col gap-3 max-w-[80%] mb-4">
           <div className="flex items-center gap-2">
-            <span>Provisional</span><span className="dotted-line flex-1"></span>
+            <span>Provisional / Regular</span><span className="dotted-line flex-1 text-blue-600 font-bold text-center">{data.isProvisional ? "Provisional" : "Regular"}</span>
           </div>
           <div className="flex items-center gap-2">
             <span>Date</span><span className="dotted-line flex-1"></span>
@@ -45,98 +52,98 @@ export default function PrintableForm() {
         {/* Checkboxes Row */}
         <div className="flex items-center gap-6 mb-4">
           <div className="flex items-center gap-2">
-            <span>Class +1</span><div className="w-4 h-4 border border-black flex items-center justify-center">✓</div>
+            <span>Class +1</span><div className="w-4 h-4 border border-black flex items-center justify-center text-blue-600">{data.selectedClass === "Class 11" ? "✓" : ""}</div>
           </div>
           <div className="flex items-center gap-2">
-            <span>+2</span><div className="w-4 h-4 border border-black"></div>
+            <span>+2</span><div className="w-4 h-4 border border-black flex items-center justify-center text-blue-600">{data.selectedClass === "Class 12" ? "✓" : ""}</div>
           </div>
           <div className="flex items-center gap-2 ml-4">
-            <span>Stream -Science</span><div className="w-4 h-4 border border-black flex items-center justify-center">✓</div>
+            <span>Stream -Science</span><div className="w-4 h-4 border border-black flex items-center justify-center text-blue-600">{data.selectedStream === "Science" ? "✓" : ""}</div>
           </div>
           <div className="flex items-center gap-2">
-            <span>Comm.</span><div className="w-4 h-4 border border-black"></div>
+            <span>Comm.</span><div className="w-4 h-4 border border-black flex items-center justify-center text-blue-600">{data.selectedStream === "Commerce" ? "✓" : ""}</div>
           </div>
           <div className="flex items-center gap-2">
-            <span>Arts</span><div className="w-4 h-4 border border-black"></div>
+            <span>Arts</span><div className="w-4 h-4 border border-black flex items-center justify-center text-blue-600">{data.selectedStream === "Arts" ? "✓" : ""}</div>
           </div>
         </div>
 
         <div className="flex items-center gap-2 mb-4">
-          <span>Subject English</span>
-          <span>2. <span className="dotted-line w-24 border-b-black border-dashed">Physics</span></span>
-          <span>3. <span className="dotted-line w-24 border-b-black border-dashed">Chemistry</span></span>
-          <span>4. <span className="dotted-line w-24 border-b-black border-dashed">Maths</span></span>
-          <span>5. <span className="dotted-line w-24 border-b-black border-dashed">CS</span></span>
+          <span>Subjects: 1.</span> <span className="dotted-line w-24 border-b-black border-dashed text-blue-600 font-bold text-center">{data.selectedSubjects.includes("English") ? data.selectedSubjects[0] : "English"}</span>
+          <span>2. <span className="dotted-line w-24 border-b-black border-dashed text-blue-600 font-bold text-center">{data.selectedSubjects.includes("English") ? data.selectedSubjects[1] : data.selectedSubjects[0] || ""}</span></span>
+          <span>3. <span className="dotted-line w-24 border-b-black border-dashed text-blue-600 font-bold text-center">{data.selectedSubjects.includes("English") ? data.selectedSubjects[2] : data.selectedSubjects[1] || ""}</span></span>
+          <span>4. <span className="dotted-line w-24 border-b-black border-dashed text-blue-600 font-bold text-center">{data.selectedSubjects.includes("English") ? data.selectedSubjects[3] : data.selectedSubjects[2] || ""}</span></span>
+          <span>5. <span className="dotted-line w-24 border-b-black border-dashed text-blue-600 font-bold text-center">{data.selectedSubjects.includes("English") ? data.selectedSubjects[4] : data.selectedSubjects[3] || ""}</span></span>
         </div>
 
         <div className="flex flex-col gap-4 mb-6">
           <div className="flex items-center gap-2">
-            <span>Name (in English)</span><span className="dotted-line flex-1">ANONYMOUS USER</span>
+            <span>Name (in English)</span><span className="dotted-line flex-1 text-blue-600 font-bold text-center">{data.studentNameEnglish}</span>
             <span>(in capital letters)</span>
           </div>
           
           <div className="flex items-center gap-2">
-            <span className="w-24">Father's Name</span><span className="dotted-line flex-1">Father Name</span>
-            <span>Mob. No</span><span className="dotted-line w-32">9876543210</span>
+            <span className="w-24">Father's Name</span><span className="dotted-line flex-1 text-blue-600 font-bold text-center">{data.fatherName}</span>
+            <span>Mob. No</span><span className="dotted-line w-32 text-blue-600 font-bold text-center font-sans tracking-widest">{data.fatherMobile}</span>
           </div>
           
           <div className="flex items-center gap-2">
-            <span className="w-24">Mother's Name</span><span className="dotted-line flex-1">Mother Name</span>
-            <span>Mob. No</span><span className="dotted-line w-32"></span>
+            <span className="w-24">Mother's Name</span><span className="dotted-line flex-1 text-blue-600 font-bold text-center">{data.motherName}</span>
+            <span>Mob. No</span><span className="dotted-line w-32 text-blue-600 font-bold text-center font-sans tracking-widest">{data.motherMobile}</span>
           </div>
           
           <div className="flex items-center gap-2">
-            <span>Guardian's Name (if applicable):</span><span className="dotted-line flex-1"></span>
-            <span>Mob .No</span><span className="dotted-line w-32"></span>
+            <span>Guardian's Name (if applicable):</span><span className="dotted-line flex-1 text-blue-600 font-bold text-center">{data.guardianName}</span>
+            <span>Mob .No</span><span className="dotted-line w-32 text-blue-600 font-bold text-center font-sans tracking-widest">{data.guardianMobile}</span>
           </div>
           
           <div className="flex items-center gap-2">
-            <span>Date of Birth(in figure)</span><span className="dotted-line w-32">11 / 05 / 2006</span>
+            <span>Date of Birth(in figure)</span><span className="dotted-line w-32 text-blue-600 font-bold text-center font-sans tracking-widest">{data.dateOfBirth}</span>
             <span>(in Words)</span><span className="dotted-line flex-1"></span>
           </div>
           
           <div className="flex items-center gap-2">
-            <span>Aadhaar No. of the student</span><span className="dotted-line flex-1">123456789123</span>
+            <span>Aadhaar No. of the student</span><span className="dotted-line flex-1 text-blue-600 font-bold text-center font-sans tracking-widest">{data.aadhaarNumber}</span>
           </div>
           
           <div className="flex items-center gap-4">
             <span>Category(tick) General/SC/ST/OBC</span>
-            <span className="font-bold underline">OBC</span>
+            <span className="font-bold underline text-blue-600 uppercase">{data.socialCategory}</span>
             <span>(Attach certificate)</span>
             <span className="ml-8">IRDP Yes/No</span>
-            <span className="dotted-line w-16">No</span>
+            <span className="dotted-line w-16 text-blue-600 font-bold text-center uppercase">{data.bplStatus}</span>
           </div>
           
           <div className="flex items-center gap-2">
-            <span>Father's/ Guardian's occupation</span><span className="dotted-line flex-1"></span>
-            <span>Annual income:</span><span className="dotted-line w-32">1200000</span>
+            <span>Father's/ Guardian's occupation</span><span className="dotted-line flex-1 text-blue-600 font-bold text-center">{data.fatherOccupation}</span>
+            <span>Annual income:</span><span className="dotted-line w-32 text-blue-600 font-bold text-center">{data.annualIncome}</span>
           </div>
           
           <div className="flex items-center gap-2">
-            <span>PAN No. of student</span><span className="dotted-line flex-1">ABCDE1234F</span>
+            <span>PAN No. of student</span><span className="dotted-line flex-1 text-blue-600 font-bold text-center font-sans uppercase tracking-widest">{data.panNumber}</span>
           </div>
           
           <div className="flex items-center gap-2">
-            <span>Bank Account No.</span><span className="dotted-line flex-1">51561561</span>
-            <span>Bank and Branch</span><span className="dotted-line flex-1">SBI</span>
-            <span>IFSC</span><span className="dotted-line w-32">SBIN0001234</span>
+            <span>Bank Account No.</span><span className="dotted-line flex-1 text-blue-600 font-bold text-center font-sans tracking-widest">{data.bankAccountNo}</span>
+            <span>Bank and Branch</span><span className="dotted-line flex-1 text-blue-600 font-bold text-center uppercase">{data.bankName}, {data.bankBranchName}</span>
+            <span>IFSC</span><span className="dotted-line w-32 text-blue-600 font-bold text-center font-sans uppercase">{data.ifscCode}</span>
           </div>
           
           <div className="flex items-center gap-2">
-            <span>Permanent Address__ Village</span><span className="dotted-line flex-1">123 Street Name</span>
-            <span>P.O</span><span className="dotted-line w-32"></span>
-            <span>Tehsil</span><span className="dotted-line w-32"></span>
+            <span>Permanent Address__ Village</span><span className="dotted-line flex-1 text-blue-600 font-bold text-center">{data.village}</span>
+            <span>P.O</span><span className="dotted-line w-32 text-blue-600 font-bold text-center">{data.postOffice}</span>
+            <span>Tehsil</span><span className="dotted-line w-32 text-blue-600 font-bold text-center">{data.tehsil}</span>
           </div>
           
           <div className="flex items-center gap-2">
-            <span>Distt:-</span><span className="dotted-line flex-1">Solan</span>
-            <span>State</span><span className="dotted-line flex-1">Himachal Pradesh</span>
-            <span>PIN</span><span className="dotted-line w-32">173205</span>
+            <span>Distt:-</span><span className="dotted-line flex-1 text-blue-600 font-bold text-center">{data.district}</span>
+            <span>State</span><span className="dotted-line flex-1 text-blue-600 font-bold text-center">{data.stateName}</span>
+            <span>PIN</span><span className="dotted-line w-32 text-blue-600 font-bold text-center">{data.pinCode}</span>
           </div>
         </div>
 
-        <h3 className="font-bold mb-2 text-sm">Academic Record</h3>
-        <table className="w-full border-collapse border border-black mb-6 text-center text-[10px]">
+        <h3 className="font-bold mb-2 text-sm mt-4">Academic Record</h3>
+        <table className="w-full border-collapse border border-black mb-4 text-center text-[10px]">
           <thead>
             <tr>
               <th className="border border-black p-1">Name of Exam</th>
@@ -152,43 +159,23 @@ export default function PrintableForm() {
             </tr>
           </thead>
           <tbody>
-            <tr className="h-8">
-              <td className="border border-black p-1">Matric</td>
-              <td className="border border-black p-1">2022</td>
-              <td className="border border-black p-1">Some School</td>
-              <td className="border border-black p-1">CBSE</td>
-              <td className="border border-black p-1">123456</td>
-              <td className="border border-black p-1">Pass</td>
-              <td className="border border-black p-1">All</td>
-              <td className="border border-black p-1">500</td>
-              <td className="border border-black p-1">500</td>
-              <td className="border border-black p-1">100%</td>
-            </tr>
-            <tr className="h-8">
-              <td className="border border-black p-1">10+1</td>
-              <td className="border border-black p-1">2026</td>
-              <td className="border border-black p-1"></td>
-              <td className="border border-black p-1">CBSE</td>
-              <td className="border border-black p-1"></td>
-              <td className="border border-black p-1">Pass</td>
-              <td className="border border-black p-1"></td>
-              <td className="border border-black p-1">500</td>
-              <td className="border border-black p-1">500</td>
-              <td className="border border-black p-1">100%</td>
-            </tr>
+            {(data.selectedClass === "Class 11" ? data.academicRecords.slice(0, 1) : data.academicRecords).map((record, index) => (
+              <tr key={index} className="h-8 text-blue-600 font-bold">
+                <td className="border border-black p-1">{record.examName}</td>
+                <td className="border border-black p-1 font-sans tracking-widest">{record.passingYear}</td>
+                <td className="border border-black p-1">{record.school}</td>
+                <td className="border border-black p-1">{record.boardName}</td>
+                <td className="border border-black p-1 font-sans tracking-widest">{record.rollNumber}</td>
+                <td className="border border-black p-1">{record.result}</td>
+                <td className="border border-black p-1">All</td>
+                <td className="border border-black p-1 font-sans">{record.maxMarks}</td>
+                <td className="border border-black p-1 font-sans">{record.marksObtained}</td>
+                <td className="border border-black p-1 font-sans">{record.percentage}</td>
+              </tr>
+            ))}
           </tbody>
         </table>
 
-        <div className="flex flex-col gap-4">
-          <div className="flex items-center gap-2">
-            <span>Details of Participation in Sports / other Activities</span>
-            <span className="dotted-line flex-1"></span>
-          </div>
-          <div className="flex items-center gap-2">
-            <span>Level</span>
-            <span className="dotted-line flex-1"></span>
-          </div>
-        </div>
       </div>
 
       {/* Page 2 */}
@@ -247,14 +234,14 @@ export default function PrintableForm() {
           </div>
         </div>
 
-        <div className="flex justify-end mb-6">
+        <div className="flex justify-end mb-4">
           <div className="flex flex-col items-center">
-            <span className="mb-8"></span>
+            <span className="mb-6"></span>
             <span>Signature of the office clerk</span>
           </div>
         </div>
         
-        <div className="flex flex-col gap-2 mb-8">
+        <div className="flex flex-col gap-2 mb-6">
           <div className="flex items-center gap-2">
             <span>Date of Provisional admission</span><span className="dotted-line w-48 border-dashed"></span>
           </div>
@@ -276,12 +263,12 @@ export default function PrintableForm() {
             </ol>
           </div>
           <div className="flex flex-col items-center">
-            <span className="font-bold mb-8">Principal</span>
+            <span className="font-bold mb-6">Principal</span>
             <span>Stamp/Signature</span>
           </div>
         </div>
 
-        <div className="border border-black p-4">
+        <div className="border border-black p-4 mb-4">
           <h3 className="font-bold text-center underline mb-2">SUBJECT COMBINATION</h3>
           <div className="text-[11px] flex flex-col gap-2">
             <div>
@@ -299,6 +286,13 @@ export default function PrintableForm() {
               <br/>Compulsory subjects :- 1.English 2.Math/History 3.Economics /Hindi 4. Political science/Geography
               <br/>Optional Subjects :-Computer Science /Physical education /Healthcare /Telecom.
             </div>
+          </div>
+        </div>
+
+        <div className="flex flex-col gap-4">
+          <div className="flex items-center gap-2">
+            <span>Details of Participation in Sports / other Activities</span>
+            <span className="dotted-line flex-1 text-blue-600 font-bold text-center">{data.extracurricular}</span>
           </div>
         </div>
 

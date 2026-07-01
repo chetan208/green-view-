@@ -3,15 +3,54 @@
 import React, { useState } from "react";
 import { GraduationCap, ChevronDown, ChevronUp } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useAdmissionContext } from "../context/AdmissionContext";
+import BoardSelect from "../components/BoardSelect";
 
 export default function Step4AcademicHistory() {
+  const { data, updateData } = useAdmissionContext();
   const [openSection, setOpenSection] = useState<"10th" | "11th" | null>("10th");
+  const { showErrors } = data;
+
+  const getErrorClass = (fieldValue: string) => {
+    return showErrors && !fieldValue ? "border-red-400 focus:border-red-500 focus:ring-red-500/20" : "border-slate-200 focus:border-[#0fa958] focus:ring-emerald-500/20";
+  };
 
   const toggleSection = (section: "10th" | "11th") => {
     setOpenSection(openSection === section ? null : section);
   };
 
-  const renderFormFields = (title: string) => (
+  const updateRecord = (index: number, field: string, value: string) => {
+    const newRecords = [...data.academicRecords];
+    let finalValue = value;
+
+    if (field === "marksObtained") {
+      const max = parseFloat(newRecords[index].maxMarks) || 0;
+      const obtained = parseFloat(value) || 0;
+      if (max > 0 && obtained > max) {
+        finalValue = newRecords[index].maxMarks;
+      }
+    }
+
+    const record = { ...newRecords[index], [field]: finalValue };
+    
+    // Auto calculate percentage
+    if (field === "maxMarks" || field === "marksObtained") {
+      const max = parseFloat(record.maxMarks) || 0;
+      const obtained = parseFloat(record.marksObtained) || 0;
+      if (max > 0 && obtained >= 0 && obtained <= max) {
+        record.percentage = ((obtained / max) * 100).toFixed(2) + "%";
+      } else {
+        record.percentage = "";
+      }
+    }
+    
+    newRecords[index] = record;
+    updateData({ academicRecords: newRecords });
+  };
+
+  const renderFormFields = (title: string, index: number) => {
+    const record = data.academicRecords[index];
+    return (
     <div className="p-5 md:p-6 bg-[#fcfcfc] border-t border-slate-100 flex flex-col gap-5">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
         <div className="flex flex-col">
@@ -19,15 +58,20 @@ export default function Step4AcademicHistory() {
           <input 
             placeholder="YYYY"
             maxLength={4}
-            className="w-full bg-white px-4 py-3 text-sm font-medium text-slate-700 outline-none border border-slate-200 rounded-xl focus:border-[#0fa958] focus:ring-2 focus:ring-emerald-500/20 transition-all" 
+            value={record.passingYear}
+            onChange={(e) => updateRecord(index, "passingYear", e.target.value)}
+            className={`w-full bg-white px-4 py-3 text-sm font-medium text-slate-700 outline-none border rounded-xl transition-all ${getErrorClass(record.passingYear)}`} 
           />
+          {showErrors && !record.passingYear && <span className="text-[10px] font-bold text-red-500 mt-1.5">Required</span>}
         </div>
         <div className="flex flex-col">
           <label className="text-[11px] font-bold text-slate-800 mb-2 uppercase tracking-wider">Board Name *</label>
-          <input 
-            placeholder="Ex: CBSE / HPBOSE"
-            className="w-full bg-white px-4 py-3 text-sm font-medium text-slate-700 outline-none border border-slate-200 rounded-xl focus:border-[#0fa958] focus:ring-2 focus:ring-emerald-500/20 transition-all" 
+          <BoardSelect 
+            value={record.boardName}
+            onChange={(val) => updateRecord(index, "boardName", val)}
+            errorClass={getErrorClass(record.boardName).includes("border-red-400") ? "border-red-400 bg-red-50" : ""}
           />
+          {showErrors && !record.boardName && <span className="text-[10px] font-bold text-red-500 mt-1.5">Required</span>}
         </div>
       </div>
 
@@ -35,8 +79,11 @@ export default function Step4AcademicHistory() {
         <label className="text-[11px] font-bold text-slate-800 mb-2 uppercase tracking-wider">School / Institution Name *</label>
         <input 
           placeholder="Full name of the previous school"
-          className="w-full bg-white px-4 py-3 text-sm font-medium text-slate-700 outline-none border border-slate-200 rounded-xl focus:border-[#0fa958] focus:ring-2 focus:ring-emerald-500/20 transition-all" 
+          value={record.school}
+          onChange={(e) => updateRecord(index, "school", e.target.value)}
+          className={`w-full bg-white px-4 py-3 text-sm font-medium text-slate-700 outline-none border rounded-xl transition-all ${getErrorClass(record.school)}`} 
         />
+        {showErrors && !record.school && <span className="text-[10px] font-bold text-red-500 mt-1.5">School Name is required.</span>}
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -44,13 +91,18 @@ export default function Step4AcademicHistory() {
           <label className="text-[11px] font-bold text-slate-800 mb-2 uppercase tracking-wider">Roll Number *</label>
           <input 
             placeholder="Board Roll No."
-            className="w-full bg-white px-4 py-3 text-sm font-medium text-slate-700 outline-none border border-slate-200 rounded-xl focus:border-[#0fa958] focus:ring-2 focus:ring-emerald-500/20 transition-all" 
+            value={record.rollNumber}
+            onChange={(e) => updateRecord(index, "rollNumber", e.target.value)}
+            className={`w-full bg-white px-4 py-3 text-sm font-medium text-slate-700 outline-none border rounded-xl transition-all ${getErrorClass(record.rollNumber)}`} 
           />
+          {showErrors && !record.rollNumber && <span className="text-[10px] font-bold text-red-500 mt-1.5">Required</span>}
         </div>
         <div className="flex flex-col">
           <label className="text-[11px] font-bold text-slate-800 mb-2 uppercase tracking-wider">Result Status *</label>
           <div className="relative">
             <select 
+              value={record.result}
+              onChange={(e) => updateRecord(index, "result", e.target.value)}
               className="w-full bg-white px-4 py-3 pr-10 text-sm font-medium text-slate-700 outline-none border border-slate-200 rounded-xl focus:border-[#0fa958] focus:ring-2 focus:ring-emerald-500/20 transition-all appearance-none cursor-pointer"
             >
               <option value="Pass">Passed</option>
@@ -62,31 +114,43 @@ export default function Step4AcademicHistory() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-        <div className="flex flex-col">
-          <label className="text-[11px] font-bold text-slate-800 mb-2 uppercase tracking-wider">Max Marks</label>
-          <input 
-            placeholder="e.g. 500"
-            className="w-full bg-white px-4 py-3 text-sm font-medium text-slate-700 outline-none border border-slate-200 rounded-xl focus:border-[#0fa958] focus:ring-2 focus:ring-emerald-500/20 transition-all" 
-          />
+      {record.result !== "Awaited" && (
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          <div className="flex flex-col">
+            <label className="text-[11px] font-bold text-slate-800 mb-2 uppercase tracking-wider">Max Marks</label>
+            <input 
+              placeholder="e.g. 500"
+              value={record.maxMarks}
+              onChange={(e) => updateRecord(index, "maxMarks", e.target.value)}
+              className={`w-full bg-white px-4 py-3 text-sm font-medium text-slate-700 outline-none border rounded-xl transition-all ${getErrorClass(record.maxMarks)}`} 
+            />
+            {showErrors && !record.maxMarks && <span className="text-[10px] font-bold text-red-500 mt-1.5">Required</span>}
+          </div>
+          <div className="flex flex-col">
+            <label className="text-[11px] font-bold text-slate-800 mb-2 uppercase tracking-wider">Marks Obtained</label>
+            <input 
+              placeholder="e.g. 450"
+              value={record.marksObtained}
+              onChange={(e) => updateRecord(index, "marksObtained", e.target.value)}
+              className={`w-full bg-white px-4 py-3 text-sm font-medium text-slate-700 outline-none border rounded-xl transition-all ${getErrorClass(record.marksObtained)}`} 
+            />
+            {showErrors && !record.marksObtained && <span className="text-[10px] font-bold text-red-500 mt-1.5">Required</span>}
+          </div>
+          <div className="flex flex-col">
+            <label className="text-[11px] font-bold text-slate-800 mb-2 uppercase tracking-wider">Percentage (%)</label>
+            <input 
+              placeholder="90%"
+              value={record.percentage}
+              readOnly
+              className={`w-full bg-slate-50 px-4 py-3 text-sm font-bold text-slate-800 outline-none border rounded-xl transition-all ${getErrorClass(record.percentage)}`} 
+            />
+            {showErrors && !record.percentage && <span className="text-[10px] font-bold text-red-500 mt-1.5">Required</span>}
+          </div>
         </div>
-        <div className="flex flex-col">
-          <label className="text-[11px] font-bold text-slate-800 mb-2 uppercase tracking-wider">Marks Obtained</label>
-          <input 
-            placeholder="e.g. 450"
-            className="w-full bg-white px-4 py-3 text-sm font-medium text-slate-700 outline-none border border-slate-200 rounded-xl focus:border-[#0fa958] focus:ring-2 focus:ring-emerald-500/20 transition-all" 
-          />
-        </div>
-        <div className="flex flex-col">
-          <label className="text-[11px] font-bold text-slate-800 mb-2 uppercase tracking-wider">Percentage (%)</label>
-          <input 
-            placeholder="90%"
-            className="w-full bg-white px-4 py-3 text-sm font-bold text-slate-800 outline-none border border-slate-200 rounded-xl focus:border-[#0fa958] focus:ring-2 focus:ring-emerald-500/20 transition-all" 
-          />
-        </div>
-      </div>
+      )}
     </div>
   );
+  };
 
   return (
     <div className="w-full bg-white rounded-2xl border border-slate-200 shadow-sm p-5 md:p-8 mb-6 overflow-hidden">
@@ -137,14 +201,15 @@ export default function Step4AcademicHistory() {
                 exit={{ height: 0, opacity: 0 }}
                 transition={{ duration: 0.3 }}
               >
-                {renderFormFields("10th Record")}
+                {renderFormFields("10th Record", 0)}
               </motion.div>
             )}
           </AnimatePresence>
         </div>
 
-        {/* 11th Record Collapsible */}
-        <div className={`w-full border rounded-2xl overflow-hidden transition-colors ${openSection === "11th" ? "border-emerald-200 shadow-sm" : "border-slate-200 hover:border-slate-300"}`}>
+        {/* 11th Record Collapsible - Only show if Class 12 */}
+        {data.selectedClass === "Class 12" && (
+          <div className={`w-full border rounded-2xl overflow-hidden transition-colors ${openSection === "11th" ? "border-emerald-200 shadow-sm" : "border-slate-200 hover:border-slate-300"}`}>
           <button 
             onClick={() => toggleSection("11th")}
             className={`w-full flex items-center justify-between p-5 md:p-6 transition-colors ${openSection === "11th" ? "bg-emerald-50/50" : "bg-white"}`}
@@ -172,11 +237,12 @@ export default function Step4AcademicHistory() {
                 exit={{ height: 0, opacity: 0 }}
                 transition={{ duration: 0.3 }}
               >
-                {renderFormFields("11th Record")}
+                {renderFormFields("11th Record", 1)}
               </motion.div>
             )}
           </AnimatePresence>
         </div>
+        )}
 
       </div>
     </div>

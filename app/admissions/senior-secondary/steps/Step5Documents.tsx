@@ -1,17 +1,16 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { ListChecks, CheckCircle2, Check } from "lucide-react";
+import { useAdmissionContext } from "../context/AdmissionContext";
 
 export default function Step5Documents() {
-  const [documents, setDocuments] = useState({
-    slc: true,
-    marksheet: true,
-    character: false,
-    category: false,
-  });
+  const { data, updateData } = useAdmissionContext();
+  const { documents, acceptedTerms, showErrors } = data;
 
-  const [acceptedTerms, setAcceptedTerms] = useState(false);
+  const toggleDocument = (field: keyof typeof documents) => {
+    updateData({ documents: { ...documents, [field]: !documents[field] } });
+  };
 
   return (
     <div className="w-full bg-white rounded-2xl border border-slate-200 shadow-sm p-5 md:p-8 mb-6">
@@ -41,7 +40,7 @@ export default function Step5Documents() {
             
             {/* SLC */}
             <div 
-              onClick={() => setDocuments(prev => ({ ...prev, slc: !prev.slc }))}
+              onClick={() => toggleDocument("slc")}
               className={`w-full bg-white border ${documents.slc ? "border-blue-200 shadow-sm" : "border-slate-100"} rounded-xl p-4 flex items-start gap-3 cursor-pointer transition-colors hover:border-slate-300`}
             >
               <div className={`mt-0.5 w-4 h-4 rounded-md border flex items-center justify-center shrink-0 transition-colors ${
@@ -59,7 +58,7 @@ export default function Step5Documents() {
 
             {/* Marksheet */}
             <div 
-              onClick={() => setDocuments(prev => ({ ...prev, marksheet: !prev.marksheet }))}
+              onClick={() => toggleDocument("marksheet")}
               className={`w-full bg-white border ${documents.marksheet ? "border-blue-200 shadow-sm" : "border-slate-100"} rounded-xl p-4 flex items-start gap-3 cursor-pointer transition-colors hover:border-slate-300`}
             >
               <div className={`mt-0.5 w-4 h-4 rounded-md border flex items-center justify-center shrink-0 transition-colors ${
@@ -77,7 +76,7 @@ export default function Step5Documents() {
 
             {/* Character */}
             <div 
-              onClick={() => setDocuments(prev => ({ ...prev, character: !prev.character }))}
+              onClick={() => toggleDocument("character")}
               className={`w-full bg-white border ${documents.character ? "border-blue-200 shadow-sm" : "border-slate-100"} rounded-xl p-4 flex items-start gap-3 cursor-pointer transition-colors hover:border-slate-300`}
             >
               <div className={`mt-0.5 w-4 h-4 rounded-md border flex items-center justify-center shrink-0 transition-colors ${
@@ -95,7 +94,7 @@ export default function Step5Documents() {
 
             {/* Category */}
             <div 
-              onClick={() => setDocuments(prev => ({ ...prev, category: !prev.category }))}
+              onClick={() => toggleDocument("category")}
               className={`w-full bg-white border ${documents.category ? "border-blue-200 shadow-sm" : "border-slate-100"} rounded-xl p-4 flex items-start gap-3 cursor-pointer transition-colors hover:border-slate-300`}
             >
               <div className={`mt-0.5 w-4 h-4 rounded-md border flex items-center justify-center shrink-0 transition-colors ${
@@ -117,6 +116,8 @@ export default function Step5Documents() {
             <label className="text-[11px] font-bold text-slate-800 mb-3 uppercase tracking-wider">Extracurricular Achievements & Sports Level</label>
             <textarea 
               placeholder="Mention activities, achievements, or certification level (District, State, National level)"
+              value={data.extracurricular}
+              onChange={(e) => updateData({ extracurricular: e.target.value })}
               rows={4}
               className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-[#0fa958] focus:ring-2 focus:ring-emerald-500/20 outline-none transition-all text-sm font-medium placeholder:text-slate-400 resize-none"
             />
@@ -139,22 +140,25 @@ export default function Step5Documents() {
             </ul>
           </div>
 
-          <label className="flex items-start gap-3 cursor-pointer group">
-            <div className={`mt-0.5 w-4 h-4 rounded border flex items-center justify-center shrink-0 transition-colors ${
-              acceptedTerms ? "bg-[#0fa958] border-[#0fa958]" : "border-slate-300 bg-white group-hover:border-[#0fa958]"
-            }`}>
-              {acceptedTerms && <Check className="w-3 h-3 text-white" strokeWidth={3} />}
-            </div>
-            <span className="text-[11px] font-bold text-slate-700 leading-tight">
-              I have read, understood, and accept all the terms, school conditions, rules & regulations listed above. *
-            </span>
-            <input 
-              type="checkbox" 
-              className="hidden" 
-              checked={acceptedTerms}
-              onChange={() => setAcceptedTerms(!acceptedTerms)}
-            />
-          </label>
+          <div className="flex flex-col gap-1">
+            <label className="flex items-start gap-3 cursor-pointer group">
+              <div className={`mt-0.5 w-4 h-4 rounded border flex items-center justify-center shrink-0 transition-colors ${
+                acceptedTerms ? "bg-[#0fa958] border-[#0fa958]" : showErrors && !acceptedTerms ? "border-red-400 bg-red-50" : "border-slate-300 bg-white group-hover:border-[#0fa958]"
+              }`}>
+                {acceptedTerms && <Check className="w-3 h-3 text-white" strokeWidth={3} />}
+              </div>
+              <span className={`text-[11px] font-bold leading-tight ${showErrors && !acceptedTerms ? "text-red-500" : "text-slate-700"}`}>
+                I have read, understood, and accept all the terms, school conditions, rules & regulations listed above. *
+              </span>
+              <input 
+                type="checkbox" 
+                className="hidden" 
+                checked={acceptedTerms}
+                onChange={() => updateData({ acceptedTerms: !acceptedTerms })}
+              />
+            </label>
+            {showErrors && !acceptedTerms && <span className="text-[10px] font-bold text-red-500 pl-7">You must accept the terms to proceed.</span>}
+          </div>
 
 
 

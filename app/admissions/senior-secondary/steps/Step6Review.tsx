@@ -3,13 +3,16 @@
 import React from "react";
 import { ClipboardList, Edit, User, Download } from "lucide-react";
 import Image from "next/image";
-import PrintableForm from "./PrintableForm";
+import PrintableForm from "../components/PrintableForm";
+import { useAdmissionContext } from "../context/AdmissionContext";
 
 interface Step6ReviewProps {
   onEdit: (step: number) => void;
 }
 
 export default function Step6Review({ onEdit }: Step6ReviewProps) {
+  const { data } = useAdmissionContext();
+
   return (
     <div className="w-full bg-white rounded-2xl border border-slate-200 shadow-sm p-5 md:p-8 mb-6">
       
@@ -25,12 +28,6 @@ export default function Step6Review({ onEdit }: Step6ReviewProps) {
           <p className="text-sm text-slate-500 font-medium mt-1">
             Carefully read over your entries. Incorrect records may delay admissions verification.
           </p>
-          <button 
-            onClick={() => window.print()}
-            className="mt-4 flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-xl text-sm font-bold shadow-md shadow-indigo-500/20 transition-all print:hidden"
-          >
-            <Download className="w-4 h-4" /> Download Admission Form
-          </button>
         </div>
       </div>
 
@@ -41,15 +38,18 @@ export default function Step6Review({ onEdit }: Step6ReviewProps) {
         {/* Left Column: Profile Card */}
         <div className="md:col-span-4 flex flex-col h-full">
           <div className="w-full bg-[#fcfcfc] border border-slate-100 rounded-2xl p-6 flex flex-col items-center shadow-sm">
-            
-            <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 mb-4 overflow-hidden flex items-center justify-center shadow-md">
-              <User className="w-10 h-10 text-white/50" />
+            <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 mb-4 overflow-hidden flex items-center justify-center shadow-md border-2 border-white">
+              {data.photoPreview ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img src={data.photoPreview} alt="Student Profile" className="w-full h-full object-cover" />
+              ) : (
+                <User className="w-10 h-10 text-white/50" />
+              )}
             </div>
-            
-            <h3 className="text-lg font-black text-slate-800 tracking-wider uppercase">ANONYMOUS USER</h3>
+            <h3 className="text-lg font-black text-slate-800 tracking-wider uppercase">{data.studentNameEnglish || "ANONYMOUS USER"}</h3>
             
             <div className="mt-2 bg-emerald-50 border border-emerald-200 text-emerald-700 px-3 py-1 rounded-full text-xs font-bold tracking-wide">
-              Class 11 - Science
+              {data.selectedClass} - {data.selectedStream}
             </div>
 
             <div className="w-full h-[1px] bg-slate-200 my-6 border-dashed" />
@@ -57,19 +57,19 @@ export default function Step6Review({ onEdit }: Step6ReviewProps) {
             <div className="w-full flex flex-col gap-4 text-sm font-medium">
               <div className="flex justify-between items-center">
                 <span className="text-slate-400">Date of Birth:</span>
-                <span className="text-slate-800 font-bold">2006-05-11</span>
+                <span className="text-slate-800 font-bold">{data.dateOfBirth || "N/A"}</span>
               </div>
               <div className="flex justify-between items-center">
                 <span className="text-slate-400">Social Category:</span>
-                <span className="text-slate-800 font-bold">OBC</span>
+                <span className="text-slate-800 font-bold">{data.socialCategory}</span>
               </div>
               <div className="flex justify-between items-center">
                 <span className="text-slate-400">Aadhaar UID:</span>
-                <span className="text-slate-800 font-bold">123456789123</span>
+                <span className="text-slate-800 font-bold">{data.aadhaarNumber || "N/A"}</span>
               </div>
               <div className="flex justify-between items-center">
                 <span className="text-slate-400">Provisional Status:</span>
-                <span className="text-slate-800 font-bold">Regular</span>
+                <span className="text-slate-800 font-bold">{data.isProvisional ? "Provisional" : "Regular"}</span>
               </div>
             </div>
 
@@ -91,23 +91,23 @@ export default function Step6Review({ onEdit }: Step6ReviewProps) {
             <div className="grid grid-cols-2 gap-y-5 gap-x-4">
               <div className="flex flex-col">
                 <span className="text-[10px] text-slate-400 mb-0.5">PAN Number:</span>
-                <span className="text-xs font-bold text-slate-800">ABCDE1234F</span>
+                <span className="text-xs font-bold text-slate-800">{data.panNumber || "N/A"}</span>
               </div>
               <div className="flex flex-col">
                 <span className="text-[10px] text-slate-400 mb-0.5">Father's Name:</span>
-                <span className="text-xs font-bold text-slate-800">Father Name</span>
+                <span className="text-xs font-bold text-slate-800">{data.fatherName || "N/A"}</span>
               </div>
               <div className="flex flex-col">
                 <span className="text-[10px] text-slate-400 mb-0.5">Mother's Name:</span>
-                <span className="text-xs font-bold text-slate-800">Mother Name</span>
+                <span className="text-xs font-bold text-slate-800">{data.motherName || "N/A"}</span>
               </div>
               <div className="flex flex-col">
                 <span className="text-[10px] text-slate-400 mb-0.5">Annual Income:</span>
-                <span className="text-xs font-bold text-slate-800">₹1200000</span>
+                <span className="text-xs font-bold text-slate-800">{data.annualIncome ? `₹${data.annualIncome}` : "N/A"}</span>
               </div>
               <div className="flex flex-col col-span-2">
                 <span className="text-[10px] text-slate-400 mb-0.5">Elective Subjects:</span>
-                <span className="text-xs font-bold text-emerald-700">Physics, Chemistry</span>
+                <span className="text-xs font-bold text-emerald-700">{data.selectedSubjects.join(", ") || "N/A"}</span>
               </div>
             </div>
           </div>
@@ -123,16 +123,18 @@ export default function Step6Review({ onEdit }: Step6ReviewProps) {
             
             <div className="grid grid-cols-2 gap-y-5 gap-x-4">
               <div className="flex flex-col col-span-2">
-                <span className="text-[10px] text-slate-400 mb-0.5">Village/Street:</span>
-                <span className="text-xs font-bold text-slate-800 leading-tight">123 Street Name, Near Landmark, Dist: Solan, Himachal Pradesh - PIN: 173205</span>
+                <span className="text-[10px] text-slate-400 mb-0.5">Address:</span>
+                <span className="text-xs font-bold text-slate-800 leading-tight">
+                  {data.village}, PO: {data.postOffice}, Teh: {data.tehsil}, Dist: {data.district}, {data.stateName} - {data.pinCode}
+                </span>
               </div>
               <div className="flex flex-col">
                 <span className="text-[10px] text-slate-400 mb-0.5">Bank Acc:</span>
-                <span className="text-xs font-bold text-slate-800">51561561</span>
+                <span className="text-xs font-bold text-slate-800">{data.bankAccountNo || "N/A"}</span>
               </div>
               <div className="flex flex-col">
                 <span className="text-[10px] text-slate-400 mb-0.5">Bank IFSC:</span>
-                <span className="text-xs font-bold text-slate-800 uppercase">SBIN0001234</span>
+                <span className="text-xs font-bold text-slate-800 uppercase">{data.ifscCode || "N/A"}</span>
               </div>
             </div>
           </div>
@@ -147,25 +149,17 @@ export default function Step6Review({ onEdit }: Step6ReviewProps) {
             </div>
             
             <div className="flex flex-col gap-3">
-              <div className="flex items-center justify-between border border-emerald-100 rounded-xl p-3 bg-emerald-50/30">
-                <div className="flex flex-col">
-                  <span className="text-xs font-bold text-slate-800">Matriculation/10th (2022)</span>
-                  <span className="text-[10px] text-slate-400">CBSE</span>
+              {(data.selectedClass === "Class 11" ? data.academicRecords.slice(0, 1) : data.academicRecords).map((record, idx) => (
+                <div key={idx} className="flex items-center justify-between border border-emerald-100 rounded-xl p-3 bg-emerald-50/30">
+                  <div className="flex flex-col">
+                    <span className="text-xs font-bold text-slate-800">{record.examName} {record.passingYear ? `(${record.passingYear})` : ""}</span>
+                    <span className="text-[10px] text-slate-400">{record.boardName || "N/A"}</span>
+                  </div>
+                  <div className="bg-white border border-emerald-200 text-emerald-700 font-bold text-[11px] px-3 py-1 rounded-full">
+                    {record.percentage || "N/A"}
+                  </div>
                 </div>
-                <div className="bg-white border border-emerald-200 text-emerald-700 font-bold text-[11px] px-3 py-1 rounded-full">
-                  100.00%
-                </div>
-              </div>
-              
-              <div className="flex items-center justify-between border border-emerald-100 rounded-xl p-3 bg-emerald-50/30">
-                <div className="flex flex-col">
-                  <span className="text-xs font-bold text-slate-800">11th Class (2026)</span>
-                  <span className="text-[10px] text-slate-400">CBSE</span>
-                </div>
-                <div className="bg-white border border-emerald-200 text-emerald-700 font-bold text-[11px] px-3 py-1 rounded-full">
-                  100.00%
-                </div>
-              </div>
+              ))}
             </div>
           </div>
 

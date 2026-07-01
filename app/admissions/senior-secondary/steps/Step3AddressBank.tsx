@@ -1,9 +1,20 @@
 "use client";
 
-import React from "react";
-import { MapPin, Building2, HelpCircle } from "lucide-react";
+import React, { useState } from "react";
+import { MapPin, Building2, HelpCircle, AlertCircle } from "lucide-react";
+import { useAdmissionContext } from "../context/AdmissionContext";
+import BankSelect from "../components/BankSelect";
 
 export default function Step3AddressBank() {
+  const { data, updateData } = useAdmissionContext();
+  const [confirmBankAcc, setConfirmBankAcc] = useState("");
+  
+  const { showErrors } = data;
+  const isBankAccMismatch = confirmBankAcc.length > 0 && confirmBankAcc !== data.bankAccountNo;
+
+  const getErrorClass = (fieldValue: string) => {
+    return showErrors && !fieldValue ? "border-red-400 focus:border-red-500 focus:ring-red-500/20" : "border-slate-200 focus:border-[#0fa958] focus:ring-emerald-500/20";
+  };
   return (
     <div className="w-full bg-white rounded-2xl border border-slate-200 shadow-sm p-5 md:p-8 mb-6">
       
@@ -33,7 +44,9 @@ export default function Step3AddressBank() {
             <input 
               type="text" 
               placeholder="Village or Local Area Name" 
-              className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-[#0fa958] focus:ring-2 focus:ring-emerald-500/20 outline-none transition-all text-sm font-medium placeholder:text-slate-400"
+              value={data.village}
+              onChange={(e) => updateData({ village: e.target.value })}
+              className={`w-full px-4 py-3 rounded-xl border outline-none transition-all text-sm font-medium placeholder:text-slate-400 ${getErrorClass(data.village)}`}
             />
           </div>
 
@@ -43,7 +56,9 @@ export default function Step3AddressBank() {
               <input 
                 type="text" 
                 placeholder="P.O. Name" 
-                className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-[#0fa958] focus:ring-2 focus:ring-emerald-500/20 outline-none transition-all text-sm font-medium placeholder:text-slate-400"
+                value={data.postOffice}
+                onChange={(e) => updateData({ postOffice: e.target.value })}
+                className={`w-full px-4 py-3 rounded-xl border outline-none transition-all text-sm font-medium placeholder:text-slate-400 ${getErrorClass(data.postOffice)}`}
               />
             </div>
             <div className="flex flex-col">
@@ -51,7 +66,9 @@ export default function Step3AddressBank() {
               <input 
                 type="text" 
                 placeholder="Tehsil / Sub-district" 
-                className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-[#0fa958] focus:ring-2 focus:ring-emerald-500/20 outline-none transition-all text-sm font-medium placeholder:text-slate-400"
+                value={data.tehsil}
+                onChange={(e) => updateData({ tehsil: e.target.value })}
+                className={`w-full px-4 py-3 rounded-xl border outline-none transition-all text-sm font-medium placeholder:text-slate-400 ${getErrorClass(data.tehsil)}`}
               />
             </div>
           </div>
@@ -62,7 +79,9 @@ export default function Step3AddressBank() {
               <input 
                 type="text" 
                 placeholder="District Name" 
-                className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-[#0fa958] focus:ring-2 focus:ring-emerald-500/20 outline-none transition-all text-sm font-medium placeholder:text-slate-400"
+                value={data.district}
+                onChange={(e) => updateData({ district: e.target.value })}
+                className={`w-full px-4 py-3 rounded-xl border outline-none transition-all text-sm font-medium placeholder:text-slate-400 ${getErrorClass(data.district)}`}
               />
             </div>
             <div className="flex flex-col">
@@ -70,8 +89,9 @@ export default function Step3AddressBank() {
               <input 
                 type="text" 
                 placeholder="Himachal Pradesh" 
-                defaultValue="Himachal Pradesh"
-                className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-[#0fa958] focus:ring-2 focus:ring-emerald-500/20 outline-none transition-all text-sm font-medium placeholder:text-slate-400 bg-slate-50"
+                value={data.stateName}
+                onChange={(e) => updateData({ stateName: e.target.value })}
+                className={`w-full bg-white px-4 py-3 text-sm font-medium text-slate-700 outline-none border rounded-xl transition-all ${getErrorClass(data.stateName)}`}
               />
             </div>
           </div>
@@ -81,8 +101,11 @@ export default function Step3AddressBank() {
             <input 
               type="text" 
               placeholder="6-digit ZIP code" 
-              className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-[#0fa958] focus:ring-2 focus:ring-emerald-500/20 outline-none transition-all text-sm font-medium placeholder:text-slate-400"
+              value={data.pinCode}
+              onChange={(e) => updateData({ pinCode: e.target.value })}
+              className={`w-full px-4 py-3 rounded-xl border outline-none transition-all text-sm font-medium placeholder:text-slate-400 tracking-widest ${getErrorClass(data.pinCode)}`}
             />
+            {data.showErrors && !data.pinCode && <span className="text-[10px] font-bold text-red-500 mt-1.5">Pin Code is mandatory.</span>}
           </div>
         </div>
 
@@ -98,6 +121,8 @@ export default function Step3AddressBank() {
             <input 
               type="text" 
               placeholder="Ex: 34182901923" 
+              value={data.bankAccountNo}
+              onChange={(e) => updateData({ bankAccountNo: e.target.value })}
               className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-[#0fa958] focus:ring-2 focus:ring-emerald-500/20 outline-none transition-all text-sm font-medium placeholder:text-slate-400 tracking-widest font-mono"
             />
           </div>
@@ -107,24 +132,35 @@ export default function Step3AddressBank() {
             <input 
               type="password" 
               placeholder="Retype Account Number" 
-              className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-[#0fa958] focus:ring-2 focus:ring-emerald-500/20 outline-none transition-all text-sm font-medium placeholder:text-slate-400 tracking-widest font-mono"
+              value={confirmBankAcc}
+              onChange={(e) => setConfirmBankAcc(e.target.value)}
+              className={`w-full px-4 py-3 rounded-xl border outline-none transition-all text-sm font-medium tracking-widest font-mono ${isBankAccMismatch ? "border-red-400 focus:border-red-500 focus:ring-2 focus:ring-red-500/20 text-red-600" : "border-slate-200 focus:border-[#0fa958] focus:ring-2 focus:ring-emerald-500/20 placeholder:text-slate-400"}`}
             />
+            {isBankAccMismatch && (
+              <div className="flex items-center gap-1.5 mt-2 text-red-500 text-[10px] font-bold">
+                <AlertCircle className="w-3.5 h-3.5" />
+                <span>Account numbers do not match!</span>
+              </div>
+            )}
           </div>
 
           <div className="grid grid-cols-2 gap-4">
             <div className="flex flex-col">
               <label className="text-[11px] font-bold text-slate-800 mb-2 uppercase tracking-wider">Bank Name *</label>
-              <input 
-                type="text" 
-                placeholder="Bank Name" 
-                className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-[#0fa958] focus:ring-2 focus:ring-emerald-500/20 outline-none transition-all text-sm font-medium placeholder:text-slate-400"
+              <BankSelect 
+                value={data.bankName}
+                onChange={(val) => updateData({ bankName: val })}
+                errorClass={getErrorClass(data.bankName).includes("border-red-400") ? "border-red-400 bg-red-50" : ""}
               />
+              {data.showErrors && !data.bankName && <span className="text-[10px] font-bold text-red-500 mt-1.5">Required</span>}
             </div>
             <div className="flex flex-col">
               <label className="text-[11px] font-bold text-slate-800 mb-2 uppercase tracking-wider">Branch Name *</label>
               <input 
                 type="text" 
                 placeholder="Branch Name" 
+                value={data.bankBranchName}
+                onChange={(e) => updateData({ bankBranchName: e.target.value })}
                 className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-[#0fa958] focus:ring-2 focus:ring-emerald-500/20 outline-none transition-all text-sm font-medium placeholder:text-slate-400"
               />
             </div>
@@ -133,13 +169,12 @@ export default function Step3AddressBank() {
           <div className="flex flex-col">
             <div className="flex items-center justify-between mb-2">
               <label className="text-[11px] font-bold text-slate-800 uppercase tracking-wider">IFSC Code *</label>
-              <span className="flex items-center gap-1 text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full">
-                <HelpCircle className="w-3 h-3" /> Tooltip
-              </span>
             </div>
             <input 
               type="text" 
               placeholder="SBIN0001234" 
+              value={data.ifscCode}
+              onChange={(e) => updateData({ ifscCode: e.target.value })}
               className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-[#0fa958] focus:ring-2 focus:ring-emerald-500/20 outline-none transition-all text-sm font-medium placeholder:text-slate-400 uppercase"
             />
           </div>

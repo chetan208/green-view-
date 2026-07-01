@@ -2,8 +2,15 @@
 
 import React from "react";
 import { Users, Calendar, HelpCircle } from "lucide-react";
+import { useAdmissionContext } from "../context/AdmissionContext";
 
 export default function Step2PersonalDetails() {
+  const { data, updateData } = useAdmissionContext();
+  const { showErrors } = data;
+
+  const getErrorClass = (fieldValue: string) => {
+    return showErrors && !fieldValue ? "border-red-400 focus:border-red-500 focus:ring-red-500/20" : "border-slate-200 focus:border-[#0fa958] focus:ring-emerald-500/20";
+  };
   return (
     <div className="w-full bg-white rounded-2xl border border-slate-200 shadow-sm p-5 md:p-8 mb-6">
       
@@ -34,8 +41,11 @@ export default function Step2PersonalDetails() {
             <input 
               type="text" 
               placeholder="ENTER IN BLOCK LETTERS" 
-              className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-[#0fa958] focus:ring-2 focus:ring-emerald-500/20 outline-none transition-all text-sm font-medium placeholder:text-slate-400"
+              value={data.studentNameEnglish}
+              onChange={(e) => updateData({ studentNameEnglish: e.target.value })}
+              className={`w-full px-4 py-3 rounded-xl border outline-none transition-all text-sm font-medium placeholder:text-slate-400 ${getErrorClass(data.studentNameEnglish)}`}
             />
+            {showErrors && !data.studentNameEnglish && <span className="text-[10px] font-bold text-red-500 mt-1.5">This field is mandatory.</span>}
             <span className="text-[10px] text-slate-400 mt-1.5 font-medium">Must strictly match Matriculation Certificate.</span>
           </div>
 
@@ -44,10 +54,13 @@ export default function Step2PersonalDetails() {
             <div className="relative">
               <input 
                 type="date" 
-                className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-[#0fa958] focus:ring-2 focus:ring-emerald-500/20 outline-none transition-all text-sm font-medium text-slate-700 appearance-none bg-transparent"
+                value={data.dateOfBirth}
+                onChange={(e) => updateData({ dateOfBirth: e.target.value })}
+                className={`w-full px-4 py-3 rounded-xl border outline-none transition-all text-sm font-medium text-slate-700 appearance-none bg-transparent ${getErrorClass(data.dateOfBirth)}`}
               />
               <Calendar className="w-4 h-4 text-slate-400 absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none" />
             </div>
+            {showErrors && !data.dateOfBirth && <span className="text-[10px] font-bold text-red-500 mt-1.5">Date of Birth is mandatory.</span>}
           </div>
         </div>
 
@@ -58,8 +71,11 @@ export default function Step2PersonalDetails() {
             <input 
               type="text" 
               placeholder="12-digit UID Number" 
-              className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-[#0fa958] focus:ring-2 focus:ring-emerald-500/20 outline-none transition-all text-sm font-medium placeholder:text-slate-400"
+              value={data.aadhaarNumber}
+              onChange={(e) => updateData({ aadhaarNumber: e.target.value })}
+              className={`w-full px-4 py-3 rounded-xl border outline-none transition-all text-sm font-medium placeholder:text-slate-400 ${getErrorClass(data.aadhaarNumber)}`}
             />
+            {showErrors && !data.aadhaarNumber && <span className="text-[10px] font-bold text-red-500 mt-1.5">Aadhaar number is mandatory.</span>}
             <span className="text-[10px] text-slate-400 mt-1.5 font-medium">12-digit alphanumeric card registration identification.</span>
           </div>
 
@@ -68,6 +84,8 @@ export default function Step2PersonalDetails() {
             <input 
               type="text" 
               placeholder="10-character Permanent Account Number" 
+              value={data.panNumber}
+              onChange={(e) => updateData({ panNumber: e.target.value })}
               className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-[#0fa958] focus:ring-2 focus:ring-emerald-500/20 outline-none transition-all text-sm font-medium placeholder:text-slate-400"
             />
           </div>
@@ -90,12 +108,16 @@ export default function Step2PersonalDetails() {
                 <input 
                   type="text" 
                   placeholder="Father's Full Name" 
-                  className="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:border-[#0fa958] outline-none transition-all text-sm font-medium placeholder:text-slate-400"
+                  value={data.fatherName}
+                  onChange={(e) => updateData({ fatherName: e.target.value })}
+                  className={`w-full px-4 py-2.5 rounded-xl border outline-none transition-all text-sm font-medium placeholder:text-slate-400 ${getErrorClass(data.fatherName)}`}
                 />
                 <input 
                   type="text" 
                   placeholder="Mobile Number" 
-                  className="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:border-[#0fa958] outline-none transition-all text-sm font-medium placeholder:text-slate-400"
+                  value={data.fatherMobile}
+                  onChange={(e) => updateData({ fatherMobile: e.target.value })}
+                  className={`w-full px-4 py-2.5 rounded-xl border outline-none transition-all text-sm font-medium placeholder:text-slate-400 ${getErrorClass(data.fatherMobile)}`}
                 />
               </div>
             </div>
@@ -107,12 +129,16 @@ export default function Step2PersonalDetails() {
                 <input 
                   type="text" 
                   placeholder="Mother's Full Name" 
-                  className="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:border-[#0fa958] outline-none transition-all text-sm font-medium placeholder:text-slate-400"
+                  value={data.motherName}
+                  onChange={(e) => updateData({ motherName: e.target.value })}
+                  className={`w-full px-4 py-2.5 rounded-xl border outline-none transition-all text-sm font-medium placeholder:text-slate-400 ${getErrorClass(data.motherName)}`}
                 />
                 <input 
                   type="text" 
                   placeholder="Mobile Number" 
-                  className="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:border-[#0fa958] outline-none transition-all text-sm font-medium placeholder:text-slate-400"
+                  value={data.motherMobile}
+                  onChange={(e) => updateData({ motherMobile: e.target.value })}
+                  className={`w-full px-4 py-2.5 rounded-xl border outline-none transition-all text-sm font-medium placeholder:text-slate-400 ${getErrorClass(data.motherMobile)}`}
                 />
               </div>
             </div>
@@ -124,11 +150,15 @@ export default function Step2PersonalDetails() {
                 <input 
                   type="text" 
                   placeholder="Guardian's Full Name" 
+                  value={data.guardianName}
+                  onChange={(e) => updateData({ guardianName: e.target.value })}
                   className="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:border-[#0fa958] outline-none transition-all text-sm font-medium placeholder:text-slate-400 bg-white"
                 />
                 <input 
                   type="text" 
                   placeholder="Mobile Number" 
+                  value={data.guardianMobile}
+                  onChange={(e) => updateData({ guardianMobile: e.target.value })}
                   className="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:border-[#0fa958] outline-none transition-all text-sm font-medium placeholder:text-slate-400 bg-white"
                 />
               </div>
@@ -136,27 +166,37 @@ export default function Step2PersonalDetails() {
           </div>
 
           {/* Additional Details */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
             <div className="flex flex-col">
               <label className="text-[10px] font-bold text-slate-800 mb-2 uppercase tracking-wider">Social Category *</label>
-              <select className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-[#0fa958] outline-none transition-all text-sm font-medium text-slate-600 bg-white appearance-none">
-                <option value="">-- Choose Option --</option>
-                <option value="general">General</option>
-                <option value="obc">OBC</option>
-                <option value="sc">SC</option>
-                <option value="st">ST</option>
-              </select>
+              <div className="flex flex-wrap gap-x-4 gap-y-2 items-center h-full">
+                {["General", "SC", "ST", "OBC"].map((cat) => (
+                  <label key={cat} className="flex items-center gap-2 cursor-pointer group">
+                    <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center transition-colors ${data.socialCategory === cat ? 'border-[#0fa958]' : 'border-slate-300 group-hover:border-[#0fa958]'}`}>
+                      {data.socialCategory === cat && <div className="w-2 h-2 bg-[#0fa958] rounded-full" />}
+                    </div>
+                    <span className="text-sm font-bold text-slate-700">{cat}</span>
+                    <input 
+                      type="radio" 
+                      name="category" 
+                      className="hidden" 
+                      checked={data.socialCategory === cat}
+                      onChange={() => updateData({ socialCategory: cat })}
+                    />
+                  </label>
+                ))}
+              </div>
             </div>
 
             <div className="flex flex-col">
               <label className="text-[10px] font-bold text-slate-800 mb-2 uppercase tracking-wider">IRDP / BPL Status *</label>
               <div className="flex gap-3 h-[46px]">
                 <label className="flex-1 flex items-center justify-center gap-2 border border-slate-200 rounded-xl cursor-pointer hover:border-slate-300">
-                  <input type="radio" name="bpl" className="w-3.5 h-3.5 accent-blue-500" />
+                  <input type="radio" name="bpl" checked={data.bplStatus === "Yes"} onChange={() => updateData({ bplStatus: "Yes" })} className="w-3.5 h-3.5 accent-blue-500" />
                   <span className="text-sm font-semibold text-slate-700">Yes</span>
                 </label>
                 <label className="flex-1 flex items-center justify-center gap-2 border border-blue-500 bg-blue-50/20 rounded-xl cursor-pointer">
-                  <input type="radio" name="bpl" defaultChecked className="w-3.5 h-3.5 accent-blue-500" />
+                  <input type="radio" name="bpl" checked={data.bplStatus === "No"} onChange={() => updateData({ bplStatus: "No" })} className="w-3.5 h-3.5 accent-blue-500" />
                   <span className="text-sm font-semibold text-slate-900">No</span>
                 </label>
               </div>
@@ -167,7 +207,9 @@ export default function Step2PersonalDetails() {
               <input 
                 type="text" 
                 placeholder="e.g., Agriculture, Business" 
-                className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-[#0fa958] outline-none transition-all text-sm font-medium placeholder:text-slate-400"
+                value={data.fatherOccupation}
+                onChange={(e) => updateData({ fatherOccupation: e.target.value })}
+                className={`w-full px-4 py-3 rounded-xl border outline-none transition-all text-sm font-medium placeholder:text-slate-400 ${getErrorClass(data.fatherOccupation)}`}
               />
             </div>
 
@@ -178,7 +220,9 @@ export default function Step2PersonalDetails() {
                 <input 
                   type="text" 
                   placeholder="Total annual earnings" 
-                  className="w-full pl-8 pr-4 py-3 rounded-xl border border-slate-200 focus:border-[#0fa958] outline-none transition-all text-sm font-medium placeholder:text-slate-400"
+                  value={data.annualIncome}
+                  onChange={(e) => updateData({ annualIncome: e.target.value })}
+                  className={`w-full pl-8 pr-4 py-3 rounded-xl border outline-none transition-all text-sm font-medium placeholder:text-slate-400 ${getErrorClass(data.annualIncome)}`}
                 />
               </div>
             </div>
