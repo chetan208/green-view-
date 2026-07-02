@@ -19,7 +19,7 @@ export default function Step6Review({ onEdit }: Step6ReviewProps) {
       {/* Header */}
       <div className="flex items-start gap-4 mb-5 md:mb-8">
         <div className="w-12 h-12 rounded-xl bg-emerald-50 flex items-center justify-center shrink-0">
-          <ClipboardList className="w-6 h-6 text-[#0fa958]" />
+          <ClipboardList className="w-6 h-6 text-brand-green" />
         </div>
         <div>
           <h2 className="text-xl md:text-2xl font-semibold md:font-bold text-slate-800 tracking-tight flex items-center justify-between">
@@ -37,7 +37,7 @@ export default function Step6Review({ onEdit }: Step6ReviewProps) {
         
         {/* Left Column: Profile Card */}
         <div className="md:col-span-4 flex flex-col h-full">
-          <div className="w-full bg-[#fcfcfc] border border-slate-100 rounded-2xl p-6 flex flex-col items-center shadow-sm">
+          <div className="w-full bg-[#f9fafb] border border-slate-100 rounded-2xl p-6 flex flex-col items-center shadow-sm">
             <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 mb-4 overflow-hidden flex items-center justify-center shadow-md border-2 border-white">
               {data.photoPreview ? (
                 // eslint-disable-next-line @next/next/no-img-element

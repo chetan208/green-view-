@@ -18,7 +18,7 @@ export default function Step5Documents() {
       {/* Header */}
       <div className="flex items-start gap-4 mb-8">
         <div className="w-12 h-12 rounded-xl bg-emerald-50 flex items-center justify-center shrink-0">
-          <ListChecks className="w-6 h-6 text-[#0fa958]" />
+          <ListChecks className="w-6 h-6 text-brand-green" />
         </div>
         <div>
           <h2 className="text-xl md:text-2xl font-semibold md:font-black text-slate-800 tracking-tight">
@@ -36,7 +36,7 @@ export default function Step5Documents() {
         <div className="flex flex-col gap-6">
           <h3 className="text-sm font-semibold md:font-black text-emerald-900 tracking-tight mb-2">Supported Document Checklist</h3>
           
-          <div className="flex flex-col gap-3 bg-[#fcfcfc] border border-emerald-100 rounded-2xl p-4">
+          <div className="flex flex-col gap-3 bg-[#f9fafb] border border-emerald-100 rounded-2xl p-4">
             
             {/* SLC */}
             <div 
@@ -119,7 +119,7 @@ export default function Step5Documents() {
               value={data.extracurricular}
               onChange={(e) => updateData({ extracurricular: e.target.value })}
               rows={4}
-              className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-[#0fa958] focus:ring-2 focus:ring-emerald-500/20 outline-none transition-all text-sm font-medium placeholder:text-slate-400 resize-none"
+              className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-brand-green focus:ring-2 focus:ring-brand-green/20 outline-none transition-all text-sm font-medium placeholder:text-slate-400 resize-none"
             />
           </div>
         </div>
@@ -127,7 +127,7 @@ export default function Step5Documents() {
         {/* Right Column: Declaration */}
         <div className="flex flex-col gap-6">
           <div className="flex items-center gap-2 mb-2">
-            <CheckCircle2 className="w-5 h-5 text-[#0fa958]" />
+            <CheckCircle2 className="w-5 h-5 text-brand-green" />
             <h3 className="text-sm font-semibold md:font-black text-emerald-900 tracking-tight">Rules, Regulations & Declaration</h3>
           </div>
           
@@ -143,7 +143,7 @@ export default function Step5Documents() {
           <div className="flex flex-col gap-1">
             <label className="flex items-start gap-3 cursor-pointer group">
               <div className={`mt-0.5 w-4 h-4 rounded border flex items-center justify-center shrink-0 transition-colors ${
-                acceptedTerms ? "bg-[#0fa958] border-[#0fa958]" : showErrors && !acceptedTerms ? "border-red-400 bg-red-50" : "border-slate-300 bg-white group-hover:border-[#0fa958]"
+                acceptedTerms ? "bg-brand-green border-brand-green" : showErrors && !acceptedTerms ? "border-red-400 bg-red-50" : "border-slate-300 bg-white group-hover:border-brand-green"
               }`}>
                 {acceptedTerms && <Check className="w-3 h-3 text-white" strokeWidth={3} />}
               </div>

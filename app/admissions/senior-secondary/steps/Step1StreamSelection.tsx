@@ -75,7 +75,7 @@ export default function Step1StreamSelection() {
       {/* Header */}
       <div className="flex items-start gap-4 mb-8">
         <div className="w-12 h-12 rounded-xl bg-emerald-50 flex items-center justify-center shrink-0">
-          <GraduationCap className="w-6 h-6 text-[#0fa958]" />
+          <GraduationCap className="w-6 h-6 text-brand-green" />
         </div>
         <div>
           <h2 className="text-xl md:text-2xl font-semibold md:font-black text-slate-800 tracking-tight">
@@ -107,9 +107,9 @@ export default function Step1StreamSelection() {
             ) : (
               <>
                 <div className="w-12 h-12 bg-white rounded-full shadow-sm flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
-                  <Camera className={`w-5 h-5 ${hasPhotoError ? 'text-red-500' : 'text-[#0fa958]'}`} />
+                  <Camera className={`w-5 h-5 ${hasPhotoError ? 'text-red-500' : 'text-brand-green'}`} />
                 </div>
-                <span className={`text-sm font-semibold md:font-bold ${hasPhotoError ? 'text-red-500' : 'text-[#0fa958]'}`}>Upload Photo</span>
+                <span className={`text-sm font-semibold md:font-bold ${hasPhotoError ? 'text-red-500' : 'text-brand-green'}`}>Upload Photo</span>
                 <span className="text-[10px] font-medium text-slate-400 mt-1">JPG, PNG up to 2MB</span>
               </>
             )}

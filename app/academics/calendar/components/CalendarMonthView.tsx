@@ -172,7 +172,7 @@ export default function CalendarMonthView() {
                       whileTap={{ scale: 0.92 }}
                       className={`w-10 h-10 md:w-11 md:h-11 flex items-center justify-center font-semibold md:font-bold text-sm rounded-full transition-colors select-none ${
                         isSelected
-                          ? "bg-brand-green text-white shadow-md shadow-emerald-500/20"
+                          ? "bg-brand-green text-white shadow-md shadow-brand-green/20"
                           : hasEvent
                           ? "text-brand-green hover:bg-brand-green/10 bg-emerald-50/50"
                           : "text-slate-700 hover:bg-slate-50"

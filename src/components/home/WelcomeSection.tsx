@@ -62,8 +62,8 @@ export default function WelcomeSection() {
   } as const;
 
   return (
-    <section id="about" className="w-full py-16 md:py-24 px-6 md:px-12 lg:px-24  flex justify-center items-center overflow-hidden">
-      <div className="max-w-7xl w-full flex flex-col lg:flex-row items-start gap-12 lg:gap-16">
+    <section id="about" className="w-full py-16 md:py-24 px-4 md:px-8 lg:px-16 flex justify-center items-center overflow-hidden">
+      <div className="max-w-7xl w-full flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
         
         {/* Left Side Column: Image, Established Badge & View More */}
         <motion.div 
@@ -76,18 +76,16 @@ export default function WelcomeSection() {
           
           {/* Established Floating Badge */}
           <motion.div 
-            initial={{ scale: 0.8, opacity: 0 }}
-            whileInView={{ scale: 1, opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ type: "spring", stiffness: 260, damping: 20, delay: 0.4 }}
-            whileHover={{ y: -2 }}
-            className="absolute top-4 left-4 md:-left-4 z-20 bg-white/95 backdrop-blur-sm p-3 px-4 rounded-2xl shadow-md border border-slate-100/80 flex flex-col cursor-pointer select-none"
+            initial={{ scale: 0, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ type: "spring", stiffness: 200, damping: 20, delay: 0.3 }}
+            className="absolute top-4 left-4 md:-left-4 z-20 bg-white/95 backdrop-blur-sm p-3 px-4 rounded-2xl shadow-md border border-slate-100/80 flex flex-col select-none"
           >
             <span className="text-[8px] font-semibold md:font-bold text-slate-400 uppercase tracking-widest leading-none">
               Established
             </span>
             <span className="text-sm font-semibold md:font-black text-slate-800 mt-1 leading-none">
-              1998 <span className="text-[#0fa958]">â€¢</span> <span className="text-[#0fa958]">Kangra</span>
+              1998 <span className="text-brand-green">•</span> <span className="text-brand-green">Kangra</span>
             </span>
           </motion.div>
 
@@ -101,14 +99,6 @@ export default function WelcomeSection() {
             />
           </div>
 
-          {/* View More pill button */}
-          <motion.button 
-            whileHover={{ scale: 1.03 }}
-            whileTap={{ scale: 0.97 }}
-            className="bg-[#0fa958] text-white hover:bg-emerald-700 px-6 py-2.5 rounded-full font-semibold md:font-bold text-xs tracking-wide transition-all shadow-md"
-          >
-            View More
-          </motion.button>
         </motion.div>
 
         {/* Right Side Column: Story & Official Credentials */}
@@ -126,8 +116,8 @@ export default function WelcomeSection() {
           </motion.span>
 
           {/* Main Heading */}
-          <motion.h2 variants={rightItemVariants} className="text-3xl md:text-4xl font-semibold md:font-extrabold text-[#0c3c86] tracking-tight leading-tight mb-4">
-            Welcome to <span className="text-[#0fa958]">Green View</span> <br />
+          <motion.h2 variants={rightItemVariants} className="text-3xl md:text-4xl font-semibold md:font-extrabold text-brand-navy tracking-tight leading-tight mb-4">
+            Welcome to <span className="text-brand-green">Green View</span> <br />
             Sr. Sec. School
           </motion.h2>
 
@@ -137,13 +127,13 @@ export default function WelcomeSection() {
           </motion.p>
 
           {/* Official Registrations Section */}
-          <motion.div variants={rightItemVariants} className="w-full mb-8">
-            <h3 className="text-xs font-semibold md:font-bold text-slate-700 uppercase tracking-widest mb-4">
+          <motion.div variants={rightItemVariants} className="w-full mt-4 lg:mt-6">
+            <h3 className="text-[10px] md:text-xs font-semibold md:font-bold text-slate-700 uppercase tracking-widest mb-4">
               Official Registrations & Legal Credentials
             </h3>
             
             {/* Credentials Card Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {credentials.map((cred, idx) => (
                 <motion.div
                   key={idx}
@@ -158,7 +148,7 @@ export default function WelcomeSection() {
                       <h4 className="text-[10px] font-semibold md:font-black text-slate-400 uppercase tracking-wider leading-none">
                         {cred.title}
                       </h4>
-                      <p className="text-xs font-semibold md:font-extrabold text-[#0c3c86] leading-tight mt-1.5">
+                      <p className="text-xs font-semibold md:font-extrabold text-brand-navy leading-tight mt-1.5">
                         {cred.value}
                       </p>
                       <p className="text-[9.5px] text-slate-500 font-normal md:font-semibold leading-normal mt-2">
@@ -172,26 +162,6 @@ export default function WelcomeSection() {
           </motion.div>
 
           
-          {/* CTA Buttons */}
-          <motion.div variants={rightItemVariants} className="flex items-center gap-4 w-full sm:w-auto">
-            <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
-              <Link
-                href="/admissions"
-                className="bg-[#0fa958] text-white hover:bg-emerald-700 px-6 py-3 rounded-full font-semibold md:font-bold text-xs tracking-wide transition-all shadow-md block"
-              >
-                Talk to Admissions
-              </Link>
-            </motion.div>
-            <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
-              <Link
-                href="/academics"
-                className="bg-white border border-slate-200 text-slate-600 hover:border-emerald-600 hover:text-emerald-600 px-6 py-3 rounded-full font-semibold md:font-bold text-xs tracking-wide transition-all block"
-              >
-                See Academics
-              </Link>
-            </motion.div>
-          </motion.div>
-
         </motion.div>
 
       </div>

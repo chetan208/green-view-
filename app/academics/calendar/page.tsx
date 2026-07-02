@@ -5,7 +5,7 @@ import CalendarGrid from "./components/CalendarGrid";
 
 export default function AcademicCalendarPage() {
   return (
-    <div className="w-full min-h-screen bg-[#fcfcfc] overflow-hidden pb-20">
+    <div className="w-full min-h-screen bg-[#f9fafb] overflow-hidden pb-20">
       <CalendarHero />
       <CalendarMonthView />
       <CalendarGrid />

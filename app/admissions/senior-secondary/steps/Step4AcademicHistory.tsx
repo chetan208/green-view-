@@ -12,7 +12,7 @@ export default function Step4AcademicHistory() {
   const { showErrors } = data;
 
   const getErrorClass = (fieldValue: string) => {
-    return showErrors && !fieldValue ? "border-red-400 focus:border-red-500 focus:ring-red-500/20" : "border-slate-200 focus:border-[#0fa958] focus:ring-emerald-500/20";
+    return showErrors && !fieldValue ? "border-red-400 focus:border-red-500 focus:ring-red-500/20" : "border-slate-200 focus:border-brand-green focus:ring-brand-green/20";
   };
 
   const toggleSection = (section: "10th" | "11th") => {
@@ -51,7 +51,7 @@ export default function Step4AcademicHistory() {
   const renderFormFields = (title: string, index: number) => {
     const record = data.academicRecords[index];
     return (
-    <div className="p-5 md:p-6 bg-[#fcfcfc] border-t border-slate-100 flex flex-col gap-3 md:gap-5">
+    <div className="p-5 md:p-6 bg-[#f9fafb] border-t border-slate-100 flex flex-col gap-3 md:gap-5">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-5">
         <div className="flex flex-col">
           <label className="text-[11px] font-semibold md:font-bold text-slate-800 mb-2 uppercase tracking-wider">Passing Year *</label>
@@ -103,7 +103,7 @@ export default function Step4AcademicHistory() {
             <select 
               value={record.result}
               onChange={(e) => updateRecord(index, "result", e.target.value)}
-              className="w-full bg-white px-3 py-2.5 md:px-4 md:py-3 pr-10 text-xs md:text-sm font-medium text-slate-700 outline-none border border-slate-200 rounded-xl focus:border-[#0fa958] focus:ring-2 focus:ring-emerald-500/20 transition-all appearance-none cursor-pointer"
+              className="w-full bg-white px-3 py-2.5 md:px-4 md:py-3 pr-10 text-xs md:text-sm font-medium text-slate-700 outline-none border border-slate-200 rounded-xl focus:border-brand-green focus:ring-2 focus:ring-brand-green/20 transition-all appearance-none cursor-pointer"
             >
               <option value="Pass">Passed</option>
               <option value="Fail">Failed</option>
@@ -158,7 +158,7 @@ export default function Step4AcademicHistory() {
       {/* Header */}
       <div className="flex items-start gap-4 mb-5 md:mb-8">
         <div className="w-12 h-12 rounded-xl bg-emerald-50 flex items-center justify-center shrink-0">
-          <GraduationCap className="w-6 h-6 text-[#0fa958]" />
+          <GraduationCap className="w-6 h-6 text-brand-green" />
         </div>
         <div>
           <h2 className="text-xl md:text-2xl font-semibold md:font-bold text-slate-800 tracking-tight">
@@ -179,7 +179,7 @@ export default function Step4AcademicHistory() {
             className={`w-full flex items-center justify-between p-5 md:p-6 transition-colors ${openSection === "10th" ? "bg-emerald-50/50" : "bg-white"}`}
           >
             <div className="flex items-center gap-3">
-              <div className={`w-8 h-8 rounded-full flex items-center justify-center font-semibold md:font-bold text-xs ${openSection === "10th" ? "bg-[#0fa958] text-white" : "bg-slate-100 text-slate-500"}`}>
+              <div className={`w-8 h-8 rounded-full flex items-center justify-center font-semibold md:font-bold text-xs ${openSection === "10th" ? "bg-brand-green text-white" : "bg-slate-100 text-slate-500"}`}>
                 1
               </div>
               <h3 className={`font-semibold md:font-bold ${openSection === "10th" ? "text-emerald-900" : "text-slate-700"}`}>
@@ -215,7 +215,7 @@ export default function Step4AcademicHistory() {
             className={`w-full flex items-center justify-between p-5 md:p-6 transition-colors ${openSection === "11th" ? "bg-emerald-50/50" : "bg-white"}`}
           >
             <div className="flex items-center gap-3">
-              <div className={`w-8 h-8 rounded-full flex items-center justify-center font-semibold md:font-bold text-xs ${openSection === "11th" ? "bg-[#0fa958] text-white" : "bg-slate-100 text-slate-500"}`}>
+              <div className={`w-8 h-8 rounded-full flex items-center justify-center font-semibold md:font-bold text-xs ${openSection === "11th" ? "bg-brand-green text-white" : "bg-slate-100 text-slate-500"}`}>
                 2
               </div>
               <h3 className={`font-semibold md:font-bold ${openSection === "11th" ? "text-emerald-900" : "text-slate-700"}`}>

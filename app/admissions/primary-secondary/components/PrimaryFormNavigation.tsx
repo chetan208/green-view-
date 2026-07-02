@@ -28,7 +28,7 @@ export default function PrimaryFormNavigation({ currentStep, totalSteps, onNext,
 
       <button 
         onClick={onNext}
-        className="flex items-center gap-2 px-6 py-2.5 rounded-xl font-normal md:font-semibold text-sm bg-[#0fa958] text-white hover:bg-emerald-600 transition-colors shadow-md shadow-emerald-500/20"
+        className="flex items-center gap-2 px-6 py-2.5 rounded-xl font-normal md:font-semibold text-sm bg-brand-green text-white hover:bg-emerald-600 transition-colors shadow-md shadow-brand-green/20"
       >
         {currentStep === totalSteps ? "Complete Submission" : "Next Step"}
         {currentStep !== totalSteps && <ArrowRight className="w-4 h-4" />}

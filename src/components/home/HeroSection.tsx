@@ -55,7 +55,7 @@ export default function HeroSection() {
           {/* Badge: Inspiring Excellence Since 1986 */}
           <motion.div 
             variants={itemVariants}
-            className="text-[10px] md:text-xs font-semibold md:font-bold text-[#0fa958] uppercase tracking-[0.2em] mb-4.5 select-none"
+            className="text-[10px] md:text-xs font-semibold md:font-bold text-brand-green uppercase tracking-[0.2em] mb-4.5 select-none"
           >
             Inspiring Excellence Since 1986
           </motion.div>
@@ -65,7 +65,7 @@ export default function HeroSection() {
             variants={itemVariants}
             className="text-4xl md:text-5xl lg:text-6xl font-semibold md:font-black text-slate-900 tracking-tight leading-[1.05] mb-6"
           >
-            <span className="text-[#0fa958]">Green view</span> <br />
+            <span className="text-brand-green">Green view</span> <br />
             Sr. Sec. School
           </motion.h1>
 
@@ -84,7 +84,7 @@ export default function HeroSection() {
             <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }} className="w-full sm:w-auto">
               <Link
                 href="/admissions"
-                className="inline-flex items-center justify-center gap-2 bg-[#0fa958] text-white hover:bg-emerald-700 px-6 md:px-8 py-3.5 rounded-full font-semibold md:font-bold text-xs md:text-sm tracking-wide transition-all duration-300 shadow-md shadow-emerald-600/10 w-full sm:w-auto"
+                className="inline-flex items-center justify-center gap-2 bg-brand-green text-white hover:bg-emerald-700 px-6 md:px-8 py-3.5 rounded-full font-semibold md:font-bold text-xs md:text-sm tracking-wide transition-all duration-300 shadow-md shadow-emerald-600/10 w-full sm:w-auto"
               >
                 Admission Enquiry
                 <ArrowRight className="w-4 h-4" />
@@ -179,7 +179,7 @@ export default function HeroSection() {
             animate={{ scale: 1, rotate: 0 }}
             transition={{ type: "spring", stiffness: 260, damping: 20, delay: 0.5 }}
             whileHover={{ scale: 1.05 }}
-            className="absolute bottom-6 left-2 md:-left-6 z-20 bg-[#0fa958] text-white w-20 h-20 md:w-28 md:h-28 rounded-full flex flex-col items-center justify-center text-center shadow-lg border-4 md:border-[6px] border-white select-none cursor-pointer"
+            className="absolute bottom-6 left-2 md:-left-6 z-20 bg-brand-green text-white w-20 h-20 md:w-28 md:h-28 rounded-full flex flex-col items-center justify-center text-center shadow-lg border-4 md:border-[6px] border-white select-none"
           >
             <span className="text-[10px] md:text-sm font-semibold md:font-black tracking-tight leading-none">
               2026-27
@@ -198,7 +198,7 @@ export default function HeroSection() {
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: 0.6 }}
             whileHover={{ y: -3 }}
-            className="absolute -bottom-4 md:-bottom-8 right-2 md:-right-6 z-20 bg-white p-3 md:p-4 rounded-2xl md:rounded-3xl shadow-lg border border-slate-100/70 flex flex-col max-w-[130px] md:max-w-[170px] select-none cursor-pointer hidden md:flex"
+            className="absolute -bottom-4 md:-bottom-8 right-2 md:-right-6 z-20 bg-white p-3 md:p-4 rounded-2xl md:rounded-3xl shadow-lg border border-slate-100/70 flex flex-col max-w-[130px] md:max-w-[170px] select-none hidden md:flex"
           >
             <span className="text-[8px] md:text-[9px] font-semibold md:font-bold text-slate-400 uppercase tracking-wider">
               Board Results 2024-25

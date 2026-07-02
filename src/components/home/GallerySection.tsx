@@ -58,7 +58,7 @@ export default function GallerySection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="text-[10px] md:text-xs font-semibold md:font-bold text-[#0fa958] uppercase tracking-[0.25em] mb-1.5"
+            className="text-[10px] md:text-xs font-semibold md:font-bold text-brand-green uppercase tracking-[0.25em] mb-1.5"
           >
             Our Campus
           </motion.span>
@@ -69,7 +69,7 @@ export default function GallerySection() {
             transition={{ duration: 0.6, ease: "easeOut" }}
             className="text-2xl md:text-3xl font-semibold md:font-extrabold text-slate-800 tracking-tight leading-tight"
           >
-            Explore Our <span className="text-[#0fa958]">World-Class Campus</span>
+            Explore Our <span className="text-brand-green">World-Class Campus</span>
           </motion.h2>
         </div>
 
@@ -87,7 +87,7 @@ export default function GallerySection() {
               variants={imageCardVariants}
               whileHover={{ scale: 1.025, y: -4 }}
               transition={{ duration: 0.3 }}
-              className="relative aspect-[1.85] w-full rounded-xl md:rounded-[20px] overflow-hidden shadow-sm border border-slate-100/80 hover:shadow-md cursor-pointer bg-slate-50"
+              className="relative aspect-[1.85] w-full rounded-xl md:rounded-[20px] overflow-hidden shadow-sm border border-slate-100/80 hover:shadow-md bg-slate-50"
             >
               <img
                 src={img.src}
@@ -109,7 +109,7 @@ export default function GallerySection() {
         >
           <a
             href="/gallery"
-            className="inline-block bg-[#0fa958] text-white hover:bg-emerald-700 px-8 py-3.5 rounded-full font-semibold md:font-bold text-sm tracking-wide transition-all shadow-md shadow-emerald-600/10 cursor-pointer"
+            className="inline-block bg-brand-green text-white hover:bg-emerald-700 px-8 py-3.5 rounded-full font-semibold md:font-bold text-sm tracking-wide transition-all shadow-md shadow-emerald-600/10 cursor-pointer"
           >
             View All
           </a>

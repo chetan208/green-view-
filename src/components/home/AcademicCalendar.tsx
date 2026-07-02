@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import React, { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
@@ -117,7 +117,7 @@ export default function AcademicCalendar() {
         className="text-center mb-8 md:mb-10 select-none"
       >
         <h2 className="text-3xl md:text-4xl font-semibold md:font-extrabold text-slate-800 tracking-tight leading-tight">
-          Academic <span className="text-[#0fa958]">Calendar</span>
+          Academic <span className="text-brand-green">Calendar</span>
         </h2>
       </motion.div>
  
@@ -145,7 +145,7 @@ export default function AcademicCalendar() {
             </motion.button>
             <h3 className="text-base md:text-lg font-semibold md:font-extrabold text-slate-700 tracking-tight flex items-center gap-1.5 w-32">
               <span className="font-normal md:font-semibold text-slate-800">{monthName}</span>
-              <span className="text-[#0fa958]">{year}</span>
+              <span className="text-brand-green">{year}</span>
             </h3>
             <motion.button 
               whileTap={{ scale: 0.9 }}
@@ -196,9 +196,9 @@ export default function AcademicCalendar() {
                       whileTap={{ scale: 0.92 }}
                       className={`w-9 h-9 md:w-10 md:h-10 flex items-center justify-center font-semibold md:font-bold text-xs md:text-sm rounded-full transition-colors select-none ${
                         isSelected
-                          ? "bg-[#0fa958] text-white shadow-sm"
+                          ? "bg-brand-green text-white shadow-sm"
                           : hasEvent
-                          ? "text-[#0fa958] hover:bg-[#0fa958]/10"
+                          ? "text-brand-green hover:bg-brand-green/10"
                           : "text-slate-700 hover:bg-slate-100"
                       }`}
                     >
@@ -218,7 +218,7 @@ export default function AcademicCalendar() {
           <h3 className="font-semibold md:font-bold text-slate-800 text-base md:text-lg tracking-tight select-none">
             Events
           </h3>
-          <div className="w-full h-[2px] bg-[#0fa958] mt-3 mb-6 select-none" />
+          <div className="w-full h-[2px] bg-brand-green mt-3 mb-6 select-none" />
 
           {/* Events Scrollable Container with Animating List */}
           <div className="relative overflow-hidden flex-1">
@@ -239,17 +239,17 @@ export default function AcademicCalendar() {
                         key={event.title}
                         onClick={() => setSelectedDay(event.day)}
                         whileHover={{ x: 2 }}
-                        className="flex items-start gap-3 cursor-pointer group transition-all pb-3.5 border-b border-slate-100 last:border-b-0 last:pb-0"
+                        className="flex items-start gap-3 transition-all pb-3.5 border-b border-slate-100 last:border-b-0 last:pb-0"
                       >
                         {/* Green Dot bullet */}
                         <motion.span 
                           animate={isEventSelected ? { scale: [1, 1.25, 1] } : {}}
                           transition={{ repeat: isEventSelected ? Infinity : 0, duration: 1.5 }}
-                          className="w-2 h-2 bg-[#0fa958] rounded-full mt-1.5 shrink-0" 
+                          className="w-2 h-2 bg-brand-green rounded-full mt-1.5 shrink-0" 
                         />
                         <div className="flex flex-col">
                           <span className={`text-slate-700 text-xs md:text-sm font-semibold md:font-bold tracking-tight transition-colors ${
-                            isEventSelected ? "text-[#0fa958]" : "group-hover:text-[#0fa958]"
+                            isEventSelected ? "text-brand-green" : "group-hover:text-brand-green"
                           }`}>
                             {event.title}
                           </span>

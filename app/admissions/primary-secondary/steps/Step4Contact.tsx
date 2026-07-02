@@ -11,7 +11,7 @@ export default function Step4Contact() {
   const getErrorClass = (fieldValue: string) => {
     return data.showErrors && !fieldValue 
       ? "border-red-400 focus:border-red-500 focus:ring-red-500/20 bg-red-50" 
-      : "border-slate-200 focus:border-[#0fa958] focus:ring-emerald-500/20";
+      : "border-slate-200 focus:border-brand-green focus:ring-brand-green/20";
   };
 
   const handleSameAsPresentChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -38,7 +38,7 @@ export default function Step4Contact() {
       {/* Header */}
       <div className="flex items-start gap-4 mb-5 md:mb-8">
         <div className="w-12 h-12 rounded-xl bg-emerald-50 flex items-center justify-center shrink-0">
-          <MapPin className="w-6 h-6 text-[#0fa958]" />
+          <MapPin className="w-6 h-6 text-brand-green" />
         </div>
         <div>
           <h2 className="text-xl md:text-2xl font-normal md:font-semibold text-slate-800 tracking-tight">
@@ -70,7 +70,7 @@ export default function Step4Contact() {
           <div className="flex items-center justify-between mb-2">
             <label className="text-[11px] font-normal md:font-semibold text-slate-800 uppercase tracking-wider">Permanent Address *</label>
             <label className="flex items-center gap-2 cursor-pointer group">
-              <div className={`w-4 h-4 rounded border flex items-center justify-center transition-colors ${sameAsPresent ? "bg-[#0fa958] border-[#0fa958]" : "border-slate-300 group-hover:border-[#0fa958]"}`}>
+              <div className={`w-4 h-4 rounded border flex items-center justify-center transition-colors ${sameAsPresent ? "bg-brand-green border-brand-green" : "border-slate-300 group-hover:border-brand-green"}`}>
                 {sameAsPresent && <div className="w-2 h-2 bg-white rounded-[1px]" />}
               </div>
               <input 
@@ -107,7 +107,7 @@ export default function Step4Contact() {
             placeholder="e.g., +91 9876543210" 
             value={data.telephoneNo}
             onChange={(e) => updateData({ telephoneNo: e.target.value })}
-            className="w-full px-3 py-2.5 md:px-4 md:py-3 rounded-xl border border-slate-200 focus:border-[#0fa958] focus:ring-emerald-500/20 outline-none transition-all text-xs md:text-sm font-medium placeholder:text-slate-400"
+            className="w-full px-3 py-2.5 md:px-4 md:py-3 rounded-xl border border-slate-200 focus:border-brand-green focus:ring-brand-green/20 outline-none transition-all text-xs md:text-sm font-medium placeholder:text-slate-400"
           />
         </div>
 

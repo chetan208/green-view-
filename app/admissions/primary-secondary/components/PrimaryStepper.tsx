@@ -22,7 +22,7 @@ export default function PrimaryStepper({ currentStep }: PrimaryStepperProps) {
         <div className="absolute left-6 right-6 top-1/2 -translate-y-1/2 h-1 bg-slate-200 rounded-full" />
         
         <div 
-          className="absolute left-6 top-1/2 -translate-y-1/2 h-1 bg-[#0fa958] rounded-full transition-all duration-500 ease-in-out"
+          className="absolute left-6 top-1/2 -translate-y-1/2 h-1 bg-brand-green rounded-full transition-all duration-500 ease-in-out"
           style={{ width: `calc(${((currentStep - 1) / (steps.length - 1)) * 100}% - 48px)` }}
         />
 
@@ -34,8 +34,8 @@ export default function PrimaryStepper({ currentStep }: PrimaryStepperProps) {
             <div key={step.num} className="relative z-10 flex flex-col items-center gap-2">
               <div 
                 className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-normal md:font-semibold transition-all duration-300 shadow-sm ${
-                  isCompleted ? "bg-[#0fa958] text-white ring-4 ring-emerald-50" :
-                  isCurrent ? "bg-[#0fa958] text-white ring-4 ring-emerald-100 scale-110 shadow-emerald-500/30" :
+                  isCompleted ? "bg-brand-green text-white ring-4 ring-emerald-50" :
+                  isCurrent ? "bg-brand-green text-white ring-4 ring-emerald-100 scale-110 shadow-emerald-500/30" :
                   "bg-white text-slate-400 border-2 border-slate-200"
                 }`}
               >

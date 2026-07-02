@@ -11,7 +11,7 @@ export default function Step1BasicInfo() {
   const getErrorClass = (fieldValue: string) => {
     return data.showErrors && !fieldValue 
       ? "border-red-400 focus:border-red-500 focus:ring-red-500/20" 
-      : "border-slate-200 focus:border-[#0fa958] focus:ring-emerald-500/20";
+      : "border-slate-200 focus:border-brand-green focus:ring-brand-green/20";
   };
 
   const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -33,7 +33,7 @@ export default function Step1BasicInfo() {
       {/* Header */}
       <div className="flex items-start gap-4 mb-5 md:mb-8">
         <div className="w-12 h-12 rounded-xl bg-emerald-50 flex items-center justify-center shrink-0">
-          <User className="w-6 h-6 text-[#0fa958]" />
+          <User className="w-6 h-6 text-brand-green" />
         </div>
         <div>
           <h2 className="text-xl md:text-2xl font-normal md:font-semibold text-slate-800 tracking-tight">
@@ -108,7 +108,7 @@ export default function Step1BasicInfo() {
             <label className="text-[11px] font-normal md:font-semibold text-slate-800 mb-2 uppercase tracking-wider">Sex *</label>
             <div className="flex gap-4">
               {["Male", "Female", "Other"].map((gender) => (
-                <label key={gender} className={`flex-1 flex items-center justify-center gap-2 p-3 rounded-xl border cursor-pointer transition-all ${data.sex === gender ? "border-[#0fa958] bg-emerald-50 text-emerald-700" : "border-slate-200 text-slate-600 hover:bg-slate-50"} ${data.showErrors && !data.sex ? "border-red-400" : ""}`}>
+                <label key={gender} className={`flex-1 flex items-center justify-center gap-2 p-3 rounded-xl border cursor-pointer transition-all ${data.sex === gender ? "border-brand-green bg-emerald-50 text-emerald-700" : "border-slate-200 text-slate-600 hover:bg-slate-50"} ${data.showErrors && !data.sex ? "border-red-400" : ""}`}>
                   <input 
                     type="radio" 
                     name="sex" 
@@ -117,8 +117,8 @@ export default function Step1BasicInfo() {
                     onChange={(e) => updateData({ sex: e.target.value })}
                     className="hidden" 
                   />
-                  <div className={`w-4 h-4 rounded-full border flex items-center justify-center ${data.sex === gender ? "border-[#0fa958]" : "border-slate-300"}`}>
-                    {data.sex === gender && <div className="w-2 h-2 rounded-full bg-[#0fa958]" />}
+                  <div className={`w-4 h-4 rounded-full border flex items-center justify-center ${data.sex === gender ? "border-brand-green" : "border-slate-300"}`}>
+                    {data.sex === gender && <div className="w-2 h-2 rounded-full bg-brand-green" />}
                   </div>
                   <span className="text-sm font-normal md:font-semibold">{gender}</span>
                 </label>

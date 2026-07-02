@@ -39,7 +39,7 @@ export default function Step2PersonalFamily() {
   const getErrorClass = (fieldValue: string) => {
     return data.showErrors && !fieldValue 
       ? "border-red-400 focus:border-red-500 focus:ring-red-500/20 bg-red-50" 
-      : "border-slate-200 focus:border-[#0fa958] focus:ring-emerald-500/20";
+      : "border-slate-200 focus:border-brand-green focus:ring-brand-green/20";
   };
 
   useEffect(() => {
@@ -54,7 +54,7 @@ export default function Step2PersonalFamily() {
       {/* Header */}
       <div className="flex items-start gap-4 mb-5 md:mb-8">
         <div className="w-12 h-12 rounded-xl bg-emerald-50 flex items-center justify-center shrink-0">
-          <Users className="w-6 h-6 text-[#0fa958]" />
+          <Users className="w-6 h-6 text-brand-green" />
         </div>
         <div>
           <h2 className="text-xl md:text-2xl font-normal md:font-semibold text-slate-800 tracking-tight">
@@ -117,7 +117,7 @@ export default function Step2PersonalFamily() {
           <label className="text-[11px] font-normal md:font-semibold text-slate-800 mb-2 uppercase tracking-wider">Category *</label>
           <div className="flex flex-wrap gap-4">
             {["Gen", "OBC", "SC", "ST"].map((cat) => (
-              <label key={cat} className={`flex-1 min-w-[100px] flex items-center justify-center gap-2 p-3 rounded-xl border cursor-pointer transition-all ${data.socialCategory === cat ? "border-[#0fa958] bg-emerald-50 text-emerald-700" : "border-slate-200 text-slate-600 hover:bg-slate-50"}`}>
+              <label key={cat} className={`flex-1 min-w-[100px] flex items-center justify-center gap-2 p-3 rounded-xl border cursor-pointer transition-all ${data.socialCategory === cat ? "border-brand-green bg-emerald-50 text-emerald-700" : "border-slate-200 text-slate-600 hover:bg-slate-50"}`}>
                 <input 
                   type="radio" 
                   name="socialCategory" 
@@ -126,8 +126,8 @@ export default function Step2PersonalFamily() {
                   onChange={(e) => updateData({ socialCategory: e.target.value })}
                   className="hidden" 
                 />
-                <div className={`w-4 h-4 rounded-full border flex items-center justify-center ${data.socialCategory === cat ? "border-[#0fa958]" : "border-slate-300"}`}>
-                  {data.socialCategory === cat && <div className="w-2 h-2 rounded-full bg-[#0fa958]" />}
+                <div className={`w-4 h-4 rounded-full border flex items-center justify-center ${data.socialCategory === cat ? "border-brand-green" : "border-slate-300"}`}>
+                  {data.socialCategory === cat && <div className="w-2 h-2 rounded-full bg-brand-green" />}
                 </div>
                 <span className="text-sm font-normal md:font-semibold">{cat}</span>
               </label>
@@ -167,7 +167,7 @@ export default function Step2PersonalFamily() {
             placeholder="Guardian's name" 
             value={data.guardianName}
             onChange={(e) => updateData({ guardianName: e.target.value })}
-            className="w-full px-3 py-2.5 md:px-4 md:py-3 rounded-xl border border-slate-200 focus:border-[#0fa958] focus:ring-emerald-500/20 outline-none transition-all text-xs md:text-sm font-medium placeholder:text-slate-400"
+            className="w-full px-3 py-2.5 md:px-4 md:py-3 rounded-xl border border-slate-200 focus:border-brand-green focus:ring-brand-green/20 outline-none transition-all text-xs md:text-sm font-medium placeholder:text-slate-400"
           />
         </div>
 
@@ -178,7 +178,7 @@ export default function Step2PersonalFamily() {
             placeholder="Occupation" 
             value={data.guardianOccupation}
             onChange={(e) => updateData({ guardianOccupation: e.target.value })}
-            className="w-full px-3 py-2.5 md:px-4 md:py-3 rounded-xl border border-slate-200 focus:border-[#0fa958] focus:ring-emerald-500/20 outline-none transition-all text-xs md:text-sm font-medium placeholder:text-slate-400"
+            className="w-full px-3 py-2.5 md:px-4 md:py-3 rounded-xl border border-slate-200 focus:border-brand-green focus:ring-brand-green/20 outline-none transition-all text-xs md:text-sm font-medium placeholder:text-slate-400"
           />
         </div>
 

@@ -9,7 +9,7 @@ export default function CtaSection() {
       <div className="absolute -top-48 -right-24 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
       
       <div className="max-w-4xl w-full flex flex-col items-center relative z-10">
-        <span className="text-[10px] md:text-xs font-semibold md:font-bold text-[#34d399] uppercase tracking-[0.3em] mb-4">
+        <span className="text-[10px] md:text-xs font-semibold md:font-bold text-brand-green uppercase tracking-[0.3em] mb-4">
           2025 - 26 Session
         </span>
         <h2 className="text-4xl md:text-5xl lg:text-6xl font-semibold md:font-extrabold text-white tracking-tight leading-tight mb-5">
@@ -20,7 +20,7 @@ export default function CtaSection() {
         </p>
         <Link 
           href="/admissions"
-          className="inline-flex items-center gap-2 bg-emerald-500 hover:bg-emerald-400 text-white px-8 py-4 rounded-full font-bold text-sm md:text-base transition-all shadow-[0_0_20px_rgba(16,185,129,0.3)] hover:shadow-[0_0_25px_rgba(16,185,129,0.5)] w-full sm:w-auto justify-center"
+          className="inline-flex items-center gap-2 bg-brand-green hover:bg-brand-green-dark text-white px-8 py-4 rounded-full font-semibold md:font-bold text-sm md:text-base transition-all shadow-md shadow-emerald-500/10 hover:shadow-lg hover:shadow-emerald-500/20 w-full sm:w-auto justify-center"
         >
           Apply for Admission
           <svg 

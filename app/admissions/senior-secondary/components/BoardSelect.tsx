@@ -79,7 +79,7 @@ export default function BoardSelect({ value, onChange, errorClass = "" }: BoardS
                 className="w-full px-3 py-2 text-sm text-slate-700 hover:bg-emerald-50 hover:text-emerald-900 rounded-lg cursor-pointer flex items-center justify-between transition-colors"
               >
                 <span className={value === board ? "font-semibold md:font-bold text-emerald-700" : ""}>{board}</span>
-                {value === board && <Check className="w-4 h-4 text-[#0fa958]" />}
+                {value === board && <Check className="w-4 h-4 text-brand-green" />}
               </div>
             ))}
           </div>

@@ -607,7 +607,7 @@ export function Footer() {
    ========================================================================== */
 export function AboutUs() {
   return (
-    <section className="w-full bg-[#fcfcfc] py-16 md:py-24 px-4 overflow-hidden">
+    <section className="w-full bg-[#f9fafb] py-16 md:py-24 px-4 overflow-hidden">
       <div className="max-w-[1280px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
         {/* Left Content (Image & Badge) */}
         <div className="relative w-full max-w-[555px] mx-auto lg:mx-0">

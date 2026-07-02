@@ -4,7 +4,7 @@ import MaterialGrid from "./components/MaterialGrid";
 
 export default function StudyMaterialPage() {
   return (
-    <div className="w-full min-h-screen bg-[#fcfcfc] overflow-hidden pb-20">
+    <div className="w-full min-h-screen bg-[#f9fafb] overflow-hidden pb-20">
       <MaterialHero />
       <MaterialGrid />
     </div>

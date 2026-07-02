@@ -253,7 +253,7 @@ export default function BankSelect({ value, onChange, errorClass = "" }: BankSel
                 className="w-full px-3 py-2 text-sm text-slate-700 hover:bg-emerald-50 hover:text-emerald-900 rounded-lg cursor-pointer flex items-center justify-between transition-colors"
               >
                 <span className={value === bank ? "font-semibold md:font-bold text-emerald-700" : ""}>{bank}</span>
-                {value === bank && <Check className="w-4 h-4 text-[#0fa958]" />}
+                {value === bank && <Check className="w-4 h-4 text-brand-green" />}
               </div>
             ))}
             

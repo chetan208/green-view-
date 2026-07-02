@@ -40,7 +40,7 @@ export default function FacilitiesSection() {
   } as const;
 
   return (
-    <section id="facilities" className="w-full py-10 px-6 md:px-12 lg:px-24 bg-[#d5f0e3] flex justify-center overflow-hidden">
+    <section id="facilities" className="w-full py-10 px-6 md:px-12 lg:px-24 bg-emerald-50/25 flex justify-center overflow-hidden">
       <div className="max-w-7xl w-full flex flex-col">
         
         {/* Subtitle */}
@@ -94,7 +94,7 @@ export default function FacilitiesSection() {
               variants={cardVariants}
               whileHover={{ y: -8, scale: 1.01 }}
               transition={{ duration: 0.3 }}
-              className="group flex flex-col bg-[#1e293b] rounded-2xl md:rounded-3xl overflow-hidden shadow-lg border border-emerald-800/10 hover:shadow-xl cursor-pointer"
+              className="group flex flex-col bg-white border border-slate-100 rounded-2xl md:rounded-3xl overflow-hidden hover:border-brand-green/20 hover:shadow-md transition-all duration-300"
             >
               {/* Image Container */}
               <div className="relative aspect-[3/2] w-full overflow-hidden bg-slate-800">
@@ -108,7 +108,7 @@ export default function FacilitiesSection() {
 
               {/* Text Container */}
               <div className="py-4 px-4 text-center select-none">
-                <span className="text-white font-semibold md:font-extrabold text-sm md:text-base tracking-tight block">
+                <span className="text-slate-800 font-semibold md:font-bold text-sm md:text-base tracking-tight block group-hover:text-brand-green transition-colors">
                   {card.title}
                 </span>
               </div>

@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import React from "react";
 import { motion } from "framer-motion";
@@ -51,7 +51,7 @@ export default function TestimonialsSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="text-[10px] md:text-xs font-semibold md:font-bold text-[#0fa958] uppercase tracking-[0.25em] mb-2.5"
+            className="text-[10px] md:text-xs font-semibold md:font-bold text-brand-green uppercase tracking-[0.25em] mb-2.5"
           >
             Testimonials
           </motion.span>
@@ -62,7 +62,7 @@ export default function TestimonialsSection() {
             transition={{ duration: 0.6, ease: "easeOut" }}
             className="text-3xl md:text-4xl font-semibold md:font-extrabold text-slate-800 tracking-tight leading-tight"
           >
-            What Parents <span className="text-[#0fa958]">Say About Us</span>
+            What Parents <span className="text-brand-green">Say About Us</span>
           </motion.h2>
         </div>
 
@@ -79,7 +79,7 @@ export default function TestimonialsSection() {
               key={idx}
               variants={cardVariants}
               whileHover={{ y: -6 }}
-              className="bg-white p-7 md:p-8 rounded-[20px] shadow-sm border border-slate-100/50 flex flex-col justify-between relative group hover:shadow-md transition-shadow duration-300 cursor-pointer"
+              className="bg-white p-7 md:p-8 rounded-[20px] shadow-sm border border-slate-100/50 flex flex-col justify-between relative group hover:shadow-md transition-shadow duration-300"
             >
               {/* Soft coral quote icon watermark */}
               <motion.span 

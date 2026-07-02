@@ -36,7 +36,7 @@ export default function ContactDetails() {
         {/* Address */}
         <div className="flex gap-4 items-start">
           <div className="w-12 h-12 rounded-2xl bg-red-50 flex items-center justify-center shrink-0">
-            <MapPin className="w-5 h-5 text-[#147a42]" strokeWidth={2.5} />
+            <MapPin className="w-5 h-5 text-brand-green-dark" strokeWidth={2.5} />
           </div>
           <div className="flex flex-col pt-1">
             <h3 className="font-semibold md:font-bold text-slate-800 text-sm md:text-base">Address</h3>
@@ -47,7 +47,7 @@ export default function ContactDetails() {
         {/* Phone */}
         <div className="flex gap-4 items-start">
           <div className="w-12 h-12 rounded-2xl bg-red-50 flex items-center justify-center shrink-0">
-            <Phone className="w-5 h-5 text-[#147a42]" strokeWidth={2.5} />
+            <Phone className="w-5 h-5 text-brand-green-dark" strokeWidth={2.5} />
           </div>
           <div className="flex flex-col pt-1">
             <h3 className="font-semibold md:font-bold text-slate-800 text-sm md:text-base">Phone</h3>
@@ -58,7 +58,7 @@ export default function ContactDetails() {
         {/* Email */}
         <div className="flex gap-4 items-start">
           <div className="w-12 h-12 rounded-2xl bg-red-50 flex items-center justify-center shrink-0">
-            <Mail className="w-5 h-5 text-[#147a42]" strokeWidth={2.5} />
+            <Mail className="w-5 h-5 text-brand-green-dark" strokeWidth={2.5} />
           </div>
           <div className="flex flex-col pt-1">
             <h3 className="font-semibold md:font-bold text-slate-800 text-sm md:text-base">Email</h3>
@@ -69,7 +69,7 @@ export default function ContactDetails() {
         {/* School Timings */}
         <div className="flex gap-4 items-start">
           <div className="w-12 h-12 rounded-2xl bg-red-50 flex items-center justify-center shrink-0">
-            <Clock className="w-5 h-5 text-[#147a42]" strokeWidth={2.5} />
+            <Clock className="w-5 h-5 text-brand-green-dark" strokeWidth={2.5} />
           </div>
           <div className="flex flex-col pt-1">
             <h3 className="font-semibold md:font-bold text-slate-800 text-sm md:text-base">School Timings</h3>
@@ -82,19 +82,19 @@ export default function ContactDetails() {
       <div className="bg-[#f8fafc] rounded-2xl p-6 mt-4">
         <h3 className="font-semibold md:font-bold text-slate-800 text-sm mb-4">Follow Us</h3>
         <div className="flex gap-3">
-          <a href="#" className="w-10 h-10 bg-white rounded-lg flex items-center justify-center text-slate-600 hover:text-[#147a42] hover:shadow-sm transition-all border border-slate-100">
+          <a href="#" className="w-10 h-10 bg-white rounded-lg flex items-center justify-center text-slate-600 hover:text-brand-green-dark hover:shadow-sm transition-all border border-slate-100">
             <FacebookIcon className="w-4 h-4" />
           </a>
-          <a href="#" className="w-10 h-10 bg-white rounded-lg flex items-center justify-center text-slate-600 hover:text-[#147a42] hover:shadow-sm transition-all border border-slate-100">
+          <a href="#" className="w-10 h-10 bg-white rounded-lg flex items-center justify-center text-slate-600 hover:text-brand-green-dark hover:shadow-sm transition-all border border-slate-100">
             <InstagramIcon className="w-4 h-4" />
           </a>
-          <a href="#" className="w-10 h-10 bg-white rounded-lg flex items-center justify-center text-slate-600 hover:text-[#147a42] hover:shadow-sm transition-all border border-slate-100">
+          <a href="#" className="w-10 h-10 bg-white rounded-lg flex items-center justify-center text-slate-600 hover:text-brand-green-dark hover:shadow-sm transition-all border border-slate-100">
             <TwitterIcon className="w-4 h-4" />
           </a>
-          <a href="#" className="w-10 h-10 bg-white rounded-lg flex items-center justify-center text-slate-600 hover:text-[#147a42] hover:shadow-sm transition-all border border-slate-100">
+          <a href="#" className="w-10 h-10 bg-white rounded-lg flex items-center justify-center text-slate-600 hover:text-brand-green-dark hover:shadow-sm transition-all border border-slate-100">
             <YoutubeIcon className="w-4 h-4" />
           </a>
-          <a href="#" className="w-10 h-10 bg-white rounded-lg flex items-center justify-center text-slate-600 hover:text-[#147a42] hover:shadow-sm transition-all border border-slate-100">
+          <a href="#" className="w-10 h-10 bg-white rounded-lg flex items-center justify-center text-slate-600 hover:text-brand-green-dark hover:shadow-sm transition-all border border-slate-100">
             <LinkedinIcon className="w-4 h-4" />
           </a>
         </div>

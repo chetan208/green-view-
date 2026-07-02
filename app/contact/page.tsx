@@ -14,10 +14,10 @@ export default function ContactPage() {
         {/* Top Header Section */}
         <div className="flex flex-col gap-2">
           <div className="text-sm font-medium text-slate-500">
-            <Link href="/" className="text-[#0fa958] hover:underline">Home</Link> / <span>Contact</span>
+            <Link href="/" className="text-brand-green hover:underline">Home</Link> / <span>Contact</span>
           </div>
           <h1 className="text-4xl md:text-5xl font-semibold md:font-extrabold text-[#1f2937] tracking-tight mt-1" style={{ fontFamily: "Georgia, serif" }}>
-            Contact <span className="text-[#147a42]">Us</span>
+            Contact <span className="text-brand-green-dark">Us</span>
           </h1>
           <p className="text-slate-500 font-medium text-sm md:text-base mt-2">
             We&apos;d love to hear from you. Reach out to us for any queries.

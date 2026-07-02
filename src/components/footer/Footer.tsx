@@ -96,13 +96,13 @@ export default function Footer() {
                 <Link href="/about" className="hover:text-emerald-400 transition-colors">About Campus</Link>
               </li>
               <li>
-                <Link href="#facilities" className="hover:text-emerald-400 transition-colors">School Facilities</Link>
+                <Link href="/facilities" className="hover:text-emerald-400 transition-colors">School Facilities</Link>
               </li>
               <li>
-                <Link href="#events" className="hover:text-emerald-400 transition-colors">Recent Events</Link>
+                <Link href="/notices" className="hover:text-emerald-400 transition-colors">Recent Events</Link>
               </li>
               <li>
-                <Link href="#contact" className="hover:text-emerald-400 transition-colors">Contact Directory</Link>
+                <Link href="/contact" className="hover:text-emerald-400 transition-colors">Contact Directory</Link>
               </li>
             </ul>
           </div>
@@ -114,19 +114,19 @@ export default function Footer() {
             </h4>
             <ul className="flex flex-col gap-3 font-normal md:font-semibold text-xs md:text-sm">
               <li>
-                <Link href="#admission" className="hover:text-emerald-400 transition-colors">Admission Form</Link>
+                <Link href="/admissions" className="hover:text-emerald-400 transition-colors">Admission Form</Link>
               </li>
               <li>
-                <span className="hover:text-emerald-400 transition-colors cursor-pointer">Syllabus & Curriculum</span>
+                <Link href="/academics/study-material" className="hover:text-emerald-400 transition-colors">Syllabus & Curriculum</Link>
               </li>
               <li>
-                <span className="hover:text-emerald-400 transition-colors cursor-pointer">Academic Calendar</span>
+                <Link href="/academics/calendar" className="hover:text-emerald-400 transition-colors">Academic Calendar</Link>
               </li>
               <li>
-                <span className="hover:text-emerald-400 transition-colors cursor-pointer">Examinations Schedule</span>
+                <Link href="/notices" className="hover:text-emerald-400 transition-colors">Examinations Schedule</Link>
               </li>
               <li>
-                <span className="hover:text-emerald-400 transition-colors cursor-pointer">Mandatory Disclosures</span>
+                <Link href="/about" className="hover:text-emerald-400 transition-colors">Mandatory Disclosures</Link>
               </li>
             </ul>
           </div>
@@ -168,8 +168,9 @@ export default function Footer() {
             © 2026 Green View Sr. Sec. School. All rights reserved.
           </span>
           <div className="flex items-center gap-4">
-            <span className="cursor-pointer hover:text-slate-400 transition-colors">Privacy Policy</span>
-            <span className="cursor-pointer hover:text-slate-400 transition-colors">Terms of Service</span>
+            <Link href="/privacy-policy" className="hover:text-slate-400 transition-colors">Privacy Policy</Link>
+            <Link href="/terms-conditions" className="hover:text-slate-400 transition-colors">Terms & Conditions</Link>
+            <Link href="/school-policies" className="hover:text-slate-400 transition-colors">School Policies</Link>
           </div>
         </div>
       </div>

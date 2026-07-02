@@ -13,7 +13,7 @@ export default function Step3AddressBank() {
   const isBankAccMismatch = confirmBankAcc.length > 0 && confirmBankAcc !== data.bankAccountNo;
 
   const getErrorClass = (fieldValue: string) => {
-    return showErrors && !fieldValue ? "border-red-400 focus:border-red-500 focus:ring-red-500/20" : "border-slate-200 focus:border-[#0fa958] focus:ring-emerald-500/20";
+    return showErrors && !fieldValue ? "border-red-400 focus:border-red-500 focus:ring-red-500/20" : "border-slate-200 focus:border-brand-green focus:ring-brand-green/20";
   };
   return (
     <div className="w-full bg-white rounded-2xl border border-slate-200 shadow-sm p-5 md:p-8 mb-6">
@@ -21,7 +21,7 @@ export default function Step3AddressBank() {
       {/* Header */}
       <div className="flex items-start gap-4 mb-8">
         <div className="w-12 h-12 rounded-xl bg-emerald-50 flex items-center justify-center shrink-0">
-          <MapPin className="w-6 h-6 text-[#0fa958]" />
+          <MapPin className="w-6 h-6 text-brand-green" />
         </div>
         <div>
           <h2 className="text-xl md:text-2xl font-semibold md:font-black text-slate-800 tracking-tight">
@@ -112,7 +112,7 @@ export default function Step3AddressBank() {
         {/* Right Column: Bank Details */}
         <div className="flex flex-col gap-6">
           <div className="flex items-center gap-2 mb-2">
-            <Building2 className="w-4 h-4 text-[#0fa958]" />
+            <Building2 className="w-4 h-4 text-brand-green" />
             <h3 className="text-sm font-semibold md:font-black text-emerald-900 tracking-tight">Student/Parent Bank Details (For Scholarships)</h3>
           </div>
           
@@ -123,7 +123,7 @@ export default function Step3AddressBank() {
               placeholder="Ex: 34182901923" 
               value={data.bankAccountNo}
               onChange={(e) => updateData({ bankAccountNo: e.target.value })}
-              className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-[#0fa958] focus:ring-2 focus:ring-emerald-500/20 outline-none transition-all text-sm font-medium placeholder:text-slate-400 tracking-widest font-mono"
+              className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-brand-green focus:ring-2 focus:ring-brand-green/20 outline-none transition-all text-sm font-medium placeholder:text-slate-400 tracking-widest font-mono"
             />
           </div>
 
@@ -134,7 +134,7 @@ export default function Step3AddressBank() {
               placeholder="Retype Account Number" 
               value={confirmBankAcc}
               onChange={(e) => setConfirmBankAcc(e.target.value)}
-              className={`w-full px-4 py-3 rounded-xl border outline-none transition-all text-sm font-medium tracking-widest font-mono ${isBankAccMismatch ? "border-red-400 focus:border-red-500 focus:ring-2 focus:ring-red-500/20 text-red-600" : "border-slate-200 focus:border-[#0fa958] focus:ring-2 focus:ring-emerald-500/20 placeholder:text-slate-400"}`}
+              className={`w-full px-4 py-3 rounded-xl border outline-none transition-all text-sm font-medium tracking-widest font-mono ${isBankAccMismatch ? "border-red-400 focus:border-red-500 focus:ring-2 focus:ring-red-500/20 text-red-600" : "border-slate-200 focus:border-brand-green focus:ring-2 focus:ring-brand-green/20 placeholder:text-slate-400"}`}
             />
             {isBankAccMismatch && (
               <div className="flex items-center gap-1.5 mt-2 text-red-500 text-[10px] font-semibold md:font-bold">
@@ -161,7 +161,7 @@ export default function Step3AddressBank() {
                 placeholder="Branch Name" 
                 value={data.bankBranchName}
                 onChange={(e) => updateData({ bankBranchName: e.target.value })}
-                className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-[#0fa958] focus:ring-2 focus:ring-emerald-500/20 outline-none transition-all text-sm font-medium placeholder:text-slate-400"
+                className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-brand-green focus:ring-2 focus:ring-brand-green/20 outline-none transition-all text-sm font-medium placeholder:text-slate-400"
               />
             </div>
           </div>
@@ -175,7 +175,7 @@ export default function Step3AddressBank() {
               placeholder="SBIN0001234" 
               value={data.ifscCode}
               onChange={(e) => updateData({ ifscCode: e.target.value })}
-              className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-[#0fa958] focus:ring-2 focus:ring-emerald-500/20 outline-none transition-all text-sm font-medium placeholder:text-slate-400 uppercase"
+              className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-brand-green focus:ring-2 focus:ring-brand-green/20 outline-none transition-all text-sm font-medium placeholder:text-slate-400 uppercase"
             />
           </div>
         </div>

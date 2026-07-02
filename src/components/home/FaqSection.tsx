@@ -62,7 +62,7 @@ export default function FaqSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="text-[10px] md:text-xs font-semibold md:font-bold text-[#0fa958] uppercase tracking-[0.25em] mb-2.5"
+            className="text-[10px] md:text-xs font-semibold md:font-bold text-brand-green uppercase tracking-[0.25em] mb-2.5"
           >
             Have Questions?
           </motion.div>
@@ -73,7 +73,7 @@ export default function FaqSection() {
             transition={{ duration: 0.6, ease: "easeOut" }}
             className="text-3xl md:text-4xl font-semibold md:font-extrabold text-slate-800 tracking-tight leading-tight"
           >
-            Frequently Asked <span className="text-[#0fa958]">Questions</span>
+            Frequently Asked <span className="text-brand-green">Questions</span>
           </motion.h2>
         </div>
 
@@ -95,7 +95,7 @@ export default function FaqSection() {
               >
                 <button
                   onClick={() => toggleFaq(idx)}
-                  className="w-full flex items-center justify-between p-5 text-left font-semibold md:font-bold text-slate-800 hover:text-[#0fa958] transition-colors focus:outline-none cursor-pointer"
+                  className="w-full flex items-center justify-between p-5 text-left font-semibold md:font-bold text-slate-800 hover:text-brand-green transition-colors focus:outline-none cursor-pointer"
                 >
                   <span className="text-sm md:text-base leading-snug pr-4 font-semibold md:font-bold">
                     {faq.q}

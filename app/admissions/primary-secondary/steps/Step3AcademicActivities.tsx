@@ -13,7 +13,7 @@ export default function Step3AcademicActivities() {
       {/* Header */}
       <div className="flex items-start gap-4 mb-5 md:mb-8">
         <div className="w-12 h-12 rounded-xl bg-emerald-50 flex items-center justify-center shrink-0">
-          <GraduationCap className="w-6 h-6 text-[#0fa958]" />
+          <GraduationCap className="w-6 h-6 text-brand-green" />
         </div>
         <div>
           <h2 className="text-xl md:text-2xl font-normal md:font-semibold text-slate-800 tracking-tight">
@@ -39,7 +39,7 @@ export default function Step3AcademicActivities() {
                 placeholder="e.g., DAV Public School" 
                 value={data.prevSchoolName}
                 onChange={(e) => updateData({ prevSchoolName: e.target.value })}
-                className="w-full px-3 py-2.5 md:px-4 md:py-3 rounded-xl border border-slate-200 focus:border-[#0fa958] focus:ring-emerald-500/20 outline-none transition-all text-xs md:text-sm font-medium placeholder:text-slate-400"
+                className="w-full px-3 py-2.5 md:px-4 md:py-3 rounded-xl border border-slate-200 focus:border-brand-green focus:ring-brand-green/20 outline-none transition-all text-xs md:text-sm font-medium placeholder:text-slate-400"
               />
             </div>
 
@@ -50,7 +50,7 @@ export default function Step3AcademicActivities() {
                 placeholder="e.g., English, Hindi" 
                 value={data.prevSchoolMedium}
                 onChange={(e) => updateData({ prevSchoolMedium: e.target.value })}
-                className="w-full px-3 py-2.5 md:px-4 md:py-3 rounded-xl border border-slate-200 focus:border-[#0fa958] focus:ring-emerald-500/20 outline-none transition-all text-xs md:text-sm font-medium placeholder:text-slate-400"
+                className="w-full px-3 py-2.5 md:px-4 md:py-3 rounded-xl border border-slate-200 focus:border-brand-green focus:ring-brand-green/20 outline-none transition-all text-xs md:text-sm font-medium placeholder:text-slate-400"
               />
             </div>
           </div>
@@ -68,7 +68,7 @@ export default function Step3AcademicActivities() {
                 placeholder="e.g., Reading, Painting" 
                 value={data.hobbies}
                 onChange={(e) => updateData({ hobbies: e.target.value })}
-                className="w-full px-3 py-2.5 md:px-4 md:py-3 rounded-xl border border-slate-200 focus:border-[#0fa958] focus:ring-emerald-500/20 outline-none transition-all text-xs md:text-sm font-medium placeholder:text-slate-400"
+                className="w-full px-3 py-2.5 md:px-4 md:py-3 rounded-xl border border-slate-200 focus:border-brand-green focus:ring-brand-green/20 outline-none transition-all text-xs md:text-sm font-medium placeholder:text-slate-400"
               />
             </div>
 
@@ -79,7 +79,7 @@ export default function Step3AcademicActivities() {
                 placeholder="e.g., Cricket, Chess" 
                 value={data.interestInGames}
                 onChange={(e) => updateData({ interestInGames: e.target.value })}
-                className="w-full px-3 py-2.5 md:px-4 md:py-3 rounded-xl border border-slate-200 focus:border-[#0fa958] focus:ring-emerald-500/20 outline-none transition-all text-xs md:text-sm font-medium placeholder:text-slate-400"
+                className="w-full px-3 py-2.5 md:px-4 md:py-3 rounded-xl border border-slate-200 focus:border-brand-green focus:ring-brand-green/20 outline-none transition-all text-xs md:text-sm font-medium placeholder:text-slate-400"
               />
             </div>
           </div>

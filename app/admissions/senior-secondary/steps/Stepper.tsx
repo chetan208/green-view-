@@ -29,7 +29,7 @@ export default function Stepper({ currentStep }: StepperProps) {
           
           {/* Connecting Line Active */}
           <div 
-            className="absolute top-5 left-[5%] h-[2px] bg-[#0fa958] -z-10 transition-all duration-500 ease-in-out" 
+            className="absolute top-5 left-[5%] h-[2px] bg-brand-green -z-10 transition-all duration-500 ease-in-out" 
             style={{ width: `${((currentStep - 1) / (steps.length - 1)) * 90}%` }}
           />
 
@@ -42,16 +42,16 @@ export default function Stepper({ currentStep }: StepperProps) {
                 <div 
                   className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-semibold md:font-bold transition-colors duration-300 ${
                     isActive 
-                      ? "bg-[#0fa958] text-white shadow-md shadow-emerald-500/20" 
+                      ? "bg-brand-green text-white shadow-md shadow-brand-green/20" 
                       : isCompleted 
-                        ? "bg-[#0fa958] text-white" 
+                        ? "bg-brand-green text-white" 
                         : "bg-slate-100 text-slate-400"
                   }`}
                 >
                   {isCompleted ? <Check className="w-5 h-5" /> : step.id}
                 </div>
                 <span className={`text-xs font-normal md:font-semibold text-center leading-tight ${
-                  isActive ? "text-[#0fa958]" : isCompleted ? "text-slate-700" : "text-slate-400"
+                  isActive ? "text-brand-green" : isCompleted ? "text-slate-700" : "text-slate-400"
                 }`}>
                   {step.title}
                 </span>
@@ -65,14 +65,14 @@ export default function Stepper({ currentStep }: StepperProps) {
       <div className="md:hidden w-full bg-white rounded-2xl border border-slate-200 p-5 shadow-sm mb-4">
         <div className="flex items-center justify-between mb-3">
           <div className="flex flex-col">
-            <span className="text-[10px] font-semibold md:font-black text-[#0fa958] tracking-wider uppercase mb-1">
+            <span className="text-[10px] font-semibold md:font-black text-brand-green tracking-wider uppercase mb-1">
               Step {currentStep} of {steps.length}
             </span>
             <h2 className="text-lg font-semibold md:font-black text-slate-800">
               {steps[currentStep - 1].title}
             </h2>
           </div>
-          <div className="bg-emerald-50 text-[#0fa958] px-3 py-1.5 rounded-full text-xs font-semibold md:font-bold border border-emerald-100 flex items-center gap-1.5">
+          <div className="bg-emerald-50 text-brand-green px-3 py-1.5 rounded-full text-xs font-semibold md:font-bold border border-emerald-100 flex items-center gap-1.5">
             <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
               <line x1="8" y1="6" x2="21" y2="6"></line>
               <line x1="8" y1="12" x2="21" y2="12"></line>
@@ -88,7 +88,7 @@ export default function Stepper({ currentStep }: StepperProps) {
         {/* Progress Bar */}
         <div className="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
           <div 
-            className="h-full bg-[#0fa958] rounded-full transition-all duration-500 ease-in-out"
+            className="h-full bg-brand-green rounded-full transition-all duration-500 ease-in-out"
             style={{ width: `${progressPercentage}%` }}
           />
         </div>

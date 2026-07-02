@@ -16,7 +16,7 @@ export default function Step5Review({ onEdit }: Step5ReviewProps) {
   const getErrorClass = () => {
     return data.showErrors && !data.acceptedDeclaration 
       ? "border-red-400 bg-red-50 text-red-700" 
-      : "border-[#0fa958] bg-emerald-50 text-emerald-900";
+      : "border-brand-green bg-emerald-50 text-emerald-900";
   };
 
   return (
@@ -25,7 +25,7 @@ export default function Step5Review({ onEdit }: Step5ReviewProps) {
       {/* Header */}
       <div className="flex items-start gap-4 mb-5 md:mb-8">
         <div className="w-12 h-12 rounded-xl bg-emerald-50 flex items-center justify-center shrink-0">
-          <ClipboardList className="w-6 h-6 text-[#0fa958]" />
+          <ClipboardList className="w-6 h-6 text-brand-green" />
         </div>
         <div>
           <h2 className="text-xl md:text-2xl font-normal md:font-semibold text-slate-800 tracking-tight flex items-center justify-between">
@@ -41,7 +41,7 @@ export default function Step5Review({ onEdit }: Step5ReviewProps) {
         
         {/* Left Column: Profile Card */}
         <div className="md:col-span-4 flex flex-col h-full">
-          <div className="w-full bg-[#fcfcfc] border border-slate-100 rounded-2xl p-6 flex flex-col items-center shadow-sm">
+          <div className="w-full bg-[#f9fafb] border border-slate-100 rounded-2xl p-6 flex flex-col items-center shadow-sm">
             <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 mb-4 overflow-hidden flex items-center justify-center shadow-md border-2 border-white">
               {data.photoPreview ? (
                 // eslint-disable-next-line @next/next/no-img-element
@@ -158,13 +158,13 @@ export default function Step5Review({ onEdit }: Step5ReviewProps) {
           "I <span className="font-normal md:font-semibold underline decoration-slate-300 underline-offset-4 mx-1">{parentName || "[Parent/Guardian Name]"}</span> Father/Mother/Guardian of <span className="font-normal md:font-semibold underline decoration-slate-300 underline-offset-4 mx-1">{data.studentName || "[Student Name]"}</span> Solemnly declare that the above information regarding my son/daughter/ward are true to the best of my knowledge."
         </p>
 
-        <label className={`flex items-start gap-4 p-4 rounded-xl border cursor-pointer transition-all ${data.acceptedDeclaration ? "border-[#0fa958] bg-emerald-50" : "border-slate-300 bg-white hover:border-[#0fa958]"} ${data.showErrors && !data.acceptedDeclaration ? "border-red-400 bg-red-50" : ""}`}>
+        <label className={`flex items-start gap-4 p-4 rounded-xl border cursor-pointer transition-all ${data.acceptedDeclaration ? "border-brand-green bg-emerald-50" : "border-slate-300 bg-white hover:border-brand-green"} ${data.showErrors && !data.acceptedDeclaration ? "border-red-400 bg-red-50" : ""}`}>
           <div className="pt-1">
             <input 
               type="checkbox" 
               checked={data.acceptedDeclaration}
               onChange={(e) => updateData({ acceptedDeclaration: e.target.checked })}
-              className="w-5 h-5 rounded border-slate-300 text-[#0fa958] focus:ring-[#0fa958] cursor-pointer"
+              className="w-5 h-5 rounded border-slate-300 text-brand-green focus:ring-[#0fa958] cursor-pointer"
             />
           </div>
           <div className="flex flex-col">

@@ -28,10 +28,10 @@ export default function SeniorHero() {
       {/* Top Breadcrumb & Tiny Header */}
       <div className="flex flex-col gap-1.5">
         <div className="text-sm font-medium text-slate-500">
-          <Link href="/" className="text-[#0fa958] hover:underline">Home</Link> / <span>Senior Secondary</span>
+          <Link href="/" className="text-brand-green hover:underline">Home</Link> / <span>Senior Secondary</span>
         </div>
         <h1 className="text-3xl md:text-4xl font-semibold md:font-extrabold text-slate-900 tracking-tight" style={{ fontFamily: "Georgia, serif" }}>
-          Class XI - <span className="text-[#147a42]">XII</span>
+          Class XI - <span className="text-brand-green-dark">XII</span>
         </h1>
         <p className="text-slate-500 font-medium text-xs md:text-sm">
           Preparing students for higher education and beyond.
@@ -46,9 +46,9 @@ export default function SeniorHero() {
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-semibold md:font-black text-slate-900 tracking-tight leading-[1.1] mb-4">
             Your child&apos;s <br />
             story <br />
-            <span className="text-[#0fa958] relative inline-block pb-2">
+            <span className="text-brand-green relative inline-block pb-2">
               starts here.
-              <svg className="absolute left-0 bottom-0 w-full h-[12px] text-[#0fa958]" viewBox="0 0 100 10" preserveAspectRatio="none">
+              <svg className="absolute left-0 bottom-0 w-full h-[12px] text-brand-green" viewBox="0 0 100 10" preserveAspectRatio="none">
                 <path d="M0,5 C30,10 70,0 100,5" stroke="currentColor" strokeWidth="3" fill="none" strokeLinecap="round" />
               </svg>
             </span>
@@ -63,7 +63,7 @@ export default function SeniorHero() {
             <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="w-full sm:w-auto">
               <Link
                 href="#admission"
-                className="inline-flex items-center justify-center gap-2 bg-[#0fa958] text-white hover:bg-emerald-700 px-6 md:px-7 py-3 rounded-full font-semibold md:font-bold text-xs md:text-sm tracking-wide transition-all duration-300 shadow-md shadow-emerald-500/10 w-full sm:w-auto"
+                className="inline-flex items-center justify-center gap-2 bg-brand-green text-white hover:bg-emerald-700 px-6 md:px-7 py-3 rounded-full font-semibold md:font-bold text-xs md:text-sm tracking-wide transition-all duration-300 shadow-md shadow-emerald-500/10 w-full sm:w-auto"
               >
                 Apply Now <ArrowRight className="w-4 h-4" />
               </Link>

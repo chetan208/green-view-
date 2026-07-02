@@ -158,7 +158,7 @@ export default function BoardNotices() {
         className="w-full max-w-6xl mb-12"
       >
         <div className="bg-white border border-slate-100 shadow-sm rounded-full p-2.5 px-6 flex items-center overflow-hidden gap-4">
-          <div className="flex items-center gap-1.5 bg-[#0fa958] text-white text-[9px] font-semibold md:font-black px-3.5 py-1.5 rounded-full shrink-0">
+          <div className="flex items-center gap-1.5 bg-brand-green text-white text-[9px] font-semibold md:font-black px-3.5 py-1.5 rounded-full shrink-0">
             <span className="w-1.5 h-1.5 bg-white rounded-full animate-ping" />
             <span>LIVE</span>
           </div>
@@ -199,7 +199,7 @@ export default function BoardNotices() {
               variants={itemVariants}
               className="text-3xl md:text-4xl font-semibold md:font-black font-serif tracking-wider leading-tight uppercase mb-8 text-slate-800"
             >
-              Official <span className="text-[#0fa958]">Board</span> Notices
+              Official <span className="text-brand-green">Board</span> Notices
             </motion.h2>
           </div>
 
@@ -242,7 +242,7 @@ export default function BoardNotices() {
                 onClick={() => setSelectedNotice(notice)}
                 className={`group flex items-center justify-between bg-white p-4 px-6 rounded-2xl border transition-all duration-300 hover:shadow-md cursor-pointer ${
                   notice.isHighlight
-                    ? "border-[#0fa958] shadow-sm shadow-emerald-50"
+                    ? "border-brand-green shadow-sm shadow-emerald-50"
                     : "border-slate-100 shadow-sm shadow-slate-100/40"
                 }`}
               >
@@ -250,7 +250,7 @@ export default function BoardNotices() {
                   <span className="bg-red-500 text-white text-[8px] font-semibold md:font-black px-1.5 py-0.5 rounded uppercase tracking-wider animate-pulse shrink-0">
                     NEW
                   </span>
-                  <p className="text-slate-800 font-semibold md:font-bold text-xs md:text-sm group-hover:text-[#0fa958] transition-colors truncate">
+                  <p className="text-slate-800 font-semibold md:font-bold text-xs md:text-sm group-hover:text-brand-green transition-colors truncate">
                     {notice.title}
                   </p>
                 </div>
@@ -259,7 +259,7 @@ export default function BoardNotices() {
                   <span className="text-[10px] font-semibold md:font-bold text-slate-400">
                     {notice.date}
                   </span>
-                  <ArrowUpRight className="w-4 h-4 text-[#0fa958] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                  <ArrowUpRight className="w-4 h-4 text-brand-green group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                 </div>
               </motion.div>
             ))}
@@ -340,12 +340,12 @@ export default function BoardNotices() {
               {selectedNotice.hasAttachment && (
                 <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-emerald-50/30 border border-emerald-100/30 rounded-2xl p-4 mt-1">
                   <div className="flex items-center gap-2">
-                    <FileText className="w-4 h-4 text-[#0fa958]" />
+                    <FileText className="w-4 h-4 text-brand-green" />
                     <span className="text-xs font-semibold md:font-bold text-slate-700">Official_Circular_{selectedNotice.id}.pdf</span>
                   </div>
                   <button
                     onClick={() => alert(`Downloading Circular PDF for Notice ID: ${selectedNotice.id}`)}
-                    className="inline-flex items-center gap-1.5 bg-[#0fa958] text-white hover:bg-emerald-700 px-4 py-2 rounded-xl text-xs font-semibold md:font-bold transition-all cursor-pointer shadow-sm shadow-emerald-500/10 border-transparent"
+                    className="inline-flex items-center gap-1.5 bg-brand-green text-white hover:bg-emerald-700 px-4 py-2 rounded-xl text-xs font-semibold md:font-bold transition-all cursor-pointer shadow-sm shadow-emerald-500/10 border-transparent"
                   >
                     <Download className="w-3.5 h-3.5" /> Download Circular
                   </button>

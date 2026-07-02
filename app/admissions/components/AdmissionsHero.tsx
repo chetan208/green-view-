@@ -1,96 +1,115 @@
 "use client";
 
-import React, { useEffect } from "react";
-import { motion } from "framer-motion";
-import { Sparkles, ArrowDown } from "lucide-react";
-import Image from "next/image";
+import React from "react";
+import Link from "next/link";
+import { Laptop, UserCircle, ListChecks, CheckCircle2, ArrowRight } from "lucide-react";
 
-export default function AdmissionsHero() {
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+export default function AdmissionsHero({ onStartApplication }: { onStartApplication?: () => void }) {
+  const steps = [
+    {
+      id: 1,
+      title: "Class Selection",
+      description: "Choose your admission pathway (Primary or Senior Secondary) and select the desired class/stream.",
+      icon: Laptop,
+    },
+    {
+      id: 2,
+      title: "Personal Details",
+      description: "Provide accurate student information, family details, and residential address.",
+      icon: UserCircle,
+    },
+    {
+      id: 3,
+      title: "Academic Checklist",
+      description: "Enter previous school records and verify the checklist of physical documents required.",
+      icon: ListChecks,
+    },
+    {
+      id: 4,
+      title: "Review & Submit",
+      description: "Verify all entered information, accept the school's declaration terms, and submit online.",
+      icon: CheckCircle2,
+    }
+  ];
 
-  const scrollToCards = () => {
-    window.scrollBy({ top: 600, behavior: "smooth" });
+  const handleStart = () => {
+    if (onStartApplication) {
+      onStartApplication();
+    } else {
+      window.scrollBy({ top: 600, behavior: "smooth" });
+    }
   };
 
   return (
-    <section className="relative w-full pt-24 pb-16 md:pt-28 overflow-hidden bg-white">
-      {/* Background Ornaments */}
-      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-        <div className="absolute -top-40 -right-40 w-96 h-96 rounded-full bg-[#0fa958]/5 blur-3xl" />
-        <div className="absolute top-20 -left-20 w-72 h-72 rounded-full bg-slate-900/5 blur-3xl" />
-        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent" />
-      </div>
-
-      <div className="relative z-10 max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8 items-center">
+    <section className="w-full bg-[#f9fafb] pt-24 pb-12 px-4 md:px-8 relative overflow-hidden font-sans">
+      <div className="max-w-7xl mx-auto flex flex-col">
         
-        {/* Left Content Area */}
-        <div className="flex flex-col items-center lg:items-start text-center lg:text-left">
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-50 border border-slate-100 mb-8"
-          >
-            <Sparkles className="w-4 h-4 text-[#0fa958]" />
-            <span className="text-xs font-bold text-slate-600 tracking-widest uppercase">Admissions Now Open 2026-27</span>
-          </motion.div>
-
-          <motion.h1 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black text-slate-900 tracking-tight leading-[1.1] mb-6"
-          >
-            Begin Your <br className="hidden md:block" />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0fa958] to-slate-900">Journey</span> With Us
-          </motion.h1>
-
-          <motion.p 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-base md:text-lg text-slate-500 font-medium max-w-xl leading-relaxed mb-10"
-          >
-            We are looking for curious minds and passionate learners. Join Green View to unlock a world-class educational experience that builds character, excellence, and a global perspective.
-          </motion.p>
-
-          <motion.button 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            onClick={scrollToCards}
-            className="w-14 h-14 rounded-full bg-white border border-slate-200 shadow-sm flex items-center justify-center text-slate-400 hover:text-[#0fa958] hover:border-[#0fa958] hover:shadow-md transition-all group cursor-pointer"
-          >
-            <ArrowDown className="w-5 h-5 group-hover:translate-y-1 transition-transform" />
-          </motion.button>
-        </div>
-
-        {/* Right Image Composition */}
-        <motion.div 
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.7, delay: 0.2 }}
-          className="hidden lg:flex relative w-full h-[500px] justify-center items-center"
-        >
-          {/* Main Image Container */}
-          <div className="relative w-full max-w-[600px] h-[500px] rounded-[2rem] overflow-hidden shadow-2xl shadow-slate-900/10 border-8 border-white/50 z-10 bg-slate-100">
-            <Image 
-              src="/images/hero-students.png" 
-              alt="Green View Students"
-              fill
-              className="object-cover"
-              priority
-            />
+        {/* Top Breadcrumb & Heading */}
+        <div className="flex flex-col mb-8 md:mb-12">
+          <div className="text-xs font-medium mb-3">
+            <Link href="/" className="text-emerald-700 hover:underline">Home</Link>
+            <span className="text-slate-400 mx-2">/</span>
+            <span className="text-slate-600">Admission</span>
           </div>
           
-          {/* Decorative shapes behind image */}
-          <div className="absolute top-10 right-10 w-full max-w-[400px] aspect-square rounded-full bg-[#0fa958]/10 -z-10 blur-2xl" />
-          <div className="absolute bottom-10 left-10 w-full max-w-[300px] aspect-square rounded-full bg-slate-900/10 -z-10 blur-2xl" />
-          
-        </motion.div>
-        
+          <h1 className="text-2xl md:text-3xl font-serif font-bold text-slate-800 mb-2">
+            Admission <span className="text-brand-green">Process</span>
+          </h1>
+          <p className="text-slate-500 font-medium text-xs md:text-sm">
+            We'd love to hear from you. Reach out to us for any queries.
+          </p>
+        </div>
+
+        {/* Center Process Section */}
+        <div className="flex flex-col items-center w-full">
+          <span className="text-[9px] md:text-[10px] font-bold text-brand-green uppercase tracking-[0.2em] mb-2">
+            STEP-BY-STEP GUIDE
+          </span>
+          <h2 className="text-2xl md:text-3xl font-semibold text-slate-800 mb-10 text-center">
+            Admission <span className="text-brand-green">Process</span>
+          </h2>
+
+          {/* Stepper Grid */}
+          <div className="relative w-full max-w-5xl">
+            {/* Connecting Line (hidden on mobile, visible on md+) */}
+            <div className="hidden md:block absolute top-[35px] left-[12%] right-[12%] h-0.5 bg-slate-200 -z-10" />
+
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-4">
+              {steps.map((step, idx) => (
+                <div key={step.id} className="flex flex-col items-center text-center relative z-10">
+                  
+                  {/* Icon Circle */}
+                  <div className="relative mb-4 group cursor-default">
+                    <div className="w-[70px] h-[70px] bg-white rounded-full flex items-center justify-center shadow-[0_4px_15px_rgb(0,0,0,0.05)] border border-slate-100 transition-transform duration-300 group-hover:scale-105">
+                      <step.icon className="w-7 h-7 text-brand-green" />
+                    </div>
+                    {/* Number Badge */}
+                    <div className="absolute top-0 right-0 w-6 h-6 bg-brand-green rounded-full flex items-center justify-center text-white text-[10px] font-bold shadow-md shadow-emerald-500/30 border-2 border-white">
+                      {step.id}
+                    </div>
+                  </div>
+
+                  {/* Text Content */}
+                  <h3 className="text-sm font-bold text-slate-900 mb-1.5">
+                    {step.title}
+                  </h3>
+                  <p className="text-[11px] text-slate-500 font-medium leading-relaxed px-2 md:px-0">
+                    {step.description}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Call to Action Button */}
+          <button 
+            onClick={handleStart}
+            className="mt-12 bg-brand-green hover:bg-[#0d924c] text-white px-6 py-2.5 rounded-full font-bold text-xs md:text-sm flex items-center gap-2 transition-colors shadow-lg shadow-brand-green/20"
+          >
+            Start Application <ArrowRight className="w-3.5 h-3.5" />
+          </button>
+        </div>
+
       </div>
     </section>
   );

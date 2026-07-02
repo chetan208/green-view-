@@ -9,7 +9,7 @@ export default function Step2PersonalDetails() {
   const { showErrors } = data;
 
   const getErrorClass = (fieldValue: string) => {
-    return showErrors && !fieldValue ? "border-red-400 focus:border-red-500 focus:ring-red-500/20" : "border-slate-200 focus:border-[#0fa958] focus:ring-emerald-500/20";
+    return showErrors && !fieldValue ? "border-red-400 focus:border-red-500 focus:ring-red-500/20" : "border-slate-200 focus:border-brand-green focus:ring-brand-green/20";
   };
   return (
     <div className="w-full bg-white rounded-2xl border border-slate-200 shadow-sm p-4 md:p-8 mb-6">
@@ -17,7 +17,7 @@ export default function Step2PersonalDetails() {
       {/* Header */}
       <div className="flex items-start gap-4 mb-5 md:mb-8">
         <div className="w-12 h-12 rounded-xl bg-emerald-50 flex items-center justify-center shrink-0">
-          <svg className="w-6 h-6 text-[#0fa958]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+          <svg className="w-6 h-6 text-brand-green" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
             <path strokeLinecap="round" strokeLinejoin="round" d="M10 14H5.236a2 2 0 01-1.789-2.894l3.5-7A2 2 0 018.736 3h4.018a2 2 0 011.847 1.236l2.003 4.809M14 10h6a2 2 0 012 2v7a2 2 0 01-2 2h-7a2 2 0 01-2-2v-4" />
             <circle cx="12" cy="12" r="3" />
           </svg>
@@ -86,7 +86,7 @@ export default function Step2PersonalDetails() {
               placeholder="10-character Permanent Account Number" 
               value={data.panNumber}
               onChange={(e) => updateData({ panNumber: e.target.value })}
-              className="w-full px-3 py-2.5 md:px-4 md:py-3 rounded-xl border border-slate-200 focus:border-[#0fa958] focus:ring-2 focus:ring-emerald-500/20 outline-none transition-all text-xs md:text-sm font-medium placeholder:text-slate-400"
+              className="w-full px-3 py-2.5 md:px-4 md:py-3 rounded-xl border border-slate-200 focus:border-brand-green focus:ring-2 focus:ring-brand-green/20 outline-none transition-all text-xs md:text-sm font-medium placeholder:text-slate-400"
             />
           </div>
         </div>
@@ -96,13 +96,13 @@ export default function Step2PersonalDetails() {
         {/* Family & Parent Details Section */}
         <div>
           <div className="flex items-center gap-2 mb-6">
-            <Users className="w-5 h-5 text-[#0fa958]" />
+            <Users className="w-5 h-5 text-brand-green" />
             <h3 className="text-sm font-semibold md:font-bold text-emerald-900 tracking-tight">Family & Parent Details</h3>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6 mb-5 md:mb-8">
             {/* Father */}
-            <div className="bg-[#fcfcfc] border border-emerald-100 rounded-2xl p-5">
+            <div className="bg-[#f9fafb] border border-emerald-100 rounded-2xl p-5">
               <label className="text-[11px] font-semibold md:font-bold text-slate-600 mb-4 uppercase tracking-wider block">Father's Information *</label>
               <div className="flex flex-col gap-3">
                 <input 
@@ -123,7 +123,7 @@ export default function Step2PersonalDetails() {
             </div>
 
             {/* Mother */}
-            <div className="bg-[#fcfcfc] border border-emerald-100 rounded-2xl p-5">
+            <div className="bg-[#f9fafb] border border-emerald-100 rounded-2xl p-5">
               <label className="text-[11px] font-semibold md:font-bold text-slate-600 mb-4 uppercase tracking-wider block">Mother's Information *</label>
               <div className="flex flex-col gap-3">
                 <input 
@@ -144,7 +144,7 @@ export default function Step2PersonalDetails() {
             </div>
 
             {/* Guardian */}
-            <div className="bg-[#fcfcfc] border border-slate-100 rounded-2xl p-5">
+            <div className="bg-[#f9fafb] border border-slate-100 rounded-2xl p-5">
               <label className="text-[11px] font-semibold md:font-bold text-slate-500 mb-4 uppercase tracking-wider block">Guardian's Information (Optional)</label>
               <div className="flex flex-col gap-3">
                 <input 
@@ -152,14 +152,14 @@ export default function Step2PersonalDetails() {
                   placeholder="Guardian's Full Name" 
                   value={data.guardianName}
                   onChange={(e) => updateData({ guardianName: e.target.value })}
-                  className="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:border-[#0fa958] outline-none transition-all text-xs md:text-sm font-medium placeholder:text-slate-400 bg-white"
+                  className="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:border-brand-green outline-none transition-all text-xs md:text-sm font-medium placeholder:text-slate-400 bg-white"
                 />
                 <input 
                   type="text" 
                   placeholder="Mobile Number" 
                   value={data.guardianMobile}
                   onChange={(e) => updateData({ guardianMobile: e.target.value })}
-                  className="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:border-[#0fa958] outline-none transition-all text-xs md:text-sm font-medium placeholder:text-slate-400 bg-white"
+                  className="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:border-brand-green outline-none transition-all text-xs md:text-sm font-medium placeholder:text-slate-400 bg-white"
                 />
               </div>
             </div>
@@ -172,8 +172,8 @@ export default function Step2PersonalDetails() {
               <div className="flex flex-wrap gap-x-4 gap-y-2 items-center h-full">
                 {["General", "SC", "ST", "OBC"].map((cat) => (
                   <label key={cat} className="flex items-center gap-2 cursor-pointer group">
-                    <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center transition-colors ${data.socialCategory === cat ? 'border-[#0fa958]' : 'border-slate-300 group-hover:border-[#0fa958]'}`}>
-                      {data.socialCategory === cat && <div className="w-2 h-2 bg-[#0fa958] rounded-full" />}
+                    <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center transition-colors ${data.socialCategory === cat ? 'border-brand-green' : 'border-slate-300 group-hover:border-brand-green'}`}>
+                      {data.socialCategory === cat && <div className="w-2 h-2 bg-brand-green rounded-full" />}
                     </div>
                     <span className="text-sm font-semibold md:font-bold text-slate-700">{cat}</span>
                     <input 

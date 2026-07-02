@@ -43,11 +43,11 @@ export default function AwardsSection() {
         
         {/* Header */}
         <div className="flex flex-col items-center text-center gap-4">
-          <span className="text-[#0fa958] font-semibold md:font-bold text-[10px] md:text-xs uppercase tracking-[0.25em]">
+          <span className="text-brand-green font-semibold md:font-bold text-[10px] md:text-xs uppercase tracking-[0.25em]">
             RECOGNITION
           </span>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold md:font-extrabold text-slate-900 tracking-tight leading-tight">
-            Awards & <span className="text-[#0fa958]">Achievements</span>
+            Awards & <span className="text-brand-green">Achievements</span>
           </h2>
           <p className="text-slate-500 font-medium max-w-2xl mt-2 text-sm md:text-base leading-relaxed">
             Four decades of excellence, discipline, and community impact â€” recognised by institutions across Himachal Pradesh and India.

@@ -54,7 +54,7 @@ export default function TimelineSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.5 }}
             transition={{ duration: 0.5 }}
-            className="text-[#10a856] font-semibold md:font-bold text-xs md:text-sm uppercase tracking-[0.2em] mb-4"
+            className="text-brand-green font-semibold md:font-bold text-xs md:text-sm uppercase tracking-[0.2em] mb-4"
           >
             OUR JOURNEY
           </motion.span>
@@ -65,7 +65,7 @@ export default function TimelineSection() {
             transition={{ duration: 0.5, delay: 0.1 }}
             className="text-3xl md:text-4xl font-semibold md:font-extrabold text-slate-900 tracking-tight"
           >
-            MILESTONES IN OUR <span className="text-[#10a856]">HISTORY</span>
+            MILESTONES IN OUR <span className="text-brand-green">HISTORY</span>
           </motion.h2>
         </div>
 
@@ -76,7 +76,7 @@ export default function TimelineSection() {
           
           {/* Central Line Active Progress (Dark Green) */}
           <motion.div 
-            className="absolute left-6 md:left-1/2 top-0 w-[4px] bg-[#10a856] -translate-x-1/2 rounded-full origin-top z-0"
+            className="absolute left-6 md:left-1/2 top-0 w-[4px] bg-brand-green -translate-x-1/2 rounded-full origin-top z-0"
             style={{ height: lineHeight }}
           ></motion.div>
 
@@ -106,7 +106,7 @@ export default function TimelineSection() {
                         transition={{ duration: 0.4 }}
                         className="flex items-center justify-end h-full"
                       >
-                        <h3 className="text-xl lg:text-2xl font-semibold md:font-bold text-[#10a856] uppercase tracking-wider">{item.title}</h3>
+                        <h3 className="text-xl lg:text-2xl font-semibold md:font-bold text-brand-green uppercase tracking-wider">{item.title}</h3>
                       </motion.div>
                     ) : (
                       <motion.div 
@@ -147,7 +147,7 @@ export default function TimelineSection() {
                         transition={{ duration: 0.4 }}
                         className="flex items-center justify-start h-full"
                       >
-                        <h3 className="text-xl lg:text-2xl font-semibold md:font-bold text-[#10a856] uppercase tracking-wider">{item.title}</h3>
+                        <h3 className="text-xl lg:text-2xl font-semibold md:font-bold text-brand-green uppercase tracking-wider">{item.title}</h3>
                       </motion.div>
                     )}
                   </div>
@@ -162,7 +162,7 @@ export default function TimelineSection() {
                       transition={{ duration: 0.4 }}
                       className="mb-2 mt-4"
                     >
-                      <h3 className="text-lg font-semibold md:font-bold text-[#10a856] uppercase tracking-wider">{item.title}</h3>
+                      <h3 className="text-lg font-semibold md:font-bold text-brand-green uppercase tracking-wider">{item.title}</h3>
                     </motion.div>
                     <motion.div 
                       initial={{ opacity: 0.3, y: 15 }}

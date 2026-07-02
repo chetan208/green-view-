@@ -38,19 +38,19 @@ export default function CoursesSection() {
   ];
 
   return (
-    <section className="w-full bg-[#f8f9fa] py-12 md:py-20 px-6 md:px-12 flex justify-center border-t border-slate-100">
-      <div className="max-w-6xl w-full flex flex-col gap-10 md:gap-12">
+    <section className="w-full bg-transparent py-10 md:py-16 px-4 md:px-8 lg:px-12 flex justify-center border-t border-slate-200/50">
+      <div className="max-w-6xl w-full flex flex-col gap-8 md:gap-10">
         
         {/* Centered Top Title */}
         <div className="w-full flex justify-center">
            <h2 className="text-2xl md:text-3xl font-semibold md:font-extrabold tracking-[0.15em] uppercase">
-             <span className="text-slate-900">OUR</span> <span className="text-[#0fa958]">COURSES</span>
+             <span className="text-slate-900">OUR</span> <span className="text-brand-green">COURSES</span>
            </h2>
         </div>
 
         {/* Section Heading */}
         <div className="flex flex-col gap-3">
-          <span className="text-[#0fa958] font-semibold md:font-bold text-[10px] md:text-xs uppercase tracking-[0.2em]">
+          <span className="text-brand-green font-semibold md:font-bold text-[10px] md:text-xs uppercase tracking-[0.2em]">
             ACADEMICS • HPBOSE
           </span>
           <h3 className="text-3xl md:text-4xl lg:text-[44px] font-semibold md:font-extrabold text-slate-900 tracking-tight leading-[1.2] max-w-2xl">
@@ -59,13 +59,13 @@ export default function CoursesSection() {
         </div>
 
         {/* Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6">
           {courses.map((course, idx) => (
             <div 
               key={idx} 
-              className="bg-white rounded-2xl md:rounded-[2rem] p-6 md:p-8 lg:p-10 flex flex-col shadow-[0_8px_30px_rgb(0,0,0,0.03)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-all duration-300 border border-slate-50"
+              className="bg-white rounded-[1.5rem] p-5 md:p-6 lg:p-8 flex flex-col shadow-sm border border-slate-100 hover:shadow-md transition-shadow duration-300"
             >
-              <span className="text-[#0fa958] font-semibold md:font-bold text-[10px] uppercase tracking-widest mb-4 block">
+              <span className="text-brand-green font-semibold md:font-bold text-[10px] uppercase tracking-widest mb-4 block">
                 {course.tag}
               </span>
               <h4 className="text-2xl font-semibold md:font-bold text-slate-800 mb-4 tracking-tight">
@@ -84,7 +84,7 @@ export default function CoursesSection() {
                 ))}
               </ul>
               
-              <button className="bg-[#10a856] hover:bg-[#0e964d] text-white rounded-full py-3.5 px-6 font-semibold md:font-bold text-xs md:text-sm tracking-wide transition-colors flex items-center justify-center gap-2 mt-auto w-max shadow-md shadow-emerald-500/20">
+              <button className="bg-brand-green hover:bg-[#0e964d] text-white rounded-xl py-3 px-6 font-semibold text-xs md:text-sm tracking-wide transition-colors flex items-center justify-center gap-2 mt-auto w-max shadow-sm shadow-brand-green/20">
                 Explore Program <ArrowRight className="w-4 h-4" />
               </button>
             </div>

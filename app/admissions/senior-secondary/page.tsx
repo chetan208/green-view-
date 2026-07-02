@@ -78,7 +78,7 @@ function SeniorSecondaryAdmissionContent() {
             {currentStep === 1 ? (
               <Link 
                 href="/admissions" 
-                className="inline-flex items-center gap-2 text-sm font-semibold md:font-bold text-slate-500 hover:text-[#0fa958] transition-colors"
+                className="inline-flex items-center gap-2 text-sm font-semibold md:font-bold text-slate-500 hover:text-brand-green transition-colors"
               >
                 <ArrowLeft className="w-4 h-4" />
                 Back to Admissions
@@ -86,7 +86,7 @@ function SeniorSecondaryAdmissionContent() {
             ) : (
               <button 
                 onClick={handlePrev}
-                className="inline-flex items-center gap-2 text-sm font-semibold md:font-bold text-slate-500 hover:text-[#0fa958] transition-colors"
+                className="inline-flex items-center gap-2 text-sm font-semibold md:font-bold text-slate-500 hover:text-brand-green transition-colors"
               >
                 <ArrowLeft className="w-4 h-4" />
                 Back to Previous Step

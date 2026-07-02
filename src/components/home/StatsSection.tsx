@@ -32,7 +32,7 @@ export default function StatsSection() {
       whileInView="show"
       viewport={{ once: true, margin: "-50px" }}
       variants={containerVariants}
-      className="w-full bg-[#10b981] py-5 px-6 flex justify-center border-y border-emerald-400/20 shadow-inner overflow-hidden"
+      className="w-full bg-brand-green py-5 px-6 flex justify-center border-y border-emerald-400/20 shadow-inner overflow-hidden"
     >
       <div className="max-w-7xl w-full grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-4 text-center">
         {stats.map((stat, i) => (

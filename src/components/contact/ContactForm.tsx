@@ -23,7 +23,7 @@ export default function ContactForm() {
               type="text" 
               id="name" 
               placeholder="Your name" 
-              className="w-full h-12 px-4 rounded-xl border border-slate-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-[#147a42]/20 focus:border-[#147a42] transition-all"
+              className="w-full h-12 px-4 rounded-xl border border-slate-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-[#147a42]/20 focus:border-brand-green-dark transition-all"
             />
           </div>
           <div className="flex flex-col gap-2">
@@ -32,7 +32,7 @@ export default function ContactForm() {
               type="email" 
               id="email" 
               placeholder="Your email" 
-              className="w-full h-12 px-4 rounded-xl border border-slate-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-[#147a42]/20 focus:border-[#147a42] transition-all"
+              className="w-full h-12 px-4 rounded-xl border border-slate-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-[#147a42]/20 focus:border-brand-green-dark transition-all"
             />
           </div>
         </div>
@@ -43,7 +43,7 @@ export default function ContactForm() {
             type="text" 
             id="subject" 
             placeholder="Subject" 
-            className="w-full h-12 px-4 rounded-xl border border-slate-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-[#147a42]/20 focus:border-[#147a42] transition-all"
+            className="w-full h-12 px-4 rounded-xl border border-slate-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-[#147a42]/20 focus:border-brand-green-dark transition-all"
           />
         </div>
 
@@ -53,13 +53,13 @@ export default function ContactForm() {
             id="message" 
             placeholder="Your message" 
             rows={5}
-            className="w-full p-4 rounded-xl border border-slate-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-[#147a42]/20 focus:border-[#147a42] transition-all resize-none"
+            className="w-full p-4 rounded-xl border border-slate-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-[#147a42]/20 focus:border-brand-green-dark transition-all resize-none"
           ></textarea>
         </div>
 
         <button 
           type="submit" 
-          className="w-full h-14 bg-[#0a5c32] hover:bg-[#084b28] text-white font-semibold md:font-bold rounded-xl mt-2 transition-colors shadow-md shadow-emerald-900/10"
+          className="w-full h-14 bg-brand-green-darker hover:bg-[#084b28] text-white font-semibold md:font-bold rounded-xl mt-2 transition-colors shadow-md shadow-emerald-900/10"
         >
           Send Message
         </button>
