@@ -68,10 +68,16 @@ export default function FacilitiesGrid() {
   };
 
   const cardVariants = {
-    hidden: { opacity: 0, y: 30 },
-    show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } },
-  };
-
+  hidden: { opacity: 0, y: 30 },
+  show: { 
+    opacity: 1, 
+    y: 0, 
+    transition: { 
+      duration: 0.6, 
+      ease: [0.16, 1, 0.3, 1] as const // Added 'as const' here
+    } 
+  },
+};
   return (
     <section className="w-full py-20 px-6 bg-slate-50 relative border-t border-slate-100">
       <div className="max-w-7xl mx-auto">
