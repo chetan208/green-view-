@@ -7,7 +7,7 @@ import Footer from "@/components/footer/Footer";
 export default function FacilitiesPage() {
   return (
     <div className="min-h-screen bg-white">
-      <Header />
+      
       
       <main className="flex flex-col items-center">
         <FacilitiesHero />
@@ -18,7 +18,7 @@ export default function FacilitiesPage() {
         </div>
       </main>
 
-      <Footer />
+      
     </div>
   );
 }

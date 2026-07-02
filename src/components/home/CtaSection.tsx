@@ -18,9 +18,9 @@ export default function CtaSection() {
         <p className="text-slate-300 md:text-lg font-medium max-w-2xl mx-auto mb-10 leading-relaxed">
           Classes open from Nursery to Class XII. Limited seats available — apply early to secure your child&apos;s place at Green View.
         </p>
-        <Link
-          href="#admission"
-          className="bg-white text-emerald-800 hover:bg-emerald-50 px-8 py-3.5 rounded-full font-semibold md:font-bold text-sm tracking-wide transition-all duration-300 shadow-xl shadow-emerald-900/20 flex items-center gap-2 group"
+        <Link 
+          href="/admissions"
+          className="inline-flex items-center gap-2 bg-emerald-500 hover:bg-emerald-400 text-white px-8 py-4 rounded-full font-bold text-sm md:text-base transition-all shadow-[0_0_20px_rgba(16,185,129,0.3)] hover:shadow-[0_0_25px_rgba(16,185,129,0.5)] w-full sm:w-auto justify-center"
         >
           Apply for Admission
           <svg 

@@ -83,7 +83,7 @@ export default function HeroSection() {
           >
             <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }} className="w-full sm:w-auto">
               <Link
-                href="#admission"
+                href="/admissions"
                 className="inline-flex items-center justify-center gap-2 bg-[#0fa958] text-white hover:bg-emerald-700 px-6 md:px-8 py-3.5 rounded-full font-semibold md:font-bold text-xs md:text-sm tracking-wide transition-all duration-300 shadow-md shadow-emerald-600/10 w-full sm:w-auto"
               >
                 Admission Enquiry
@@ -92,7 +92,7 @@ export default function HeroSection() {
             </motion.div>
             <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }} className="w-full sm:w-auto">
               <Link
-                href="#about"
+                href="/about"
                 className="inline-flex items-center justify-center bg-white border border-slate-200 hover:bg-slate-50 text-slate-800 px-6 md:px-8 py-3.5 rounded-full font-semibold md:font-bold text-xs md:text-sm tracking-wide transition-all duration-300 text-center w-full sm:w-auto"
               >
                 About Us

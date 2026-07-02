@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import React from "react";
 import Link from "next/link";
@@ -176,7 +176,7 @@ export default function WelcomeSection() {
           <motion.div variants={rightItemVariants} className="flex items-center gap-4 w-full sm:w-auto">
             <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
               <Link
-                href="#admission"
+                href="/admissions"
                 className="bg-[#0fa958] text-white hover:bg-emerald-700 px-6 py-3 rounded-full font-semibold md:font-bold text-xs tracking-wide transition-all shadow-md block"
               >
                 Talk to Admissions
@@ -184,7 +184,7 @@ export default function WelcomeSection() {
             </motion.div>
             <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
               <Link
-                href="#academics"
+                href="/academics"
                 className="bg-white border border-slate-200 text-slate-600 hover:border-emerald-600 hover:text-emerald-600 px-6 py-3 rounded-full font-semibold md:font-bold text-xs tracking-wide transition-all block"
               >
                 See Academics

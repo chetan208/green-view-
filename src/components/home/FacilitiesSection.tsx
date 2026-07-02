@@ -71,7 +71,7 @@ export default function FacilitiesSection() {
 
           <motion.div whileHover={{ scale: 1.05 }}>
             <Link
-              href="#events"
+              href="/facilities"
               className="flex items-center gap-1 font-semibold md:font-bold text-slate-900 hover:text-emerald-700 text-sm md:text-base transition-colors"
             >
               See All

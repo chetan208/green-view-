@@ -3,87 +3,99 @@
 import React from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowRight, BookOpen, GraduationCap, ClipboardList, CheckCircle2 } from "lucide-react";
+import { GraduationCap, BookOpen, ArrowRight, CheckCircle2 } from "lucide-react";
 
 export default function AdmissionCards() {
   const cards = [
     {
-      title: "Nursery to Class 10",
-      subtitle: "Primary & High School Application",
+      title: "Primary & High School",
+      subtitle: "Nursery to Class X",
+      description: "A strong foundation focusing on holistic growth, interactive learning, and core academics aligned with the CBSE framework.",
       icon: BookOpen,
-      desc: "Apply for foundational and core curriculum classes. Admissions are based on seat availability and interaction.",
-      href: "/admissions/nursery-to-10",
-      color: "from-[#0fa958] to-[#147a42]",
-      bgLight: "bg-[#e8fbf0]",
+      href: "/admissions/primary-secondary",
+      theme: "from-[#0fa958]/10 to-[#0fa958]/5",
       iconColor: "text-[#0fa958]",
-      features: ["Age criteria applies for Nursery", "Previous school records needed", "Interactive session required"]
+      btnColor: "bg-[#0fa958] hover:bg-emerald-700 text-white",
+      features: ["Activity-based Learning", "Smart Classrooms", "Extracurricular Focus", "Foundational Numeracy & Literacy"]
     },
     {
-      title: "Class 11 & 12",
-      subtitle: "Senior Secondary Application",
+      title: "Senior Secondary",
+      subtitle: "Class XI to XII",
+      description: "Specialized streams (Science, Commerce, Humanities) preparing students for board excellence and competitive examinations.",
       icon: GraduationCap,
-      desc: "Apply for Medical, Non-Medical, Commerce or Humanities streams. Admissions based on Class 10 board results.",
       href: "/admissions/senior-secondary",
-      color: "from-[#0c3c86] to-[#082a5e]",
-      bgLight: "bg-blue-50",
-      iconColor: "text-[#0c3c86]",
-      features: ["Stream selection required", "Class 10 mark sheet mandatory", "Subject counseling available"]
+      theme: "from-slate-900/10 to-slate-900/5",
+      iconColor: "text-slate-900",
+      btnColor: "bg-slate-900 hover:bg-slate-800 text-white",
+      features: ["Advanced Science Labs", "Career Counseling", "Competitive Exam Prep", "Leadership Programs"]
     }
   ];
 
   return (
-    <section className="w-full pt-32 pb-24 px-6 md:px-12 flex justify-center bg-[#fcfcfc] relative z-20">
-      <div className="max-w-6xl w-full grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
-        {cards.map((card, idx) => {
-          const Icon = card.icon;
-          return (
+    <section className="w-full py-20 px-6 bg-white relative z-20 -mt-10">
+      <div className="max-w-6xl mx-auto flex flex-col items-center">
+        
+        <div className="text-center mb-16">
+          <h2 className="text-3xl md:text-4xl font-black text-slate-900 tracking-tight mb-4">
+            Select Your Pathway
+          </h2>
+          <p className="text-slate-500 font-medium max-w-xl mx-auto">
+            Choose the appropriate admission form based on your child's grade level. The application process is fully digital and seamless.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full">
+          {cards.map((card, idx) => (
             <motion.div
-              key={card.title}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.1 + idx * 0.1 }}
-              className="flex flex-col bg-white rounded-3xl overflow-hidden shadow-sm border border-slate-100 hover:shadow-lg transition-shadow duration-300"
+              key={idx}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.6, delay: idx * 0.1 }}
+              whileHover={{ y: -5 }}
+              className="group relative bg-white border border-slate-200 rounded-3xl p-8 md:p-10 shadow-sm hover:shadow-2xl hover:shadow-slate-200/50 transition-all duration-300 flex flex-col h-full overflow-hidden"
             >
-              <div className="p-8 md:p-10 flex flex-col h-full">
-                {/* Header Area */}
-                <div className="flex items-center gap-5 mb-6">
-                  <div className={`w-14 h-14 rounded-2xl ${card.bgLight} flex items-center justify-center shrink-0`}>
-                    <Icon className={`w-8 h-8 ${card.iconColor}`} strokeWidth={1.5} />
-                  </div>
-                  <div>
-                    <h3 className="text-2xl font-semibold md:font-black text-slate-900 tracking-tight">{card.title}</h3>
-                    <p className="text-sm font-semibold md:font-bold text-slate-500 mt-1">{card.subtitle}</p>
-                  </div>
+              {/* Background subtle gradient */}
+              <div className={`absolute top-0 right-0 w-64 h-64 bg-gradient-to-br ${card.theme} rounded-bl-full -z-10 opacity-50 group-hover:scale-110 transition-transform duration-500`} />
+              
+              <div className="flex items-start justify-between mb-8">
+                <div className="flex flex-col">
+                  <span className={`text-[10px] font-black uppercase tracking-widest ${card.iconColor} mb-2`}>
+                    {card.subtitle}
+                  </span>
+                  <h3 className="text-2xl md:text-3xl font-black text-slate-900 tracking-tight">
+                    {card.title}
+                  </h3>
                 </div>
-
-                {/* Description */}
-                <p className="text-slate-600 font-medium leading-relaxed mb-8">
-                  {card.desc}
-                </p>
-
-                {/* Features List */}
-                <ul className="flex flex-col gap-3 mb-10 mt-auto">
-                  {card.features.map((feature, i) => (
-                    <li key={i} className="flex items-start gap-3 text-sm font-medium text-slate-600">
-                      <CheckCircle2 className={`w-5 h-5 ${card.iconColor} shrink-0`} />
-                      <span>{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-
-                {/* CTA Button */}
-                <Link
-                  href={card.href}
-                  className={`group w-full py-4 rounded-2xl bg-gradient-to-r ${card.color} text-white font-semibold md:font-bold text-center flex items-center justify-center gap-2 hover:opacity-90 hover:shadow-xl transition-all shadow-md`}
-                >
-                  <ClipboardList className="w-5 h-5" />
-                  Proceed to Application
-                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                </Link>
+                <div className={`w-14 h-14 rounded-2xl bg-white shadow-md border border-slate-100 flex items-center justify-center ${card.iconColor} shrink-0`}>
+                  <card.icon className="w-6 h-6" />
+                </div>
               </div>
+
+              <p className="text-slate-500 font-medium leading-relaxed mb-8 flex-1">
+                {card.description}
+              </p>
+
+              <div className="flex flex-col gap-3 mb-10">
+                {card.features.map((feat, fidx) => (
+                  <div key={fidx} className="flex items-center gap-2.5 text-sm font-semibold text-slate-700">
+                    <CheckCircle2 className={`w-4 h-4 ${card.iconColor}`} />
+                    {feat}
+                  </div>
+                ))}
+              </div>
+
+              <Link 
+                href={card.href}
+                className={`mt-auto w-full py-4 rounded-xl flex items-center justify-center gap-2 text-sm font-bold tracking-wide transition-all ${card.btnColor} shadow-md group-hover:gap-4`}
+              >
+                <span>Apply Now</span>
+                <ArrowRight className="w-4 h-4" />
+              </Link>
             </motion.div>
-          );
-        })}
+          ))}
+        </div>
+
       </div>
     </section>
   );

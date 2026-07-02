@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import React from "react";
 import { motion } from "framer-motion";
@@ -97,6 +97,22 @@ export default function GallerySection() {
               />
             </motion.div>
           ))}
+        </motion.div>
+
+        {/* View All Button */}
+        <motion.div 
+          initial={{ opacity: 0, y: 15 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="mt-10"
+        >
+          <a
+            href="/gallery"
+            className="inline-block bg-[#0fa958] text-white hover:bg-emerald-700 px-8 py-3.5 rounded-full font-semibold md:font-bold text-sm tracking-wide transition-all shadow-md shadow-emerald-600/10 cursor-pointer"
+          >
+            View All
+          </a>
         </motion.div>
 
       </div>
