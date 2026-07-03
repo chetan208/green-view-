@@ -37,8 +37,8 @@ export default function Step3AcademicActivities() {
               <input 
                 type="text" 
                 placeholder="e.g., DAV Public School" 
-                value={data.prevSchoolName}
-                onChange={(e) => updateData({ prevSchoolName: e.target.value })}
+                value={data.academicDetails.prevSchoolName}
+                onChange={(e) => updateData({ academicDetails: { ...data.academicDetails, prevSchoolName: e.target.value } })}
                 className="w-full px-3 py-2.5 md:px-4 md:py-3 rounded-xl border border-slate-200 focus:border-brand-green focus:ring-brand-green/20 outline-none transition-all text-xs md:text-sm font-medium placeholder:text-slate-400"
               />
             </div>
@@ -48,8 +48,8 @@ export default function Step3AcademicActivities() {
               <input 
                 type="text" 
                 placeholder="e.g., English, Hindi" 
-                value={data.prevSchoolMedium}
-                onChange={(e) => updateData({ prevSchoolMedium: e.target.value })}
+                value={data.academicDetails.prevSchoolMedium}
+                onChange={(e) => updateData({ academicDetails: { ...data.academicDetails, prevSchoolMedium: e.target.value } })}
                 className="w-full px-3 py-2.5 md:px-4 md:py-3 rounded-xl border border-slate-200 focus:border-brand-green focus:ring-brand-green/20 outline-none transition-all text-xs md:text-sm font-medium placeholder:text-slate-400"
               />
             </div>
@@ -66,8 +66,8 @@ export default function Step3AcademicActivities() {
               <input 
                 type="text" 
                 placeholder="e.g., Reading, Painting" 
-                value={data.hobbies}
-                onChange={(e) => updateData({ hobbies: e.target.value })}
+                value={data.activityDetails.hobbies}
+                onChange={(e) => updateData({ activityDetails: { ...data.activityDetails, hobbies: e.target.value } })}
                 className="w-full px-3 py-2.5 md:px-4 md:py-3 rounded-xl border border-slate-200 focus:border-brand-green focus:ring-brand-green/20 outline-none transition-all text-xs md:text-sm font-medium placeholder:text-slate-400"
               />
             </div>
@@ -77,8 +77,8 @@ export default function Step3AcademicActivities() {
               <input 
                 type="text" 
                 placeholder="e.g., Cricket, Chess" 
-                value={data.interestInGames}
-                onChange={(e) => updateData({ interestInGames: e.target.value })}
+                value={data.activityDetails.interestInGames}
+                onChange={(e) => updateData({ activityDetails: { ...data.activityDetails, interestInGames: e.target.value } })}
                 className="w-full px-3 py-2.5 md:px-4 md:py-3 rounded-xl border border-slate-200 focus:border-brand-green focus:ring-brand-green/20 outline-none transition-all text-xs md:text-sm font-medium placeholder:text-slate-400"
               />
             </div>

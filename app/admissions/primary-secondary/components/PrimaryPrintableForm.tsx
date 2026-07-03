@@ -5,7 +5,7 @@ import { usePrimaryAdmissionContext } from "../context/PrimaryAdmissionContext";
 
 export default function PrimaryPrintableForm() {
   const { data } = usePrimaryAdmissionContext();
-  const parentName = data.fatherName || data.motherName || data.guardianName;
+  const parentName = data.familyDetails.fatherName || data.familyDetails.motherName || data.familyDetails.guardianName;
 
   const currentYear = new Date().getFullYear();
   const session = `${currentYear}-${(currentYear + 1).toString().slice(2)}`;
@@ -44,9 +44,9 @@ export default function PrimaryPrintableForm() {
 
         {/* Photo Box */}
         <div className="absolute right-0 top-32 w-[120px] h-[150px] border border-black flex items-center justify-center text-center text-[10px] p-2 bg-white z-10">
-          {data.photoPreview ? (
+          {data.studentDetails.photoPreview ? (
             // eslint-disable-next-line @next/next/no-img-element
-            <img src={data.photoPreview} alt="Student" className="w-full h-full object-cover" />
+            <img src={data.studentDetails.photoPreview} alt="Student" className="w-full h-full object-cover" />
           ) : (
             "Paste Passport Size Photograph"
           )}
@@ -57,25 +57,25 @@ export default function PrimaryPrintableForm() {
           <div className="flex-line">
             <span className="w-6">1.</span>
             <span className="w-48">Name of the student<br/><span className="text-[10px]">(In Block Letters)</span></span>
-            <span className="font-normal text-[13px] border-b border-dotted border-black flex-1 uppercase pb-1 text-blue-700 px-2 text-left">{data.studentName}</span>
+            <span className="font-normal text-[13px] border-b border-dotted border-black flex-1 uppercase pb-1 text-blue-700 px-2 text-left">{data.studentDetails.studentName}</span>
           </div>
 
           <div className="flex-line">
             <span className="w-6">2.</span>
             <span className="w-48">Father's Name</span>
-            <span className="font-normal text-[13px] border-b border-dotted border-black flex-1 uppercase pb-1 text-blue-700 px-2 text-left">{data.fatherName}</span>
+            <span className="font-normal text-[13px] border-b border-dotted border-black flex-1 uppercase pb-1 text-blue-700 px-2 text-left">{data.familyDetails.fatherName}</span>
           </div>
 
           <div className="flex-line">
             <span className="w-6">3.</span>
             <span className="w-48">Mother's Name</span>
-            <span className="font-normal text-[13px] border-b border-dotted border-black flex-1 uppercase pb-1 text-blue-700 px-2 text-left">{data.motherName}</span>
+            <span className="font-normal text-[13px] border-b border-dotted border-black flex-1 uppercase pb-1 text-blue-700 px-2 text-left">{data.familyDetails.motherName}</span>
           </div>
 
           <div className="flex-line">
             <span className="w-6">4.</span>
             <span className="w-48">Sex</span>
-            <span className="font-normal text-[13px] border-b border-dotted border-black flex-1 uppercase pb-1 text-blue-700 px-2 text-left">{data.sex}</span>
+            <span className="font-normal text-[13px] border-b border-dotted border-black flex-1 uppercase pb-1 text-blue-700 px-2 text-left">{data.studentDetails.sex}</span>
           </div>
 
           <div className="flex-line">
@@ -85,36 +85,36 @@ export default function PrimaryPrintableForm() {
           <div className="flex-line pl-8">
             <span className="w-6">a)</span>
             <span className="w-32">in figures</span>
-            <span className="font-normal text-[13px] border-b border-dotted border-black flex-1 uppercase pb-1 text-blue-700 px-2 text-left">{data.dateOfBirthFigures}</span>
+            <span className="font-normal text-[13px] border-b border-dotted border-black flex-1 uppercase pb-1 text-blue-700 px-2 text-left">{data.studentDetails.dateOfBirthFigures}</span>
           </div>
           <div className="flex-line pl-8">
             <span className="w-6">b)</span>
             <span className="w-32">in words</span>
-            <span className="font-normal text-[13px] border-b border-dotted border-black flex-1 uppercase pb-1 text-blue-700 px-2 text-left">{data.dateOfBirthWords}</span>
+            <span className="font-normal text-[13px] border-b border-dotted border-black flex-1 uppercase pb-1 text-blue-700 px-2 text-left">{data.studentDetails.dateOfBirthWords}</span>
           </div>
 
           <div className="flex-line">
             <span className="w-6">6.</span>
             <span className="w-48">Mother Tongue</span>
-            <span className="font-normal text-[13px] border-b border-dotted border-black flex-1 uppercase pb-1 text-blue-700 px-2 text-left">{data.motherTongue}</span>
+            <span className="font-normal text-[13px] border-b border-dotted border-black flex-1 uppercase pb-1 text-blue-700 px-2 text-left">{data.studentDetails.motherTongue}</span>
           </div>
 
           <div className="flex-line">
             <span className="w-6">7.</span>
             <span className="w-48">Religion</span>
-            <span className="font-normal text-[13px] border-b border-dotted border-black flex-1 uppercase pb-1 text-blue-700 px-2 text-left">{data.religion}</span>
+            <span className="font-normal text-[13px] border-b border-dotted border-black flex-1 uppercase pb-1 text-blue-700 px-2 text-left">{data.studentDetails.religion}</span>
           </div>
 
           <div className="flex-line">
             <span className="w-6">8.</span>
             <span className="w-96">Category (Authentic proof must be attached) Gen .... OBC .... SC .... ST ....</span>
-            <span className="font-normal text-[13px] border-b border-dotted border-black flex-1 uppercase pb-1 text-blue-700 px-2 text-left">{data.socialCategory}</span>
+            <span className="font-normal text-[13px] border-b border-dotted border-black flex-1 uppercase pb-1 text-blue-700 px-2 text-left">{data.studentDetails.socialCategory}</span>
           </div>
 
           <div className="flex-line">
             <span className="w-6">9.</span>
             <span className="w-64">Class to which admission is sought :</span>
-            <span className="font-normal text-[13px] border-b border-dotted border-black flex-1 uppercase pb-1 text-blue-700 px-2 text-left">{data.selectedClass}</span>
+            <span className="font-normal text-[13px] border-b border-dotted border-black flex-1 uppercase pb-1 text-blue-700 px-2 text-left">{data.courseDetails.selectedClass}</span>
           </div>
         </div>
 
@@ -127,24 +127,24 @@ export default function PrimaryPrintableForm() {
           <div className="flex-line pl-8">
             <span className="w-6">(a)</span>
             <span className="w-48">Name of the School</span>
-            <span className="font-normal text-[13px] border-b border-dotted border-black flex-1 uppercase pb-1 text-blue-700 px-2 text-left">{data.prevSchoolName}</span>
+            <span className="font-normal text-[13px] border-b border-dotted border-black flex-1 uppercase pb-1 text-blue-700 px-2 text-left">{data.academicDetails.prevSchoolName}</span>
           </div>
           <div className="flex-line pl-8">
             <span className="w-6">(b)</span>
             <span className="w-48">Medium of Instruction</span>
-            <span className="font-normal text-[13px] border-b border-dotted border-black flex-1 uppercase pb-1 text-blue-700 px-2 text-left">{data.prevSchoolMedium}</span>
+            <span className="font-normal text-[13px] border-b border-dotted border-black flex-1 uppercase pb-1 text-blue-700 px-2 text-left">{data.academicDetails.prevSchoolMedium}</span>
           </div>
 
           <div className="flex-line">
             <span className="w-6">11.</span>
             <span className="w-48">Hobbies</span>
-            <span className="font-normal text-[13px] border-b border-dotted border-black flex-1 uppercase pb-1 text-blue-700 px-2 text-left">{data.hobbies}</span>
+            <span className="font-normal text-[13px] border-b border-dotted border-black flex-1 uppercase pb-1 text-blue-700 px-2 text-left">{data.activityDetails.hobbies}</span>
           </div>
 
           <div className="flex-line">
             <span className="w-6">12.</span>
             <span className="w-48">Interest in games</span>
-            <span className="font-normal text-[13px] border-b border-dotted border-black flex-1 uppercase pb-1 text-blue-700 px-2 text-left">{data.interestInGames}</span>
+            <span className="font-normal text-[13px] border-b border-dotted border-black flex-1 uppercase pb-1 text-blue-700 px-2 text-left">{data.activityDetails.interestInGames}</span>
           </div>
 
           <div className="flex-line">
@@ -156,25 +156,25 @@ export default function PrimaryPrintableForm() {
           <div className="flex-line pl-8">
             <span className="w-6">(b)</span>
             <span className="w-48">Occupation</span>
-            <span className="font-normal text-[13px] border-b border-dotted border-black flex-1 uppercase pb-1 text-blue-700 px-2 text-left">{data.guardianOccupation}</span>
+            <span className="font-normal text-[13px] border-b border-dotted border-black flex-1 uppercase pb-1 text-blue-700 px-2 text-left">{data.familyDetails.guardianOccupation}</span>
           </div>
 
           <div className="flex-line mt-3">
             <span className="w-6">14.</span>
             <span className="w-64">Present address with pin code :</span>
-            <span className="font-normal text-[13px] border-b border-dotted border-black flex-1 uppercase pb-1 text-blue-700 px-2 text-left">{data.presentAddress}</span>
+            <span className="font-normal text-[13px] border-b border-dotted border-black flex-1 uppercase pb-1 text-blue-700 px-2 text-left">{data.contactDetails.presentAddress}</span>
           </div>
 
           <div className="flex-line mt-3">
             <span className="w-6">15.</span>
             <span className="w-64">Permanent Address :</span>
-            <span className="font-normal text-[13px] border-b border-dotted border-black flex-1 uppercase pb-1 text-blue-700 px-2 text-left">{data.permanentAddress}</span>
+            <span className="font-normal text-[13px] border-b border-dotted border-black flex-1 uppercase pb-1 text-blue-700 px-2 text-left">{data.contactDetails.permanentAddress}</span>
           </div>
 
           <div className="flex-line mt-3">
             <span className="w-6">16.</span>
             <span className="w-64">Telephone No. if any :</span>
-            <span className="font-normal text-[13px] border-b border-dotted border-black flex-1 uppercase pb-1 text-blue-700 px-2 text-left">{data.telephoneNo}</span>
+            <span className="font-normal text-[13px] border-b border-dotted border-black flex-1 uppercase pb-1 text-blue-700 px-2 text-left">{data.contactDetails.telephoneNo}</span>
           </div>
         </div>
 
@@ -182,7 +182,7 @@ export default function PrimaryPrintableForm() {
         <div className="mt-6 text-center">
           <h3 className="font-normal md:font-semibold underline text-lg mb-3">DECLARATION</h3>
           <p className="text-left leading-relaxed">
-            I <span className="inline-block w-64 border-b border-dotted border-black font-normal text-[13px] uppercase text-blue-700 px-2 text-left">{parentName}</span> Father/Mother/Guardian of <span className="inline-block w-64 border-b border-dotted border-black font-normal text-[13px] uppercase text-blue-700 px-2 text-left">{data.studentName}</span> Solemnly declare that the above information regarding my son/daughter/ward are true to the best of my knowledge.
+            I <span className="inline-block w-64 border-b border-dotted border-black font-normal text-[13px] uppercase text-blue-700 px-2 text-left">{parentName}</span> Father/Mother/Guardian of <span className="inline-block w-64 border-b border-dotted border-black font-normal text-[13px] uppercase text-blue-700 px-2 text-left">{data.studentDetails.studentName}</span> Solemnly declare that the above information regarding my son/daughter/ward are true to the best of my knowledge.
           </p>
         </div>
 

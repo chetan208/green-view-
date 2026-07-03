@@ -6,7 +6,9 @@ import { useAdmissionContext } from "../context/AdmissionContext";
 
 export default function Step1StreamSelection() {
   const { data, updateData } = useAdmissionContext();
-  const { selectedClass, selectedStream, isProvisional, photoPreview, selectedSubjects, showErrors } = data;
+  const { selectedClass, selectedStream, isProvisional, selectedSubjects } = data.courseDetails;
+  const showErrors = data.meta.showErrors;
+  const { photoPreview } = data.studentDetails;
   
   const hasPhotoError = showErrors && !photoPreview;
   const hasSubjectError = showErrors && selectedSubjects.length !== 5;
@@ -45,26 +47,23 @@ export default function Step1StreamSelection() {
   
   const handleStreamChange = (stream: string) => {
     const defaultSubjects = streamSubjects[stream].filter(s => s.compulsory).map(s => s.name);
-    updateData({ selectedStream: stream, selectedSubjects: defaultSubjects });
+    updateData({ courseDetails: { ...data.courseDetails, selectedStream: stream, selectedSubjects: defaultSubjects } });
   };
 
   const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        updateData({ photoPreview: reader.result as string });
-      };
-      reader.readAsDataURL(file);
+      const previewUrl = URL.createObjectURL(file);
+      updateData({ studentDetails: { ...data.studentDetails, photoFile: file, photoPreview: previewUrl } });
     }
   };
 
   const toggleSubject = (subject: string) => {
     if (selectedSubjects.includes(subject)) {
-      updateData({ selectedSubjects: selectedSubjects.filter(s => s !== subject) });
+      updateData({ courseDetails: { ...data.courseDetails, selectedSubjects: selectedSubjects.filter(s => s !== subject) } });
     } else {
       if (selectedSubjects.length < 5) {
-        updateData({ selectedSubjects: [...selectedSubjects, subject] });
+        updateData({ courseDetails: { ...data.courseDetails, selectedSubjects: [...selectedSubjects, subject] } });
       }
     }
   };
@@ -133,7 +132,7 @@ export default function Step1StreamSelection() {
                 {["Class 11", "Class 12"].map((cls) => (
                   <button
                     key={cls}
-                    onClick={() => updateData({ selectedClass: cls })}
+                    onClick={() => updateData({ courseDetails: { ...data.courseDetails, selectedClass: cls } })}
                     className={`flex-1 flex items-center gap-3 p-3 rounded-xl border transition-all ${
                       selectedClass === cls 
                         ? "border-blue-500 bg-blue-50/30" 

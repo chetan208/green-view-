@@ -39,17 +39,17 @@ export default function Step6Review({ onEdit }: Step6ReviewProps) {
         <div className="md:col-span-4 flex flex-col h-full">
           <div className="w-full bg-[#f9fafb] border border-slate-100 rounded-2xl p-6 flex flex-col items-center shadow-sm">
             <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 mb-4 overflow-hidden flex items-center justify-center shadow-md border-2 border-white">
-              {data.photoPreview ? (
+              {data.studentDetails.photoPreview ? (
                 // eslint-disable-next-line @next/next/no-img-element
-                <img src={data.photoPreview} alt="Student Profile" className="w-full h-full object-cover" />
+                <img src={data.studentDetails.photoPreview} alt="Student Profile" className="w-full h-full object-cover" />
               ) : (
                 <User className="w-10 h-10 text-white/50" />
               )}
             </div>
-            <h3 className="text-lg font-semibold md:font-bold text-slate-800 tracking-wider uppercase">{data.studentNameEnglish || "ANONYMOUS USER"}</h3>
+            <h3 className="text-lg font-semibold md:font-bold text-slate-800 tracking-wider uppercase">{data.studentDetails.studentNameEnglish || "ANONYMOUS USER"}</h3>
             
             <div className="mt-2 bg-emerald-50 border border-emerald-200 text-emerald-700 px-3 py-1 rounded-full text-xs font-semibold md:font-bold tracking-wide">
-              {data.selectedClass} - {data.selectedStream}
+              {data.courseDetails.selectedClass} - {data.courseDetails.selectedStream}
             </div>
 
             <div className="w-full h-[1px] bg-slate-200 my-6 border-dashed" />
@@ -57,19 +57,19 @@ export default function Step6Review({ onEdit }: Step6ReviewProps) {
             <div className="w-full flex flex-col gap-4 text-xs md:text-sm font-medium">
               <div className="flex justify-between items-center">
                 <span className="text-slate-400">Date of Birth:</span>
-                <span className="text-slate-800 font-semibold md:font-bold">{data.dateOfBirth || "N/A"}</span>
+                <span className="text-slate-800 font-semibold md:font-bold">{data.studentDetails.dateOfBirth || "N/A"}</span>
               </div>
               <div className="flex justify-between items-center">
                 <span className="text-slate-400">Social Category:</span>
-                <span className="text-slate-800 font-semibold md:font-bold">{data.socialCategory}</span>
+                <span className="text-slate-800 font-semibold md:font-bold">{data.studentDetails.socialCategory}</span>
               </div>
               <div className="flex justify-between items-center">
                 <span className="text-slate-400">Aadhaar UID:</span>
-                <span className="text-slate-800 font-semibold md:font-bold">{data.aadhaarNumber || "N/A"}</span>
+                <span className="text-slate-800 font-semibold md:font-bold">{data.studentDetails.aadhaarNumber || "N/A"}</span>
               </div>
               <div className="flex justify-between items-center">
                 <span className="text-slate-400">Provisional Status:</span>
-                <span className="text-slate-800 font-semibold md:font-bold">{data.isProvisional ? "Provisional" : "Regular"}</span>
+                <span className="text-slate-800 font-semibold md:font-bold">{data.courseDetails.isProvisional ? "Provisional" : "Regular"}</span>
               </div>
             </div>
 
@@ -91,23 +91,23 @@ export default function Step6Review({ onEdit }: Step6ReviewProps) {
             <div className="grid grid-cols-2 gap-y-5 gap-x-4">
               <div className="flex flex-col">
                 <span className="text-[10px] text-slate-400 mb-0.5">PAN Number:</span>
-                <span className="text-xs font-semibold md:font-bold text-slate-800">{data.panNumber || "N/A"}</span>
+                <span className="text-xs font-semibold md:font-bold text-slate-800">{data.studentDetails.panNumber || "N/A"}</span>
               </div>
               <div className="flex flex-col">
                 <span className="text-[10px] text-slate-400 mb-0.5">Father's Name:</span>
-                <span className="text-xs font-semibold md:font-bold text-slate-800">{data.fatherName || "N/A"}</span>
+                <span className="text-xs font-semibold md:font-bold text-slate-800">{data.familyDetails.fatherName || "N/A"}</span>
               </div>
               <div className="flex flex-col">
                 <span className="text-[10px] text-slate-400 mb-0.5">Mother's Name:</span>
-                <span className="text-xs font-semibold md:font-bold text-slate-800">{data.motherName || "N/A"}</span>
+                <span className="text-xs font-semibold md:font-bold text-slate-800">{data.familyDetails.motherName || "N/A"}</span>
               </div>
               <div className="flex flex-col">
                 <span className="text-[10px] text-slate-400 mb-0.5">Annual Income:</span>
-                <span className="text-xs font-semibold md:font-bold text-slate-800">{data.annualIncome ? `₹${data.annualIncome}` : "N/A"}</span>
+                <span className="text-xs font-semibold md:font-bold text-slate-800">{data.familyDetails.annualIncome ? `₹${data.familyDetails.annualIncome}` : "N/A"}</span>
               </div>
               <div className="flex flex-col col-span-2">
                 <span className="text-[10px] text-slate-400 mb-0.5">Elective Subjects:</span>
-                <span className="text-xs font-semibold md:font-bold text-emerald-700">{data.selectedSubjects.join(", ") || "N/A"}</span>
+                <span className="text-xs font-semibold md:font-bold text-emerald-700">{data.courseDetails.selectedSubjects.join(", ") || "N/A"}</span>
               </div>
             </div>
           </div>
@@ -125,16 +125,16 @@ export default function Step6Review({ onEdit }: Step6ReviewProps) {
               <div className="flex flex-col col-span-2">
                 <span className="text-[10px] text-slate-400 mb-0.5">Address:</span>
                 <span className="text-xs font-semibold md:font-bold text-slate-800 leading-tight">
-                  {data.village}, PO: {data.postOffice}, Teh: {data.tehsil}, Dist: {data.district}, {data.stateName} - {data.pinCode}
+                  {data.addressDetails.village}, PO: {data.addressDetails.postOffice}, Teh: {data.addressDetails.tehsil}, Dist: {data.addressDetails.district}, {data.addressDetails.stateName} - {data.addressDetails.pinCode}
                 </span>
               </div>
               <div className="flex flex-col">
                 <span className="text-[10px] text-slate-400 mb-0.5">Bank Acc:</span>
-                <span className="text-xs font-semibold md:font-bold text-slate-800">{data.bankAccountNo || "N/A"}</span>
+                <span className="text-xs font-semibold md:font-bold text-slate-800">{data.bankDetails.bankAccountNo || "N/A"}</span>
               </div>
               <div className="flex flex-col">
                 <span className="text-[10px] text-slate-400 mb-0.5">Bank IFSC:</span>
-                <span className="text-xs font-semibold md:font-bold text-slate-800 uppercase">{data.ifscCode || "N/A"}</span>
+                <span className="text-xs font-semibold md:font-bold text-slate-800 uppercase">{data.bankDetails.ifscCode || "N/A"}</span>
               </div>
             </div>
           </div>
@@ -149,7 +149,7 @@ export default function Step6Review({ onEdit }: Step6ReviewProps) {
             </div>
             
             <div className="flex flex-col gap-3">
-              {(data.selectedClass === "Class 11" ? data.academicRecords.slice(0, 1) : data.academicRecords).map((record, idx) => (
+              {(data.courseDetails.selectedClass === "Class 11" ? data.academicRecords.slice(0, 1) : data.academicRecords).map((record, idx) => (
                 <div key={idx} className="flex items-center justify-between border border-emerald-100 rounded-xl p-3 bg-emerald-50/30">
                   <div className="flex flex-col">
                     <span className="text-xs font-semibold md:font-bold text-slate-800">{record.examName} {record.passingYear ? `(${record.passingYear})` : ""}</span>

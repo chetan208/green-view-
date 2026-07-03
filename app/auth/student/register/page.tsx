@@ -1,17 +1,14 @@
 "use client";
 
 import React, { useState } from "react";
-import AuthCard from "../../../../src/components/auth/AuthCard";
-import { User, Lock, Calendar, Phone, AlertCircle, CheckCircle2, ChevronDown } from "lucide-react";
+import { AlertCircle, CheckCircle2, ArrowLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function StudentRegisterPage() {
-  const [name, setName] = useState("");
-  const [parentName, setParentName] = useState("");
-  const [dob, setDob] = useState("");
-  const [targetClass, setTargetClass] = useState("Class XI");
-  const [mobile, setMobile] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -22,19 +19,13 @@ export default function StudentRegisterPage() {
     setError("");
     setSuccess("");
 
-    if (!name.trim() || !parentName.trim() || !dob || !mobile || !password) {
-      setError("Please fill in all mandatory fields.");
+    if (!email.trim() || !password.trim() || !confirmPassword.trim()) {
+      setError("Please fill in all fields.");
       return;
     }
 
-    const hasHindi = /[\u0900-\u097F]/.test(name);
-    if (hasHindi) {
-      setError("Student name cannot contain Hindi/Devanagari characters. Please write in English.");
-      return;
-    }
-
-    if (mobile.length < 10) {
-      setError("Please enter a valid 10-digit mobile number.");
+    if (password !== confirmPassword) {
+      setError("Passwords do not match.");
       return;
     }
 
@@ -42,167 +33,118 @@ export default function StudentRegisterPage() {
 
     setTimeout(() => {
       setIsLoading(false);
-      setSuccess("Pre-Registration Completed! Temporary ID: GV-REG-2026-8742 generated. Redirecting to login...");
+      setSuccess("Account Registered successfully! Redirecting to login...");
       
       setTimeout(() => {
         router.push("/auth/student/login");
-      }, 2000);
+      }, 1500);
     }, 1200);
   };
 
-  const classes = ["Nursery", "KG", "Class I", "Class V", "Class IX", "Class X", "Class XI", "Class XII"];
-
   return (
-    <div className="w-full min-h-screen bg-[#f9fafb] pt-20 md:pt-28 pb-20 px-4 md:px-8 flex justify-center items-center relative overflow-hidden">
+    <div className="w-full min-h-screen bg-[#f9fafb] flex flex-col justify-center items-center py-10 px-4 relative">
       
-      {/* Decorative Ornaments */}
-      <div className="absolute top-0 left-0 w-[35rem] h-[35rem] bg-emerald-500/5 rounded-full blur-3xl pointer-events-none -translate-x-1/2 -translate-y-1/2" />
-      
-      <AuthCard
-        title="Student Pre-Admission Portal"
-        subtitle="Complete this form to create a candidate registration file."
-        userType="student"
-        alternativeLink={{
-          label: "Already registered a student?",
-          text: "Login to Portal",
-          href: "/auth/student/login"
-        }}
-      >
+      {/* Screen Title */}
+      <h1 className="text-2xl md:text-3xl font-bold text-slate-800 text-center mb-8 mt-12 md:mt-0 tracking-tight">
+        Create your School account
+      </h1>
+
+      {/* Main card */}
+      <div className="w-full max-w-[460px] bg-white border border-slate-100/80 rounded-3xl p-8 md:p-10 shadow-[0_15px_45px_rgba(0,0,0,0.015)] flex flex-col gap-6 relative">
+        
+        {/* School Crest Logo */}
+        <div className="flex justify-center mb-2">
+          <img 
+            src="/images/logo.png" 
+            alt="Green View Logo" 
+            className="w-20 h-20 object-contain" 
+          />
+        </div>
+
+        {/* Card Header Title */}
+        <div className="text-center flex flex-col items-center">
+          <h2 className="text-2xl font-bold tracking-tight">
+            <span className="text-[#0fa958]">Sign Up as </span>
+            <span className="text-[#0c3c86]">Student</span>
+          </h2>
+          <p className="text-slate-400 text-[11px] font-semibold mt-2.5 leading-relaxed max-w-[290px]">
+            Please register your account with a valid school email.
+          </p>
+        </div>
+
         {error && (
-          <div className="bg-red-50 border border-red-100 rounded-2xl p-3 flex items-start gap-2.5 mb-5 text-red-700 text-xs font-semibold">
+          <div className="bg-red-50 border border-red-100 rounded-xl p-3 flex items-start gap-2 text-red-700 text-xs font-semibold">
             <AlertCircle className="w-4 h-4 shrink-0 text-red-500 mt-0.5" />
             <span>{error}</span>
           </div>
         )}
 
         {success && (
-          <div className="bg-emerald-50 border border-emerald-100 rounded-2xl p-3 flex items-start gap-2.5 mb-5 text-brand-green text-xs font-semibold">
-            <CheckCircle2 className="w-4 h-4 shrink-0 text-brand-green mt-0.5" />
+          <div className="bg-emerald-50 border border-emerald-100 rounded-xl p-3 flex items-start gap-2 text-[#0fa958] text-xs font-semibold">
+            <CheckCircle2 className="w-4 h-4 shrink-0 text-[#0fa958] mt-0.5" />
             <span>{success}</span>
           </div>
         )}
 
-        <form onSubmit={handleRegister} className="flex flex-col gap-3.5">
-          
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
-            {/* Student Name */}
-            <div className="flex flex-col">
-              <label className="text-[10px] font-semibold md:font-bold text-slate-500 mb-1.5 uppercase tracking-wider">
-                Student Name (English) *
-              </label>
-              <div className="relative">
-                <input 
-                  type="text" 
-                  placeholder="Student's Full Name" 
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 focus:border-brand-green focus:ring-2 focus:ring-brand-green/20 outline-none transition-all text-xs md:text-sm font-semibold placeholder:text-slate-400 text-slate-800 bg-white"
-                />
-                <User className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-              </div>
-            </div>
-
-            {/* Parent Name */}
-            <div className="flex flex-col">
-              <label className="text-[10px] font-semibold md:font-bold text-slate-500 mb-1.5 uppercase tracking-wider">
-                Father/Guardian Name *
-              </label>
-              <div className="relative">
-                <input 
-                  type="text" 
-                  placeholder="Father's Full Name" 
-                  value={parentName}
-                  onChange={(e) => setParentName(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 focus:border-brand-green focus:ring-2 focus:ring-brand-green/20 outline-none transition-all text-xs md:text-sm font-semibold placeholder:text-slate-400 text-slate-800 bg-white"
-                />
-                <User className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-              </div>
-            </div>
+        {/* Signup Form */}
+        <form onSubmit={handleRegister} className="flex flex-col gap-4">
+          <div className="flex flex-col">
+            <label className="text-xs font-semibold text-slate-500 mb-2">
+              Email Address
+            </label>
+            <input 
+              type="email" 
+              placeholder="alex@email.com" 
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full px-4 py-3 rounded-xl border border-slate-200 outline-none text-xs md:text-sm font-semibold placeholder:text-slate-400 text-slate-800 bg-white focus:border-brand-green focus:ring-1 focus:ring-brand-green/20 transition-all"
+            />
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
-            {/* DOB */}
-            <div className="flex flex-col">
-              <label className="text-[10px] font-semibold md:font-bold text-slate-500 mb-1.5 uppercase tracking-wider">
-                Date of Birth *
-              </label>
-              <div className="relative">
-                <input 
-                  type="date" 
-                  value={dob}
-                  onChange={(e) => setDob(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 focus:border-brand-green focus:ring-2 focus:ring-brand-green/20 outline-none transition-all text-xs md:text-sm font-semibold text-slate-800 bg-white"
-                />
-                <Calendar className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-              </div>
-            </div>
-
-            {/* Target Class dropdown */}
-            <div className="flex flex-col">
-              <label className="text-[10px] font-semibold md:font-bold text-slate-500 mb-1.5 uppercase tracking-wider">
-                Class for Admission *
-              </label>
-              <div className="relative">
-                <select
-                  value={targetClass}
-                  onChange={(e) => setTargetClass(e.target.value)}
-                  className="w-full pl-10 pr-8 py-2.5 rounded-xl border border-slate-200 focus:border-brand-green focus:ring-2 focus:ring-brand-green/20 outline-none transition-all text-xs md:text-sm font-semibold text-slate-800 bg-white appearance-none"
-                >
-                  {classes.map((cls) => (
-                    <option key={cls} value={cls}>{cls}</option>
-                  ))}
-                </select>
-                <ChevronDown className="absolute right-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
-                <User className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-              </div>
-            </div>
+          <div className="flex flex-col">
+            <label className="text-xs font-semibold text-slate-500 mb-2">
+              Password
+            </label>
+            <input 
+              type="password" 
+              placeholder="Enter your password" 
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full px-4 py-3 rounded-xl border border-slate-200 outline-none text-xs md:text-sm font-semibold placeholder:text-slate-400 text-slate-800 bg-white focus:border-brand-green focus:ring-1 focus:ring-brand-green/20 transition-all"
+            />
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
-            {/* Mobile */}
-            <div className="flex flex-col">
-              <label className="text-[10px] font-semibold md:font-bold text-slate-500 mb-1.5 uppercase tracking-wider">
-                Mobile Number *
-              </label>
-              <div className="relative">
-                <input 
-                  type="text" 
-                  placeholder="10-digit number" 
-                  value={mobile}
-                  onChange={(e) => setMobile(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 focus:border-brand-green focus:ring-2 focus:ring-brand-green/20 outline-none transition-all text-xs md:text-sm font-semibold placeholder:text-slate-400 text-slate-800 bg-white"
-                />
-                <Phone className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-              </div>
-            </div>
-
-            {/* Password */}
-            <div className="flex flex-col">
-              <label className="text-[10px] font-semibold md:font-bold text-slate-500 mb-1.5 uppercase tracking-wider">
-                Create Password *
-              </label>
-              <div className="relative">
-                <input 
-                  type="password" 
-                  placeholder="Minimum 6 characters" 
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 focus:border-brand-green focus:ring-2 focus:ring-brand-green/20 outline-none transition-all text-xs md:text-sm font-semibold placeholder:text-slate-400 text-slate-800 bg-white"
-                />
-                <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-              </div>
-            </div>
+          <div className="flex flex-col">
+            <label className="text-xs font-semibold text-slate-500 mb-2">
+              Confirm Password
+            </label>
+            <input 
+              type="password" 
+              placeholder="Confirm your password" 
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              className="w-full px-4 py-3 rounded-xl border border-slate-200 outline-none text-xs md:text-sm font-semibold placeholder:text-slate-400 text-slate-800 bg-white focus:border-brand-green focus:ring-1 focus:ring-brand-green/20 transition-all"
+            />
           </div>
 
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full bg-gradient-to-r from-brand-green to-brand-green-dark hover:from-brand-green-dark hover:to-brand-green-darker text-white rounded-xl py-3.5 font-semibold md:font-bold text-xs md:text-sm transition-all shadow-md shadow-emerald-500/10 cursor-pointer flex items-center justify-center gap-2 mt-2"
+            className="w-full bg-[#0fa958] hover:bg-[#147a42] text-white rounded-xl py-3.5 font-bold text-xs md:text-sm transition-all shadow-md shadow-emerald-500/10 cursor-pointer flex items-center justify-center gap-2 mt-2"
           >
-            {isLoading ? "Submitting Registration..." : "Complete Pre-Registration"}
+            {isLoading ? "Signing up..." : "Sign UP Now"}
           </button>
         </form>
-      </AuthCard>
+
+        {/* Switch to Login link */}
+        <div className="text-xs text-slate-500 font-medium text-center pt-4 border-t border-slate-50">
+          Already have an account?{" "}
+          <Link href="/auth/student/login" className="text-[#0c3c86] font-bold hover:underline">
+            Sign in
+          </Link>
+        </div>
+
+      </div>
 
     </div>
   );

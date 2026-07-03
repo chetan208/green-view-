@@ -17,95 +17,109 @@ export interface ExamRecord {
 }
 
 export interface AdmissionData {
-  // Step 1
-  selectedClass: string;
-  selectedStream: string;
-  isProvisional: boolean;
-  photoPreview: string | null;
-  selectedSubjects: string[];
-
-  // Step 2
-  studentNameEnglish: string;
-  studentNameHindi: string;
-  dateOfBirth: string;
-  gender: string;
-  fatherName: string;
-  fatherMobile: string;
-  fatherOccupation: string;
-  motherName: string;
-  motherMobile: string;
-  guardianName: string;
-  guardianMobile: string;
-  annualIncome: string;
-  socialCategory: string;
-  bplStatus: string;
-  aadhaarNumber: string;
-  panNumber: string;
-
-  // Step 3
-  village: string;
-  postOffice: string;
-  tehsil: string;
-  district: string;
-  stateName: string;
-  pinCode: string;
-  bankAccountNo: string;
-  bankName: string;
-  bankBranchName: string;
-  ifscCode: string;
-
-  // Step 4
+  courseDetails: {
+    selectedClass: string;
+    selectedStream: string;
+    isProvisional: boolean;
+    
+    selectedSubjects: string[];
+  };
+  studentDetails: {
+    photoFile: File | null;
+    photoPreview: string | null;
+    studentNameEnglish: string;
+    studentNameHindi: string;
+    dateOfBirth: string;
+    gender: string;
+    aadhaarNumber: string;
+    panNumber: string;
+    socialCategory: string;
+    bplStatus: string;
+  };
+  familyDetails: {
+    fatherName: string;
+    fatherMobile: string;
+    fatherOccupation: string;
+    motherName: string;
+    motherMobile: string;
+    guardianName: string;
+    guardianMobile: string;
+    annualIncome: string;
+  };
+  addressDetails: {
+    village: string;
+    postOffice: string;
+    tehsil: string;
+    district: string;
+    stateName: string;
+    pinCode: string;
+  };
+  bankDetails: {
+    bankAccountNo: string;
+    bankName: string;
+    bankBranchName: string;
+    ifscCode: string;
+  };
   academicRecords: ExamRecord[];
-
-  // Step 5
   documents: {
     slc: boolean;
     marksheet: boolean;
     character: boolean;
     category: boolean;
   };
-  extracurricular: string;
-  acceptedTerms: boolean;
-  
-  // Validation
-  showErrors: boolean;
+  additionalDetails: {
+    extracurricular: string;
+    acceptedTerms: boolean;
+  };
+  meta: {
+    showErrors: boolean;
+  };
 }
 
 const defaultData: AdmissionData = {
-  selectedClass: "Class 11",
-  selectedStream: "Science",
-  isProvisional: false,
-  photoPreview: null,
-  selectedSubjects: ["English (Core)", "Physics", "Chemistry"],
-  
-  studentNameEnglish: "",
-  studentNameHindi: "",
-  dateOfBirth: "",
-  gender: "",
-  fatherName: "",
-  fatherMobile: "",
-  fatherOccupation: "",
-  motherName: "",
-  motherMobile: "",
-  guardianName: "",
-  guardianMobile: "",
-  annualIncome: "",
-  socialCategory: "General",
-  bplStatus: "No",
-  aadhaarNumber: "",
-  panNumber: "",
-
-  village: "",
-  postOffice: "",
-  tehsil: "",
-  district: "",
-  stateName: "Himachal Pradesh",
-  pinCode: "",
-  bankAccountNo: "",
-  bankName: "",
-  bankBranchName: "",
-  ifscCode: "",
-
+  courseDetails: {
+    selectedClass: "Class 11",
+    selectedStream: "Science",
+    isProvisional: false,
+    
+    selectedSubjects: ["English (Core)", "Physics", "Chemistry"],
+  },
+  studentDetails: {
+    photoFile: null,
+    photoPreview: null,
+    studentNameEnglish: "",
+    studentNameHindi: "",
+    dateOfBirth: "",
+    gender: "",
+    aadhaarNumber: "",
+    panNumber: "",
+    socialCategory: "General",
+    bplStatus: "No",
+  },
+  familyDetails: {
+    fatherName: "",
+    fatherMobile: "",
+    fatherOccupation: "",
+    motherName: "",
+    motherMobile: "",
+    guardianName: "",
+    guardianMobile: "",
+    annualIncome: "",
+  },
+  addressDetails: {
+    village: "",
+    postOffice: "",
+    tehsil: "",
+    district: "",
+    stateName: "Himachal Pradesh",
+    pinCode: "",
+  },
+  bankDetails: {
+    bankAccountNo: "",
+    bankName: "",
+    bankBranchName: "",
+    ifscCode: "",
+  },
   academicRecords: [
     {
       id: 1,
@@ -132,16 +146,19 @@ const defaultData: AdmissionData = {
       percentage: "",
     }
   ],
-
   documents: {
     slc: false,
     marksheet: false,
     character: false,
     category: false,
   },
-  extracurricular: "",
-  acceptedTerms: false,
-  showErrors: false,
+  additionalDetails: {
+    extracurricular: "",
+    acceptedTerms: false,
+  },
+  meta: {
+    showErrors: false,
+  }
 };
 
 interface AdmissionContextType {
@@ -161,9 +178,17 @@ export function AdmissionProvider({ children }: { children: ReactNode }) {
     if (saved) {
       try {
         const parsed = JSON.parse(saved);
-        if (parsed.selectedSubjects) {
-          parsed.selectedSubjects = parsed.selectedSubjects.map((s: string) => s === "English" ? "English (Core)" : s);
+        if (parsed.courseDetails?.selectedSubjects) {
+          parsed.courseDetails.selectedSubjects = parsed.courseDetails.selectedSubjects.map((s: string) => s === "English" ? "English (Core)" : s);
         }
+        
+        // Handle migration from old flat format if necessary
+        if (!parsed.studentDetails && parsed.studentNameEnglish) {
+          // In case the user has old localstorage, clear it and use default to prevent crashes
+          localStorage.removeItem("seniorSecondaryAdmissionData");
+          return;
+        }
+
         setData(parsed);
       } catch (e) {
         console.error("Error parsing local storage data", e);

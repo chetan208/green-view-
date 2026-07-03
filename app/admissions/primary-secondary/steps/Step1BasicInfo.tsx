@@ -9,19 +9,17 @@ export default function Step1BasicInfo() {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const getErrorClass = (fieldValue: string) => {
-    return data.showErrors && !fieldValue 
+    return data.meta.showErrors && !fieldValue 
       ? "border-red-400 focus:border-red-500 focus:ring-red-500/20" 
       : "border-slate-200 focus:border-brand-green focus:ring-brand-green/20";
   };
 
+  
   const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        updateData({ photoPreview: reader.result as string });
-      };
-      reader.readAsDataURL(file);
+      const previewUrl = URL.createObjectURL(file);
+      updateData({ studentDetails: { ...data.studentDetails, photoFile: file, photoPreview: previewUrl } });
     }
   };
 
@@ -50,9 +48,9 @@ export default function Step1BasicInfo() {
         {/* Left Side: Photo Upload */}
         <div className="w-full md:w-1/3 flex flex-col items-center">
           <div className="w-full max-w-[200px] aspect-[3/4] rounded-2xl border-2 border-dashed border-slate-300 overflow-hidden relative group bg-slate-50 transition-all hover:bg-slate-100 flex flex-col items-center justify-center">
-            {data.photoPreview ? (
+            {data.studentDetails.photoPreview ? (
               // eslint-disable-next-line @next/next/no-img-element
-              <img src={data.photoPreview} alt="Student" className="w-full h-full object-cover" />
+              <img src={data.studentDetails.photoPreview} alt="Student" className="w-full h-full object-cover" />
             ) : (
               <div className="flex flex-col items-center p-4 text-center">
                 <div className="w-12 h-12 rounded-full bg-slate-200 flex items-center justify-center mb-3">
@@ -69,7 +67,7 @@ export default function Step1BasicInfo() {
             </div>
             <input type="file" ref={fileInputRef} onChange={handlePhotoUpload} accept="image/*" className="hidden" />
           </div>
-          {data.showErrors && !data.photoPreview && (
+          {data.meta.showErrors && !data.studentDetails.photoPreview && (
             <span className="text-xs font-normal md:font-semibold text-red-500 mt-2 text-center">Photograph is mandatory</span>
           )}
         </div>
@@ -80,16 +78,16 @@ export default function Step1BasicInfo() {
           <div className="flex flex-col">
             <label className="text-[11px] font-normal md:font-semibold text-slate-800 mb-2 uppercase tracking-wider">Class to which admission is sought *</label>
             <select
-              value={data.selectedClass}
-              onChange={(e) => updateData({ selectedClass: e.target.value })}
-              className={`w-full bg-white px-3 py-2.5 md:px-4 md:py-3 text-xs md:text-sm font-medium text-slate-700 outline-none border rounded-xl transition-all ${getErrorClass(data.selectedClass)}`}
+              value={data.courseDetails.selectedClass}
+              onChange={(e) => updateData({ courseDetails: { ...data.courseDetails, selectedClass: e.target.value } })}
+              className={`w-full bg-white px-3 py-2.5 md:px-4 md:py-3 text-xs md:text-sm font-medium text-slate-700 outline-none border rounded-xl transition-all ${getErrorClass(data.courseDetails.selectedClass)}`}
             >
               <option value="">Select Class</option>
               {classes.map(c => (
                 <option key={c} value={c}>{c}</option>
               ))}
             </select>
-            {data.showErrors && !data.selectedClass && <span className="text-[10px] font-normal md:font-semibold text-red-500 mt-1.5">Required field.</span>}
+            {data.meta.showErrors && !data.courseDetails.selectedClass && <span className="text-[10px] font-normal md:font-semibold text-red-500 mt-1.5">Required field.</span>}
           </div>
 
           <div className="flex flex-col">
@@ -97,34 +95,34 @@ export default function Step1BasicInfo() {
             <input 
               type="text" 
               placeholder="e.g., ROHAN SHARMA" 
-              value={data.studentName}
-              onChange={(e) => updateData({ studentName: e.target.value.toUpperCase() })}
-              className={`w-full px-3 py-2.5 md:px-4 md:py-3 rounded-xl border outline-none transition-all text-xs md:text-sm font-medium placeholder:text-slate-400 uppercase ${getErrorClass(data.studentName)}`}
+              value={data.studentDetails.studentName}
+              onChange={(e) => updateData({ studentDetails: { ...data.studentDetails, studentName: e.target.value.toUpperCase() } })}
+              className={`w-full px-3 py-2.5 md:px-4 md:py-3 rounded-xl border outline-none transition-all text-xs md:text-sm font-medium placeholder:text-slate-400 uppercase ${getErrorClass(data.studentDetails.studentName)}`}
             />
-            {data.showErrors && !data.studentName && <span className="text-[10px] font-normal md:font-semibold text-red-500 mt-1.5">Required field.</span>}
+            {data.meta.showErrors && !data.studentDetails.studentName && <span className="text-[10px] font-normal md:font-semibold text-red-500 mt-1.5">Required field.</span>}
           </div>
 
           <div className="flex flex-col">
             <label className="text-[11px] font-normal md:font-semibold text-slate-800 mb-2 uppercase tracking-wider">Sex *</label>
             <div className="flex gap-4">
               {["Male", "Female", "Other"].map((gender) => (
-                <label key={gender} className={`flex-1 flex items-center justify-center gap-2 p-3 rounded-xl border cursor-pointer transition-all ${data.sex === gender ? "border-brand-green bg-emerald-50 text-emerald-700" : "border-slate-200 text-slate-600 hover:bg-slate-50"} ${data.showErrors && !data.sex ? "border-red-400" : ""}`}>
+                <label key={gender} className={`flex-1 flex items-center justify-center gap-2 p-3 rounded-xl border cursor-pointer transition-all ${data.studentDetails.sex === gender ? "border-brand-green bg-emerald-50 text-emerald-700" : "border-slate-200 text-slate-600 hover:bg-slate-50"} ${data.meta.showErrors && !data.studentDetails.sex ? "border-red-400" : ""}`}>
                   <input 
                     type="radio" 
                     name="sex" 
                     value={gender} 
-                    checked={data.sex === gender}
-                    onChange={(e) => updateData({ sex: e.target.value })}
+                    checked={data.studentDetails.sex === gender}
+                    onChange={(e) => updateData({ studentDetails: { ...data.studentDetails, sex: e.target.value } })}
                     className="hidden" 
                   />
-                  <div className={`w-4 h-4 rounded-full border flex items-center justify-center ${data.sex === gender ? "border-brand-green" : "border-slate-300"}`}>
-                    {data.sex === gender && <div className="w-2 h-2 rounded-full bg-brand-green" />}
+                  <div className={`w-4 h-4 rounded-full border flex items-center justify-center ${data.studentDetails.sex === gender ? "border-brand-green" : "border-slate-300"}`}>
+                    {data.studentDetails.sex === gender && <div className="w-2 h-2 rounded-full bg-brand-green" />}
                   </div>
                   <span className="text-sm font-normal md:font-semibold">{gender}</span>
                 </label>
               ))}
             </div>
-            {data.showErrors && !data.sex && <span className="text-[10px] font-normal md:font-semibold text-red-500 mt-1.5">Please select gender.</span>}
+            {data.meta.showErrors && !data.studentDetails.sex && <span className="text-[10px] font-normal md:font-semibold text-red-500 mt-1.5">Please select gender.</span>}
           </div>
 
         </div>

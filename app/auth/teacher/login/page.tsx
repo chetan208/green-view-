@@ -1,12 +1,12 @@
 "use client";
 
 import React, { useState } from "react";
-import { User, Lock, AlertCircle, CheckCircle2, ArrowLeft } from "lucide-react";
+import { AlertCircle, CheckCircle2, ArrowLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 export default function TeacherLoginPage() {
-  const [employeeId, setEmployeeId] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
@@ -18,8 +18,8 @@ export default function TeacherLoginPage() {
     setError("");
     setSuccess("");
 
-    if (!employeeId.trim() || !password.trim()) {
-      setError("Please enter your Employee ID and Password.");
+    if (!email.trim() || !password.trim()) {
+      setError("Please enter your Email Address and Password.");
       return;
     }
 
@@ -27,139 +27,141 @@ export default function TeacherLoginPage() {
 
     setTimeout(() => {
       setIsLoading(false);
-      const cleanEmp = employeeId.trim().toUpperCase();
+      const cleanEmail = email.trim().toLowerCase();
       if (
-        (cleanEmp === "T-2026-084" && password === "teacher123") ||
-        (cleanEmp === "DEMO" && password === "demo")
+        (cleanEmail === "teacher@email.com" && password === "teacher123") ||
+        (cleanEmail === "demo" && password === "demo")
       ) {
-        setSuccess("Login successful! Redirecting to faculty portal...");
+        setSuccess("Login successful! Redirecting to dashboard...");
         setTimeout(() => {
           router.push("/");
         }, 1200);
       } else {
-        setError("Invalid Employee ID or Password. Use the Demo credentials below.");
+        setError("Invalid credentials. Try using the Quick Demo auto-fill option below.");
       }
     }, 1000);
   };
 
   const handleDemoLogin = () => {
-    setEmployeeId("T-2026-084");
+    setEmail("teacher@email.com");
     setPassword("teacher123");
     setError("");
   };
 
   return (
-    <div className="w-full min-h-screen bg-[#f9fafb] flex justify-center items-center py-6 px-4 md:px-8 relative overflow-hidden">
+    <div className="w-full min-h-screen bg-[#f9fafb] flex flex-col justify-center items-center py-10 px-4 relative">
       
-      {/* Soft Light Green Background Ornaments */}
-      <div className="absolute top-0 left-0 w-[40rem] h-[40rem] bg-emerald-500/5 rounded-full blur-3xl pointer-events-none -translate-x-1/2 -translate-y-1/2" />
-      <div className="absolute bottom-0 right-0 w-[40rem] h-[40rem] bg-blue-500/5 rounded-full blur-3xl pointer-events-none translate-x-1/2 translate-y-1/2" />
+      {/* Screen Title */}
+      <h1 className="text-2xl md:text-3xl font-bold text-slate-800 text-center mb-8 mt-12 md:mt-0 tracking-tight">
+        Welcome, Log into your account
+      </h1>
 
-      {/* Main Card Container (Pure Light, High-End Card) */}
-      <div className="w-full max-w-lg bg-white border border-slate-100/80 rounded-[2rem] p-5 md:p-8 shadow-[0_20px_50px_rgba(0,0,0,0.02)] flex flex-col gap-5 relative z-10 transition-all duration-300">
+      {/* Main card */}
+      <div className="w-full max-w-[460px] bg-white border border-slate-100/80 rounded-3xl p-8 md:p-10 shadow-[0_15px_45px_rgba(0,0,0,0.015)] flex flex-col gap-6 relative">
         
-        {/* Back Link & Branding row */}
-        <div className="flex justify-between items-center pb-4 border-b border-slate-50">
-          <Link href="/" className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-400 hover:text-slate-700 transition-colors group">
-            <ArrowLeft className="w-3.5 h-3.5 transition-transform group-hover:-translate-x-0.5" /> Back
-          </Link>
-          <div className="flex items-center gap-2">
-            <div className="w-6 h-6 relative shrink-0">
-              <img src="/images/logo.png" alt="Green View Logo" className="w-full h-full object-contain" />
-            </div>
-            <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Faculty Portal</span>
-          </div>
+        {/* School Crest Logo */}
+        <div className="flex justify-center mb-2">
+          <img 
+            src="/images/logo.png" 
+            alt="Green View Logo" 
+            className="w-20 h-20 object-contain" 
+          />
         </div>
 
-        {/* Header Block */}
-        <div className="flex flex-col text-center mt-2">
-          <h1 className="text-xl md:text-2xl font-semibold md:font-extrabold text-brand-navy tracking-tight leading-tight">
-            Welcome Back, Educator!
-          </h1>
-          <p className="text-slate-400 text-xs font-medium mt-1.5 leading-relaxed">
+        {/* Card Header Title */}
+        <div className="text-center flex flex-col items-center">
+          <h2 className="text-2xl font-bold tracking-tight">
+            <span className="text-[#0fa958]">Sign In as </span>
+            <span className="text-[#0c3c86]">Teacher</span>
+          </h2>
+          <p className="text-slate-400 text-[11px] font-semibold mt-2.5 leading-relaxed max-w-[290px]">
             Please log in with your official school registration credentials.
           </p>
         </div>
 
         {error && (
-          <div className="bg-red-50 border border-red-100 rounded-2xl p-3.5 flex items-start gap-2.5 text-red-700 text-xs font-semibold">
+          <div className="bg-red-50 border border-red-100 rounded-xl p-3 flex items-start gap-2 text-red-700 text-xs font-semibold">
             <AlertCircle className="w-4 h-4 shrink-0 text-red-500 mt-0.5" />
             <span>{error}</span>
           </div>
         )}
 
         {success && (
-          <div className="bg-emerald-50 border border-emerald-100 rounded-2xl p-3.5 flex items-start gap-2.5 text-brand-green text-xs font-semibold">
-            <CheckCircle2 className="w-4 h-4 shrink-0 text-brand-green mt-0.5" />
+          <div className="bg-emerald-50 border border-emerald-100 rounded-xl p-3 flex items-start gap-2 text-[#0fa958] text-xs font-semibold">
+            <CheckCircle2 className="w-4 h-4 shrink-0 text-[#0fa958] mt-0.5" />
             <span>{success}</span>
           </div>
         )}
 
         {/* Login Form */}
-        <form onSubmit={handleLogin} className="flex flex-col gap-4.5">
+        <form onSubmit={handleLogin} className="flex flex-col gap-4">
           <div className="flex flex-col">
-            <label className="text-[10px] font-semibold md:font-bold text-slate-500 mb-2 uppercase tracking-wider">
-              Employee ID *
+            <label className="text-xs font-semibold text-slate-500 mb-2">
+              Email Address
             </label>
-            <div className="relative">
-              <input 
-                type="text" 
-                placeholder="e.g. T-2026-084" 
-                value={employeeId}
-                onChange={(e) => setEmployeeId(e.target.value)}
-                className="w-full pl-11 pr-4 py-3 rounded-xl border border-slate-200 focus:border-brand-green focus:ring-2 focus:ring-brand-green/20 outline-none transition-all text-xs md:text-sm font-semibold placeholder:text-slate-400 text-slate-800 bg-white"
-              />
-              <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-            </div>
+            <input 
+              type="email" 
+              placeholder="teacher@email.com" 
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full px-4 py-3 rounded-xl border border-slate-200 outline-none text-xs md:text-sm font-semibold placeholder:text-slate-400 text-slate-800 bg-white focus:border-brand-green focus:ring-1 focus:ring-brand-green/20 transition-all"
+            />
           </div>
 
-          <div className="flex flex-col">
-            <label className="text-[10px] font-semibold md:font-bold text-slate-500 mb-2 uppercase tracking-wider">
-              Access Password *
+          <div className="flex flex-col relative">
+            <label className="text-xs font-semibold text-slate-500 mb-2">
+              Password
             </label>
-            <div className="relative">
-              <input 
-                type="password" 
-                placeholder="••••••••" 
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full pl-11 pr-4 py-3 rounded-xl border border-slate-200 focus:border-brand-green focus:ring-2 focus:ring-brand-green/20 outline-none transition-all text-xs md:text-sm font-semibold placeholder:text-slate-400 text-slate-800 bg-white"
-              />
-              <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-            </div>
+            <input 
+              type="password" 
+              placeholder="Enter your password" 
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full px-4 py-3 rounded-xl border border-slate-200 outline-none text-xs md:text-sm font-semibold placeholder:text-slate-400 text-slate-800 bg-white focus:border-brand-green focus:ring-1 focus:ring-brand-green/20 transition-all"
+            />
+            <Link href="#" className="text-[11px] font-bold text-[#0c3c86] hover:underline block text-right mt-1.5 self-end">
+              Forgot Password?
+            </Link>
           </div>
 
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full bg-gradient-to-r from-brand-green to-brand-green-dark hover:from-brand-green-dark hover:to-brand-green-darker text-white rounded-xl py-3.5 font-semibold md:font-bold text-xs md:text-sm transition-all shadow-md shadow-emerald-500/10 cursor-pointer flex items-center justify-center gap-2 mt-2"
+            className="w-full bg-[#0fa958] hover:bg-[#147a42] text-white rounded-xl py-3.5 font-bold text-xs md:text-sm transition-all shadow-md shadow-emerald-500/10 cursor-pointer flex items-center justify-center gap-2 mt-2"
           >
-            {isLoading ? "Signing in..." : "Sign In to Portal"}
+            {isLoading ? "Logging in..." : "Login Now"}
           </button>
         </form>
 
-        {/* Demo Access Box (Light Theme) */}
+        {/* OR Divider */}
+        <div className="w-full flex items-center justify-center gap-3 my-1">
+          <span className="h-[1px] bg-slate-100 flex-grow" />
+          <span className="text-[10px] font-bold text-slate-400 tracking-wider">OR</span>
+          <span className="h-[1px] bg-slate-100 flex-grow" />
+        </div>
+
+        {/* Demo Helper Box */}
         <div className="bg-emerald-50/30 border border-emerald-100/50 rounded-2xl p-4 flex flex-col items-center">
-          <span className="text-[9px] font-bold text-brand-green uppercase tracking-widest mb-3">
+          <span className="text-[9px] font-bold text-emerald-700 uppercase tracking-widest mb-2.5">
             Quick Demo Login
           </span>
-          <div className="flex flex-col gap-1.5 text-center text-xs text-slate-655 font-semibold mb-3">
-            <div>Employee ID: <code className="bg-emerald-50 border border-emerald-100/30 px-1.5 py-0.5 rounded text-emerald-800 font-mono">T-2026-084</code></div>
+          <div className="flex flex-col gap-1 text-center text-xs text-slate-600 font-semibold mb-2.5">
+            <div>Email: <code className="bg-emerald-50 border border-emerald-100/30 px-1.5 py-0.5 rounded text-emerald-800 font-mono">teacher@email.com</code></div>
             <div>Password: <code className="bg-emerald-50 border border-emerald-100/30 px-1.5 py-0.5 rounded text-emerald-800 font-mono">teacher123</code></div>
           </div>
           <button
             onClick={handleDemoLogin}
-            className="text-brand-green hover:text-brand-green-dark text-xs font-bold underline cursor-pointer flex items-center gap-1.5"
+            className="text-[#0fa958] hover:text-[#147a42] text-xs font-bold underline cursor-pointer flex items-center gap-1.5"
           >
             <CheckCircle2 className="w-3.5 h-3.5" /> Auto-Fill Demo Credentials
           </button>
         </div>
 
-        {/* Alternative Link */}
-        <div className="text-xs text-slate-500 text-center font-medium pt-4 border-t border-slate-50">
-          First time on portal?{" "}
-          <Link href="/auth/teacher/register" className="text-brand-green font-bold hover:underline">
-            Register Teacher Account
+        {/* Switch to Register link */}
+        <div className="text-xs text-slate-500 font-medium text-center pt-2 border-t border-slate-50">
+          Don&apos;t have an account?{" "}
+          <Link href="/auth/teacher/register" className="text-[#0c3c86] font-bold hover:underline">
+            Sign up
           </Link>
         </div>
 

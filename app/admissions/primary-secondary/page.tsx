@@ -24,24 +24,24 @@ function PrimarySecondaryAdmissionContent() {
     let isValid = true;
 
     if (currentStep === 1) {
-      if (!data.photoPreview || !data.selectedClass || !data.studentName || !data.sex) isValid = false;
+      if (!data.studentDetails.photoFile || !data.courseDetails.selectedClass || !data.studentDetails.studentName || !data.studentDetails.sex) isValid = false;
     } else if (currentStep === 2) {
-      if (!data.dateOfBirthFigures || !data.motherTongue || !data.religion || !data.fatherName || !data.motherName) isValid = false;
+      if (!data.studentDetails.dateOfBirthFigures || !data.studentDetails.motherTongue || !data.studentDetails.religion || !data.familyDetails.fatherName || !data.familyDetails.motherName) isValid = false;
     } else if (currentStep === 3) {
       // Academic / activities fields are optional as nursery students might not have previous schools
     } else if (currentStep === 4) {
-      if (!data.presentAddress || !data.permanentAddress) isValid = false;
+      if (!data.contactDetails.presentAddress || !data.contactDetails.permanentAddress) isValid = false;
     } else if (currentStep === 5) {
-      if (!data.acceptedDeclaration) isValid = false;
+      if (!data.additionalDetails.acceptedDeclaration) isValid = false;
     }
 
     if (!isValid) {
-      updateData({ showErrors: true });
+      updateData({ meta: { ...data.meta, showErrors: true } });
       window.scrollTo({ top: 0, behavior: 'smooth' });
       return;
     }
 
-    updateData({ showErrors: false });
+    updateData({ meta: { ...data.meta, showErrors: false } });
 
     if (currentStep < totalSteps) {
       setCurrentStep(prev => prev + 1);
@@ -122,7 +122,7 @@ function PrimarySecondaryAdmissionContent() {
               Application Submitted Successfully!
             </h2>
             <p className="text-slate-500 font-medium max-w-md mb-8">
-              Your admission details for {data.selectedClass} have been recorded. Please download a copy of the application form for your records and future reference.
+              Your admission details for {data.courseDetails.selectedClass} have been recorded. Please download a copy of the application form for your records and future reference.
             </p>
             
             <button 

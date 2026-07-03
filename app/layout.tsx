@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Poppins } from "next/font/google";
 import "./globals.css";
-import Header from "@/components/header/Header";
-import Footer from "@/components/footer/Footer";
+import GlobalLayout from "@/components/layout/GlobalLayout";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -33,9 +32,9 @@ export default function RootLayout({
       className={`${inter.variable} ${poppins.variable} h-full antialiased overflow-x-hidden`}
     >
       <body className="min-h-full flex flex-col font-sans bg-[#f9fafb] text-zinc-900 selection:bg-emerald-500 selection:text-white overflow-x-hidden">
-        <Header />
-        <main className="flex-grow pt-24">{children}</main>
-        <Footer />
+        <GlobalLayout>
+          {children}
+        </GlobalLayout>
       </body>
     </html>
   );

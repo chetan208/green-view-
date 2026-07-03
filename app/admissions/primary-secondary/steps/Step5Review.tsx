@@ -11,10 +11,10 @@ interface Step5ReviewProps {
 
 export default function Step5Review({ onEdit }: Step5ReviewProps) {
   const { data, updateData } = usePrimaryAdmissionContext();
-  const parentName = data.fatherName || data.motherName || data.guardianName;
+  const parentName = data.familyDetails.fatherName || data.familyDetails.motherName || data.familyDetails.guardianName;
 
   const getErrorClass = () => {
-    return data.showErrors && !data.acceptedDeclaration 
+    return data.meta.showErrors && !data.additionalDetails.acceptedDeclaration 
       ? "border-red-400 bg-red-50 text-red-700" 
       : "border-brand-green bg-emerald-50 text-emerald-900";
   };
@@ -43,17 +43,17 @@ export default function Step5Review({ onEdit }: Step5ReviewProps) {
         <div className="md:col-span-4 flex flex-col h-full">
           <div className="w-full bg-[#f9fafb] border border-slate-100 rounded-2xl p-6 flex flex-col items-center shadow-sm">
             <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 mb-4 overflow-hidden flex items-center justify-center shadow-md border-2 border-white">
-              {data.photoPreview ? (
+              {data.studentDetails.photoPreview ? (
                 // eslint-disable-next-line @next/next/no-img-element
-                <img src={data.photoPreview} alt="Student Profile" className="w-full h-full object-cover" />
+                <img src={data.studentDetails.photoPreview} alt="Student Profile" className="w-full h-full object-cover" />
               ) : (
                 <User className="w-10 h-10 text-white/50" />
               )}
             </div>
-            <h3 className="text-lg font-normal md:font-semibold text-slate-800 tracking-wider uppercase text-center">{data.studentName || "ANONYMOUS USER"}</h3>
+            <h3 className="text-lg font-normal md:font-semibold text-slate-800 tracking-wider uppercase text-center">{data.studentDetails.studentName || "ANONYMOUS USER"}</h3>
             
             <div className="mt-2 bg-emerald-50 border border-emerald-200 text-emerald-700 px-3 py-1 rounded-full text-xs font-normal md:font-semibold tracking-wide">
-              {data.selectedClass || "Class Not Selected"}
+              {data.courseDetails.selectedClass || "Class Not Selected"}
             </div>
 
             <div className="w-full h-[1px] bg-slate-200 my-6 border-dashed" />
@@ -61,15 +61,15 @@ export default function Step5Review({ onEdit }: Step5ReviewProps) {
             <div className="w-full flex flex-col gap-4 text-xs md:text-sm font-medium">
               <div className="flex justify-between items-center">
                 <span className="text-slate-400">Date of Birth:</span>
-                <span className="text-slate-800 font-normal md:font-semibold">{data.dateOfBirthFigures || "N/A"}</span>
+                <span className="text-slate-800 font-normal md:font-semibold">{data.studentDetails.dateOfBirthFigures || "N/A"}</span>
               </div>
               <div className="flex justify-between items-center">
                 <span className="text-slate-400">Gender:</span>
-                <span className="text-slate-800 font-normal md:font-semibold">{data.sex || "N/A"}</span>
+                <span className="text-slate-800 font-normal md:font-semibold">{data.studentDetails.sex || "N/A"}</span>
               </div>
               <div className="flex justify-between items-center">
                 <span className="text-slate-400">Category:</span>
-                <span className="text-slate-800 font-normal md:font-semibold">{data.socialCategory}</span>
+                <span className="text-slate-800 font-normal md:font-semibold">{data.studentDetails.socialCategory}</span>
               </div>
             </div>
 
@@ -91,27 +91,27 @@ export default function Step5Review({ onEdit }: Step5ReviewProps) {
             <div className="grid grid-cols-2 gap-y-5 gap-x-4">
               <div className="flex flex-col">
                 <span className="text-[10px] text-slate-400 mb-0.5">Father's Name:</span>
-                <span className="text-xs font-normal md:font-semibold text-slate-800">{data.fatherName || "N/A"}</span>
+                <span className="text-xs font-normal md:font-semibold text-slate-800">{data.familyDetails.fatherName || "N/A"}</span>
               </div>
               <div className="flex flex-col">
                 <span className="text-[10px] text-slate-400 mb-0.5">Mother's Name:</span>
-                <span className="text-xs font-normal md:font-semibold text-slate-800">{data.motherName || "N/A"}</span>
+                <span className="text-xs font-normal md:font-semibold text-slate-800">{data.familyDetails.motherName || "N/A"}</span>
               </div>
               <div className="flex flex-col">
                 <span className="text-[10px] text-slate-400 mb-0.5">Guardian Name:</span>
-                <span className="text-xs font-normal md:font-semibold text-slate-800">{data.guardianName || "N/A"}</span>
+                <span className="text-xs font-normal md:font-semibold text-slate-800">{data.familyDetails.guardianName || "N/A"}</span>
               </div>
               <div className="flex flex-col">
                 <span className="text-[10px] text-slate-400 mb-0.5">Guardian Occupation:</span>
-                <span className="text-xs font-normal md:font-semibold text-slate-800">{data.guardianOccupation || "N/A"}</span>
+                <span className="text-xs font-normal md:font-semibold text-slate-800">{data.familyDetails.guardianOccupation || "N/A"}</span>
               </div>
               <div className="flex flex-col">
                 <span className="text-[10px] text-slate-400 mb-0.5">Religion:</span>
-                <span className="text-xs font-normal md:font-semibold text-slate-800">{data.religion || "N/A"}</span>
+                <span className="text-xs font-normal md:font-semibold text-slate-800">{data.studentDetails.religion || "N/A"}</span>
               </div>
               <div className="flex flex-col">
                 <span className="text-[10px] text-slate-400 mb-0.5">Mother Tongue:</span>
-                <span className="text-xs font-normal md:font-semibold text-slate-800">{data.motherTongue || "N/A"}</span>
+                <span className="text-xs font-normal md:font-semibold text-slate-800">{data.studentDetails.motherTongue || "N/A"}</span>
               </div>
             </div>
           </div>
@@ -129,18 +129,18 @@ export default function Step5Review({ onEdit }: Step5ReviewProps) {
               <div className="flex flex-col col-span-2">
                 <span className="text-[10px] text-slate-400 mb-0.5">Present Address:</span>
                 <span className="text-xs font-normal md:font-semibold text-slate-800 leading-tight">
-                  {data.presentAddress || "N/A"}
+                  {data.contactDetails.presentAddress || "N/A"}
                 </span>
               </div>
               <div className="flex flex-col col-span-2">
                 <span className="text-[10px] text-slate-400 mb-0.5">Permanent Address:</span>
                 <span className="text-xs font-normal md:font-semibold text-slate-800 leading-tight">
-                  {data.permanentAddress || "N/A"}
+                  {data.contactDetails.permanentAddress || "N/A"}
                 </span>
               </div>
               <div className="flex flex-col col-span-2">
                 <span className="text-[10px] text-slate-400 mb-0.5">Telephone No:</span>
-                <span className="text-xs font-normal md:font-semibold text-slate-800">{data.telephoneNo || "N/A"}</span>
+                <span className="text-xs font-normal md:font-semibold text-slate-800">{data.contactDetails.telephoneNo || "N/A"}</span>
               </div>
             </div>
           </div>
@@ -155,23 +155,23 @@ export default function Step5Review({ onEdit }: Step5ReviewProps) {
           <h3 className="text-sm font-normal md:font-semibold text-slate-800 uppercase tracking-widest">Declaration</h3>
         </div>
         <p className="text-sm font-medium text-slate-600 leading-relaxed italic mb-6">
-          "I <span className="font-normal md:font-semibold underline decoration-slate-300 underline-offset-4 mx-1">{parentName || "[Parent/Guardian Name]"}</span> Father/Mother/Guardian of <span className="font-normal md:font-semibold underline decoration-slate-300 underline-offset-4 mx-1">{data.studentName || "[Student Name]"}</span> Solemnly declare that the above information regarding my son/daughter/ward are true to the best of my knowledge."
+          "I <span className="font-normal md:font-semibold underline decoration-slate-300 underline-offset-4 mx-1">{parentName || "[Parent/Guardian Name]"}</span> Father/Mother/Guardian of <span className="font-normal md:font-semibold underline decoration-slate-300 underline-offset-4 mx-1">{data.studentDetails.studentName || "[Student Name]"}</span> Solemnly declare that the above information regarding my son/daughter/ward are true to the best of my knowledge."
         </p>
 
-        <label className={`flex items-start gap-4 p-4 rounded-xl border cursor-pointer transition-all ${data.acceptedDeclaration ? "border-brand-green bg-emerald-50" : "border-slate-300 bg-white hover:border-brand-green"} ${data.showErrors && !data.acceptedDeclaration ? "border-red-400 bg-red-50" : ""}`}>
+        <label className={`flex items-start gap-4 p-4 rounded-xl border cursor-pointer transition-all ${data.additionalDetails.acceptedDeclaration ? "border-brand-green bg-emerald-50" : "border-slate-300 bg-white hover:border-brand-green"} ${data.meta.showErrors && !data.additionalDetails.acceptedDeclaration ? "border-red-400 bg-red-50" : ""}`}>
           <div className="pt-1">
             <input 
               type="checkbox" 
-              checked={data.acceptedDeclaration}
-              onChange={(e) => updateData({ acceptedDeclaration: e.target.checked })}
+              checked={data.additionalDetails.acceptedDeclaration}
+              onChange={(e) => updateData({ additionalDetails: { ...data.additionalDetails, acceptedDeclaration: e.target.checked } })}
               className="w-5 h-5 rounded border-slate-300 text-brand-green focus:ring-[#0fa958] cursor-pointer"
             />
           </div>
           <div className="flex flex-col">
-            <span className={`text-sm font-normal md:font-semibold ${data.acceptedDeclaration ? "text-emerald-900" : "text-slate-700"} ${data.showErrors && !data.acceptedDeclaration ? "text-red-700" : ""}`}>
+            <span className={`text-sm font-normal md:font-semibold ${data.additionalDetails.acceptedDeclaration ? "text-emerald-900" : "text-slate-700"} ${data.meta.showErrors && !data.additionalDetails.acceptedDeclaration ? "text-red-700" : ""}`}>
               I accept the declaration terms *
             </span>
-            <span className={`text-[11px] font-medium mt-1 ${data.acceptedDeclaration ? "text-emerald-700" : "text-slate-500"} ${data.showErrors && !data.acceptedDeclaration ? "text-red-600" : ""}`}>
+            <span className={`text-[11px] font-medium mt-1 ${data.additionalDetails.acceptedDeclaration ? "text-emerald-700" : "text-slate-500"} ${data.meta.showErrors && !data.additionalDetails.acceptedDeclaration ? "text-red-600" : ""}`}>
               By checking this box, you confirm that all details provided are accurate and authorize the school to process this admission application.
             </span>
           </div>

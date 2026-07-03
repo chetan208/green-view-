@@ -41,7 +41,7 @@ export default function Footer() {
           {/* Logo & Description */}
           <div className="flex flex-col gap-6">
             <Link href="/" className="flex items-center gap-3 group w-fit">
-              <div className="w-10 h-10 relative shrink-0">
+              <div className="w-13 h-13 relative shrink-0">
                 <img
                   src="/images/logo.png"
                   alt="Green View Logo"

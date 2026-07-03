@@ -6,7 +6,7 @@ import { useAdmissionContext } from "../context/AdmissionContext";
 
 export default function Step2PersonalDetails() {
   const { data, updateData } = useAdmissionContext();
-  const { showErrors } = data;
+  const showErrors = data.meta.showErrors;
 
   const getErrorClass = (fieldValue: string) => {
     return showErrors && !fieldValue ? "border-red-400 focus:border-red-500 focus:ring-red-500/20" : "border-slate-200 focus:border-brand-green focus:ring-brand-green/20";
@@ -41,11 +41,11 @@ export default function Step2PersonalDetails() {
             <input 
               type="text" 
               placeholder="ENTER IN BLOCK LETTERS" 
-              value={data.studentNameEnglish}
-              onChange={(e) => updateData({ studentNameEnglish: e.target.value })}
-              className={`w-full px-3 py-2.5 md:px-4 md:py-3 rounded-xl border outline-none transition-all text-xs md:text-sm font-medium placeholder:text-slate-400 ${getErrorClass(data.studentNameEnglish)}`}
+              value={data.studentDetails.studentNameEnglish}
+              onChange={(e) => updateData({ studentDetails: { ...data.studentDetails, studentNameEnglish: e.target.value } })}
+              className={`w-full px-3 py-2.5 md:px-4 md:py-3 rounded-xl border outline-none transition-all text-xs md:text-sm font-medium placeholder:text-slate-400 ${getErrorClass(data.studentDetails.studentNameEnglish)}`}
             />
-            {showErrors && !data.studentNameEnglish && <span className="text-[10px] font-semibold md:font-bold text-red-500 mt-1.5">This field is mandatory.</span>}
+            {showErrors && !data.studentDetails.studentNameEnglish && <span className="text-[10px] font-semibold md:font-bold text-red-500 mt-1.5">This field is mandatory.</span>}
             <span className="text-[10px] text-slate-400 mt-1.5 font-medium">Must strictly match Matriculation Certificate.</span>
           </div>
 
@@ -54,13 +54,13 @@ export default function Step2PersonalDetails() {
             <div className="relative">
               <input 
                 type="date" 
-                value={data.dateOfBirth}
-                onChange={(e) => updateData({ dateOfBirth: e.target.value })}
-                className={`w-full px-3 py-2.5 md:px-4 md:py-3 rounded-xl border outline-none transition-all text-xs md:text-sm font-medium text-slate-700 appearance-none bg-transparent ${getErrorClass(data.dateOfBirth)}`}
+                value={data.studentDetails.dateOfBirth}
+                onChange={(e) => updateData({ studentDetails: { ...data.studentDetails, dateOfBirth: e.target.value } })}
+                className={`w-full px-3 py-2.5 md:px-4 md:py-3 rounded-xl border outline-none transition-all text-xs md:text-sm font-medium text-slate-700 appearance-none bg-transparent ${getErrorClass(data.studentDetails.dateOfBirth)}`}
               />
               <Calendar className="w-4 h-4 text-slate-400 absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none" />
             </div>
-            {showErrors && !data.dateOfBirth && <span className="text-[10px] font-semibold md:font-bold text-red-500 mt-1.5">Date of Birth is mandatory.</span>}
+            {showErrors && !data.studentDetails.dateOfBirth && <span className="text-[10px] font-semibold md:font-bold text-red-500 mt-1.5">Date of Birth is mandatory.</span>}
           </div>
         </div>
 
@@ -71,11 +71,11 @@ export default function Step2PersonalDetails() {
             <input 
               type="text" 
               placeholder="12-digit UID Number" 
-              value={data.aadhaarNumber}
-              onChange={(e) => updateData({ aadhaarNumber: e.target.value })}
-              className={`w-full px-3 py-2.5 md:px-4 md:py-3 rounded-xl border outline-none transition-all text-xs md:text-sm font-medium placeholder:text-slate-400 ${getErrorClass(data.aadhaarNumber)}`}
+              value={data.studentDetails.aadhaarNumber}
+              onChange={(e) => updateData({ studentDetails: { ...data.studentDetails, aadhaarNumber: e.target.value } })}
+              className={`w-full px-3 py-2.5 md:px-4 md:py-3 rounded-xl border outline-none transition-all text-xs md:text-sm font-medium placeholder:text-slate-400 ${getErrorClass(data.studentDetails.aadhaarNumber)}`}
             />
-            {showErrors && !data.aadhaarNumber && <span className="text-[10px] font-semibold md:font-bold text-red-500 mt-1.5">Aadhaar number is mandatory.</span>}
+            {showErrors && !data.studentDetails.aadhaarNumber && <span className="text-[10px] font-semibold md:font-bold text-red-500 mt-1.5">Aadhaar number is mandatory.</span>}
             <span className="text-[10px] text-slate-400 mt-1.5 font-medium">12-digit alphanumeric card registration identification.</span>
           </div>
 
@@ -84,8 +84,8 @@ export default function Step2PersonalDetails() {
             <input 
               type="text" 
               placeholder="10-character Permanent Account Number" 
-              value={data.panNumber}
-              onChange={(e) => updateData({ panNumber: e.target.value })}
+              value={data.studentDetails.panNumber}
+              onChange={(e) => updateData({ studentDetails: { ...data.studentDetails, panNumber: e.target.value } })}
               className="w-full px-3 py-2.5 md:px-4 md:py-3 rounded-xl border border-slate-200 focus:border-brand-green focus:ring-2 focus:ring-brand-green/20 outline-none transition-all text-xs md:text-sm font-medium placeholder:text-slate-400"
             />
           </div>
@@ -108,16 +108,16 @@ export default function Step2PersonalDetails() {
                 <input 
                   type="text" 
                   placeholder="Father's Full Name" 
-                  value={data.fatherName}
-                  onChange={(e) => updateData({ fatherName: e.target.value })}
-                  className={`w-full px-4 py-2.5 rounded-xl border outline-none transition-all text-xs md:text-sm font-medium placeholder:text-slate-400 ${getErrorClass(data.fatherName)}`}
+                  value={data.familyDetails.fatherName}
+                  onChange={(e) => updateData({ familyDetails: { ...data.familyDetails, fatherName: e.target.value } })}
+                  className={`w-full px-4 py-2.5 rounded-xl border outline-none transition-all text-xs md:text-sm font-medium placeholder:text-slate-400 ${getErrorClass(data.familyDetails.fatherName)}`}
                 />
                 <input 
                   type="text" 
                   placeholder="Mobile Number" 
-                  value={data.fatherMobile}
-                  onChange={(e) => updateData({ fatherMobile: e.target.value })}
-                  className={`w-full px-4 py-2.5 rounded-xl border outline-none transition-all text-xs md:text-sm font-medium placeholder:text-slate-400 ${getErrorClass(data.fatherMobile)}`}
+                  value={data.familyDetails.fatherMobile}
+                  onChange={(e) => updateData({ familyDetails: { ...data.familyDetails, fatherMobile: e.target.value } })}
+                  className={`w-full px-4 py-2.5 rounded-xl border outline-none transition-all text-xs md:text-sm font-medium placeholder:text-slate-400 ${getErrorClass(data.familyDetails.fatherMobile)}`}
                 />
               </div>
             </div>
@@ -129,16 +129,16 @@ export default function Step2PersonalDetails() {
                 <input 
                   type="text" 
                   placeholder="Mother's Full Name" 
-                  value={data.motherName}
-                  onChange={(e) => updateData({ motherName: e.target.value })}
-                  className={`w-full px-4 py-2.5 rounded-xl border outline-none transition-all text-xs md:text-sm font-medium placeholder:text-slate-400 ${getErrorClass(data.motherName)}`}
+                  value={data.familyDetails.motherName}
+                  onChange={(e) => updateData({ familyDetails: { ...data.familyDetails, motherName: e.target.value } })}
+                  className={`w-full px-4 py-2.5 rounded-xl border outline-none transition-all text-xs md:text-sm font-medium placeholder:text-slate-400 ${getErrorClass(data.familyDetails.motherName)}`}
                 />
                 <input 
                   type="text" 
                   placeholder="Mobile Number" 
-                  value={data.motherMobile}
-                  onChange={(e) => updateData({ motherMobile: e.target.value })}
-                  className={`w-full px-4 py-2.5 rounded-xl border outline-none transition-all text-xs md:text-sm font-medium placeholder:text-slate-400 ${getErrorClass(data.motherMobile)}`}
+                  value={data.familyDetails.motherMobile}
+                  onChange={(e) => updateData({ familyDetails: { ...data.familyDetails, motherMobile: e.target.value } })}
+                  className={`w-full px-4 py-2.5 rounded-xl border outline-none transition-all text-xs md:text-sm font-medium placeholder:text-slate-400 ${getErrorClass(data.familyDetails.motherMobile)}`}
                 />
               </div>
             </div>
@@ -150,15 +150,15 @@ export default function Step2PersonalDetails() {
                 <input 
                   type="text" 
                   placeholder="Guardian's Full Name" 
-                  value={data.guardianName}
-                  onChange={(e) => updateData({ guardianName: e.target.value })}
+                  value={data.familyDetails.guardianName}
+                  onChange={(e) => updateData({ familyDetails: { ...data.familyDetails, guardianName: e.target.value } })}
                   className="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:border-brand-green outline-none transition-all text-xs md:text-sm font-medium placeholder:text-slate-400 bg-white"
                 />
                 <input 
                   type="text" 
                   placeholder="Mobile Number" 
-                  value={data.guardianMobile}
-                  onChange={(e) => updateData({ guardianMobile: e.target.value })}
+                  value={data.familyDetails.guardianMobile}
+                  onChange={(e) => updateData({ familyDetails: { ...data.familyDetails, guardianMobile: e.target.value } })}
                   className="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:border-brand-green outline-none transition-all text-xs md:text-sm font-medium placeholder:text-slate-400 bg-white"
                 />
               </div>
@@ -172,16 +172,16 @@ export default function Step2PersonalDetails() {
               <div className="flex flex-wrap gap-x-4 gap-y-2 items-center h-full">
                 {["General", "SC", "ST", "OBC"].map((cat) => (
                   <label key={cat} className="flex items-center gap-2 cursor-pointer group">
-                    <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center transition-colors ${data.socialCategory === cat ? 'border-brand-green' : 'border-slate-300 group-hover:border-brand-green'}`}>
-                      {data.socialCategory === cat && <div className="w-2 h-2 bg-brand-green rounded-full" />}
+                    <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center transition-colors ${data.studentDetails.socialCategory === cat ? 'border-brand-green' : 'border-slate-300 group-hover:border-brand-green'}`}>
+                      {data.studentDetails.socialCategory === cat && <div className="w-2 h-2 bg-brand-green rounded-full" />}
                     </div>
                     <span className="text-sm font-semibold md:font-bold text-slate-700">{cat}</span>
                     <input 
                       type="radio" 
                       name="category" 
                       className="hidden" 
-                      checked={data.socialCategory === cat}
-                      onChange={() => updateData({ socialCategory: cat })}
+                      checked={data.studentDetails.socialCategory === cat}
+                      onChange={() => updateData({ studentDetails: { ...data.studentDetails, socialCategory: cat } })}
                     />
                   </label>
                 ))}
@@ -192,11 +192,11 @@ export default function Step2PersonalDetails() {
               <label className="text-[10px] font-semibold md:font-bold text-slate-800 mb-2 uppercase tracking-wider">IRDP / BPL Status *</label>
               <div className="flex gap-3 h-[46px]">
                 <label className="flex-1 flex items-center justify-center gap-2 border border-slate-200 rounded-xl cursor-pointer hover:border-slate-300">
-                  <input type="radio" name="bpl" checked={data.bplStatus === "Yes"} onChange={() => updateData({ bplStatus: "Yes" })} className="w-3.5 h-3.5 accent-blue-500" />
+                  <input type="radio" name="bpl" checked={data.studentDetails.bplStatus === "Yes"} onChange={() => updateData({ studentDetails: { ...data.studentDetails, bplStatus: "Yes" } })} className="w-3.5 h-3.5 accent-blue-500" />
                   <span className="text-sm font-normal md:font-semibold text-slate-700">Yes</span>
                 </label>
                 <label className="flex-1 flex items-center justify-center gap-2 border border-blue-500 bg-blue-50/20 rounded-xl cursor-pointer">
-                  <input type="radio" name="bpl" checked={data.bplStatus === "No"} onChange={() => updateData({ bplStatus: "No" })} className="w-3.5 h-3.5 accent-blue-500" />
+                  <input type="radio" name="bpl" checked={data.studentDetails.bplStatus === "No"} onChange={() => updateData({ studentDetails: { ...data.studentDetails, bplStatus: "No" } })} className="w-3.5 h-3.5 accent-blue-500" />
                   <span className="text-sm font-normal md:font-semibold text-slate-900">No</span>
                 </label>
               </div>
@@ -207,9 +207,9 @@ export default function Step2PersonalDetails() {
               <input 
                 type="text" 
                 placeholder="e.g., Agriculture, Business" 
-                value={data.fatherOccupation}
-                onChange={(e) => updateData({ fatherOccupation: e.target.value })}
-                className={`w-full px-3 py-2.5 md:px-4 md:py-3 rounded-xl border outline-none transition-all text-xs md:text-sm font-medium placeholder:text-slate-400 ${getErrorClass(data.fatherOccupation)}`}
+                value={data.familyDetails.fatherOccupation}
+                onChange={(e) => updateData({ familyDetails: { ...data.familyDetails, fatherOccupation: e.target.value } })}
+                className={`w-full px-3 py-2.5 md:px-4 md:py-3 rounded-xl border outline-none transition-all text-xs md:text-sm font-medium placeholder:text-slate-400 ${getErrorClass(data.familyDetails.fatherOccupation)}`}
               />
             </div>
 
@@ -220,9 +220,9 @@ export default function Step2PersonalDetails() {
                 <input 
                   type="text" 
                   placeholder="Total annual earnings" 
-                  value={data.annualIncome}
-                  onChange={(e) => updateData({ annualIncome: e.target.value })}
-                  className={`w-full pl-8 pr-4 py-3 rounded-xl border outline-none transition-all text-xs md:text-sm font-medium placeholder:text-slate-400 ${getErrorClass(data.annualIncome)}`}
+                  value={data.familyDetails.annualIncome}
+                  onChange={(e) => updateData({ familyDetails: { ...data.familyDetails, annualIncome: e.target.value } })}
+                  className={`w-full pl-8 pr-4 py-3 rounded-xl border outline-none transition-all text-xs md:text-sm font-medium placeholder:text-slate-400 ${getErrorClass(data.familyDetails.annualIncome)}`}
                 />
               </div>
             </div>

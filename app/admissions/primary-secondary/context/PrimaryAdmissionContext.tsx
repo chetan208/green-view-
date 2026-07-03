@@ -2,69 +2,90 @@
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
 
-interface PrimaryAdmissionData {
-  // Step 1: Basic Information
-  selectedClass: string;
-  studentName: string;
-  sex: string;
-  photoPreview: string;
-
-  // Step 2: Personal & Family Details
-  dateOfBirthFigures: string;
-  dateOfBirthWords: string;
-  motherTongue: string;
-  religion: string;
-  socialCategory: string;
-  fatherName: string;
-  motherName: string;
-  guardianName: string;
-  guardianOccupation: string;
-
-  // Step 3: Academic & Activities
-  prevSchoolName: string;
-  prevSchoolMedium: string;
-  hobbies: string;
-  interestInGames: string;
-
-  // Step 4: Contact Details
-  presentAddress: string;
-  permanentAddress: string;
-  telephoneNo: string;
-
-  // Step 5: Declaration
-  acceptedDeclaration: boolean;
-
-  // Form State
-  showErrors: boolean;
+export interface PrimaryAdmissionData {
+  courseDetails: {
+    selectedClass: string;
+    
+  };
+  studentDetails: {
+    photoFile: File | null;
+    photoPreview: string | null;
+    studentName: string;
+    sex: string;
+    dateOfBirthFigures: string;
+    dateOfBirthWords: string;
+    motherTongue: string;
+    religion: string;
+    socialCategory: string;
+  };
+  familyDetails: {
+    fatherName: string;
+    motherName: string;
+    guardianName: string;
+    guardianOccupation: string;
+  };
+  academicDetails: {
+    prevSchoolName: string;
+    prevSchoolMedium: string;
+  };
+  activityDetails: {
+    hobbies: string;
+    interestInGames: string;
+  };
+  contactDetails: {
+    presentAddress: string;
+    permanentAddress: string;
+    telephoneNo: string;
+  };
+  additionalDetails: {
+    acceptedDeclaration: boolean;
+  };
+  meta: {
+    showErrors: boolean;
+  };
 }
 
 const defaultData: PrimaryAdmissionData = {
-  selectedClass: "",
-  studentName: "",
-  sex: "",
-  photoPreview: "",
-  
-  dateOfBirthFigures: "",
-  dateOfBirthWords: "",
-  motherTongue: "",
-  religion: "",
-  socialCategory: "Gen",
-  fatherName: "",
-  motherName: "",
-  guardianName: "",
-  guardianOccupation: "",
-  
-  prevSchoolName: "",
-  prevSchoolMedium: "",
-  hobbies: "",
-  interestInGames: "",
-  
-  presentAddress: "",
-  permanentAddress: "",
-  telephoneNo: "",
-  
-  acceptedDeclaration: false,
-  showErrors: false,
+  courseDetails: {
+    selectedClass: "",
+    
+  },
+  studentDetails: {
+    photoFile: null,
+    photoPreview: null,
+    studentName: "",
+    sex: "",
+    dateOfBirthFigures: "",
+    dateOfBirthWords: "",
+    motherTongue: "",
+    religion: "",
+    socialCategory: "Gen",
+  },
+  familyDetails: {
+    fatherName: "",
+    motherName: "",
+    guardianName: "",
+    guardianOccupation: "",
+  },
+  academicDetails: {
+    prevSchoolName: "",
+    prevSchoolMedium: "",
+  },
+  activityDetails: {
+    hobbies: "",
+    interestInGames: "",
+  },
+  contactDetails: {
+    presentAddress: "",
+    permanentAddress: "",
+    telephoneNo: "",
+  },
+  additionalDetails: {
+    acceptedDeclaration: false,
+  },
+  meta: {
+    showErrors: false,
+  },
 };
 
 interface PrimaryAdmissionContextType {
@@ -84,7 +105,12 @@ export function PrimaryAdmissionProvider({ children }: { children: ReactNode }) 
     if (savedData) {
       try {
         const parsed = JSON.parse(savedData);
-        setData({ ...defaultData, ...parsed, showErrors: false });
+        // Handle migration from flat structure
+        if (parsed.studentName !== undefined && !parsed.studentDetails) {
+          localStorage.removeItem("primaryAdmissionData");
+          return;
+        }
+        setData({ ...defaultData, ...parsed });
       } catch (e) {
         console.error("Failed to parse local storage data", e);
       }

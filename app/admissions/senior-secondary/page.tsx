@@ -25,13 +25,13 @@ function SeniorSecondaryAdmissionContent() {
     let isValid = true;
 
     if (currentStep === 1) {
-      if (!data.photoPreview || data.selectedSubjects.length !== 5) isValid = false;
+      if (!data.studentDetails.photoFile || data.courseDetails.selectedSubjects.length !== 5) isValid = false;
     } else if (currentStep === 2) {
-      if (!data.studentNameEnglish || !data.dateOfBirth || !data.fatherName || !data.fatherMobile || !data.motherName || !data.motherMobile || !data.aadhaarNumber || !data.fatherOccupation || !data.annualIncome) isValid = false;
+      if (!data.studentDetails.studentNameEnglish || !data.studentDetails.dateOfBirth || !data.familyDetails.fatherName || !data.familyDetails.fatherMobile || !data.familyDetails.motherName || !data.familyDetails.motherMobile || !data.studentDetails.aadhaarNumber || !data.familyDetails.fatherOccupation || !data.familyDetails.annualIncome) isValid = false;
     } else if (currentStep === 3) {
-      if (!data.village || !data.postOffice || !data.tehsil || !data.district || !data.stateName || !data.pinCode) isValid = false;
+      if (!data.addressDetails.village || !data.addressDetails.postOffice || !data.addressDetails.tehsil || !data.addressDetails.district || !data.addressDetails.stateName || !data.addressDetails.pinCode) isValid = false;
     } else if (currentStep === 4) {
-      const recordsToValidate = data.selectedClass === "Class 11" ? [data.academicRecords[0]] : data.academicRecords;
+      const recordsToValidate = data.courseDetails.selectedClass === "Class 11" ? [data.academicRecords[0]] : data.academicRecords;
       for (const record of recordsToValidate) {
         if (!record.passingYear || !record.boardName || !record.school || !record.rollNumber) {
           isValid = false; break;
@@ -41,15 +41,15 @@ function SeniorSecondaryAdmissionContent() {
         }
       }
     } else if (currentStep === 5) {
-      if (!data.acceptedTerms) isValid = false;
+      if (!data.additionalDetails.acceptedTerms) isValid = false;
     }
 
     if (!isValid) {
-      updateData({ showErrors: true });
+      updateData({ meta: { ...data.meta, showErrors: true } });
       return;
     }
 
-    updateData({ showErrors: false });
+    updateData({ meta: { ...data.meta, showErrors: false } });
 
     if (currentStep < totalSteps) {
       setCurrentStep(prev => prev + 1);

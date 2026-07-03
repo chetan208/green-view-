@@ -9,7 +9,7 @@ export default function Step4Contact() {
   const [sameAsPresent, setSameAsPresent] = useState(false);
 
   const getErrorClass = (fieldValue: string) => {
-    return data.showErrors && !fieldValue 
+    return data.meta.showErrors && !fieldValue 
       ? "border-red-400 focus:border-red-500 focus:ring-red-500/20 bg-red-50" 
       : "border-slate-200 focus:border-brand-green focus:ring-brand-green/20";
   };
@@ -18,17 +18,17 @@ export default function Step4Contact() {
     const checked = e.target.checked;
     setSameAsPresent(checked);
     if (checked) {
-      updateData({ permanentAddress: data.presentAddress });
+      updateData({ contactDetails: { ...data.contactDetails, permanentAddress: data.contactDetails.presentAddress } });
     } else {
-      updateData({ permanentAddress: "" });
+      updateData({ contactDetails: { ...data.contactDetails, permanentAddress: "" } });
     }
   };
 
   const handlePresentAddressChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const val = e.target.value;
-    updateData({ presentAddress: val });
+    updateData({ contactDetails: { ...data.contactDetails, presentAddress: val } });
     if (sameAsPresent) {
-      updateData({ permanentAddress: val });
+      updateData({ contactDetails: { ...data.contactDetails, permanentAddress: val } });
     }
   };
 
@@ -57,12 +57,12 @@ export default function Step4Contact() {
           <label className="text-[11px] font-normal md:font-semibold text-slate-800 mb-2 uppercase tracking-wider">Present Address with PIN Code *</label>
           <textarea 
             placeholder="Enter full present residential address including PIN code" 
-            value={data.presentAddress}
+            value={data.contactDetails.presentAddress}
             onChange={handlePresentAddressChange}
             rows={3}
-            className={`w-full px-3 py-2.5 md:px-4 md:py-3 rounded-xl border outline-none transition-all text-xs md:text-sm font-medium placeholder:text-slate-400 resize-none ${getErrorClass(data.presentAddress)}`}
+            className={`w-full px-3 py-2.5 md:px-4 md:py-3 rounded-xl border outline-none transition-all text-xs md:text-sm font-medium placeholder:text-slate-400 resize-none ${getErrorClass(data.contactDetails.presentAddress)}`}
           />
-          {data.showErrors && !data.presentAddress && <span className="text-[10px] font-normal md:font-semibold text-red-500 mt-1.5">Required field.</span>}
+          {data.meta.showErrors && !data.contactDetails.presentAddress && <span className="text-[10px] font-normal md:font-semibold text-red-500 mt-1.5">Required field.</span>}
         </div>
 
         {/* Permanent Address */}
@@ -84,17 +84,17 @@ export default function Step4Contact() {
           </div>
           <textarea 
             placeholder="Enter full permanent residential address" 
-            value={data.permanentAddress}
+            value={data.contactDetails.permanentAddress}
             onChange={(e) => {
-              if (!sameAsPresent) updateData({ permanentAddress: e.target.value });
+              if (!sameAsPresent) updateData({ contactDetails: { ...data.contactDetails, permanentAddress: e.target.value } });
             }}
             readOnly={sameAsPresent}
             rows={3}
             className={`w-full px-3 py-2.5 md:px-4 md:py-3 rounded-xl border outline-none transition-all text-xs md:text-sm font-medium placeholder:text-slate-400 resize-none ${
-              sameAsPresent ? "bg-slate-50 text-slate-500 cursor-not-allowed border-slate-200" : getErrorClass(data.permanentAddress)
+              sameAsPresent ? "bg-slate-50 text-slate-500 cursor-not-allowed border-slate-200" : getErrorClass(data.contactDetails.permanentAddress)
             }`}
           />
-          {data.showErrors && !data.permanentAddress && !sameAsPresent && <span className="text-[10px] font-normal md:font-semibold text-red-500 mt-1.5">Required field.</span>}
+          {data.meta.showErrors && !data.contactDetails.permanentAddress && !sameAsPresent && <span className="text-[10px] font-normal md:font-semibold text-red-500 mt-1.5">Required field.</span>}
         </div>
 
         <div className="w-full h-px bg-slate-200 my-2" />
@@ -105,8 +105,8 @@ export default function Step4Contact() {
           <input 
             type="text" 
             placeholder="e.g., +91 9876543210" 
-            value={data.telephoneNo}
-            onChange={(e) => updateData({ telephoneNo: e.target.value })}
+            value={data.contactDetails.telephoneNo}
+            onChange={(e) => updateData({ contactDetails: { ...data.contactDetails, telephoneNo: e.target.value } })}
             className="w-full px-3 py-2.5 md:px-4 md:py-3 rounded-xl border border-slate-200 focus:border-brand-green focus:ring-brand-green/20 outline-none transition-all text-xs md:text-sm font-medium placeholder:text-slate-400"
           />
         </div>

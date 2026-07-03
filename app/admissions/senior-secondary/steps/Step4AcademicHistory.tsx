@@ -9,7 +9,7 @@ import BoardSelect from "../components/BoardSelect";
 export default function Step4AcademicHistory() {
   const { data, updateData } = useAdmissionContext();
   const [openSection, setOpenSection] = useState<"10th" | "11th" | null>("10th");
-  const { showErrors } = data;
+  const showErrors = data.meta.showErrors;
 
   const getErrorClass = (fieldValue: string) => {
     return showErrors && !fieldValue ? "border-red-400 focus:border-red-500 focus:ring-red-500/20" : "border-slate-200 focus:border-brand-green focus:ring-brand-green/20";
@@ -208,7 +208,7 @@ export default function Step4AcademicHistory() {
         </div>
 
         {/* 11th Record Collapsible - Only show if Class 12 */}
-        {data.selectedClass === "Class 12" && (
+        {data.courseDetails.selectedClass === "Class 12" && (
           <div className={`w-full border rounded-2xl overflow-hidden transition-colors ${openSection === "11th" ? "border-emerald-200 shadow-sm" : "border-slate-200 hover:border-slate-300"}`}>
           <button 
             onClick={() => toggleSection("11th")}

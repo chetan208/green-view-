@@ -92,7 +92,7 @@ export default function Header() {
       className={`fixed top-0 left-0 right-0 z-50 bg-white border-b border-slate-100 shadow-sm transition-all duration-300 flex flex-col`}
     >
       {/* Top Bar */}
-      <div className={`w-full bg-brand-green text-white flex justify-center transition-all duration-300 overflow-hidden ${isScrolled ? "h-0 opacity-0" : "h-7 opacity-100 hidden md:flex"}`}>
+      <div className={`w-full bg-brand-green text-white flex justify-center transition-all duration-300 overflow-hidden ${(isScrolled || pathname?.startsWith('/admin')) ? "h-0 opacity-0" : "h-7 opacity-100 hidden md:flex"}`}>
         <div className="max-w-7xl w-full px-6 md:px-8 flex justify-between items-center h-full text-[10px] font-semibold md:font-bold tracking-wider uppercase">
           <div className="flex items-center gap-5">
             <span className="flex items-center gap-1.5"><Mail className="w-3 h-3" /> info@greenviewschool.edu.in</span>
@@ -117,7 +117,7 @@ export default function Header() {
         {/* Logo */}
         <Link href="/" className="flex items-center gap-3 shrink-0">
           {/* GV Logo Image */}
-          <div className="w-10 h-10 relative shrink-0">
+          <div className="w-13 h-13 relative shrink-0">
             <img
               src="/images/logo.png"
               alt="Green View Logo"
@@ -207,7 +207,7 @@ export default function Header() {
             <motion.button 
               whileHover={{ scale: 1.02 }} 
               whileTap={{ scale: 0.98 }} 
-              className="bg-gradient-to-r from-brand-green to-brand-green-dark hover:from-brand-green-dark hover:to-brand-green-darker text-white px-6 py-2.5 rounded-xl font-semibold md:font-bold text-xs md:text-sm tracking-wide transition-all shadow-sm shadow-emerald-500/10 cursor-pointer flex items-center gap-1.5"
+              className="bg-brand-green hover:bg-brand-green-dark text-white px-6 py-2.5 rounded-xl font-semibold md:font-bold text-xs md:text-sm tracking-wide transition-all shadow-sm shadow-emerald-500/10 cursor-pointer flex items-center gap-1.5"
             >
               Login <ChevronDown className="w-3.5 h-3.5 transition-transform duration-300 group-hover:rotate-180" />
             </motion.button>
@@ -335,7 +335,7 @@ export default function Header() {
                 <Link
                   href="/auth/student/login"
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="flex-1 bg-gradient-to-r from-brand-green to-brand-green-dark hover:from-brand-green-dark hover:to-brand-green-darker text-white rounded-xl py-3 px-4 font-semibold text-center text-xs tracking-wide transition-colors"
+                  className="flex-1 bg-brand-green hover:bg-brand-green-dark text-white rounded-xl py-3 px-4 font-semibold text-center text-xs tracking-wide transition-colors"
                 >
                   Student Login
                 </Link>

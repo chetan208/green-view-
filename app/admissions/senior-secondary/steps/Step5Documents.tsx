@@ -6,7 +6,9 @@ import { useAdmissionContext } from "../context/AdmissionContext";
 
 export default function Step5Documents() {
   const { data, updateData } = useAdmissionContext();
-  const { documents, acceptedTerms, showErrors } = data;
+  const { documents } = data;
+  const { extracurricular, acceptedTerms } = data.additionalDetails;
+  const showErrors = data.meta.showErrors;
 
   const toggleDocument = (field: keyof typeof documents) => {
     updateData({ documents: { ...documents, [field]: !documents[field] } });
@@ -116,8 +118,8 @@ export default function Step5Documents() {
             <label className="text-[11px] font-semibold md:font-bold text-slate-800 mb-3 uppercase tracking-wider">Extracurricular Achievements & Sports Level</label>
             <textarea 
               placeholder="Mention activities, achievements, or certification level (District, State, National level)"
-              value={data.extracurricular}
-              onChange={(e) => updateData({ extracurricular: e.target.value })}
+              value={extracurricular}
+              onChange={(e) => updateData({ additionalDetails: { ...data.additionalDetails, extracurricular: e.target.value } })}
               rows={4}
               className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-brand-green focus:ring-2 focus:ring-brand-green/20 outline-none transition-all text-sm font-medium placeholder:text-slate-400 resize-none"
             />
@@ -154,7 +156,7 @@ export default function Step5Documents() {
                 type="checkbox" 
                 className="hidden" 
                 checked={acceptedTerms}
-                onChange={() => updateData({ acceptedTerms: !acceptedTerms })}
+                onChange={() => updateData({ additionalDetails: { ...data.additionalDetails, acceptedTerms: !acceptedTerms } })}
               />
             </label>
             {showErrors && !acceptedTerms && <span className="text-[10px] font-semibold md:font-bold text-red-500 pl-7">You must accept the terms to proceed.</span>}
