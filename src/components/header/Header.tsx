@@ -102,7 +102,7 @@ export default function Header() {
             <Link href="/academics/calendar" className="flex items-center gap-1.5 hover:text-emerald-200 transition-colors">
               <Calendar className="w-3.5 h-3.5 opacity-80" /> Calendar
             </Link>
-            <Link href="/student-portal" className="flex items-center gap-1.5 hover:text-emerald-200 transition-colors">
+            <Link href="/student-portal" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 hover:text-emerald-200 transition-colors">
               <User className="w-3.5 h-3.5 opacity-80" /> Student Portal
             </Link>
             <Link href="/contact" className="flex items-center gap-1.5 hover:text-emerald-200 transition-colors">

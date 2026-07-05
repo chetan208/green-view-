@@ -9,10 +9,11 @@ export default function GlobalLayout({ children }: { children: React.ReactNode }
   const pathname = usePathname();
   
   const isErpPortal = pathname?.startsWith('/erp');
+  const isStudentPortal = pathname?.startsWith('/student-portal');
   const isAdmin = pathname?.startsWith('/admin');
 
-  // ERP portal: no header, no footer
-  if (isErpPortal) {
+  // ERP portal or Student portal: no global header, no footer
+  if (isErpPortal || isStudentPortal) {
     return <main className="flex-grow">{children}</main>;
   }
 

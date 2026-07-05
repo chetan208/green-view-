@@ -18,13 +18,13 @@ export default function PrimaryPrintableForm() {
           @page { size: A4; margin: 0; }
           body * { visibility: hidden; }
           #primary-printable-form, #primary-printable-form * { visibility: visible; }
-          #primary-printable-form { position: absolute; left: 0; top: 0; width: 100%; padding: 10mm; box-sizing: border-box; }
+          #primary-printable-form { position: absolute; left: 0; top: 0; width: 100%; }
           .dotted-line { border-bottom: 1px dotted black; display: inline-block; }
           .flex-line { display: flex; align-items: baseline; gap: 8px; margin-bottom: 8px; }
         }
       `}} />
       
-      <div className="w-full relative">
+      <div className="w-full relative p-[10mm] box-border" style={{ height: '296mm', overflow: 'hidden' }}>
         <div className="absolute right-0 top-0 text-[12px]">
           Form No. ............
         </div>

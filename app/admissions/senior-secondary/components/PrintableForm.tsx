@@ -7,7 +7,7 @@ export default function PrintableForm() {
     <div id="printable-form" className="hidden print:block w-full bg-white text-black text-[12px] font-serif leading-tight">
       <style dangerouslySetInnerHTML={{__html: `
         @media print {
-          @page { size: A4; margin: 10mm; }
+          @page { size: A4; margin: 0; }
           body * { visibility: hidden; }
           #printable-form, #printable-form * { visibility: visible; }
           #printable-form { position: absolute; left: 0; top: 0; width: 100%; }
@@ -16,7 +16,7 @@ export default function PrintableForm() {
       `}} />
       
       {/* Page 1 */}
-      <div className="w-full relative" style={{ pageBreakAfter: 'always' }}>
+      <div className="w-full relative p-[10mm] box-border" style={{ height: '296mm', pageBreakAfter: 'always', overflow: 'hidden' }}>
         <div className="absolute right-0 top-0 text-[10px]">
           Roll . No. Allowed.......................
         </div>
@@ -39,7 +39,7 @@ export default function PrintableForm() {
 
         <div className="flex flex-col gap-3 max-w-[80%] mb-4">
           <div className="flex items-center gap-2">
-            <span>Provisional / Regular</span><span className="dotted-line flex-1 text-blue-600 font-semibold md:font-bold text-center">{data.courseDetails.isProvisional ? "Provisional" : "Regular"}</span>
+            <span>Provisional / Regular</span><span className="dotted-line flex-1 text-blue-600 font-semibold md:font-bold text-left pl-2">{data.courseDetails.isProvisional ? "Provisional" : "Regular"}</span>
           </div>
           <div className="flex items-center gap-2">
             <span>Date</span><span className="dotted-line flex-1"></span>
@@ -69,41 +69,41 @@ export default function PrintableForm() {
         </div>
 
         <div className="flex items-center gap-2 mb-4">
-          <span>Subjects: 1.</span> <span className="dotted-line w-24 border-b-black border-dashed text-blue-600 font-semibold md:font-bold text-center">{data.courseDetails.selectedSubjects.includes("English") ? data.courseDetails.selectedSubjects[0] : "English"}</span>
-          <span>2. <span className="dotted-line w-24 border-b-black border-dashed text-blue-600 font-semibold md:font-bold text-center">{data.courseDetails.selectedSubjects.includes("English") ? data.courseDetails.selectedSubjects[1] : data.courseDetails.selectedSubjects[0] || ""}</span></span>
-          <span>3. <span className="dotted-line w-24 border-b-black border-dashed text-blue-600 font-semibold md:font-bold text-center">{data.courseDetails.selectedSubjects.includes("English") ? data.courseDetails.selectedSubjects[2] : data.courseDetails.selectedSubjects[1] || ""}</span></span>
-          <span>4. <span className="dotted-line w-24 border-b-black border-dashed text-blue-600 font-semibold md:font-bold text-center">{data.courseDetails.selectedSubjects.includes("English") ? data.courseDetails.selectedSubjects[3] : data.courseDetails.selectedSubjects[2] || ""}</span></span>
-          <span>5. <span className="dotted-line w-24 border-b-black border-dashed text-blue-600 font-semibold md:font-bold text-center">{data.courseDetails.selectedSubjects.includes("English") ? data.courseDetails.selectedSubjects[4] : data.courseDetails.selectedSubjects[3] || ""}</span></span>
+          <span>Subjects: 1.</span> <span className="dotted-line w-24 border-b-black border-dashed text-blue-600 font-semibold md:font-bold text-left pl-2">{data.courseDetails.selectedSubjects.includes("English") ? data.courseDetails.selectedSubjects[0] : "English"}</span>
+          <span>2. <span className="dotted-line w-24 border-b-black border-dashed text-blue-600 font-semibold md:font-bold text-left pl-2">{data.courseDetails.selectedSubjects.includes("English") ? data.courseDetails.selectedSubjects[1] : data.courseDetails.selectedSubjects[0] || ""}</span></span>
+          <span>3. <span className="dotted-line w-24 border-b-black border-dashed text-blue-600 font-semibold md:font-bold text-left pl-2">{data.courseDetails.selectedSubjects.includes("English") ? data.courseDetails.selectedSubjects[2] : data.courseDetails.selectedSubjects[1] || ""}</span></span>
+          <span>4. <span className="dotted-line w-24 border-b-black border-dashed text-blue-600 font-semibold md:font-bold text-left pl-2">{data.courseDetails.selectedSubjects.includes("English") ? data.courseDetails.selectedSubjects[3] : data.courseDetails.selectedSubjects[2] || ""}</span></span>
+          <span>5. <span className="dotted-line w-24 border-b-black border-dashed text-blue-600 font-semibold md:font-bold text-left pl-2">{data.courseDetails.selectedSubjects.includes("English") ? data.courseDetails.selectedSubjects[4] : data.courseDetails.selectedSubjects[3] || ""}</span></span>
         </div>
 
         <div className="flex flex-col gap-4 mb-6">
           <div className="flex items-center gap-2">
-            <span>Name (in English)</span><span className="dotted-line flex-1 text-blue-600 font-semibold md:font-bold text-center">{data.studentDetails.studentNameEnglish}</span>
+            <span>Name (in English)</span><span className="dotted-line flex-1 text-blue-600 font-semibold md:font-bold text-left pl-2">{data.studentDetails.studentNameEnglish}</span>
             <span>(in capital letters)</span>
           </div>
           
           <div className="flex items-center gap-2">
-            <span className="w-24">Father's Name</span><span className="dotted-line flex-1 text-blue-600 font-semibold md:font-bold text-center">{data.familyDetails.fatherName}</span>
-            <span>Mob. No</span><span className="dotted-line w-32 text-blue-600 font-semibold md:font-bold text-center font-sans tracking-widest">{data.familyDetails.fatherMobile}</span>
+            <span className="w-24">Father's Name</span><span className="dotted-line flex-1 text-blue-600 font-semibold md:font-bold text-left pl-2">{data.familyDetails.fatherName}</span>
+            <span>Mob. No</span><span className="dotted-line w-32 text-blue-600 font-semibold md:font-bold text-left pl-2 font-sans tracking-widest">{data.familyDetails.fatherMobile}</span>
           </div>
           
           <div className="flex items-center gap-2">
-            <span className="w-24">Mother's Name</span><span className="dotted-line flex-1 text-blue-600 font-semibold md:font-bold text-center">{data.familyDetails.motherName}</span>
-            <span>Mob. No</span><span className="dotted-line w-32 text-blue-600 font-semibold md:font-bold text-center font-sans tracking-widest">{data.familyDetails.motherMobile}</span>
+            <span className="w-24">Mother's Name</span><span className="dotted-line flex-1 text-blue-600 font-semibold md:font-bold text-left pl-2">{data.familyDetails.motherName}</span>
+            <span>Mob. No</span><span className="dotted-line w-32 text-blue-600 font-semibold md:font-bold text-left pl-2 font-sans tracking-widest">{data.familyDetails.motherMobile}</span>
           </div>
           
           <div className="flex items-center gap-2">
-            <span>Guardian's Name (if applicable):</span><span className="dotted-line flex-1 text-blue-600 font-semibold md:font-bold text-center">{data.familyDetails.guardianName}</span>
-            <span>Mob .No</span><span className="dotted-line w-32 text-blue-600 font-semibold md:font-bold text-center font-sans tracking-widest">{data.familyDetails.guardianMobile}</span>
+            <span>Guardian's Name (if applicable):</span><span className="dotted-line flex-1 text-blue-600 font-semibold md:font-bold text-left pl-2">{data.familyDetails.guardianName}</span>
+            <span>Mob .No</span><span className="dotted-line w-32 text-blue-600 font-semibold md:font-bold text-left pl-2 font-sans tracking-widest">{data.familyDetails.guardianMobile}</span>
           </div>
           
           <div className="flex items-center gap-2">
-            <span>Date of Birth(in figure)</span><span className="dotted-line w-32 text-blue-600 font-semibold md:font-bold text-center font-sans tracking-widest">{data.studentDetails.dateOfBirth}</span>
+            <span>Date of Birth(in figure)</span><span className="dotted-line w-32 text-blue-600 font-semibold md:font-bold text-left pl-2 font-sans tracking-widest">{data.studentDetails.dateOfBirth}</span>
             <span>(in Words)</span><span className="dotted-line flex-1"></span>
           </div>
           
           <div className="flex items-center gap-2">
-            <span>Aadhaar No. of the student</span><span className="dotted-line flex-1 text-blue-600 font-semibold md:font-bold text-center font-sans tracking-widest">{data.studentDetails.aadhaarNumber}</span>
+            <span>Aadhaar No. of the student</span><span className="dotted-line flex-1 text-blue-600 font-semibold md:font-bold text-left pl-2 font-sans tracking-widest">{data.studentDetails.aadhaarNumber}</span>
           </div>
           
           <div className="flex items-center gap-4">
@@ -111,34 +111,34 @@ export default function PrintableForm() {
             <span className="font-semibold md:font-bold underline text-blue-600 uppercase">{data.studentDetails.socialCategory}</span>
             <span>(Attach certificate)</span>
             <span className="ml-8">IRDP Yes/No</span>
-            <span className="dotted-line w-16 text-blue-600 font-semibold md:font-bold text-center uppercase">{data.studentDetails.bplStatus}</span>
+            <span className="dotted-line w-16 text-blue-600 font-semibold md:font-bold text-left pl-2 uppercase">{data.studentDetails.bplStatus}</span>
           </div>
           
           <div className="flex items-center gap-2">
-            <span>Father's/ Guardian's occupation</span><span className="dotted-line flex-1 text-blue-600 font-semibold md:font-bold text-center">{data.familyDetails.fatherOccupation}</span>
-            <span>Annual income:</span><span className="dotted-line w-32 text-blue-600 font-semibold md:font-bold text-center">{data.familyDetails.annualIncome}</span>
+            <span>Father's/ Guardian's occupation</span><span className="dotted-line flex-1 text-blue-600 font-semibold md:font-bold text-left pl-2">{data.familyDetails.fatherOccupation}</span>
+            <span>Annual income:</span><span className="dotted-line w-32 text-blue-600 font-semibold md:font-bold text-left pl-2">{data.familyDetails.annualIncome}</span>
           </div>
           
           <div className="flex items-center gap-2">
-            <span>PAN No. of student</span><span className="dotted-line flex-1 text-blue-600 font-semibold md:font-bold text-center font-sans uppercase tracking-widest">{data.studentDetails.panNumber}</span>
+            <span>PAN No. of student</span><span className="dotted-line flex-1 text-blue-600 font-semibold md:font-bold text-left pl-2 font-sans uppercase tracking-widest">{data.studentDetails.panNumber}</span>
           </div>
           
           <div className="flex items-center gap-2">
-            <span>Bank Account No.</span><span className="dotted-line flex-1 text-blue-600 font-semibold md:font-bold text-center font-sans tracking-widest">{data.bankDetails.bankAccountNo}</span>
-            <span>Bank and Branch</span><span className="dotted-line flex-1 text-blue-600 font-semibold md:font-bold text-center uppercase">{data.bankDetails.bankName}, {data.bankDetails.bankBranchName}</span>
-            <span>IFSC</span><span className="dotted-line w-32 text-blue-600 font-semibold md:font-bold text-center font-sans uppercase">{data.bankDetails.ifscCode}</span>
+            <span>Bank Account No.</span><span className="dotted-line flex-1 text-blue-600 font-semibold md:font-bold text-left pl-2 font-sans tracking-widest">{data.bankDetails.bankAccountNo}</span>
+            <span>Bank and Branch</span><span className="dotted-line flex-1 text-blue-600 font-semibold md:font-bold text-left pl-2 uppercase">{data.bankDetails.bankName}, {data.bankDetails.bankBranchName}</span>
+            <span>IFSC</span><span className="dotted-line w-32 text-blue-600 font-semibold md:font-bold text-left pl-2 font-sans uppercase">{data.bankDetails.ifscCode}</span>
           </div>
           
           <div className="flex items-center gap-2">
-            <span>Permanent Address__ Village</span><span className="dotted-line flex-1 text-blue-600 font-semibold md:font-bold text-center">{data.addressDetails.village}</span>
-            <span>P.O</span><span className="dotted-line w-32 text-blue-600 font-semibold md:font-bold text-center">{data.addressDetails.postOffice}</span>
-            <span>Tehsil</span><span className="dotted-line w-32 text-blue-600 font-semibold md:font-bold text-center">{data.addressDetails.tehsil}</span>
+            <span>Permanent Address__ Village</span><span className="dotted-line flex-1 text-blue-600 font-semibold md:font-bold text-left pl-2">{data.addressDetails.village}</span>
+            <span>P.O</span><span className="dotted-line w-32 text-blue-600 font-semibold md:font-bold text-left pl-2">{data.addressDetails.postOffice}</span>
+            <span>Tehsil</span><span className="dotted-line w-32 text-blue-600 font-semibold md:font-bold text-left pl-2">{data.addressDetails.tehsil}</span>
           </div>
           
           <div className="flex items-center gap-2">
-            <span>Distt:-</span><span className="dotted-line flex-1 text-blue-600 font-semibold md:font-bold text-center">{data.addressDetails.district}</span>
-            <span>State</span><span className="dotted-line flex-1 text-blue-600 font-semibold md:font-bold text-center">{data.addressDetails.stateName}</span>
-            <span>PIN</span><span className="dotted-line w-32 text-blue-600 font-semibold md:font-bold text-center">{data.addressDetails.pinCode}</span>
+            <span>Distt:-</span><span className="dotted-line flex-1 text-blue-600 font-semibold md:font-bold text-left pl-2">{data.addressDetails.district}</span>
+            <span>State</span><span className="dotted-line flex-1 text-blue-600 font-semibold md:font-bold text-left pl-2">{data.addressDetails.stateName}</span>
+            <span>PIN</span><span className="dotted-line w-32 text-blue-600 font-semibold md:font-bold text-left pl-2">{data.addressDetails.pinCode}</span>
           </div>
         </div>
 
@@ -179,7 +179,7 @@ export default function PrintableForm() {
       </div>
 
       {/* Page 2 */}
-      <div className="w-full relative">
+      <div className="w-full relative p-[10mm] box-border" style={{ height: '296mm', overflow: 'hidden' }}>
         <h3 className="font-semibold md:font-bold text-center mb-2">DECLARATION</h3>
         <p className="mb-4 text-justify">
           I/We hereby declare to abide by all the rules and regulations of the school,(which is a NO-INTOXICATION ZONE). HP Board of school education and other Government intrusions and declare that I will not be involved in any activities that goes against the discipline of the institution .I understand that admission will automatically be cancelled if/ my ward fail to pay necessary dues to remain absent without authorization and if found to be indulged in any in toxicities, drugs related activities or anti social activities disciplinary action will be taken against me/my wards.
@@ -292,7 +292,7 @@ export default function PrintableForm() {
         <div className="flex flex-col gap-4">
           <div className="flex items-center gap-2">
             <span>Details of Participation in Sports / other Activities</span>
-            <span className="dotted-line flex-1 text-blue-600 font-semibold md:font-bold text-center">{data.additionalDetails.extracurricular}</span>
+            <span className="dotted-line flex-1 text-blue-600 font-semibold md:font-bold text-left pl-2">{data.additionalDetails.extracurricular}</span>
           </div>
         </div>
 

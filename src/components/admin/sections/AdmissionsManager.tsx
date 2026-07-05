@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from "react";
-import { GraduationCap, CheckCircle2, Clock, XCircle, Search, Eye, X, Download } from "lucide-react";
+import { GraduationCap, CheckCircle2, Clock, XCircle, Search, Eye, X, Download, User } from "lucide-react";
 
 type AppStatus = "Pending" | "Approved" | "Rejected";
 
@@ -201,19 +201,38 @@ export default function AdmissionsManager() {
 
             {/* Modal Body */}
             <div className="p-6 overflow-y-auto flex-1">
-              
-              <DetailSection title="Course Details">
-                <Field label="Applied Class" value={selectedApp.fullData.course.class} />
-                {activeTab === "senior" && (
-                  <>
-                    <Field label="Stream" value={selectedApp.fullData.course.stream} />
-                    <Field label="Provisional" value={selectedApp.fullData.course.provisional ? "Yes" : "No"} />
-                    <div className="col-span-2 sm:col-span-3">
-                      <Field label="Selected Subjects" value={selectedApp.fullData.course.subjects} />
-                    </div>
-                  </>
-                )}
-              </DetailSection>
+              <div className="flex flex-col-reverse sm:flex-row justify-between items-start gap-6 mb-2">
+                <div className="flex-1 w-full">
+                  <DetailSection title="Course Details">
+                    <Field label="Applied Class" value={selectedApp.fullData.course.class} />
+                    {activeTab === "senior" && (
+                      <>
+                        <Field label="Stream" value={selectedApp.fullData.course.stream} />
+                        <Field label="Provisional" value={selectedApp.fullData.course.provisional ? "Yes" : "No"} />
+                        <div className="col-span-2 sm:col-span-3">
+                          <Field label="Selected Subjects" value={selectedApp.fullData.course.subjects} />
+                        </div>
+                      </>
+                    )}
+                  </DetailSection>
+                </div>
+
+                {/* Applicant Photo Box */}
+                <div className="shrink-0 w-28 h-36 rounded-xl border border-slate-200 overflow-hidden bg-white shadow-sm flex flex-col items-center justify-center p-1">
+                  <div className="w-full h-full rounded-lg bg-slate-50 border-2 border-dashed border-slate-200 flex flex-col items-center justify-center">
+                    {selectedApp.fullData.student.photo ? (
+                      <img src={selectedApp.fullData.student.photo} alt="Applicant" className="w-full h-full object-cover rounded-lg" />
+                    ) : (
+                      <>
+                        <div className="w-10 h-10 bg-slate-200 rounded-full flex items-center justify-center mb-2">
+                          <User size={20} className="text-slate-400" />
+                        </div>
+                        <span className="text-[9px] font-black uppercase text-slate-400 tracking-wider text-center px-1 leading-tight">Applicant<br/>Photo</span>
+                      </>
+                    )}
+                  </div>
+                </div>
+              </div>
 
               <DetailSection title="Student Details">
                 <Field label="Student Name" value={selectedApp.fullData.student.name} />
