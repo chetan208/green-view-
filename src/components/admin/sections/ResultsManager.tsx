@@ -59,16 +59,16 @@ export default function ResultsManager() {
     <div className="space-y-6 text-slate-800">
       <div className="flex justify-between items-center">
         <div>
-          <h2 className="text-xl sm:text-2xl font-bold font-serif text-slate-900 flex items-center gap-2">
+          <h2 className="text-xl sm:text-2xl font-semibold font-serif text-slate-900 flex items-center gap-2">
             <Trophy className="w-6 h-6 text-amber-500" />
             Top Results & Achievers
           </h2>
-          <p className="text-xs font-semibold text-slate-500 mt-1">Celebrate and showcase our highest performing students.</p>
+          <p className="text-xs font-medium text-slate-500 mt-1">Celebrate and showcase our highest performing students.</p>
         </div>
         {!showForm && (
           <button 
             onClick={() => setShowForm(true)}
-            className="bg-brand-green hover:bg-brand-green-dark text-white px-5 py-2.5 rounded-xl text-sm font-bold flex items-center gap-2 transition shadow-[0_4px_15px_-3px_rgba(16,185,129,0.3)] border-0 cursor-pointer"
+            className="bg-brand-green hover:bg-brand-green-dark text-white px-5 py-2.5 rounded-xl text-sm font-semibold flex items-center gap-2 transition shadow-[0_4px_15px_-3px_rgba(16,185,129,0.3)] border-0 cursor-pointer"
           >
             <Plus size={16} /> Add Topper
           </button>
@@ -85,41 +85,41 @@ export default function ResultsManager() {
             className="bg-white border border-slate-100 rounded-2xl p-6 shadow-xl shadow-slate-200/40 space-y-5"
           >
             <div className="flex justify-between items-center border-b border-slate-100 pb-4">
-              <h3 className="text-sm font-black text-slate-900 flex items-center gap-2">
+              <h3 className="text-sm font-bold text-slate-900 flex items-center gap-2">
                 <Star className="w-4 h-4 text-amber-500 fill-amber-500" />
                 Register New Achiever
               </h3>
-              <button type="button" onClick={() => setShowForm(false)} className="text-xs font-bold text-slate-400 hover:text-slate-600 transition bg-transparent border-0 cursor-pointer">Cancel</button>
+              <button type="button" onClick={() => setShowForm(false)} className="text-xs font-semibold text-slate-400 hover:text-slate-600 transition bg-transparent border-0 cursor-pointer">Cancel</button>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
               
               {/* Photo Upload Area */}
               <div className="md:col-span-3 flex flex-col gap-1.5">
-                <label className="block text-[10px] font-black uppercase tracking-wider text-slate-400">Student Photo *</label>
+                <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400">Student Photo *</label>
                 <label className="flex flex-col items-center justify-center w-full aspect-square border-2 border-slate-200 border-dashed rounded-2xl cursor-pointer bg-slate-50 hover:bg-emerald-50 hover:border-emerald-200 transition-all group">
                   <Upload size={24} className="text-slate-300 group-hover:text-emerald-500 mb-2 transition-colors" />
-                  <p className="text-[10px] font-bold text-slate-500 text-center px-4">Upload Headshot<br/>(1:1 Square)</p>
+                  <p className="text-[10px] font-semibold text-slate-500 text-center px-4">Upload Headshot<br/>(1:1 Square)</p>
                 </label>
               </div>
 
               {/* Form Fields */}
               <div className="md:col-span-9 grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-[10px] font-black uppercase tracking-wider text-slate-400 mb-1.5">Student Name *</label>
+                  <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Student Name *</label>
                   <input type="text" required value={newResult.studentName} onChange={e => setNewResult({...newResult, studentName: e.target.value})} placeholder="e.g., Anjali Gupta" className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 text-sm rounded-xl focus:outline-none focus:border-brand-green focus:bg-white font-medium transition" />
                 </div>
                 <div>
-                  <label className="block text-[10px] font-black uppercase tracking-wider text-slate-400 mb-1.5">Class / Stream *</label>
+                  <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Class / Stream *</label>
                   <input type="text" required value={newResult.grade} onChange={e => setNewResult({...newResult, grade: e.target.value})} placeholder="e.g., Class XII (Science)" className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 text-sm rounded-xl focus:outline-none focus:border-brand-green focus:bg-white font-medium transition" />
                 </div>
                 <div>
-                  <label className="block text-[10px] font-black uppercase tracking-wider text-slate-400 mb-1.5">Score / Percentage *</label>
+                  <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Score / Percentage *</label>
                   <input type="text" required value={newResult.percentage} onChange={e => setNewResult({...newResult, percentage: e.target.value})} placeholder="e.g., 99.2%" className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 text-sm rounded-xl focus:outline-none focus:border-brand-green focus:bg-white font-medium transition" />
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-[10px] font-black uppercase tracking-wider text-slate-400 mb-1.5">Rank *</label>
+                    <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Rank *</label>
                     <select value={newResult.rank} onChange={e => setNewResult({...newResult, rank: e.target.value})} className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 text-sm rounded-xl focus:outline-none focus:border-brand-green font-medium transition cursor-pointer">
                       <option value="1st">1st Rank</option>
                       <option value="2nd">2nd Rank</option>
@@ -128,7 +128,7 @@ export default function ResultsManager() {
                     </select>
                   </div>
                   <div>
-                    <label className="block text-[10px] font-black uppercase tracking-wider text-slate-400 mb-1.5">Academic Year *</label>
+                    <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Academic Year *</label>
                     <input type="text" required value={newResult.year} onChange={e => setNewResult({...newResult, year: e.target.value})} placeholder="2026" className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 text-sm rounded-xl focus:outline-none focus:border-brand-green focus:bg-white font-medium transition" />
                   </div>
                 </div>
@@ -136,7 +136,7 @@ export default function ResultsManager() {
             </div>
 
             <div className="pt-2 border-t border-slate-50">
-              <button type="submit" className="w-full bg-slate-900 hover:bg-slate-800 text-white py-3 rounded-xl text-sm font-bold transition flex items-center justify-center gap-2 shadow-md border-0 cursor-pointer">
+              <button type="submit" className="w-full bg-slate-900 hover:bg-slate-800 text-white py-3 rounded-xl text-sm font-semibold transition flex items-center justify-center gap-2 shadow-md border-0 cursor-pointer">
                 <Trophy size={16} className="text-amber-400" /> Confirm & Add Topper
               </button>
             </div>
@@ -170,19 +170,19 @@ export default function ResultsManager() {
                     <Image src={res.photo} alt={res.studentName} fill className="object-cover" />
                   </div>
                 </div>
-                <div className={`absolute -bottom-2.5 left-1/2 -translate-x-1/2 px-3.5 py-1 rounded-full text-[10px] font-black uppercase tracking-widest shadow-lg ${getRankBadgeColor(res.rank)} border-2 border-white whitespace-nowrap`}>
+                <div className={`absolute -bottom-2.5 left-1/2 -translate-x-1/2 px-3.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest shadow-lg ${getRankBadgeColor(res.rank)} border-2 border-white whitespace-nowrap`}>
                   {res.rank}
                 </div>
               </div>
 
               {/* Student Details */}
-              <h3 className="text-base font-black text-slate-900 mt-1 mb-0.5">{res.studentName}</h3>
-              <p className="text-[11px] font-bold text-slate-500 mb-3">{res.grade} • Batch {res.year}</p>
+              <h3 className="text-base font-bold text-slate-900 mt-1 mb-0.5">{res.studentName}</h3>
+              <p className="text-[11px] font-semibold text-slate-500 mb-3">{res.grade} • Batch {res.year}</p>
               
               {/* Score Display */}
               <div className="w-full py-2.5 bg-slate-50 rounded-xl border border-slate-100">
-                <p className="text-[9px] font-black uppercase tracking-widest text-slate-400 mb-0.5">Final Score</p>
-                <p className="text-2xl font-black text-brand-green">{res.percentage}</p>
+                <p className="text-[9px] font-bold uppercase tracking-widest text-slate-400 mb-0.5">Final Score</p>
+                <p className="text-2xl font-bold text-brand-green">{res.percentage}</p>
               </div>
               
             </div>

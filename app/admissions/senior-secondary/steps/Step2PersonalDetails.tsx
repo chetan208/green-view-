@@ -23,7 +23,7 @@ export default function Step2PersonalDetails() {
           </svg>
         </div>
         <div>
-          <h2 className="text-xl md:text-2xl font-semibold md:font-bold text-slate-800 tracking-tight">
+          <h2 className="text-xl md:text-2xl font-medium md:font-semibold text-slate-800 tracking-tight">
             Personal Information
           </h2>
           <p className="text-sm text-slate-500 font-medium mt-1">
@@ -37,7 +37,7 @@ export default function Step2PersonalDetails() {
         {/* Row 1: Student Name & DOB */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
           <div className="flex flex-col">
-            <label className="text-xs font-semibold md:font-bold text-slate-800 mb-2 uppercase tracking-wider">Student Name (English) *</label>
+            <label className="text-xs font-medium md:font-semibold text-slate-800 mb-2 uppercase tracking-wider">Student Name (English) *</label>
             <input 
               type="text" 
               placeholder="ENTER IN BLOCK LETTERS" 
@@ -45,12 +45,12 @@ export default function Step2PersonalDetails() {
               onChange={(e) => updateData({ studentDetails: { ...data.studentDetails, studentNameEnglish: e.target.value } })}
               className={`w-full px-3 py-2.5 md:px-4 md:py-3 rounded-xl border outline-none transition-all text-xs md:text-sm font-medium placeholder:text-slate-400 ${getErrorClass(data.studentDetails.studentNameEnglish)}`}
             />
-            {showErrors && !data.studentDetails.studentNameEnglish && <span className="text-[10px] font-semibold md:font-bold text-red-500 mt-1.5">This field is mandatory.</span>}
+            {showErrors && !data.studentDetails.studentNameEnglish && <span className="text-[10px] font-medium md:font-semibold text-red-500 mt-1.5">This field is mandatory.</span>}
             <span className="text-[10px] text-slate-400 mt-1.5 font-medium">Must strictly match Matriculation Certificate.</span>
           </div>
 
           <div className="flex flex-col">
-            <label className="text-xs font-semibold md:font-bold text-slate-800 mb-2 uppercase tracking-wider">Date of Birth *</label>
+            <label className="text-xs font-medium md:font-semibold text-slate-800 mb-2 uppercase tracking-wider">Date of Birth *</label>
             <div className="relative">
               <input 
                 type="date" 
@@ -60,14 +60,14 @@ export default function Step2PersonalDetails() {
               />
               <Calendar className="w-4 h-4 text-slate-400 absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none" />
             </div>
-            {showErrors && !data.studentDetails.dateOfBirth && <span className="text-[10px] font-semibold md:font-bold text-red-500 mt-1.5">Date of Birth is mandatory.</span>}
+            {showErrors && !data.studentDetails.dateOfBirth && <span className="text-[10px] font-medium md:font-semibold text-red-500 mt-1.5">Date of Birth is mandatory.</span>}
           </div>
         </div>
 
         {/* Row 2: Aadhaar & PAN */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
           <div className="flex flex-col">
-            <label className="text-xs font-semibold md:font-bold text-slate-800 mb-2 uppercase tracking-wider">Aadhaar Number *</label>
+            <label className="text-xs font-medium md:font-semibold text-slate-800 mb-2 uppercase tracking-wider">Aadhaar Number *</label>
             <input 
               type="text" 
               placeholder="12-digit UID Number" 
@@ -75,12 +75,12 @@ export default function Step2PersonalDetails() {
               onChange={(e) => updateData({ studentDetails: { ...data.studentDetails, aadhaarNumber: e.target.value } })}
               className={`w-full px-3 py-2.5 md:px-4 md:py-3 rounded-xl border outline-none transition-all text-xs md:text-sm font-medium placeholder:text-slate-400 ${getErrorClass(data.studentDetails.aadhaarNumber)}`}
             />
-            {showErrors && !data.studentDetails.aadhaarNumber && <span className="text-[10px] font-semibold md:font-bold text-red-500 mt-1.5">Aadhaar number is mandatory.</span>}
+            {showErrors && !data.studentDetails.aadhaarNumber && <span className="text-[10px] font-medium md:font-semibold text-red-500 mt-1.5">Aadhaar number is mandatory.</span>}
             <span className="text-[10px] text-slate-400 mt-1.5 font-medium">12-digit alphanumeric card registration identification.</span>
           </div>
 
           <div className="flex flex-col">
-            <label className="text-xs font-semibold md:font-bold text-slate-800 mb-2 uppercase tracking-wider">PAN Number (If Applicable)</label>
+            <label className="text-xs font-medium md:font-semibold text-slate-800 mb-2 uppercase tracking-wider">PAN Number (If Applicable)</label>
             <input 
               type="text" 
               placeholder="10-character Permanent Account Number" 
@@ -97,13 +97,13 @@ export default function Step2PersonalDetails() {
         <div>
           <div className="flex items-center gap-2 mb-6">
             <Users className="w-5 h-5 text-brand-green" />
-            <h3 className="text-sm font-semibold md:font-bold text-emerald-900 tracking-tight">Family & Parent Details</h3>
+            <h3 className="text-sm font-medium md:font-semibold text-emerald-900 tracking-tight">Family & Parent Details</h3>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6 mb-5 md:mb-8">
             {/* Father */}
             <div className="bg-[#f9fafb] border border-emerald-100 rounded-2xl p-5">
-              <label className="text-[11px] font-semibold md:font-bold text-slate-600 mb-4 uppercase tracking-wider block">Father's Information *</label>
+              <label className="text-[11px] font-medium md:font-semibold text-slate-600 mb-4 uppercase tracking-wider block">Father's Information *</label>
               <div className="flex flex-col gap-3">
                 <input 
                   type="text" 
@@ -124,7 +124,7 @@ export default function Step2PersonalDetails() {
 
             {/* Mother */}
             <div className="bg-[#f9fafb] border border-emerald-100 rounded-2xl p-5">
-              <label className="text-[11px] font-semibold md:font-bold text-slate-600 mb-4 uppercase tracking-wider block">Mother's Information *</label>
+              <label className="text-[11px] font-medium md:font-semibold text-slate-600 mb-4 uppercase tracking-wider block">Mother's Information *</label>
               <div className="flex flex-col gap-3">
                 <input 
                   type="text" 
@@ -145,7 +145,7 @@ export default function Step2PersonalDetails() {
 
             {/* Guardian */}
             <div className="bg-[#f9fafb] border border-slate-100 rounded-2xl p-5">
-              <label className="text-[11px] font-semibold md:font-bold text-slate-500 mb-4 uppercase tracking-wider block">Guardian's Information (Optional)</label>
+              <label className="text-[11px] font-medium md:font-semibold text-slate-500 mb-4 uppercase tracking-wider block">Guardian's Information (Optional)</label>
               <div className="flex flex-col gap-3">
                 <input 
                   type="text" 
@@ -168,14 +168,14 @@ export default function Step2PersonalDetails() {
           {/* Additional Details */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 md:gap-6">
             <div className="flex flex-col">
-              <label className="text-[10px] font-semibold md:font-bold text-slate-800 mb-2 uppercase tracking-wider">Social Category *</label>
+              <label className="text-[10px] font-medium md:font-semibold text-slate-800 mb-2 uppercase tracking-wider">Social Category *</label>
               <div className="flex flex-wrap gap-x-4 gap-y-2 items-center h-full">
                 {["General", "SC", "ST", "OBC"].map((cat) => (
                   <label key={cat} className="flex items-center gap-2 cursor-pointer group">
                     <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center transition-colors ${data.studentDetails.socialCategory === cat ? 'border-brand-green' : 'border-slate-300 group-hover:border-brand-green'}`}>
                       {data.studentDetails.socialCategory === cat && <div className="w-2 h-2 bg-brand-green rounded-full" />}
                     </div>
-                    <span className="text-sm font-semibold md:font-bold text-slate-700">{cat}</span>
+                    <span className="text-sm font-medium md:font-semibold text-slate-700">{cat}</span>
                     <input 
                       type="radio" 
                       name="category" 
@@ -189,21 +189,21 @@ export default function Step2PersonalDetails() {
             </div>
 
             <div className="flex flex-col">
-              <label className="text-[10px] font-semibold md:font-bold text-slate-800 mb-2 uppercase tracking-wider">IRDP / BPL Status *</label>
+              <label className="text-[10px] font-medium md:font-semibold text-slate-800 mb-2 uppercase tracking-wider">IRDP / BPL Status *</label>
               <div className="flex gap-3 h-[46px]">
                 <label className="flex-1 flex items-center justify-center gap-2 border border-slate-200 rounded-xl cursor-pointer hover:border-slate-300">
                   <input type="radio" name="bpl" checked={data.studentDetails.bplStatus === "Yes"} onChange={() => updateData({ studentDetails: { ...data.studentDetails, bplStatus: "Yes" } })} className="w-3.5 h-3.5 accent-blue-500" />
-                  <span className="text-sm font-normal md:font-semibold text-slate-700">Yes</span>
+                  <span className="text-sm font-normal md:font-medium text-slate-700">Yes</span>
                 </label>
                 <label className="flex-1 flex items-center justify-center gap-2 border border-blue-500 bg-blue-50/20 rounded-xl cursor-pointer">
                   <input type="radio" name="bpl" checked={data.studentDetails.bplStatus === "No"} onChange={() => updateData({ studentDetails: { ...data.studentDetails, bplStatus: "No" } })} className="w-3.5 h-3.5 accent-blue-500" />
-                  <span className="text-sm font-normal md:font-semibold text-slate-900">No</span>
+                  <span className="text-sm font-normal md:font-medium text-slate-900">No</span>
                 </label>
               </div>
             </div>
 
             <div className="flex flex-col">
-              <label className="text-[10px] font-semibold md:font-bold text-slate-800 mb-2 uppercase tracking-wider truncate" title="Parent/Guardian Occupation *">Parent/Guardian Occupation *</label>
+              <label className="text-[10px] font-medium md:font-semibold text-slate-800 mb-2 uppercase tracking-wider truncate" title="Parent/Guardian Occupation *">Parent/Guardian Occupation *</label>
               <input 
                 type="text" 
                 placeholder="e.g., Agriculture, Business" 
@@ -214,7 +214,7 @@ export default function Step2PersonalDetails() {
             </div>
 
             <div className="flex flex-col">
-              <label className="text-[10px] font-semibold md:font-bold text-slate-800 mb-2 uppercase tracking-wider truncate" title="Annual Household Income *">Annual Household Income *</label>
+              <label className="text-[10px] font-medium md:font-semibold text-slate-800 mb-2 uppercase tracking-wider truncate" title="Annual Household Income *">Annual Household Income *</label>
               <div className="relative">
                 <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-xs md:text-sm font-medium">₹</span>
                 <input 

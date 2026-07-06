@@ -34,7 +34,7 @@ export default function Step1BasicInfo() {
           <User className="w-6 h-6 text-brand-green" />
         </div>
         <div>
-          <h2 className="text-xl md:text-2xl font-normal md:font-semibold text-slate-800 tracking-tight">
+          <h2 className="text-xl md:text-2xl font-normal md:font-medium text-slate-800 tracking-tight">
             Basic Information
           </h2>
           <p className="text-sm text-slate-500 font-medium mt-1">
@@ -56,19 +56,19 @@ export default function Step1BasicInfo() {
                 <div className="w-12 h-12 rounded-full bg-slate-200 flex items-center justify-center mb-3">
                   <Camera className="w-5 h-5 text-slate-500" />
                 </div>
-                <span className="text-xs font-normal md:font-semibold text-slate-600 mb-1">Passport Photo</span>
+                <span className="text-xs font-normal md:font-medium text-slate-600 mb-1">Passport Photo</span>
                 <span className="text-[10px] text-slate-400">Max size 2MB (JPG/PNG)</span>
               </div>
             )}
             
             <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center cursor-pointer" onClick={() => fileInputRef.current?.click()}>
               <UploadCloud className="w-8 h-8 text-white mb-2" />
-              <span className="text-xs font-normal md:font-semibold text-white">Upload New</span>
+              <span className="text-xs font-normal md:font-medium text-white">Upload New</span>
             </div>
             <input type="file" ref={fileInputRef} onChange={handlePhotoUpload} accept="image/*" className="hidden" />
           </div>
           {data.meta.showErrors && !data.studentDetails.photoPreview && (
-            <span className="text-xs font-normal md:font-semibold text-red-500 mt-2 text-center">Photograph is mandatory</span>
+            <span className="text-xs font-normal md:font-medium text-red-500 mt-2 text-center">Photograph is mandatory</span>
           )}
         </div>
 
@@ -76,7 +76,7 @@ export default function Step1BasicInfo() {
         <div className="w-full md:w-2/3 flex flex-col gap-3 md:gap-5">
           
           <div className="flex flex-col">
-            <label className="text-[11px] font-normal md:font-semibold text-slate-800 mb-2 uppercase tracking-wider">Class to which admission is sought *</label>
+            <label className="text-[11px] font-normal md:font-medium text-slate-800 mb-2 uppercase tracking-wider">Class to which admission is sought *</label>
             <select
               value={data.courseDetails.selectedClass}
               onChange={(e) => updateData({ courseDetails: { ...data.courseDetails, selectedClass: e.target.value } })}
@@ -87,11 +87,11 @@ export default function Step1BasicInfo() {
                 <option key={c} value={c}>{c}</option>
               ))}
             </select>
-            {data.meta.showErrors && !data.courseDetails.selectedClass && <span className="text-[10px] font-normal md:font-semibold text-red-500 mt-1.5">Required field.</span>}
+            {data.meta.showErrors && !data.courseDetails.selectedClass && <span className="text-[10px] font-normal md:font-medium text-red-500 mt-1.5">Required field.</span>}
           </div>
 
           <div className="flex flex-col">
-            <label className="text-[11px] font-normal md:font-semibold text-slate-800 mb-2 uppercase tracking-wider">Name of the student (Block Letters) *</label>
+            <label className="text-[11px] font-normal md:font-medium text-slate-800 mb-2 uppercase tracking-wider">Name of the student (Block Letters) *</label>
             <input 
               type="text" 
               placeholder="e.g., ROHAN SHARMA" 
@@ -99,11 +99,11 @@ export default function Step1BasicInfo() {
               onChange={(e) => updateData({ studentDetails: { ...data.studentDetails, studentName: e.target.value.toUpperCase() } })}
               className={`w-full px-3 py-2.5 md:px-4 md:py-3 rounded-xl border outline-none transition-all text-xs md:text-sm font-medium placeholder:text-slate-400 uppercase ${getErrorClass(data.studentDetails.studentName)}`}
             />
-            {data.meta.showErrors && !data.studentDetails.studentName && <span className="text-[10px] font-normal md:font-semibold text-red-500 mt-1.5">Required field.</span>}
+            {data.meta.showErrors && !data.studentDetails.studentName && <span className="text-[10px] font-normal md:font-medium text-red-500 mt-1.5">Required field.</span>}
           </div>
 
           <div className="flex flex-col">
-            <label className="text-[11px] font-normal md:font-semibold text-slate-800 mb-2 uppercase tracking-wider">Sex *</label>
+            <label className="text-[11px] font-normal md:font-medium text-slate-800 mb-2 uppercase tracking-wider">Sex *</label>
             <div className="flex gap-4">
               {["Male", "Female", "Other"].map((gender) => (
                 <label key={gender} className={`flex-1 flex items-center justify-center gap-2 p-3 rounded-xl border cursor-pointer transition-all ${data.studentDetails.sex === gender ? "border-brand-green bg-emerald-50 text-emerald-700" : "border-slate-200 text-slate-600 hover:bg-slate-50"} ${data.meta.showErrors && !data.studentDetails.sex ? "border-red-400" : ""}`}>
@@ -118,11 +118,11 @@ export default function Step1BasicInfo() {
                   <div className={`w-4 h-4 rounded-full border flex items-center justify-center ${data.studentDetails.sex === gender ? "border-brand-green" : "border-slate-300"}`}>
                     {data.studentDetails.sex === gender && <div className="w-2 h-2 rounded-full bg-brand-green" />}
                   </div>
-                  <span className="text-sm font-normal md:font-semibold">{gender}</span>
+                  <span className="text-sm font-normal md:font-medium">{gender}</span>
                 </label>
               ))}
             </div>
-            {data.meta.showErrors && !data.studentDetails.sex && <span className="text-[10px] font-normal md:font-semibold text-red-500 mt-1.5">Please select gender.</span>}
+            {data.meta.showErrors && !data.studentDetails.sex && <span className="text-[10px] font-normal md:font-medium text-red-500 mt-1.5">Please select gender.</span>}
           </div>
 
         </div>

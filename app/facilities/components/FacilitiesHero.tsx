@@ -30,14 +30,14 @@ export default function FacilitiesHero() {
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-50 border border-slate-100 mb-8"
           >
             <Sparkles className="w-4 h-4 text-brand-green" />
-            <span className="text-xs font-bold text-slate-600 tracking-widest uppercase">World-Class Infrastructure</span>
+            <span className="text-xs font-semibold text-slate-600 tracking-widest uppercase">World-Class Infrastructure</span>
           </motion.div>
 
           <motion.h1 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black text-slate-900 tracking-tight leading-[1.1] mb-6"
+            className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-slate-900 tracking-tight leading-[1.1] mb-6"
           >
             Experience <br className="hidden md:block" />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-green to-brand-navy">Excellence</span> at Every Corner

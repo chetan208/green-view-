@@ -57,7 +57,7 @@ export default function Step2PersonalFamily() {
           <Users className="w-6 h-6 text-brand-green" />
         </div>
         <div>
-          <h2 className="text-xl md:text-2xl font-normal md:font-semibold text-slate-800 tracking-tight">
+          <h2 className="text-xl md:text-2xl font-normal md:font-medium text-slate-800 tracking-tight">
             Personal & Family Details
           </h2>
           <p className="text-sm text-slate-500 font-medium mt-1">
@@ -70,18 +70,18 @@ export default function Step2PersonalFamily() {
         
         {/* Date of Birth */}
         <div className="flex flex-col">
-          <label className="text-[11px] font-normal md:font-semibold text-slate-800 mb-2 uppercase tracking-wider">Date of Birth (in figures) *</label>
+          <label className="text-[11px] font-normal md:font-medium text-slate-800 mb-2 uppercase tracking-wider">Date of Birth (in figures) *</label>
           <input 
             type="date" 
             value={data.studentDetails.dateOfBirthFigures}
             onChange={(e) => updateData({ studentDetails: { ...data.studentDetails, dateOfBirthFigures: e.target.value } })}
             className={`w-full bg-white px-3 py-2.5 md:px-4 md:py-3 text-xs md:text-sm font-medium text-slate-700 outline-none border rounded-xl transition-all ${getErrorClass(data.studentDetails.dateOfBirthFigures)}`}
           />
-          {data.meta.showErrors && !data.studentDetails.dateOfBirthFigures && <span className="text-[10px] font-normal md:font-semibold text-red-500 mt-1.5">Required field.</span>}
+          {data.meta.showErrors && !data.studentDetails.dateOfBirthFigures && <span className="text-[10px] font-normal md:font-medium text-red-500 mt-1.5">Required field.</span>}
         </div>
 
         <div className="flex flex-col">
-          <label className="text-[11px] font-normal md:font-semibold text-slate-800 mb-2 uppercase tracking-wider">Date of Birth (in words)</label>
+          <label className="text-[11px] font-normal md:font-medium text-slate-800 mb-2 uppercase tracking-wider">Date of Birth (in words)</label>
           <input 
             type="text" 
             value={data.studentDetails.dateOfBirthWords}
@@ -92,7 +92,7 @@ export default function Step2PersonalFamily() {
 
         {/* Demographics */}
         <div className="flex flex-col">
-          <label className="text-[11px] font-normal md:font-semibold text-slate-800 mb-2 uppercase tracking-wider">Mother Tongue *</label>
+          <label className="text-[11px] font-normal md:font-medium text-slate-800 mb-2 uppercase tracking-wider">Mother Tongue *</label>
           <input 
             type="text" 
             placeholder="e.g., Hindi, English" 
@@ -103,7 +103,7 @@ export default function Step2PersonalFamily() {
         </div>
 
         <div className="flex flex-col">
-          <label className="text-[11px] font-normal md:font-semibold text-slate-800 mb-2 uppercase tracking-wider">Religion *</label>
+          <label className="text-[11px] font-normal md:font-medium text-slate-800 mb-2 uppercase tracking-wider">Religion *</label>
           <input 
             type="text" 
             placeholder="e.g., Hindu, Sikh, Muslim" 
@@ -114,7 +114,7 @@ export default function Step2PersonalFamily() {
         </div>
 
         <div className="flex flex-col md:col-span-2">
-          <label className="text-[11px] font-normal md:font-semibold text-slate-800 mb-2 uppercase tracking-wider">Category *</label>
+          <label className="text-[11px] font-normal md:font-medium text-slate-800 mb-2 uppercase tracking-wider">Category *</label>
           <div className="flex flex-wrap gap-4">
             {["Gen", "OBC", "SC", "ST"].map((cat) => (
               <label key={cat} className={`flex-1 min-w-[100px] flex items-center justify-center gap-2 p-3 rounded-xl border cursor-pointer transition-all ${data.studentDetails.socialCategory === cat ? "border-brand-green bg-emerald-50 text-emerald-700" : "border-slate-200 text-slate-600 hover:bg-slate-50"}`}>
@@ -129,7 +129,7 @@ export default function Step2PersonalFamily() {
                 <div className={`w-4 h-4 rounded-full border flex items-center justify-center ${data.studentDetails.socialCategory === cat ? "border-brand-green" : "border-slate-300"}`}>
                   {data.studentDetails.socialCategory === cat && <div className="w-2 h-2 rounded-full bg-brand-green" />}
                 </div>
-                <span className="text-sm font-normal md:font-semibold">{cat}</span>
+                <span className="text-sm font-normal md:font-medium">{cat}</span>
               </label>
             ))}
           </div>
@@ -139,7 +139,7 @@ export default function Step2PersonalFamily() {
 
         {/* Parents/Guardian */}
         <div className="flex flex-col">
-          <label className="text-[11px] font-normal md:font-semibold text-slate-800 mb-2 uppercase tracking-wider">Father's Name *</label>
+          <label className="text-[11px] font-normal md:font-medium text-slate-800 mb-2 uppercase tracking-wider">Father's Name *</label>
           <input 
             type="text" 
             placeholder="Father's full name" 
@@ -150,7 +150,7 @@ export default function Step2PersonalFamily() {
         </div>
 
         <div className="flex flex-col">
-          <label className="text-[11px] font-normal md:font-semibold text-slate-800 mb-2 uppercase tracking-wider">Mother's Name *</label>
+          <label className="text-[11px] font-normal md:font-medium text-slate-800 mb-2 uppercase tracking-wider">Mother's Name *</label>
           <input 
             type="text" 
             placeholder="Mother's full name" 
@@ -161,7 +161,7 @@ export default function Step2PersonalFamily() {
         </div>
 
         <div className="flex flex-col">
-          <label className="text-[11px] font-normal md:font-semibold text-slate-800 mb-2 uppercase tracking-wider">Name of Guardian (if applicable)</label>
+          <label className="text-[11px] font-normal md:font-medium text-slate-800 mb-2 uppercase tracking-wider">Name of Guardian (if applicable)</label>
           <input 
             type="text" 
             placeholder="Guardian's name" 
@@ -172,7 +172,7 @@ export default function Step2PersonalFamily() {
         </div>
 
         <div className="flex flex-col">
-          <label className="text-[11px] font-normal md:font-semibold text-slate-800 mb-2 uppercase tracking-wider">Guardian's Occupation</label>
+          <label className="text-[11px] font-normal md:font-medium text-slate-800 mb-2 uppercase tracking-wider">Guardian's Occupation</label>
           <input 
             type="text" 
             placeholder="Occupation" 

@@ -46,10 +46,10 @@ export default function AdmissionFaqs() {
         
         {/* Header */}
         <div className="text-center mb-12">
-          <span className="text-[10px] md:text-xs font-bold text-brand-green uppercase tracking-[0.2em] mb-2 block">
+          <span className="text-[10px] md:text-xs font-semibold text-brand-green uppercase tracking-[0.2em] mb-2 block">
             HAVE QUESTIONS?
           </span>
-          <h2 className="text-3xl md:text-4xl font-semibold text-slate-800 tracking-tight">
+          <h2 className="text-3xl md:text-4xl font-medium text-slate-800 tracking-tight">
             Frequently Asked <span className="text-brand-green">Questions</span>
           </h2>
         </div>
@@ -68,7 +68,7 @@ export default function AdmissionFaqs() {
                   onClick={() => toggleIndex(idx)}
                   className="w-full flex items-center justify-between p-5 md:p-6 text-left focus:outline-none"
                 >
-                  <span className="text-sm font-bold text-slate-800 pr-8">
+                  <span className="text-sm font-semibold text-slate-800 pr-8">
                     {faq.question}
                   </span>
                   <div className={`w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center shrink-0 transition-transform duration-300 ${isOpen ? "rotate-180" : "rotate-0"}`}>

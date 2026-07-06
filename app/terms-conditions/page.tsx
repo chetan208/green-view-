@@ -23,8 +23,8 @@ export default function TermsConditionsPage() {
             <Scale className="w-6 h-6 stroke-[1.5]" />
           </div>
           <div>
-            <span className="text-[10px] font-semibold text-slate-400 uppercase tracking-widest block">Legal Disclosures</span>
-            <h1 className="text-2xl md:text-3xl font-semibold md:font-extrabold text-brand-navy tracking-tight leading-none mt-1">
+            <span className="text-[10px] font-medium text-slate-400 uppercase tracking-widest block">Legal Disclosures</span>
+            <h1 className="text-2xl md:text-3xl font-medium md:font-bold text-brand-navy tracking-tight leading-none mt-1">
               Terms & Conditions
             </h1>
           </div>
@@ -37,7 +37,7 @@ export default function TermsConditionsPage() {
           </p>
 
           <div className="flex flex-col gap-2">
-            <h2 className="text-sm font-semibold md:font-extrabold text-slate-800 uppercase tracking-wider">
+            <h2 className="text-sm font-medium md:font-bold text-slate-800 uppercase tracking-wider">
               1. Accuracy of Admission Details
             </h2>
             <p>
@@ -46,7 +46,7 @@ export default function TermsConditionsPage() {
           </div>
 
           <div className="flex flex-col gap-2">
-            <h2 className="text-sm font-semibold md:font-extrabold text-slate-800 uppercase tracking-wider">
+            <h2 className="text-sm font-medium md:font-bold text-slate-800 uppercase tracking-wider">
               2. Student Portal Usage & Security
             </h2>
             <p>
@@ -59,7 +59,7 @@ export default function TermsConditionsPage() {
           </div>
 
           <div className="flex flex-col gap-2">
-            <h2 className="text-sm font-semibold md:font-extrabold text-slate-800 uppercase tracking-wider">
+            <h2 className="text-sm font-medium md:font-bold text-slate-800 uppercase tracking-wider">
               3. Fee Cycle & Late Penalties
             </h2>
             <p>
@@ -68,7 +68,7 @@ export default function TermsConditionsPage() {
           </div>
 
           <div className="flex flex-col gap-2">
-            <h2 className="text-sm font-semibold md:font-extrabold text-slate-800 uppercase tracking-wider">
+            <h2 className="text-sm font-medium md:font-bold text-slate-800 uppercase tracking-wider">
               4. Disclaimer of Liability
             </h2>
             <p>
@@ -76,7 +76,7 @@ export default function TermsConditionsPage() {
             </p>
           </div>
 
-          <div className="pt-4 border-t border-slate-100 text-[10px] text-slate-400 font-semibold uppercase tracking-wider">
+          <div className="pt-4 border-t border-slate-100 text-[10px] text-slate-400 font-medium uppercase tracking-wider">
             Last Updated: July 2026
           </div>
         </div>

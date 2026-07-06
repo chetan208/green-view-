@@ -52,7 +52,7 @@ export default function AdmissionsHero({ onStartApplication }: { onStartApplicat
             <span className="text-slate-600">Admission</span>
           </div>
           
-          <h1 className="text-2xl md:text-3xl font-serif font-bold text-slate-800 mb-2">
+          <h1 className="text-2xl md:text-3xl font-serif font-semibold text-slate-800 mb-2">
             Admission <span className="text-brand-green">Process</span>
           </h1>
           <p className="text-slate-500 font-medium text-xs md:text-sm">
@@ -62,10 +62,10 @@ export default function AdmissionsHero({ onStartApplication }: { onStartApplicat
 
         {/* Center Process Section */}
         <div className="flex flex-col items-center w-full">
-          <span className="text-[9px] md:text-[10px] font-bold text-brand-green uppercase tracking-[0.2em] mb-2">
+          <span className="text-[9px] md:text-[10px] font-semibold text-brand-green uppercase tracking-[0.2em] mb-2">
             STEP-BY-STEP GUIDE
           </span>
-          <h2 className="text-2xl md:text-3xl font-semibold text-slate-800 mb-10 text-center">
+          <h2 className="text-2xl md:text-3xl font-medium text-slate-800 mb-10 text-center">
             Admission <span className="text-brand-green">Process</span>
           </h2>
 
@@ -84,13 +84,13 @@ export default function AdmissionsHero({ onStartApplication }: { onStartApplicat
                       <step.icon className="w-7 h-7 text-brand-green" />
                     </div>
                     {/* Number Badge */}
-                    <div className="absolute top-0 right-0 w-6 h-6 bg-brand-green rounded-full flex items-center justify-center text-white text-[10px] font-bold shadow-md shadow-emerald-500/30 border-2 border-white">
+                    <div className="absolute top-0 right-0 w-6 h-6 bg-brand-green rounded-full flex items-center justify-center text-white text-[10px] font-semibold shadow-md shadow-emerald-500/30 border-2 border-white">
                       {step.id}
                     </div>
                   </div>
 
                   {/* Text Content */}
-                  <h3 className="text-sm font-bold text-slate-900 mb-1.5">
+                  <h3 className="text-sm font-semibold text-slate-900 mb-1.5">
                     {step.title}
                   </h3>
                   <p className="text-[11px] text-slate-500 font-medium leading-relaxed px-2 md:px-0">
@@ -104,7 +104,7 @@ export default function AdmissionsHero({ onStartApplication }: { onStartApplicat
           {/* Call to Action Button */}
           <button 
             onClick={handleStart}
-            className="mt-12 bg-brand-green hover:bg-[#0d924c] text-white px-6 py-2.5 rounded-full font-bold text-xs md:text-sm flex items-center gap-2 transition-colors shadow-lg shadow-brand-green/20"
+            className="mt-12 bg-brand-green hover:bg-[#0d924c] text-white px-6 py-2.5 rounded-full font-semibold text-xs md:text-sm flex items-center gap-2 transition-colors shadow-lg shadow-brand-green/20"
           >
             Start Application <ArrowRight className="w-3.5 h-3.5" />
           </button>

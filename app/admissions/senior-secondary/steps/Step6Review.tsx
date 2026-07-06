@@ -22,7 +22,7 @@ export default function Step6Review({ onEdit }: Step6ReviewProps) {
           <ClipboardList className="w-6 h-6 text-brand-green" />
         </div>
         <div>
-          <h2 className="text-xl md:text-2xl font-semibold md:font-bold text-slate-800 tracking-tight flex items-center justify-between">
+          <h2 className="text-xl md:text-2xl font-medium md:font-semibold text-slate-800 tracking-tight flex items-center justify-between">
             <span>Application Registration Summary</span>
           </h2>
           <p className="text-sm text-slate-500 font-medium mt-1">
@@ -46,9 +46,9 @@ export default function Step6Review({ onEdit }: Step6ReviewProps) {
                 <User className="w-10 h-10 text-white/50" />
               )}
             </div>
-            <h3 className="text-lg font-semibold md:font-bold text-slate-800 tracking-wider uppercase">{data.studentDetails.studentNameEnglish || "ANONYMOUS USER"}</h3>
+            <h3 className="text-lg font-medium md:font-semibold text-slate-800 tracking-wider uppercase">{data.studentDetails.studentNameEnglish || "ANONYMOUS USER"}</h3>
             
-            <div className="mt-2 bg-emerald-50 border border-emerald-200 text-emerald-700 px-3 py-1 rounded-full text-xs font-semibold md:font-bold tracking-wide">
+            <div className="mt-2 bg-emerald-50 border border-emerald-200 text-emerald-700 px-3 py-1 rounded-full text-xs font-medium md:font-semibold tracking-wide">
               {data.courseDetails.selectedClass} - {data.courseDetails.selectedStream}
             </div>
 
@@ -57,19 +57,19 @@ export default function Step6Review({ onEdit }: Step6ReviewProps) {
             <div className="w-full flex flex-col gap-4 text-xs md:text-sm font-medium">
               <div className="flex justify-between items-center">
                 <span className="text-slate-400">Date of Birth:</span>
-                <span className="text-slate-800 font-semibold md:font-bold">{data.studentDetails.dateOfBirth || "N/A"}</span>
+                <span className="text-slate-800 font-medium md:font-semibold">{data.studentDetails.dateOfBirth || "N/A"}</span>
               </div>
               <div className="flex justify-between items-center">
                 <span className="text-slate-400">Social Category:</span>
-                <span className="text-slate-800 font-semibold md:font-bold">{data.studentDetails.socialCategory}</span>
+                <span className="text-slate-800 font-medium md:font-semibold">{data.studentDetails.socialCategory}</span>
               </div>
               <div className="flex justify-between items-center">
                 <span className="text-slate-400">Aadhaar UID:</span>
-                <span className="text-slate-800 font-semibold md:font-bold">{data.studentDetails.aadhaarNumber || "N/A"}</span>
+                <span className="text-slate-800 font-medium md:font-semibold">{data.studentDetails.aadhaarNumber || "N/A"}</span>
               </div>
               <div className="flex justify-between items-center">
                 <span className="text-slate-400">Provisional Status:</span>
-                <span className="text-slate-800 font-semibold md:font-bold">{data.courseDetails.isProvisional ? "Provisional" : "Regular"}</span>
+                <span className="text-slate-800 font-medium md:font-semibold">{data.courseDetails.isProvisional ? "Provisional" : "Regular"}</span>
               </div>
             </div>
 
@@ -82,8 +82,8 @@ export default function Step6Review({ onEdit }: Step6ReviewProps) {
           {/* Card 1: Stream & Personal Family */}
           <div className="w-full border border-slate-100 rounded-2xl p-6 relative group hover:border-emerald-100 hover:shadow-sm transition-all">
             <div className="flex items-center justify-between mb-5">
-              <h4 className="text-xs font-semibold md:font-bold text-slate-400 tracking-widest uppercase">STREAM & PERSONAL FAMILY</h4>
-              <button onClick={() => onEdit(2)} className="flex items-center gap-1.5 text-xs font-semibold md:font-bold text-emerald-600 hover:text-emerald-700 cursor-pointer">
+              <h4 className="text-xs font-medium md:font-semibold text-slate-400 tracking-widest uppercase">STREAM & PERSONAL FAMILY</h4>
+              <button onClick={() => onEdit(2)} className="flex items-center gap-1.5 text-xs font-medium md:font-semibold text-emerald-600 hover:text-emerald-700 cursor-pointer">
                 <Edit className="w-3.5 h-3.5" /> Edit
               </button>
             </div>
@@ -91,23 +91,23 @@ export default function Step6Review({ onEdit }: Step6ReviewProps) {
             <div className="grid grid-cols-2 gap-y-5 gap-x-4">
               <div className="flex flex-col">
                 <span className="text-[10px] text-slate-400 mb-0.5">PAN Number:</span>
-                <span className="text-xs font-semibold md:font-bold text-slate-800">{data.studentDetails.panNumber || "N/A"}</span>
+                <span className="text-xs font-medium md:font-semibold text-slate-800">{data.studentDetails.panNumber || "N/A"}</span>
               </div>
               <div className="flex flex-col">
                 <span className="text-[10px] text-slate-400 mb-0.5">Father's Name:</span>
-                <span className="text-xs font-semibold md:font-bold text-slate-800">{data.familyDetails.fatherName || "N/A"}</span>
+                <span className="text-xs font-medium md:font-semibold text-slate-800">{data.familyDetails.fatherName || "N/A"}</span>
               </div>
               <div className="flex flex-col">
                 <span className="text-[10px] text-slate-400 mb-0.5">Mother's Name:</span>
-                <span className="text-xs font-semibold md:font-bold text-slate-800">{data.familyDetails.motherName || "N/A"}</span>
+                <span className="text-xs font-medium md:font-semibold text-slate-800">{data.familyDetails.motherName || "N/A"}</span>
               </div>
               <div className="flex flex-col">
                 <span className="text-[10px] text-slate-400 mb-0.5">Annual Income:</span>
-                <span className="text-xs font-semibold md:font-bold text-slate-800">{data.familyDetails.annualIncome ? `₹${data.familyDetails.annualIncome}` : "N/A"}</span>
+                <span className="text-xs font-medium md:font-semibold text-slate-800">{data.familyDetails.annualIncome ? `₹${data.familyDetails.annualIncome}` : "N/A"}</span>
               </div>
               <div className="flex flex-col col-span-2">
                 <span className="text-[10px] text-slate-400 mb-0.5">Elective Subjects:</span>
-                <span className="text-xs font-semibold md:font-bold text-emerald-700">{data.courseDetails.selectedSubjects.join(", ") || "N/A"}</span>
+                <span className="text-xs font-medium md:font-semibold text-emerald-700">{data.courseDetails.selectedSubjects.join(", ") || "N/A"}</span>
               </div>
             </div>
           </div>
@@ -115,8 +115,8 @@ export default function Step6Review({ onEdit }: Step6ReviewProps) {
           {/* Card 2: Address & Banking */}
           <div className="w-full border border-slate-100 rounded-2xl p-6 relative group hover:border-emerald-100 hover:shadow-sm transition-all">
             <div className="flex items-center justify-between mb-5">
-              <h4 className="text-xs font-semibold md:font-bold text-slate-400 tracking-widest uppercase">ADDRESS & BANKING</h4>
-              <button onClick={() => onEdit(3)} className="flex items-center gap-1.5 text-xs font-semibold md:font-bold text-emerald-600 hover:text-emerald-700 cursor-pointer">
+              <h4 className="text-xs font-medium md:font-semibold text-slate-400 tracking-widest uppercase">ADDRESS & BANKING</h4>
+              <button onClick={() => onEdit(3)} className="flex items-center gap-1.5 text-xs font-medium md:font-semibold text-emerald-600 hover:text-emerald-700 cursor-pointer">
                 <Edit className="w-3.5 h-3.5" /> Edit
               </button>
             </div>
@@ -124,17 +124,17 @@ export default function Step6Review({ onEdit }: Step6ReviewProps) {
             <div className="grid grid-cols-2 gap-y-5 gap-x-4">
               <div className="flex flex-col col-span-2">
                 <span className="text-[10px] text-slate-400 mb-0.5">Address:</span>
-                <span className="text-xs font-semibold md:font-bold text-slate-800 leading-tight">
+                <span className="text-xs font-medium md:font-semibold text-slate-800 leading-tight">
                   {data.addressDetails.village}, PO: {data.addressDetails.postOffice}, Teh: {data.addressDetails.tehsil}, Dist: {data.addressDetails.district}, {data.addressDetails.stateName} - {data.addressDetails.pinCode}
                 </span>
               </div>
               <div className="flex flex-col">
                 <span className="text-[10px] text-slate-400 mb-0.5">Bank Acc:</span>
-                <span className="text-xs font-semibold md:font-bold text-slate-800">{data.bankDetails.bankAccountNo || "N/A"}</span>
+                <span className="text-xs font-medium md:font-semibold text-slate-800">{data.bankDetails.bankAccountNo || "N/A"}</span>
               </div>
               <div className="flex flex-col">
                 <span className="text-[10px] text-slate-400 mb-0.5">Bank IFSC:</span>
-                <span className="text-xs font-semibold md:font-bold text-slate-800 uppercase">{data.bankDetails.ifscCode || "N/A"}</span>
+                <span className="text-xs font-medium md:font-semibold text-slate-800 uppercase">{data.bankDetails.ifscCode || "N/A"}</span>
               </div>
             </div>
           </div>
@@ -142,8 +142,8 @@ export default function Step6Review({ onEdit }: Step6ReviewProps) {
           {/* Card 3: Academic Merit */}
           <div className="w-full border border-slate-100 rounded-2xl p-6 relative group hover:border-emerald-100 hover:shadow-sm transition-all">
             <div className="flex items-center justify-between mb-5">
-              <h4 className="text-xs font-semibold md:font-bold text-slate-400 tracking-widest uppercase">ACADEMIC MERIT</h4>
-              <button onClick={() => onEdit(4)} className="flex items-center gap-1.5 text-xs font-semibold md:font-bold text-emerald-600 hover:text-emerald-700 cursor-pointer">
+              <h4 className="text-xs font-medium md:font-semibold text-slate-400 tracking-widest uppercase">ACADEMIC MERIT</h4>
+              <button onClick={() => onEdit(4)} className="flex items-center gap-1.5 text-xs font-medium md:font-semibold text-emerald-600 hover:text-emerald-700 cursor-pointer">
                 <Edit className="w-3.5 h-3.5" /> Edit
               </button>
             </div>
@@ -152,10 +152,10 @@ export default function Step6Review({ onEdit }: Step6ReviewProps) {
               {(data.courseDetails.selectedClass === "Class 11" ? data.academicRecords.slice(0, 1) : data.academicRecords).map((record, idx) => (
                 <div key={idx} className="flex items-center justify-between border border-emerald-100 rounded-xl p-3 bg-emerald-50/30">
                   <div className="flex flex-col">
-                    <span className="text-xs font-semibold md:font-bold text-slate-800">{record.examName} {record.passingYear ? `(${record.passingYear})` : ""}</span>
+                    <span className="text-xs font-medium md:font-semibold text-slate-800">{record.examName} {record.passingYear ? `(${record.passingYear})` : ""}</span>
                     <span className="text-[10px] text-slate-400">{record.boardName || "N/A"}</span>
                   </div>
-                  <div className="bg-white border border-emerald-200 text-emerald-700 font-semibold md:font-bold text-[11px] px-3 py-1 rounded-full">
+                  <div className="bg-white border border-emerald-200 text-emerald-700 font-medium md:font-semibold text-[11px] px-3 py-1 rounded-full">
                     {record.percentage || "N/A"}
                   </div>
                 </div>

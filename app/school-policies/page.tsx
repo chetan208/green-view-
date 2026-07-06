@@ -23,8 +23,8 @@ export default function SchoolPoliciesPage() {
             <BookOpen className="w-6 h-6 stroke-[1.5]" />
           </div>
           <div>
-            <span className="text-[10px] font-semibold text-slate-400 uppercase tracking-widest block">Administration</span>
-            <h1 className="text-2xl md:text-3xl font-semibold md:font-extrabold text-brand-navy tracking-tight leading-none mt-1">
+            <span className="text-[10px] font-medium text-slate-400 uppercase tracking-widest block">Administration</span>
+            <h1 className="text-2xl md:text-3xl font-medium md:font-bold text-brand-navy tracking-tight leading-none mt-1">
               School Policies
             </h1>
           </div>
@@ -37,16 +37,16 @@ export default function SchoolPoliciesPage() {
           </p>
 
           <div className="flex flex-col gap-2">
-            <h2 className="text-sm font-semibold md:font-extrabold text-slate-800 uppercase tracking-wider">
+            <h2 className="text-sm font-medium md:font-bold text-slate-800 uppercase tracking-wider">
               1. Minimum Attendance Requirement
             </h2>
             <p>
-              According to CBSE regulations, students must maintain a minimum of <span className="text-brand-green font-bold">75% attendance</span> in each academic session to be eligible to sit for final term and board examinations. Absences due to medical reasons must be accompanied by an official doctor&apos;s certificate.
+              According to CBSE regulations, students must maintain a minimum of <span className="text-brand-green font-semibold">75% attendance</span> in each academic session to be eligible to sit for final term and board examinations. Absences due to medical reasons must be accompanied by an official doctor&apos;s certificate.
             </p>
           </div>
 
           <div className="flex flex-col gap-2">
-            <h2 className="text-sm font-semibold md:font-extrabold text-slate-800 uppercase tracking-wider">
+            <h2 className="text-sm font-medium md:font-bold text-slate-800 uppercase tracking-wider">
               2. Code of Conduct & Bullying Policy
             </h2>
             <p>
@@ -55,7 +55,7 @@ export default function SchoolPoliciesPage() {
           </div>
 
           <div className="flex flex-col gap-2">
-            <h2 className="text-sm font-semibold md:font-extrabold text-slate-800 uppercase tracking-wider">
+            <h2 className="text-sm font-medium md:font-bold text-slate-800 uppercase tracking-wider">
               3. Uniform Code & Discipline
             </h2>
             <p>
@@ -64,7 +64,7 @@ export default function SchoolPoliciesPage() {
           </div>
 
           <div className="flex flex-col gap-2">
-            <h2 className="text-sm font-semibold md:font-extrabold text-slate-800 uppercase tracking-wider">
+            <h2 className="text-sm font-medium md:font-bold text-slate-800 uppercase tracking-wider">
               4. Transport & Safety rules
             </h2>
             <p>
@@ -77,7 +77,7 @@ export default function SchoolPoliciesPage() {
             </ul>
           </div>
 
-          <div className="pt-4 border-t border-slate-100 text-[10px] text-slate-400 font-semibold uppercase tracking-wider">
+          <div className="pt-4 border-t border-slate-100 text-[10px] text-slate-400 font-medium uppercase tracking-wider">
             Last Updated: July 2026
           </div>
         </div>

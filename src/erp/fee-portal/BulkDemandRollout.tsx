@@ -34,8 +34,8 @@ interface BulkDemandRolloutProps {
   selectedSession?: string;
 }
 
-const inputCls = "w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold focus:outline-none focus:ring-2 focus:ring-[#093C5D]/15 focus:border-brand-green-dark transition-all";
-const labelCls = "block text-xs font-black uppercase tracking-wider text-slate-400 mb-1.5";
+const inputCls = "w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#093C5D]/15 focus:border-brand-green-dark transition-all";
+const labelCls = "block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5";
 
 export default function BulkDemandRollout({
   bulkForm,
@@ -72,17 +72,17 @@ export default function BulkDemandRollout({
       className="bg-white rounded-3xl border border-slate-200/80 p-6 shadow-sm space-y-6"
     >
       <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-        <h3 className="text-base font-black uppercase tracking-wider text-brand-green-dark flex items-center gap-2">
+        <h3 className="text-base font-bold uppercase tracking-wider text-brand-green-dark flex items-center gap-2">
           <Layers size={18} className="text-brand-green-dark" />
           Bulk Monthly Demand Rollout
         </h3>
         {defaultsLoading && (
-          <span className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-400">
+          <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-400">
             <Loader2 size={12} className="animate-spin" /> Loading defaults...
           </span>
         )}
         {!defaultsLoading && (
-          <span className="inline-flex items-center gap-1.5 text-xs font-bold text-brand-green-dark bg-brand-green/5 border border-brand-green-dark/15 px-2 py-1 rounded-lg">
+          <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-brand-green-dark bg-brand-green/5 border border-brand-green-dark/15 px-2 py-1 rounded-lg">
             Pre-filled from defaults
           </span>
         )}
@@ -201,7 +201,7 @@ export default function BulkDemandRollout({
         <button
           type="submit"
           disabled={submitLoading}
-          className="inline-flex items-center gap-2 px-6 py-3.5 bg-brand-green hover:bg-[#0b4870] text-white rounded-2xl text-sm font-black uppercase tracking-widest transition duration-200 cursor-pointer border-0 shadow-sm active:scale-95"
+          className="inline-flex items-center gap-2 px-6 py-3.5 bg-brand-green hover:bg-[#0b4870] text-white rounded-2xl text-sm font-bold uppercase tracking-widest transition duration-200 cursor-pointer border-0 shadow-sm active:scale-95"
         >
           {submitLoading ? <Loader2 size={16} className="animate-spin" /> : <FileCheck size={16} />}
           {submitLoading ? "Rolling out..." : "Rollout Monthly Demand Ledger"}

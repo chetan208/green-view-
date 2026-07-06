@@ -26,7 +26,7 @@ export default function ERPModuleWrapper({
   return (
     <div className="p-5 sm:p-7 mx-auto transition-all duration-300 max-w-6xl">
       {/* Breadcrumb Header */}
-      <div className="mb-6 flex items-center gap-2 text-xs font-bold text-brand-green-dark">
+      <div className="mb-6 flex items-center gap-2 text-xs font-semibold text-brand-green-dark">
         <button
           onClick={() => setActiveModule(null)}
           className="text-slate-400 hover:text-brand-green-dark transition cursor-pointer border-0 bg-transparent p-0"

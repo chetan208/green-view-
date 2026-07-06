@@ -16,7 +16,7 @@ export default function ContactPage() {
           <div className="text-sm font-medium text-slate-500">
             <Link href="/" className="text-brand-green hover:underline">Home</Link> / <span>Contact</span>
           </div>
-          <h1 className="text-4xl md:text-5xl font-semibold md:font-extrabold text-[#1f2937] tracking-tight mt-1" style={{ fontFamily: "Georgia, serif" }}>
+          <h1 className="text-4xl md:text-5xl font-medium md:font-bold text-[#1f2937] tracking-tight mt-1" style={{ fontFamily: "Georgia, serif" }}>
             Contact <span className="text-brand-green-dark">Us</span>
           </h1>
           <p className="text-slate-500 font-medium text-sm md:text-base mt-2">

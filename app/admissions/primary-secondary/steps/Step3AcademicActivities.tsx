@@ -16,7 +16,7 @@ export default function Step3AcademicActivities() {
           <GraduationCap className="w-6 h-6 text-brand-green" />
         </div>
         <div>
-          <h2 className="text-xl md:text-2xl font-normal md:font-semibold text-slate-800 tracking-tight">
+          <h2 className="text-xl md:text-2xl font-normal md:font-medium text-slate-800 tracking-tight">
             Academic & Activities
           </h2>
           <p className="text-sm text-slate-500 font-medium mt-1">
@@ -29,11 +29,11 @@ export default function Step3AcademicActivities() {
         
         {/* Previous School */}
         <div className="flex flex-col gap-4 md:gap-6">
-          <h3 className="text-xs md:text-sm font-normal md:font-semibold text-emerald-900 tracking-tight mb-2 border-b border-slate-100 pb-2">Previous School Attended</h3>
+          <h3 className="text-xs md:text-sm font-normal md:font-medium text-emerald-900 tracking-tight mb-2 border-b border-slate-100 pb-2">Previous School Attended</h3>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
             <div className="flex flex-col">
-              <label className="text-[10px] md:text-[11px] font-normal md:font-semibold text-slate-800 mb-2 uppercase tracking-wider">Name of the School</label>
+              <label className="text-[10px] md:text-[11px] font-normal md:font-medium text-slate-800 mb-2 uppercase tracking-wider">Name of the School</label>
               <input 
                 type="text" 
                 placeholder="e.g., DAV Public School" 
@@ -44,7 +44,7 @@ export default function Step3AcademicActivities() {
             </div>
 
             <div className="flex flex-col">
-              <label className="text-[10px] md:text-[11px] font-normal md:font-semibold text-slate-800 mb-2 uppercase tracking-wider">Medium of Instruction</label>
+              <label className="text-[10px] md:text-[11px] font-normal md:font-medium text-slate-800 mb-2 uppercase tracking-wider">Medium of Instruction</label>
               <input 
                 type="text" 
                 placeholder="e.g., English, Hindi" 
@@ -58,11 +58,11 @@ export default function Step3AcademicActivities() {
 
         {/* Interests */}
         <div className="flex flex-col gap-4 md:gap-6">
-          <h3 className="text-sm font-normal md:font-semibold text-emerald-900 tracking-tight mb-2 border-b border-slate-100 pb-2">Interests & Hobbies</h3>
+          <h3 className="text-sm font-normal md:font-medium text-emerald-900 tracking-tight mb-2 border-b border-slate-100 pb-2">Interests & Hobbies</h3>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
             <div className="flex flex-col">
-              <label className="text-[10px] md:text-[11px] font-normal md:font-semibold text-slate-800 mb-2 uppercase tracking-wider">Hobbies</label>
+              <label className="text-[10px] md:text-[11px] font-normal md:font-medium text-slate-800 mb-2 uppercase tracking-wider">Hobbies</label>
               <input 
                 type="text" 
                 placeholder="e.g., Reading, Painting" 
@@ -73,7 +73,7 @@ export default function Step3AcademicActivities() {
             </div>
 
             <div className="flex flex-col">
-              <label className="text-[10px] md:text-[11px] font-normal md:font-semibold text-slate-800 mb-2 uppercase tracking-wider">Interest in games</label>
+              <label className="text-[10px] md:text-[11px] font-normal md:font-medium text-slate-800 mb-2 uppercase tracking-wider">Interest in games</label>
               <input 
                 type="text" 
                 placeholder="e.g., Cricket, Chess" 

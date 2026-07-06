@@ -71,7 +71,7 @@ export default function HeroSection() {
 
           <motion.p 
             variants={itemVariants}
-            className="text-slate-500 text-sm md:text-base max-w-md mb-8 leading-relaxed font-normal md:font-semibold"
+            className="text-slate-500 text-sm md:text-base max-w-md mb-8 leading-relaxed font-normal md:font-normal text-center lg:text-left select-none"
           >
             A trusted private senior secondary school focused on academic excellence, discipline, values and modern parent communication.
           </motion.p>

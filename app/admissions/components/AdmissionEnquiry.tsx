@@ -23,14 +23,14 @@ export default function AdmissionEnquiry() {
           <div className="inline-flex items-center justify-center w-10 h-10 md:w-12 md:h-12 rounded-2xl bg-brand-green/10 text-brand-green mb-4 md:mb-6">
             <MessageSquareText className="w-5 h-5 md:w-6 md:h-6" />
           </div>
-          <h2 className="text-2xl md:text-4xl font-black text-slate-900 tracking-tight mb-3 md:mb-4">
+          <h2 className="text-2xl md:text-4xl font-bold text-slate-900 tracking-tight mb-3 md:mb-4">
             Have Questions Before Applying?
           </h2>
           <p className="text-[12px] md:text-sm text-slate-500 font-medium leading-relaxed max-w-lg mb-6 md:mb-8">
             Choosing the right school is a big decision. If you have any doubts regarding the curriculum, fee structure, or admission process, our counselors are here to help. Drop us a message!
           </p>
           
-          <div className="flex flex-col gap-4 text-sm font-semibold text-slate-700 w-full max-w-md bg-white p-6 rounded-2xl border border-slate-100 shadow-sm">
+          <div className="flex flex-col gap-4 text-sm font-medium text-slate-700 w-full max-w-md bg-white p-6 rounded-2xl border border-slate-100 shadow-sm">
             <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-1 sm:gap-4 border-b border-slate-100 pb-3">
               <span className="text-slate-400">Admission Helpdesk</span>
               <span className="text-slate-800">+91 98765 43210</span>
@@ -55,24 +55,24 @@ export default function AdmissionEnquiry() {
             {!isSubmitted ? (
               <form onSubmit={handleSubmit} className="flex flex-col gap-4 relative z-10">
                 <div className="mb-2">
-                  <h3 className="text-2xl font-bold text-slate-900 tracking-tight">Quick Enquiry</h3>
+                  <h3 className="text-2xl font-semibold text-slate-900 tracking-tight">Quick Enquiry</h3>
                   <p className="text-xs font-medium text-slate-500 mt-1">We usually respond within 24 hours.</p>
                 </div>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="flex flex-col gap-1.5">
-                    <label className="text-[10px] font-bold text-slate-600 uppercase tracking-wider">Parent's Name</label>
+                    <label className="text-[10px] font-semibold text-slate-600 uppercase tracking-wider">Parent's Name</label>
                     <input required type="text" className={inputStyles} placeholder="John Doe" />
                   </div>
                   <div className="flex flex-col gap-1.5">
-                    <label className="text-[10px] font-bold text-slate-600 uppercase tracking-wider">Phone Number</label>
+                    <label className="text-[10px] font-semibold text-slate-600 uppercase tracking-wider">Phone Number</label>
                     <input required type="tel" className={inputStyles} placeholder="+91 98765 43210" />
                   </div>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="flex flex-col gap-1.5">
-                    <label className="text-[10px] font-bold text-slate-600 uppercase tracking-wider">Child's Class</label>
+                    <label className="text-[10px] font-semibold text-slate-600 uppercase tracking-wider">Child's Class</label>
                     <select required className={inputStyles}>
                       <option value="">Select Class</option>
                       <option value="Pre-Primary">Nursery - UKG</option>
@@ -83,17 +83,17 @@ export default function AdmissionEnquiry() {
                     </select>
                   </div>
                   <div className="flex flex-col gap-1.5">
-                    <label className="text-[10px] font-bold text-slate-600 uppercase tracking-wider">Email (Optional)</label>
+                    <label className="text-[10px] font-semibold text-slate-600 uppercase tracking-wider">Email (Optional)</label>
                     <input type="email" className={inputStyles} placeholder="john@example.com" />
                   </div>
                 </div>
 
                 <div className="flex flex-col gap-1.5">
-                  <label className="text-[10px] font-bold text-slate-600 uppercase tracking-wider">Your Message</label>
+                  <label className="text-[10px] font-semibold text-slate-600 uppercase tracking-wider">Your Message</label>
                   <textarea required rows={3} className={`${inputStyles} py-3 h-auto resize-none`} placeholder="I would like to know about..." />
                 </div>
 
-                <button type="submit" className="mt-2 w-full h-11 rounded-xl bg-brand-green hover:bg-[#0d924c] text-white font-bold text-sm tracking-wide transition-colors flex items-center justify-center gap-2 shadow-md shadow-brand-green/20">
+                <button type="submit" className="mt-2 w-full h-11 rounded-xl bg-brand-green hover:bg-[#0d924c] text-white font-semibold text-sm tracking-wide transition-colors flex items-center justify-center gap-2 shadow-md shadow-brand-green/20">
                   <span>Submit Enquiry</span>
                   <Send className="w-4 h-4" />
                 </button>
@@ -107,13 +107,13 @@ export default function AdmissionEnquiry() {
                 <div className="w-16 h-16 bg-brand-green/10 rounded-full flex items-center justify-center text-brand-green">
                   <CheckCircle2 className="w-8 h-8" />
                 </div>
-                <h3 className="text-2xl font-bold text-slate-900">Enquiry Submitted!</h3>
+                <h3 className="text-2xl font-semibold text-slate-900">Enquiry Submitted!</h3>
                 <p className="text-slate-500 font-medium max-w-sm">
                   Thank you for reaching out. Our admissions counselor will get back to you within 24 working hours.
                 </p>
                 <button 
                   onClick={() => setIsSubmitted(false)}
-                  className="mt-4 px-6 py-2.5 rounded-full border border-slate-200 text-slate-600 font-semibold hover:bg-slate-50 transition-colors"
+                  className="mt-4 px-6 py-2.5 rounded-full border border-slate-200 text-slate-600 font-medium hover:bg-slate-50 transition-colors"
                 >
                   Ask Another Question
                 </button>

@@ -39,7 +39,7 @@ export default function AdmissionCards({ onBack }: { onBack?: () => void }) {
         {onBack && (
           <button 
             onClick={onBack}
-            className="absolute left-0 top-0 flex items-center gap-1.5 text-xs md:text-sm font-semibold text-slate-500 hover:text-brand-green transition-colors bg-white/80 md:bg-transparent backdrop-blur-sm md:backdrop-blur-none py-1.5 px-3 md:p-0 rounded-full md:rounded-none shadow-sm md:shadow-none z-10"
+            className="absolute left-0 top-0 flex items-center gap-1.5 text-xs md:text-sm font-medium text-slate-500 hover:text-brand-green transition-colors bg-white/80 md:bg-transparent backdrop-blur-sm md:backdrop-blur-none py-1.5 px-3 md:p-0 rounded-full md:rounded-none shadow-sm md:shadow-none z-10"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
             Back
@@ -47,7 +47,7 @@ export default function AdmissionCards({ onBack }: { onBack?: () => void }) {
         )}
 
         <div className="text-center mb-8 md:mb-12 mt-10 md:mt-0 px-2">
-          <h2 className="text-2xl md:text-3xl font-black text-slate-900 tracking-tight mb-2">
+          <h2 className="text-2xl md:text-3xl font-bold text-slate-900 tracking-tight mb-2">
             Select Your Pathway
           </h2>
           <p className="text-xs md:text-sm text-slate-500 font-medium max-w-xl mx-auto leading-relaxed">
@@ -71,10 +71,10 @@ export default function AdmissionCards({ onBack }: { onBack?: () => void }) {
               
               <div className="flex items-start justify-between mb-4 md:mb-5">
                 <div className="flex flex-col">
-                  <span className={`text-[9px] md:text-[10px] font-black uppercase tracking-[0.15em] ${card.iconColor} mb-1.5`}>
+                  <span className={`text-[9px] md:text-[10px] font-bold uppercase tracking-[0.15em] ${card.iconColor} mb-1.5`}>
                     {card.subtitle}
                   </span>
-                  <h3 className="text-xl md:text-2xl font-black text-slate-900 tracking-tight leading-none">
+                  <h3 className="text-xl md:text-2xl font-bold text-slate-900 tracking-tight leading-none">
                     {card.title}
                   </h3>
                 </div>
@@ -89,7 +89,7 @@ export default function AdmissionCards({ onBack }: { onBack?: () => void }) {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-2.5 gap-x-2 mb-6">
                 {card.features.map((feat, fidx) => (
-                  <div key={fidx} className="flex items-center gap-2 text-[10px] md:text-[11px] font-bold text-slate-700">
+                  <div key={fidx} className="flex items-center gap-2 text-[10px] md:text-[11px] font-semibold text-slate-700">
                     <CheckCircle2 className={`w-3.5 h-3.5 ${card.iconColor} shrink-0`} />
                     <span className="truncate">{feat}</span>
                   </div>
@@ -98,7 +98,7 @@ export default function AdmissionCards({ onBack }: { onBack?: () => void }) {
 
               <Link 
                 href={card.href}
-                className={`mt-auto w-full py-3 md:py-3.5 rounded-xl flex items-center justify-center gap-2 text-xs md:text-sm font-bold tracking-wide transition-all ${card.btnColor} shadow-md group-hover:gap-3`}
+                className={`mt-auto w-full py-3 md:py-3.5 rounded-xl flex items-center justify-center gap-2 text-xs md:text-sm font-semibold tracking-wide transition-all ${card.btnColor} shadow-md group-hover:gap-3`}
               >
                 <span>Apply Now</span>
                 <ArrowRight className="w-4 h-4" />

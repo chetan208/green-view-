@@ -61,10 +61,10 @@ export default function EligibilityCriteria() {
         
         {/* Header */}
         <div className="text-center mb-12">
-          <span className="text-[10px] md:text-xs font-bold text-brand-green uppercase tracking-[0.2em] mb-2 block">
+          <span className="text-[10px] md:text-xs font-semibold text-brand-green uppercase tracking-[0.2em] mb-2 block">
             WHO CAN APPLY
           </span>
-          <h2 className="text-3xl md:text-4xl font-semibold text-slate-800 tracking-tight">
+          <h2 className="text-3xl md:text-4xl font-medium text-slate-800 tracking-tight">
             Eligibility <span className="text-brand-green">Criteria</span>
           </h2>
         </div>
@@ -83,7 +83,7 @@ export default function EligibilityCriteria() {
                 {/* Title */}
                 <div className="flex items-center gap-2 mb-4">
                   <item.icon className="w-5 h-5 text-slate-800" />
-                  <h3 className="text-base font-bold text-slate-900">{item.title}</h3>
+                  <h3 className="text-base font-semibold text-slate-900">{item.title}</h3>
                 </div>
 
                 {/* Info List */}
