@@ -22,27 +22,21 @@ export default function ScheduleTab() {
   ];
 
   return (
-    <div className="w-full flex flex-col gap-6 animate-fadeIn">
+    <div className="w-full flex flex-col gap-5 animate-fadeIn select-none">
       
-      {/* Toggle Switch */}
-      <div className="bg-white border border-slate-200 p-1.5 rounded-xl shadow-[0_2px_10px_-4px_rgba(0,0,0,0.02)] flex items-center w-full max-w-[400px] mx-auto md:mx-0 shrink-0">
+      {/* Toggle Switch (Pill Segmented Control) */}
+      <div className="bg-slate-100/85 p-0.5 rounded-lg border border-slate-200/30 flex items-center w-full max-w-[320px] mx-auto md:mx-0 shrink-0">
         <button
           onClick={() => setView("daily")}
-          className={`flex-1 text-xs font-bold py-2.5 px-4 rounded-lg transition-all duration-300 text-center ${
-            view === "daily" 
-            ? "bg-brand-green text-white shadow-sm" 
-            : "text-slate-500 hover:text-slate-800 hover:bg-slate-50"
-          }`}
+          className="flex-1 text-[10px] font-bold py-1.5 px-3 rounded-md transition-all duration-200 text-center cursor-pointer bg-transparent text-slate-500 hover:text-slate-800 data-[active=true]:bg-white data-[active=true]:text-slate-800 data-[active=true]:shadow-xs"
+          data-active={view === "daily"}
         >
           Daily Timetable
         </button>
         <button
           onClick={() => setView("yearly")}
-          className={`flex-1 text-xs font-bold py-2.5 px-4 rounded-lg transition-all duration-300 text-center ${
-            view === "yearly" 
-            ? "bg-brand-green text-white shadow-sm" 
-            : "text-slate-500 hover:text-slate-800 hover:bg-slate-50"
-          }`}
+          className="flex-1 text-[10px] font-bold py-1.5 px-3 rounded-md transition-all duration-200 text-center cursor-pointer bg-transparent text-slate-500 hover:text-slate-800 data-[active=true]:bg-white data-[active=true]:text-slate-800 data-[active=true]:shadow-xs"
+          data-active={view === "yearly"}
         >
           Academic Calendar
         </button>
@@ -53,10 +47,10 @@ export default function ScheduleTab() {
         {view === "daily" ? (
           <DailySchedule timetable={timetable} />
         ) : (
-          <div className="flex flex-col gap-8 bg-white border border-slate-100 rounded-3xl p-6 shadow-sm overflow-hidden pb-12">
+          <div className="flex flex-col gap-6 bg-white border border-slate-200 rounded-xl p-5 shadow-[0_1px_2px_0_rgba(0,0,0,0.02)] overflow-hidden pb-10">
             {/* Embedded Calendar from main website */}
-            <div className="flex justify-between items-center pb-3 border-b border-slate-100">
-              <h3 className="text-sm font-semibold md:font-extrabold text-slate-850 uppercase tracking-wider">
+            <div className="flex justify-between items-center pb-2.5 border-b border-slate-150">
+              <h3 className="text-xs font-bold text-slate-800 uppercase tracking-wider">
                 Full Academic Calendar
               </h3>
             </div>
