@@ -1,180 +1,238 @@
 "use client";
 
 import React, { useState } from "react";
-import OverviewCards, { AttendanceStat } from "../components/attendance/OverviewCards";
-import CalendarView from "../components/attendance/CalendarView";
+import { ChevronLeft, ChevronRight, Calendar, CheckCircle2, XCircle, LogOut } from "lucide-react";
 
 export default function AttendanceTab() {
-  const [selectedMonth, setSelectedMonth] = useState("June 2026");
+  const [currentMonth, setCurrentMonth] = useState("May 2024");
 
-  // Four stats cards data matching the screenshot layout
-  const attendanceStats: AttendanceStat[] = [
-    { 
-      label: "Overall YTD", 
-      value: "94.2%", 
-      subtext: "Year to date", 
-      badgeBg: "bg-emerald-50/60", 
-      badgeText: "text-emerald-700" 
+  // Four top stats cards
+  const stats = [
+    {
+      title: "ATTENDANCE YTD",
+      value: "94.2%",
+      subtext: "Excellent standing",
+      icon: Calendar,
+      iconColor: "text-slate-500",
+      bgColor: "bg-white",
     },
-    { 
-      label: "Classes Attended", 
-      value: "210", 
-      subtext: "of 225 classes", 
-      badgeBg: "bg-blue-50/60", 
-      badgeText: "text-blue-700" 
+    {
+      title: "PRESENT",
+      value: "180 days",
+      subtext: "",
+      icon: CheckCircle2,
+      iconColor: "text-emerald-500",
+      bgColor: "bg-white",
     },
-    { 
-      label: "Days Absent", 
-      value: "4", 
-      subtext: "This session", 
-      badgeBg: "bg-rose-50/60", 
-      badgeText: "text-rose-700" 
+    {
+      title: "ABSENT",
+      value: "5 days",
+      subtext: "",
+      icon: XCircle,
+      iconColor: "text-rose-500",
+      bgColor: "bg-white",
     },
-    { 
-      label: "Monthly (Jul)", 
-      value: "100%", 
-      subtext: "4 of 4 days", 
-      badgeBg: "bg-emerald-50/60", 
-      badgeText: "text-emerald-700" 
+    {
+      title: "LEAVE",
+      value: "2 days",
+      subtext: "",
+      icon: LogOut,
+      iconColor: "text-blue-500",
+      bgColor: "bg-white",
     },
   ];
 
-  // June 2026 Calendar Days
-  const juneDays = Array.from({ length: 30 }, (_, i) => {
-    const day = i + 1;
-    // Sundays: 7, 14, 21, 28
-    if ([7, 14, 21, 28].includes(day)) return { day, status: 3 };
-    // June 9 is holiday
-    if (day === 9) return { day, status: 2 };
-    // June 10 is absent
-    if (day === 10) return { day, status: 0 };
-    return { day, status: 1 };
-  });
+  // Subject-wise Attendance Table Data
+  const subjects = [
+    { name: "English (Core)", total: 45, attended: 43, percentage: "95.56%" },
+    { name: "Physics", total: 45, attended: 41, percentage: "91.11%" },
+    { name: "Chemistry", total: 45, attended: 40, percentage: "88.89%" },
+    { name: "Mathematics", total: 45, attended: 42, percentage: "93.33%" },
+    { name: "Computer Science", total: 30, attended: 29, percentage: "96.67%" },
+  ];
 
-  // July 2026 Calendar Days
-  const julyDays = Array.from({ length: 31 }, (_, i) => {
-    const day = i + 1;
-    // Sundays: 5, 12, 19, 26
-    if ([5, 12, 19, 26].includes(day)) return { day, status: 3 };
-    // July 9 is holiday
-    if (day === 9) return { day, status: 2 };
-    // July 16 is absent
-    if (day === 16) return { day, status: 0 };
-    return { day, status: 1 };
-  });
-
-  // May 2026 Calendar Days
-  const mayDays = Array.from({ length: 31 }, (_, i) => {
-    const day = i + 1;
-    // Sundays: 3, 10, 17, 24, 31
-    if ([3, 10, 17, 24, 31].includes(day)) return { day, status: 3 };
-    // May 14 is absent
-    if (day === 14) return { day, status: 0 };
-    // May 20 is holiday
-    if (day === 20) return { day, status: 2 };
-    return { day, status: 1 };
-  });
-
-  const getDaysForMonth = () => {
-    if (selectedMonth.startsWith("June")) return juneDays;
-    if (selectedMonth.startsWith("July")) return julyDays;
-    return mayDays;
-  };
-
-  // Monthly summary table data
-  const monthlySummary = [
-    { month: "April 2026", working: 22, present: 20, absent: 2, percent: "90.9%" },
-    { month: "May 2026", working: 18, present: 18, absent: 0, percent: "100.0%" },
-    { month: "June 2026", working: 25, present: 24, absent: 1, percent: "96.0%" },
-    { month: "July 2026", working: 4, present: 4, absent: 0, percent: "100.0%" }
+  // Calendar configuration for May 2024
+  // 1: Present (green dot), 0: Absent (red dot, no box), -1: Absent with light-red box (red dot + red bg box), 3: Sunday (muted gray text, no dot), 4: Muted/inactive days of surrounding months
+  const calendarDays = [
+    // Row 1
+    { day: 28, status: 4 },
+    { day: 29, status: 4 },
+    { day: 30, status: 4 },
+    { day: 1, status: 1 },
+    { day: 2, status: 1 },
+    { day: 3, status: 1 },
+    { day: 4, status: 1 },
+    // Row 2
+    { day: 5, status: 1 },
+    { day: 6, status: -1 }, // Absent with box
+    { day: 7, status: 1 },
+    { day: 8, status: 1 },
+    { day: 9, status: 1 },
+    { day: 10, status: 1 },
+    { day: 11, status: 1 },
+    // Row 3
+    { day: 12, status: 1 },
+    { day: 13, status: 1 },
+    { day: 14, status: 0 }, // Absent without box
+    { day: 15, status: 1 },
+    { day: 16, status: 1 },
+    { day: 17, status: 1 },
+    { day: 18, status: 1 },
+    // Row 4
+    { day: 19, status: 1 },
+    { day: 20, status: -1 }, // Absent with box
+    { day: 21, status: 1 },
+    { day: 22, status: -1 }, // Absent with box
+    { day: 23, status: 0 }, // Absent without box
+    { day: 24, status: 0 }, // Absent without box
+    { day: 25, status: 1 },
+    // Row 5
+    { day: 26, status: 1 },
+    { day: 27, status: 1 },
+    { day: 28, status: 0 }, // Absent without box
+    { day: 29, status: 1 },
+    { day: 30, status: 1 },
+    { day: 31, status: 1 },
+    { day: 1, status: 4 },
   ];
 
   return (
-    <div className="flex flex-col gap-6 w-full animate-fadeIn pb-12">
-      {/* Top 4 Stats Cards */}
-      <OverviewCards stats={attendanceStats} />
-
-      {/* Centered Heading */}
-      <div className="text-center my-2 select-none">
-        <h2 className="text-xl font-bold text-slate-800 tracking-tight">
-          Academic <span className="text-brand-green">Calendar</span>
-        </h2>
+    <div className="flex flex-col gap-6 w-full animate-fadeIn pb-12 select-none">
+      
+      {/* 4 Stats Cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        {stats.map((stat, i) => {
+          const Icon = stat.icon;
+          return (
+            <div 
+              key={i} 
+              className="bg-white border border-slate-200 rounded-xl p-5 flex flex-col justify-between shadow-2xs h-28 relative"
+            >
+              {/* Top Row: Label & Icon */}
+              <div className="flex justify-between items-start">
+                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                  {stat.title}
+                </span>
+                <Icon className={`w-4.5 h-4.5 ${stat.iconColor}`} />
+              </div>
+              {/* Bottom Row: Value & Subtext */}
+              <div className="flex flex-col mt-2">
+                <span className="text-2xl font-bold text-slate-900 leading-none">
+                  {stat.value}
+                </span>
+                {stat.subtext ? (
+                  <span className="text-[10px] text-[#006a37] font-semibold mt-1.5">
+                    {stat.subtext}
+                  </span>
+                ) : (
+                  <span className="h-3 mt-1.5"></span>
+                )}
+              </div>
+            </div>
+          );
+        })}
       </div>
 
-      {/* Calendar Grid Section */}
-      <CalendarView 
-        selectedMonth={selectedMonth} 
-        setSelectedMonth={setSelectedMonth} 
-        days={getDaysForMonth()} 
-      />
-
-      {/* Bottom Section: Summary & Guidelines */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-1">
-        {/* Left: Monthly Summary Table */}
-        <div className="bg-white border border-slate-205 rounded-xl p-5 shadow-[0_1px_2px_0_rgba(0,0,0,0.02)]">
-          <h3 className="text-xs font-bold text-slate-800 uppercase tracking-wider pb-3 border-b border-slate-150 mb-3.5 select-none">
-            Monthly Summary
+      {/* Monthly Attendance Calendar */}
+      <div className="bg-white border border-slate-200 rounded-xl p-6.5 shadow-xs flex flex-col gap-5">
+        
+        {/* Calendar Card Header */}
+        <div className="flex justify-between items-center pb-2">
+          <h3 className="text-[16px] font-bold text-slate-900">
+            Monthly Attendance
           </h3>
-          <div className="overflow-x-auto no-scrollbar">
-            <table className="w-full text-left border-collapse text-xs">
-              <thead>
-                <tr className="text-slate-400 font-semibold border-b border-slate-100 select-none">
-                  <th className="pb-2.5 font-medium">Month</th>
-                  <th className="pb-2.5 text-center font-medium">Working Days</th>
-                  <th className="pb-2.5 text-center font-medium">Present</th>
-                  <th className="pb-2.5 text-center font-medium">Absent</th>
-                  <th className="pb-2.5 text-right font-medium">%</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-100">
-                {monthlySummary.map((row, i) => (
-                  <tr key={i} className="text-slate-700 font-semibold hover:bg-slate-55/50 transition">
-                    <td className="py-3">{row.month}</td>
-                    <td className="py-3 text-center text-slate-500 font-mono">{row.working}</td>
-                    <td className="py-3 text-center text-emerald-600 font-mono">{row.present}</td>
-                    <td className="py-3 text-center text-rose-500 font-mono">{row.absent}</td>
-                    <td className="py-3 text-right">
-                      <span className="bg-emerald-50 text-emerald-700 px-2 py-0.5 rounded border border-emerald-100/50 font-mono text-[10px] font-bold">
-                        {row.percent}
-                      </span>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          <div className="flex items-center gap-4 text-slate-650 font-bold">
+            <button className="p-1 hover:text-slate-900 transition cursor-pointer">
+              <ChevronLeft className="w-4 h-4" />
+            </button>
+            <span className="text-sm font-bold tracking-wide">{currentMonth}</span>
+            <button className="p-1 hover:text-slate-900 transition cursor-pointer">
+              <ChevronRight className="w-4 h-4" />
+            </button>
           </div>
         </div>
 
-        {/* Right: Policy Guidelines & CBSE Benchmark */}
-        <div className="bg-white border border-slate-205 rounded-xl p-5 shadow-[0_1px_2px_0_rgba(0,0,0,0.02)] flex flex-col justify-between gap-4">
-          <div>
-            <h3 className="text-xs font-bold text-slate-800 uppercase tracking-wider pb-3 border-b border-slate-150 mb-3.5 select-none">
-              Attendance Rules & CBSE Guidelines
-            </h3>
-            <div className="flex flex-col gap-3 text-xs text-slate-500 font-medium leading-relaxed">
-              <p>
-                <strong className="text-slate-750 font-semibold">1. CBSE Mandate:</strong> A minimum of <strong className="text-brand-green font-semibold">75% attendance</strong> is compulsory in each academic session for a student to be eligible to sit for the CBSE Board Examinations.
-              </p>
-              <p>
-                <strong className="text-slate-755 font-semibold">2. Medical Leaves:</strong> In case of prolonged illness, parents must submit a formal medical certificate and leave application addressed to the Principal within 3 days of absence.
-              </p>
-              <p>
-                <strong className="text-slate-755 font-semibold">3. School Benchmark:</strong> Green View Senior Secondary School sets a target benchmark of <strong className="text-brand-navy font-semibold">90% attendance</strong> for consistent academic engagement.
-              </p>
-            </div>
-          </div>
-          
-          <div className="bg-blue-50/20 border border-blue-100/30 rounded-xl p-4 flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-blue-50 text-brand-navy flex items-center justify-center shrink-0">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-brand-navy"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-            </div>
-            <div className="flex flex-col select-none">
-              <span className="text-[10px] font-bold text-slate-700 uppercase tracking-wider">CBSE Safe Status</span>
-              <span className="text-[10px] text-slate-400 font-medium mt-0.5">Your attendance is within the safe range (94.2% YTD). Keep it up!</span>
-            </div>
-          </div>
+        {/* Days of Week */}
+        <div className="grid grid-cols-7 text-center text-[10px] font-bold text-slate-400 uppercase tracking-widest pb-3 border-b border-slate-100">
+          <span>Sun</span>
+          <span>Mon</span>
+          <span>Tue</span>
+          <span>Wed</span>
+          <span>Thu</span>
+          <span>Fri</span>
+          <span>Sat</span>
+        </div>
+
+        {/* Calendar Grid */}
+        <div className="grid grid-cols-7 gap-y-4 gap-x-2 text-center items-center justify-items-center">
+          {calendarDays.map((cell, i) => {
+            const isInactive = cell.status === 4;
+            const isAbsentBox = cell.status === -1;
+            const isAbsentDot = cell.status === 0;
+            const isPresent = cell.status === 1;
+
+            return (
+              <div 
+                key={i}
+                className={`w-full flex items-center justify-center py-2.5 rounded-lg relative ${
+                  isAbsentBox ? "bg-[#fce8e6] text-[#ba1a1a]" : "text-slate-800"
+                }`}
+              >
+                <div className="flex items-center gap-1.5 justify-center">
+                  <span className={`text-[13px] font-semibold ${
+                    isInactive ? "text-slate-350" : isAbsentBox || isAbsentDot ? "text-[#ba1a1a] font-bold" : "text-slate-800"
+                  }`}>
+                    {cell.day}
+                  </span>
+                  
+                  {/* Attendance Status Dot */}
+                  {!isInactive && (
+                    <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${
+                      isPresent ? "bg-[#006a37]" : "bg-[#ba1a1a]"
+                    }`} />
+                  )}
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
+
+      {/* Subject-wise Attendance Table */}
+      <div className="bg-white border border-slate-200 rounded-xl p-6.5 shadow-xs">
+        <h3 className="text-[16px] font-bold text-slate-900 mb-5">
+          Subject-wise Attendance
+        </h3>
+        <div className="overflow-x-auto">
+          <table className="w-full text-left border-collapse text-sm">
+            <thead>
+              <tr className="text-slate-400 font-bold border-b border-slate-100 select-none text-[11px] uppercase tracking-wider">
+                <th className="pb-3 pl-4 font-semibold">Subject</th>
+                <th className="pb-3 text-center font-semibold">Total Classes</th>
+                <th className="pb-3 text-center font-semibold">Attended</th>
+                <th className="pb-3 text-center font-semibold">Percentage</th>
+                <th className="pb-3 pr-4 text-center font-semibold">Status</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-100">
+              {subjects.map((row, i) => (
+                <tr key={i} className="text-slate-850 font-semibold hover:bg-slate-50/50 transition">
+                  <td className="py-4 pl-4 font-bold text-slate-900">{row.name}</td>
+                  <td className="py-4 text-center text-slate-500 font-mono font-bold">{row.total}</td>
+                  <td className="py-4 text-center text-slate-500 font-mono font-bold">{row.attended}</td>
+                  <td className="py-4 text-center text-slate-950 font-mono font-bold">{row.percentage}</td>
+                  <td className="py-4 text-center pr-4">
+                    <span className="bg-[#E6F4EA] text-[#006a37] text-[11px] font-bold px-3 py-1 rounded-full">
+                      Excellent
+                    </span>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
     </div>
   );
 }

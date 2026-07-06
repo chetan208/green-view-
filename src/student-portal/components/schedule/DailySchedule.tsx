@@ -22,18 +22,18 @@ export default function DailySchedule({ timetable }: { timetable: any[] }) {
     if (colorClass.includes("purple")) return "text-purple-600 bg-purple-100/40 border border-purple-200/40";
     if (colorClass.includes("cyan")) return "text-cyan-600 bg-cyan-100/40 border border-cyan-200/40";
     if (colorClass.includes("amber")) return "text-amber-600 bg-amber-100/40 border border-amber-200/40";
-    return "text-slate-600 bg-slate-105 border border-slate-200";
+    return "text-slate-650 bg-slate-100 border border-slate-200";
   };
 
   return (
-    <div className="bg-white border border-slate-200 rounded-xl p-5 md:p-6 shadow-[0_1px_2px_0_rgba(0,0,0,0.02)] flex flex-col gap-6 w-full animate-fadeIn select-none">
+    <div className="bg-white border border-slate-200 rounded-xl p-5 md:p-6 shadow-xs flex flex-col gap-6 w-full animate-fadeIn select-none">
       
       {/* Header section */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 pb-3 border-b border-slate-150">
         <div className="flex flex-col gap-0.5">
           <h3 className="text-sm font-bold text-slate-800 flex items-center gap-2">
             Today's Classes 
-            <span className="bg-emerald-50 text-emerald-605 text-[10px] font-bold px-2 py-0.5 rounded-md flex items-center gap-1 border border-emerald-100/60">
+            <span className="bg-[#E6F4EA] text-[#006a37] text-[10px] font-bold px-2.5 py-0.5 rounded-md flex items-center gap-1 border border-[#a3e2b6]/25">
               <CheckCircle2 className="w-3 h-3" /> Live
             </span>
           </h3>
@@ -42,7 +42,7 @@ export default function DailySchedule({ timetable }: { timetable: any[] }) {
         
         <div className="flex items-center gap-2 bg-slate-50 border border-slate-200/60 p-1 rounded-lg">
           <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest px-2.5 py-1">Room</span>
-          <span className="text-[10px] font-bold text-brand-navy bg-white shadow-xs px-2.5 py-1 rounded-md border border-slate-100">104-A (Section X-A)</span>
+          <span className="text-[10px] font-bold text-[#121c28] bg-white shadow-xs px-2.5 py-1 rounded-md border border-slate-100">104-A (Section X-A)</span>
         </div>
       </div>
 
@@ -66,7 +66,7 @@ export default function DailySchedule({ timetable }: { timetable: any[] }) {
                 </div>
                 <div className="flex flex-col">
                   <span className="text-[9px] font-bold uppercase tracking-wider text-slate-400">Period {idx + 1}</span>
-                  <span className={`text-xs font-bold ${isBreak ? 'text-slate-500' : 'text-slate-700'}`}>{period.time}</span>
+                  <span className={`text-xs font-bold ${isBreak ? 'text-slate-500' : 'text-slate-750'}`}>{period.time}</span>
                 </div>
               </div>
 
@@ -81,7 +81,7 @@ export default function DailySchedule({ timetable }: { timetable: any[] }) {
                 {/* Subject Name & Type */}
                 <div className="flex items-center gap-3">
                   <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 border shadow-xs ${
-                    isBreak ? "bg-white text-slate-400 border-slate-200" : "bg-white text-brand-green border-slate-100"
+                    isBreak ? "bg-white text-slate-400 border-slate-200" : "bg-white text-[#006a37] border-slate-100"
                   }`}>
                     {isBreak ? <Coffee className="w-4.5 h-4.5" /> : <BookOpen className="w-4.5 h-4.5" />}
                   </div>
