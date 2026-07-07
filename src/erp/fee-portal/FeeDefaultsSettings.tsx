@@ -40,7 +40,7 @@ const MONTHS = [
   "July", "August", "September", "October", "November", "December"
 ];
 
-const inputCls = "w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-mono font-bold focus:outline-none focus:ring-2 focus:ring-[#093C5D]/15 focus:border-brand-green-dark transition-all";
+const inputCls = "w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-mono font-semibold focus:outline-none focus:ring-2 focus:ring-[#093C5D]/15 focus:border-brand-green-dark transition-all";
 
 export default function FeeDefaultsSettings({ selectedSession }: { selectedSession?: string }) {
   const user = { role: "Owner" };
@@ -159,14 +159,14 @@ export default function FeeDefaultsSettings({ selectedSession }: { selectedSessi
             <Settings size={18} className="text-brand-green-dark" />
           </div>
           <div>
-            <h3 className="text-base font-black text-brand-green-dark uppercase tracking-wider">Fee Defaults Configuration</h3>
+            <h3 className="text-base font-bold text-brand-green-dark uppercase tracking-wider">Fee Defaults Configuration</h3>
             <p className="text-xs text-slate-400 font-medium mt-0.5">
               Set default starting values for rollout. Class-specific configurations inherit from Global Defaults.
             </p>
           </div>
         </div>
         {!isOwner && (
-          <span className="inline-flex items-center gap-1.5 text-xs font-black uppercase tracking-widest text-slate-500 bg-slate-100 border border-slate-200 px-3 py-1.5 rounded-lg shrink-0">
+          <span className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest text-slate-500 bg-slate-100 border border-slate-200 px-3 py-1.5 rounded-lg shrink-0">
             <AlertCircle size={12} /> Owner Only
           </span>
         )}
@@ -177,7 +177,7 @@ export default function FeeDefaultsSettings({ selectedSession }: { selectedSessi
         <div className="flex bg-slate-100 p-1 rounded-xl w-full max-w-sm mb-6">
           <button
             onClick={() => setConfigMode("default")}
-            className={`flex-1 py-2 text-xs font-bold uppercase tracking-wider rounded-lg transition-all ${
+            className={`flex-1 py-2 text-xs font-semibold uppercase tracking-wider rounded-lg transition-all ${
               configMode === "default" ? "bg-white text-brand-green-dark shadow-sm" : "text-slate-500 hover:text-slate-700"
             }`}
           >
@@ -185,7 +185,7 @@ export default function FeeDefaultsSettings({ selectedSession }: { selectedSessi
           </button>
           <button
             onClick={() => setConfigMode("special")}
-            className={`flex-1 py-2 text-xs font-bold uppercase tracking-wider rounded-lg transition-all ${
+            className={`flex-1 py-2 text-xs font-semibold uppercase tracking-wider rounded-lg transition-all ${
               configMode === "special" ? "bg-white text-brand-green-dark shadow-sm" : "text-slate-500 hover:text-slate-700"
             }`}
           >
@@ -196,11 +196,11 @@ export default function FeeDefaultsSettings({ selectedSession }: { selectedSessi
         {/* Selection Dropdowns */}
         <div className="flex flex-wrap items-center gap-4 mb-5 max-w-2xl">
           <div className="flex items-center gap-3 bg-slate-50 border border-slate-200 rounded-xl p-3 flex-1 min-w-[200px]">
-            <label className="text-xs font-black uppercase tracking-wider text-brand-green-dark shrink-0">Class:</label>
+            <label className="text-xs font-bold uppercase tracking-wider text-brand-green-dark shrink-0">Class:</label>
             <select
               value={selectedClass}
               onChange={e => setSelectedClass(e.target.value)}
-              className="flex-1 px-3 py-2 bg-white border border-slate-200 rounded-lg text-xs font-bold focus:outline-none focus:ring-2 focus:ring-[#093C5D]/15 focus:border-brand-green-dark transition-all cursor-pointer text-slate-700"
+              className="flex-1 px-3 py-2 bg-white border border-slate-200 rounded-lg text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-[#093C5D]/15 focus:border-brand-green-dark transition-all cursor-pointer text-slate-700"
             >
               {dbClasses.map(cls => (
                 <option key={cls.id} value={cls.className}>{cls.className}</option>
@@ -210,11 +210,11 @@ export default function FeeDefaultsSettings({ selectedSession }: { selectedSessi
 
           {configMode === "special" && (
             <div className="flex items-center gap-3 bg-slate-50 border border-slate-200 rounded-xl p-3 flex-1 min-w-[200px]">
-              <label className="text-xs font-black uppercase tracking-wider text-brand-green-dark shrink-0">Month:</label>
+              <label className="text-xs font-bold uppercase tracking-wider text-brand-green-dark shrink-0">Month:</label>
               <select
                 value={selectedMonth}
                 onChange={e => setSelectedMonth(e.target.value)}
-                className="flex-1 px-3 py-2 bg-white border border-slate-200 rounded-lg text-xs font-bold focus:outline-none focus:ring-2 focus:ring-[#093C5D]/15 focus:border-brand-green-dark transition-all cursor-pointer text-slate-700"
+                className="flex-1 px-3 py-2 bg-white border border-slate-200 rounded-lg text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-[#093C5D]/15 focus:border-brand-green-dark transition-all cursor-pointer text-slate-700"
               >
                 {MONTHS.map(m => (
                   <option key={m} value={m}>{m}</option>
@@ -252,7 +252,7 @@ export default function FeeDefaultsSettings({ selectedSession }: { selectedSessi
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {FIELDS.map(({ key, label }) => (
                 <div key={key}>
-                  <label className="block text-xs font-black uppercase tracking-wider text-slate-400 mb-1.5">
+                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">
                     {label}
                   </label>
                   <input
@@ -277,7 +277,7 @@ export default function FeeDefaultsSettings({ selectedSession }: { selectedSessi
             </div>
 
             {message && (
-              <div className={`px-4 py-3 rounded-xl text-xs font-bold border ${
+              <div className={`px-4 py-3 rounded-xl text-xs font-semibold border ${
                 message.type === "success"
                   ? "bg-brand-green/5 border-brand-green-dark/20 text-brand-green-dark"
                   : "bg-rose-50 border-rose-200 text-rose-700"
@@ -290,7 +290,7 @@ export default function FeeDefaultsSettings({ selectedSession }: { selectedSessi
               <button
                 type="submit"
                 disabled={saving}
-                className="inline-flex items-center gap-2 px-5 py-3 bg-brand-green hover:bg-[#0b4870] text-white rounded-xl text-xs font-black uppercase tracking-wider border-0 cursor-pointer transition shadow-sm active:scale-95"
+                className="inline-flex items-center gap-2 px-5 py-3 bg-brand-green hover:bg-[#0b4870] text-white rounded-xl text-xs font-bold uppercase tracking-wider border-0 cursor-pointer transition shadow-sm active:scale-95"
               >
                 {saving ? <Loader2 size={14} className="animate-spin" /> : <Save size={14} />}
                 {saving ? "Saving..." : "Save Defaults"}

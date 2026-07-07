@@ -43,8 +43,8 @@ export default function ERPDashboardContent() {
             {sidebarOpen ? <X size={16} /> : <Menu size={16} />}
           </button>
           <div className="flex flex-col">
-            <span className="text-[10px] font-black uppercase tracking-wider text-slate-400">Green View School</span>
-            <span className="text-xs font-black text-brand-green-dark mt-0.5">Control Center</span>
+            <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Green View School</span>
+            <span className="text-xs font-bold text-brand-green-dark mt-0.5">Control Center</span>
           </div>
         </div>
 

@@ -247,10 +247,10 @@ export default function BoardNotices() {
                 }`}
               >
                 <div className="flex items-center gap-3 overflow-hidden">
-                  <span className="bg-red-500 text-white text-[8px] font-semibold md:font-black px-1.5 py-0.5 rounded uppercase tracking-wider animate-pulse shrink-0">
+                  <span className="bg-red-500 text-white text-[8px] font-semibold md:font-bold px-1.5 py-0.5 rounded uppercase tracking-wider animate-pulse shrink-0">
                     NEW
                   </span>
-                  <p className="text-slate-800 font-semibold md:font-bold text-xs md:text-sm group-hover:text-brand-green transition-colors truncate">
+                  <p className="text-slate-800 font-medium md:font-semibold text-xs md:text-sm group-hover:text-brand-green transition-colors truncate">
                     {notice.title}
                   </p>
                 </div>
@@ -273,7 +273,7 @@ export default function BoardNotices() {
           >
             <Link
               href="/notices"
-              className="mt-2 inline-flex items-center gap-2 bg-[#0a4d2e] hover:bg-emerald-950 text-white py-3.5 px-8 rounded-full text-xs font-semibold md:font-black tracking-wide transition-all shadow-md shadow-emerald-900/10 w-full sm:w-auto justify-center"
+              className="mt-2 inline-flex items-center gap-2 bg-[#0B9E50] hover:bg-[#4fe29d] text-white py-3.5 px-8 rounded-full text-xs font-medium md:font-bold tracking-wide transition-all shadow-md shadow-emerald-900/10 w-full sm:w-auto justify-center"
             >
               View All Board Notices
               <ArrowRight className="w-4 h-4" />

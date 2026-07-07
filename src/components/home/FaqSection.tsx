@@ -62,7 +62,7 @@ export default function FaqSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="text-[10px] md:text-xs font-semibold md:font-bold text-brand-green uppercase tracking-[0.25em] mb-2.5"
+            className="text-[10px] md:text-xs font-medium md:font-semibold text-brand-green uppercase tracking-[0.25em] mb-2.5"
           >
             Have Questions?
           </motion.div>
@@ -95,9 +95,9 @@ export default function FaqSection() {
               >
                 <button
                   onClick={() => toggleFaq(idx)}
-                  className="w-full flex items-center justify-between p-5 text-left font-semibold md:font-bold text-slate-800 hover:text-brand-green transition-colors focus:outline-none cursor-pointer"
+                  className="w-full flex items-center justify-between p-5 text-left font-medium md:font-semibold text-slate-800 hover:text-brand-green transition-colors focus:outline-none cursor-pointer"
                 >
-                  <span className="text-sm md:text-base leading-snug pr-4 font-semibold md:font-bold">
+                  <span className="text-sm md:text-base leading-snug pr-4 font-medium md:font-semibold">
                     {faq.q}
                   </span>
                   <motion.div

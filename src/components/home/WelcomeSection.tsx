@@ -94,7 +94,7 @@ export default function WelcomeSection() {
             <img
               src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&q=80&w=800"
               alt="Green View Classroom Lecture"
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              className="w-full h-full object-cover  transition-transform duration-500"
               loading="lazy"
             />
           </div>
@@ -122,7 +122,7 @@ export default function WelcomeSection() {
           </motion.h2>
 
           {/* Description */}
-          <motion.p variants={rightItemVariants} className="text-slate-500 text-xs md:text-sm font-normal md:font-semibold leading-relaxed mb-6">
+          <motion.p variants={rightItemVariants} className="text-slate-500 text-xs md:text-sm font-normal md:font-medium leading-relaxed mb-6">
             Green View Senior Secondary School was established in 1998 with a vision to provide quality education in a nurturing environment. Affiliated with HPBOSE, the school has grown into a trusted institution for students from Nursery to XII. With experienced faculty, well-equipped labs, sports facilities, and a strong focus on academics and values, Green View has been shaping confident and responsible learners for over 27 years.
           </motion.p>
 
@@ -137,8 +137,8 @@ export default function WelcomeSection() {
               {credentials.map((cred, idx) => (
                 <motion.div
                   key={idx}
-                  whileHover={{ y: -3, borderColor: "#a7f3d0" }}
-                  className="bg-slate-50/70 border border-slate-100 hover:border-emerald-200 rounded-2xl p-4 transition-all duration-300 hover:shadow-md cursor-default flex flex-col justify-between"
+                  
+                  className="bg-slate-50/70 border border-slate-100  rounded-2xl p-4 transition-all duration-300 cursor-default flex flex-col justify-between"
                 >
                   <div className="flex flex-col gap-3">
                     <div className="w-8 h-8 rounded-lg bg-emerald-50 flex items-center justify-center shrink-0">

@@ -54,12 +54,12 @@ export default function AdminDashboard() {
         ${isSidebarOpen ? "translate-x-0 opacity-100 shadow-xl" : "-translate-x-full lg:translate-x-0"}
       `}>
         <div className="p-6 hidden lg:block border-b border-slate-100">
-          <h2 className="text-xl font-black font-serif tracking-tight text-slate-800">Green View</h2>
-          <p className="text-[10px] font-black uppercase tracking-widest text-brand-green mt-1">Control Panel</p>
+          <h2 className="text-xl font-bold font-serif tracking-tight text-slate-800">Green View</h2>
+          <p className="text-[10px] font-bold uppercase tracking-widest text-brand-green mt-1">Control Panel</p>
         </div>
 
         <div className="p-5 lg:hidden border-b border-slate-100 flex justify-between items-center bg-slate-50">
-          <span className="text-xs font-black uppercase tracking-widest text-slate-500">Admin Menu</span>
+          <span className="text-xs font-bold uppercase tracking-widest text-slate-500">Admin Menu</span>
         </div>
         
         <nav className="p-4 space-y-1 overflow-y-auto max-h-[calc(100vh-14rem)] custom-scrollbar">
@@ -69,7 +69,7 @@ export default function AdminDashboard() {
               <button
                 key={item.id}
                 onClick={() => { setActiveTab(item.id as TabIdType); setIsSidebarOpen(false); }}
-                className={`w-full flex items-center gap-3 px-3.5 py-3 rounded-lg text-[13px] font-bold transition-all border cursor-pointer ${
+                className={`w-full flex items-center gap-3 px-3.5 py-3 rounded-lg text-[13px] font-semibold transition-all border cursor-pointer ${
                   isTabActive 
                     ? "bg-brand-green border-brand-green text-white shadow-sm" 
                     : "text-slate-600 border-transparent bg-transparent hover:bg-brand-green/10 hover:text-brand-green-dark"
@@ -84,12 +84,12 @@ export default function AdminDashboard() {
 
         {/* ERP Button */}
         <div className="px-4 pb-6 mt-2 absolute bottom-0 w-full bg-white border-t border-slate-100 pt-4">
-          <p className="text-[9px] font-black uppercase tracking-widest text-slate-400 px-0.5 mb-2.5">System</p>
+          <p className="text-[9px] font-bold uppercase tracking-widest text-slate-400 px-0.5 mb-2.5">System</p>
           <a
             href="/erp"
             target="_blank"
             rel="noopener noreferrer"
-            className="w-full flex items-center gap-3 px-3.5 py-3 rounded-lg text-[13px] font-bold transition-all border cursor-pointer bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-800 hover:text-white group"
+            className="w-full flex items-center gap-3 px-3.5 py-3 rounded-lg text-[13px] font-semibold transition-all border cursor-pointer bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-800 hover:text-white group"
           >
             <School size={16} className="shrink-0" />
             <span className="flex-1">School ERP</span>

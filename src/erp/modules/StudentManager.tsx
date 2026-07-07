@@ -100,7 +100,7 @@ const STATIONS = [
   { station: "Railway Station" },
 ];
 
-const inputCls = "w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-brand-green-dark focus:outline-none focus:ring-2 focus:ring-brand-green/15 focus:border-brand-green transition-all";
+const inputCls = "w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold text-brand-green-dark focus:outline-none focus:ring-2 focus:ring-brand-green/15 focus:border-brand-green transition-all";
 
 export default function StudentManager({ onManageFees, selectedSession = "2025-26" }: StudentManagerProps) {
   const [students, setStudents] = useState<StudentType[]>(DUMMY_STUDENTS);
@@ -327,7 +327,7 @@ export default function StudentManager({ onManageFees, selectedSession = "2025-2
       {selectedStudentForDetail ? (
         <div className="w-full space-y-6">
           {/* Breadcrumb */}
-          <div className="flex items-center gap-2 text-xs font-bold text-brand-green-darker border-b border-slate-100 pb-3">
+          <div className="flex items-center gap-2 text-xs font-semibold text-brand-green-darker border-b border-slate-100 pb-3">
             <button
               onClick={() => setSelectedStudentForDetail(null)}
               className="text-slate-400 hover:text-brand-green-darker transition cursor-pointer border-0 bg-transparent p-0 flex items-center gap-1"
@@ -349,16 +349,16 @@ export default function StudentManager({ onManageFees, selectedSession = "2025-2
               <div className="absolute right-0 top-0 w-40 h-40 bg-white/5 rounded-full blur-2xl -mr-10 -mt-10" />
               <div className="absolute bottom-0 left-0 w-32 h-32 bg-white/10 rounded-full blur-xl -ml-16 -mb-16" />
 
-              <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-white/10 border border-white/20 flex items-center justify-center text-3xl font-black uppercase text-white shadow-inner relative z-10 shrink-0">
+              <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-white/10 border border-white/20 flex items-center justify-center text-3xl font-bold uppercase text-white shadow-inner relative z-10 shrink-0">
                 {selectedStudentForDetail.name?.charAt(0)}
               </div>
 
               <div className="text-center sm:text-left relative z-10 space-y-2">
-                <span className="text-[10px] font-black uppercase tracking-widest text-white/70">Student Profile</span>
-                <h2 className="text-2xl sm:text-3xl font-black tracking-tight leading-none">
+                <span className="text-[10px] font-bold uppercase tracking-widest text-white/70">Student Profile</span>
+                <h2 className="text-2xl sm:text-3xl font-bold tracking-tight leading-none">
                   {selectedStudentForDetail.name}
                 </h2>
-                <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2.5 text-xs text-white/80 mt-1 font-semibold">
+                <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2.5 text-xs text-white/80 mt-1 font-medium">
                   <span className="bg-white/10 px-2.5 py-1 rounded-lg border border-white/15">
                     Class: {selectedStudentForDetail.studentclass?.className || selectedStudentForDetail.studentClass}
                   </span>
@@ -372,28 +372,28 @@ export default function StudentManager({ onManageFees, selectedSession = "2025-2
             {/* Details Body */}
             <div className="p-6 sm:p-8 grid grid-cols-1 md:grid-cols-2 gap-8">
               <div className="space-y-5">
-                <h3 className="text-xs font-black text-brand-green-dark uppercase tracking-widest border-b border-slate-100 pb-2">
+                <h3 className="text-xs font-bold text-brand-green-dark uppercase tracking-widest border-b border-slate-100 pb-2">
                   Academic & Enrollment
                 </h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
                   <div>
-                    <p className="text-[9px] font-black text-slate-400 uppercase tracking-wider">Class Name</p>
-                    <p className="font-bold text-brand-green-dark mt-1">{selectedStudentForDetail.studentclass?.className || selectedStudentForDetail.studentClass}</p>
+                    <p className="text-[9px] font-bold text-slate-400 uppercase tracking-wider">Class Name</p>
+                    <p className="font-semibold text-brand-green-dark mt-1">{selectedStudentForDetail.studentclass?.className || selectedStudentForDetail.studentClass}</p>
                   </div>
                   <div>
-                    <p className="text-[9px] font-black text-slate-400 uppercase tracking-wider">Admission / Card Number</p>
-                    <p className="font-mono font-bold text-brand-green-dark mt-1">{selectedStudentForDetail.cardNo}</p>
+                    <p className="text-[9px] font-bold text-slate-400 uppercase tracking-wider">Admission / Card Number</p>
+                    <p className="font-mono font-semibold text-brand-green-dark mt-1">{selectedStudentForDetail.cardNo}</p>
                   </div>
                   <div>
-                    <p className="text-[9px] font-black text-slate-400 uppercase tracking-wider">Date of Admission</p>
-                    <p className="font-bold text-brand-green-dark mt-1 flex items-center gap-1.5">
+                    <p className="text-[9px] font-bold text-slate-400 uppercase tracking-wider">Date of Admission</p>
+                    <p className="font-semibold text-brand-green-dark mt-1 flex items-center gap-1.5">
                       <Calendar size={13} className="text-slate-400" />
                       {new Date(selectedStudentForDetail.dateOfAdmission).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" })}
                     </p>
                   </div>
                   <div>
-                    <p className="text-[9px] font-black text-slate-400 uppercase tracking-wider">Transport Route / Bus Station</p>
-                    <p className="font-bold text-brand-green-dark mt-1 flex items-center gap-1.5">
+                    <p className="text-[9px] font-bold text-slate-400 uppercase tracking-wider">Transport Route / Bus Station</p>
+                    <p className="font-semibold text-brand-green-dark mt-1 flex items-center gap-1.5">
                       <Bus size={13} className="text-slate-400" />
                       {selectedStudentForDetail.station || "Day Scholar / None"}
                     </p>
@@ -402,45 +402,45 @@ export default function StudentManager({ onManageFees, selectedSession = "2025-2
               </div>
 
               <div className="space-y-5">
-                <h3 className="text-xs font-black text-brand-green-dark uppercase tracking-widest border-b border-slate-100 pb-2">
+                <h3 className="text-xs font-bold text-brand-green-dark uppercase tracking-widest border-b border-slate-100 pb-2">
                   Personal & Family Details
                 </h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
                   <div>
-                    <p className="text-[9px] font-black text-slate-400 uppercase tracking-wider">Date of Birth</p>
-                    <p className="font-bold text-brand-green-dark mt-1 flex items-center gap-1.5">
+                    <p className="text-[9px] font-bold text-slate-400 uppercase tracking-wider">Date of Birth</p>
+                    <p className="font-semibold text-brand-green-dark mt-1 flex items-center gap-1.5">
                       <Calendar size={13} className="text-slate-400" />
                       {selectedStudentForDetail.dob ? new Date(selectedStudentForDetail.dob).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" }) : "Not Specified"}
                     </p>
                   </div>
                   <div>
-                    <p className="text-[9px] font-black text-slate-400 uppercase tracking-wider">Contact Number</p>
-                    <p className="font-bold text-brand-green-dark mt-1">{selectedStudentForDetail.contactNo}</p>
+                    <p className="text-[9px] font-bold text-slate-400 uppercase tracking-wider">Contact Number</p>
+                    <p className="font-semibold text-brand-green-dark mt-1">{selectedStudentForDetail.contactNo}</p>
                   </div>
                   <div>
-                    <p className="text-[9px] font-black text-slate-400 uppercase tracking-wider">Father&apos;s Name</p>
-                    <p className="font-bold text-brand-green-dark mt-1">Mr. {selectedStudentForDetail.fatherName}</p>
+                    <p className="text-[9px] font-bold text-slate-400 uppercase tracking-wider">Father&apos;s Name</p>
+                    <p className="font-semibold text-brand-green-dark mt-1">Mr. {selectedStudentForDetail.fatherName}</p>
                   </div>
                   <div>
-                    <p className="text-[9px] font-black text-slate-400 uppercase tracking-wider">Mother&apos;s Name</p>
-                    <p className="font-bold text-brand-green-dark mt-1">Mrs. {selectedStudentForDetail.motherName}</p>
+                    <p className="text-[9px] font-bold text-slate-400 uppercase tracking-wider">Mother&apos;s Name</p>
+                    <p className="font-semibold text-brand-green-dark mt-1">Mrs. {selectedStudentForDetail.motherName}</p>
                   </div>
                   {selectedStudentForDetail.sex && (
                     <div>
-                      <p className="text-[9px] font-black text-slate-400 uppercase tracking-wider">Gender</p>
-                      <p className="font-bold text-brand-green-dark mt-1">{selectedStudentForDetail.sex}</p>
+                      <p className="text-[9px] font-bold text-slate-400 uppercase tracking-wider">Gender</p>
+                      <p className="font-semibold text-brand-green-dark mt-1">{selectedStudentForDetail.sex}</p>
                     </div>
                   )}
                   {selectedStudentForDetail.religion && (
                     <div>
-                      <p className="text-[9px] font-black text-slate-400 uppercase tracking-wider">Religion</p>
-                      <p className="font-bold text-brand-green-dark mt-1">{selectedStudentForDetail.religion}</p>
+                      <p className="text-[9px] font-bold text-slate-400 uppercase tracking-wider">Religion</p>
+                      <p className="font-semibold text-brand-green-dark mt-1">{selectedStudentForDetail.religion}</p>
                     </div>
                   )}
                   {selectedStudentForDetail.address && (
                     <div className="sm:col-span-2">
-                      <p className="text-[9px] font-black text-slate-400 uppercase tracking-wider">Address</p>
-                      <p className="font-bold text-brand-green-dark mt-1">{selectedStudentForDetail.address}</p>
+                      <p className="text-[9px] font-bold text-slate-400 uppercase tracking-wider">Address</p>
+                      <p className="font-semibold text-brand-green-dark mt-1">{selectedStudentForDetail.address}</p>
                     </div>
                   )}
                 </div>
@@ -453,7 +453,7 @@ export default function StudentManager({ onManageFees, selectedSession = "2025-2
                 <button
                   type="button"
                   onClick={() => setSelectedStudentForDetail(null)}
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-slate-200 hover:bg-slate-300 text-slate-700 rounded-xl text-xs font-bold transition duration-200 cursor-pointer border-0 active:scale-95"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-slate-200 hover:bg-slate-300 text-slate-700 rounded-xl text-xs font-semibold transition duration-200 cursor-pointer border-0 active:scale-95"
                 >
                   <ArrowLeft size={14} />
                   Back
@@ -461,21 +461,21 @@ export default function StudentManager({ onManageFees, selectedSession = "2025-2
                 <button
                   type="button"
                   onClick={() => handleOpenEdit(selectedStudentForDetail)}
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-brand-green-darker/10 hover:bg-brand-green-darker/20 text-brand-green-darker border border-brand-green-darker/25 rounded-xl text-xs font-bold transition duration-200 cursor-pointer active:scale-95"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-brand-green-darker/10 hover:bg-brand-green-darker/20 text-brand-green-darker border border-brand-green-darker/25 rounded-xl text-xs font-semibold transition duration-200 cursor-pointer active:scale-95"
                 >
                   Edit Profile
                 </button>
                 <button
                   type="button"
                   onClick={() => handleOpenPromote(selectedStudentForDetail)}
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-brand-green/10 hover:bg-brand-green/20 text-brand-green-dark border border-brand-green/25 rounded-xl text-xs font-bold transition duration-200 cursor-pointer active:scale-95"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-brand-green/10 hover:bg-brand-green/20 text-brand-green-dark border border-brand-green/25 rounded-xl text-xs font-semibold transition duration-200 cursor-pointer active:scale-95"
                 >
                   Promote Student
                 </button>
                 <button
                   type="button"
                   onClick={() => setShowDeleteConfirm(true)}
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-rose-50 hover:bg-rose-100 text-rose-600 border border-rose-200 rounded-xl text-xs font-bold transition duration-200 cursor-pointer active:scale-95"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-rose-50 hover:bg-rose-100 text-rose-600 border border-rose-200 rounded-xl text-xs font-semibold transition duration-200 cursor-pointer active:scale-95"
                 >
                   Delete Student
                 </button>
@@ -484,7 +484,7 @@ export default function StudentManager({ onManageFees, selectedSession = "2025-2
               <button
                 type="button"
                 onClick={() => onManageFees?.(selectedStudentForDetail)}
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-2.5 bg-brand-green-darker hover:bg-brand-green-darker/90 text-white rounded-xl text-xs font-bold transition duration-200 cursor-pointer border-0 shadow-md shadow-brand-green-darker/10 active:scale-95"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-2.5 bg-brand-green-darker hover:bg-brand-green-darker/90 text-white rounded-xl text-xs font-semibold transition duration-200 cursor-pointer border-0 shadow-md shadow-brand-green-darker/10 active:scale-95"
               >
                 <CreditCard size={14} />
                 Go to Fee Management & Ledger
@@ -497,12 +497,12 @@ export default function StudentManager({ onManageFees, selectedSession = "2025-2
           {/* Header Block */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 pb-4">
             <div>
-              <h2 className="text-lg font-black text-black">Student Database</h2>
+              <h2 className="text-lg font-bold text-black">Student Database</h2>
               <p className="text-xs text-slate-400 font-medium mt-0.5">Manage and register students enrolled at Green View Public School.</p>
             </div>
             <button
               onClick={() => { setShowForm(!showForm); resetForm(); }}
-              className="inline-flex items-center gap-2 px-4 py-2.5 bg-brand-green-darker hover:bg-brand-green-darker/90 text-white rounded-xl text-xs font-bold transition duration-200 cursor-pointer border-0 shadow-md shadow-brand-green-darker/10"
+              className="inline-flex items-center gap-2 px-4 py-2.5 bg-brand-green-darker hover:bg-brand-green-darker/90 text-white rounded-xl text-xs font-semibold transition duration-200 cursor-pointer border-0 shadow-md shadow-brand-green-darker/10"
             >
               {showForm ? <X size={14} /> : <UserPlus size={14} />}
               {showForm ? "Cancel Registration" : "Register New Student"}
@@ -512,7 +512,7 @@ export default function StudentManager({ onManageFees, selectedSession = "2025-2
           {/* Expandable Registration Form */}
           {showForm && (
             <div className="bg-white rounded-2xl border border-slate-200/60 p-5 shadow-xs animate-in slide-in-from-top-4 duration-300">
-              <h3 className="text-sm font-black text-brand-green-dark mb-4 flex items-center gap-2">
+              <h3 className="text-sm font-bold text-brand-green-dark mb-4 flex items-center gap-2">
                 <UserPlus size={16} className="text-brand-green" />
                 Student Admission Form
               </h3>
@@ -520,12 +520,12 @@ export default function StudentManager({ onManageFees, selectedSession = "2025-2
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div>
-                    <label className="block text-[10px] font-black uppercase tracking-wider text-slate-400 mb-1.5">Full Name *</label>
+                    <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Full Name *</label>
                     <input type="text" required placeholder="E.g., Aarav Sharma" value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })} className={inputCls} />
                   </div>
                   <div>
-                    <label className="block text-[10px] font-black uppercase tracking-wider text-slate-400 mb-1.5">Student Class *</label>
+                    <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Student Class *</label>
                     <select required value={formData.studentClass}
                       onChange={(e) => setFormData({ ...formData, studentClass: e.target.value })} className={inputCls}>
                       <option value="" disabled>Select Class</option>
@@ -533,7 +533,7 @@ export default function StudentManager({ onManageFees, selectedSession = "2025-2
                     </select>
                   </div>
                   <div>
-                    <label className="block text-[10px] font-black uppercase tracking-wider text-slate-400 mb-1.5">Gender *</label>
+                    <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Gender *</label>
                     <select required value={formData.sex}
                       onChange={(e) => setFormData({ ...formData, sex: e.target.value })} className={inputCls}>
                       <option value="" disabled>Select Gender</option>
@@ -546,12 +546,12 @@ export default function StudentManager({ onManageFees, selectedSession = "2025-2
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-[10px] font-black uppercase tracking-wider text-slate-400 mb-1.5">Father&apos;s Name *</label>
+                    <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Father&apos;s Name *</label>
                     <input type="text" required placeholder="E.g., Mr. Rajesh Sharma" value={formData.fatherName}
                       onChange={(e) => setFormData({ ...formData, fatherName: e.target.value })} className={inputCls} />
                   </div>
                   <div>
-                    <label className="block text-[10px] font-black uppercase tracking-wider text-slate-400 mb-1.5">Mother&apos;s Name *</label>
+                    <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Mother&apos;s Name *</label>
                     <input type="text" required placeholder="E.g., Mrs. Sunita Sharma" value={formData.motherName}
                       onChange={(e) => setFormData({ ...formData, motherName: e.target.value })} className={inputCls} />
                   </div>
@@ -559,17 +559,17 @@ export default function StudentManager({ onManageFees, selectedSession = "2025-2
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div>
-                    <label className="block text-[10px] font-black uppercase tracking-wider text-slate-400 mb-1.5">Date of Birth *</label>
+                    <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Date of Birth *</label>
                     <input type="date" required value={formData.dob}
                       onChange={(e) => setFormData({ ...formData, dob: e.target.value })} className={inputCls} />
                   </div>
                   <div>
-                    <label className="block text-[10px] font-black uppercase tracking-wider text-slate-400 mb-1.5">Admission Date *</label>
+                    <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Admission Date *</label>
                     <input type="date" required value={formData.dateOfAdmission}
                       onChange={(e) => setFormData({ ...formData, dateOfAdmission: e.target.value })} className={inputCls} />
                   </div>
                   <div>
-                    <label className="block text-[10px] font-black uppercase tracking-wider text-slate-400 mb-1.5">Admission / Card No *</label>
+                    <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Admission / Card No *</label>
                     <input type="text" required placeholder="E.g., GV-2026-001" value={formData.cardNo}
                       onChange={(e) => setFormData({ ...formData, cardNo: e.target.value })} className={inputCls} />
                   </div>
@@ -577,17 +577,17 @@ export default function StudentManager({ onManageFees, selectedSession = "2025-2
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div>
-                    <label className="block text-[10px] font-black uppercase tracking-wider text-slate-400 mb-1.5">Mother Tongue</label>
+                    <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Mother Tongue</label>
                     <input type="text" placeholder="E.g., Hindi" value={formData.motherTongue}
                       onChange={(e) => setFormData({ ...formData, motherTongue: e.target.value })} className={inputCls} />
                   </div>
                   <div>
-                    <label className="block text-[10px] font-black uppercase tracking-wider text-slate-400 mb-1.5">Religion</label>
+                    <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Religion</label>
                     <input type="text" placeholder="E.g., Hindu" value={formData.religion}
                       onChange={(e) => setFormData({ ...formData, religion: e.target.value })} className={inputCls} />
                   </div>
                   <div>
-                    <label className="block text-[10px] font-black uppercase tracking-wider text-slate-400 mb-1.5">Social Category</label>
+                    <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Social Category</label>
                     <select value={formData.socialCategory}
                       onChange={(e) => setFormData({ ...formData, socialCategory: e.target.value })} className={inputCls}>
                       <option value="">Select Category</option>
@@ -601,12 +601,12 @@ export default function StudentManager({ onManageFees, selectedSession = "2025-2
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-[10px] font-black uppercase tracking-wider text-slate-400 mb-1.5">Contact Number *</label>
+                    <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Contact Number *</label>
                     <input type="tel" required placeholder="E.g., 9876543210" value={formData.contactNo}
                       onChange={(e) => setFormData({ ...formData, contactNo: e.target.value })} className={inputCls} />
                   </div>
                   <div>
-                    <label className="block text-[10px] font-black uppercase tracking-wider text-slate-400 mb-1.5">Bus Station (Optional)</label>
+                    <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Bus Station (Optional)</label>
                     <select value={formData.station}
                       onChange={(e) => setFormData({ ...formData, station: e.target.value })} className={inputCls}>
                       <option value="">None / Day Scholar</option>
@@ -617,12 +617,12 @@ export default function StudentManager({ onManageFees, selectedSession = "2025-2
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-[10px] font-black uppercase tracking-wider text-slate-400 mb-1.5">Address</label>
+                    <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Address</label>
                     <input type="text" placeholder="Full Address" value={formData.address}
                       onChange={(e) => setFormData({ ...formData, address: e.target.value })} className={inputCls} />
                   </div>
                   <div>
-                    <label className="block text-[10px] font-black uppercase tracking-wider text-slate-400 mb-1.5">Previous School</label>
+                    <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Previous School</label>
                     <input type="text" placeholder="Previous School Name" value={formData.prevSchool}
                       onChange={(e) => setFormData({ ...formData, prevSchool: e.target.value })} className={inputCls} />
                   </div>
@@ -630,12 +630,12 @@ export default function StudentManager({ onManageFees, selectedSession = "2025-2
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-[10px] font-black uppercase tracking-wider text-slate-400 mb-1.5">Initial Amount Collected</label>
+                    <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Initial Amount Collected</label>
                     <input type="number" placeholder="e.g. 5000 (0 if none)" value={formData.initialAmountPaid}
                       onChange={(e) => setFormData(prev => ({ ...prev, initialAmountPaid: e.target.value }))} className={inputCls} />
                   </div>
                   <div>
-                    <label className="block text-[10px] font-black uppercase tracking-wider text-slate-400 mb-1.5">Payment Mode</label>
+                    <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Payment Mode</label>
                     <select value={formData.paymentMode}
                       onChange={(e) => setFormData(prev => ({ ...prev, paymentMode: e.target.value }))} className={inputCls}>
                       <option value="CASH">CASH</option>
@@ -653,7 +653,7 @@ export default function StudentManager({ onManageFees, selectedSession = "2025-2
                 )}
 
                 <button type="submit" disabled={submitLoading}
-                  className="inline-flex items-center gap-2 px-5 py-2.5 bg-brand-green-darker hover:bg-brand-green-darker/90 text-white rounded-xl text-xs font-bold transition duration-200 cursor-pointer border-0 shadow-md shadow-brand-green-darker/10">
+                  className="inline-flex items-center gap-2 px-5 py-2.5 bg-brand-green-darker hover:bg-brand-green-darker/90 text-white rounded-xl text-xs font-semibold transition duration-200 cursor-pointer border-0 shadow-md shadow-brand-green-darker/10">
                   {submitLoading ? <Loader2 size={14} className="animate-spin" /> : <Plus size={14} />}
                   {submitLoading ? "Registering..." : "Add Student"}
                 </button>
@@ -682,12 +682,12 @@ export default function StudentManager({ onManageFees, selectedSession = "2025-2
                   <Search size={14} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400" />
                   <input type="text" placeholder="Search by name, card, or phone..."
                     value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full pl-9 pr-3 py-1.5 bg-white border border-slate-200 text-xs rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-green/15 focus:border-brand-green transition-all font-semibold" />
+                    className="w-full pl-9 pr-3 py-1.5 bg-white border border-slate-200 text-xs rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-green/15 focus:border-brand-green transition-all font-medium" />
                 </div>
                 <div className="flex items-center gap-2 bg-white border border-slate-200 px-3 py-1.5 rounded-xl w-full sm:w-auto">
-                  <span className="text-[10px] font-black uppercase tracking-wider text-brand-green-dark">Filter Class:</span>
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-brand-green-dark">Filter Class:</span>
                   <select value={selectedClass} onChange={(e) => setSelectedClass(e.target.value)}
-                    className="bg-transparent border-0 text-xs font-bold text-slate-700 focus:outline-none cursor-pointer">
+                    className="bg-transparent border-0 text-xs font-semibold text-slate-700 focus:outline-none cursor-pointer">
                     <option value="All">All Classes</option>
                     {CLASSES_LIST.map((c) => (<option key={c} value={c}>{c}</option>))}
                   </select>
@@ -695,7 +695,7 @@ export default function StudentManager({ onManageFees, selectedSession = "2025-2
               </div>
               <div className="flex items-center gap-1.5 text-xs text-slate-400 shrink-0">
                 <Users size={13} />
-                <span className="font-bold">{filteredStudents.length}</span> students found
+                <span className="font-semibold">{filteredStudents.length}</span> students found
               </div>
             </div>
 
@@ -704,18 +704,18 @@ export default function StudentManager({ onManageFees, selectedSession = "2025-2
               {loading ? (
                 <div className="flex flex-col items-center justify-center py-16 gap-3">
                   <Loader2 className="animate-spin text-brand-green-dark" size={24} />
-                  <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">Loading Student Records...</span>
+                  <span className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Loading Student Records...</span>
                 </div>
               ) : filteredStudents.length > 0 ? (
                 <table className="w-full border-collapse text-left text-xs">
                   <thead>
                     <tr className="bg-slate-50 border-b border-slate-100 text-slate-400">
-                      <th className="px-5 py-3 font-bold uppercase tracking-wider text-[10px]">Student Details</th>
-                      <th className="px-5 py-3 font-bold uppercase tracking-wider text-[10px]">Card Number</th>
-                      <th className="px-5 py-3 font-bold uppercase tracking-wider text-[10px]">Family Details</th>
-                      <th className="px-5 py-3 font-bold uppercase tracking-wider text-[10px]">Admission Date</th>
-                      <th className="px-5 py-3 font-bold uppercase tracking-wider text-[10px]">Contact</th>
-                      <th className="px-5 py-3 font-bold uppercase tracking-wider text-[10px] text-right">Actions</th>
+                      <th className="px-5 py-3 font-semibold uppercase tracking-wider text-[10px]">Student Details</th>
+                      <th className="px-5 py-3 font-semibold uppercase tracking-wider text-[10px]">Card Number</th>
+                      <th className="px-5 py-3 font-semibold uppercase tracking-wider text-[10px]">Family Details</th>
+                      <th className="px-5 py-3 font-semibold uppercase tracking-wider text-[10px]">Admission Date</th>
+                      <th className="px-5 py-3 font-semibold uppercase tracking-wider text-[10px]">Contact</th>
+                      <th className="px-5 py-3 font-semibold uppercase tracking-wider text-[10px] text-right">Actions</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-slate-100 text-slate-600">
@@ -724,13 +724,13 @@ export default function StudentManager({ onManageFees, selectedSession = "2025-2
                         <td className="px-5 py-3.5">
                           <button
                             onClick={() => setSelectedStudentForDetail(student)}
-                            className="font-black text-black hover:text-brand-green transition cursor-pointer border-0 bg-transparent p-0 text-left"
+                            className="font-bold text-black hover:text-brand-green transition cursor-pointer border-0 bg-transparent p-0 text-left"
                           >
                             {student.name}
                           </button>
-                          <p className="text-[10px] text-slate-400 font-semibold uppercase mt-0.5">{student.studentclass?.className || student.studentClass}</p>
+                          <p className="text-[10px] text-slate-400 font-medium uppercase mt-0.5">{student.studentclass?.className || student.studentClass}</p>
                         </td>
-                        <td className="px-5 py-3.5 font-mono text-[11px] font-semibold text-slate-500">
+                        <td className="px-5 py-3.5 font-mono text-[11px] font-medium text-slate-500">
                           {student.cardNo}
                         </td>
                         <td className="px-5 py-3.5">
@@ -743,7 +743,7 @@ export default function StudentManager({ onManageFees, selectedSession = "2025-2
                             {new Date(student.dateOfAdmission).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" })}
                           </div>
                         </td>
-                        <td className="px-5 py-3.5 font-bold text-slate-600">
+                        <td className="px-5 py-3.5 font-semibold text-slate-600">
                           {student.contactNo}
                         </td>
                         <td className="px-5 py-3.5 text-right">
@@ -751,7 +751,7 @@ export default function StudentManager({ onManageFees, selectedSession = "2025-2
                             <button
                               onClick={() => setSelectedStudentForDetail(student)}
                               title="View Details"
-                              className="inline-flex items-center gap-1 px-2.5 py-1.5 bg-brand-green hover:bg-brand-green text-white rounded-xl text-[10px] font-bold transition duration-200 cursor-pointer border-0 shadow-sm"
+                              className="inline-flex items-center gap-1 px-2.5 py-1.5 bg-brand-green hover:bg-brand-green text-white rounded-xl text-[10px] font-semibold transition duration-200 cursor-pointer border-0 shadow-sm"
                             >
                               <User size={12} />
                               View Profile
@@ -759,7 +759,7 @@ export default function StudentManager({ onManageFees, selectedSession = "2025-2
                             <button
                               onClick={() => onManageFees?.(student)}
                               title="Manage Fees"
-                              className="inline-flex items-center gap-1 px-2.5 py-1.5 bg-brand-green-darker hover:bg-brand-green-darker/90 text-white rounded-xl text-[10px] font-bold transition duration-200 cursor-pointer border-0 shadow-sm"
+                              className="inline-flex items-center gap-1 px-2.5 py-1.5 bg-brand-green-darker hover:bg-brand-green-darker/90 text-white rounded-xl text-[10px] font-semibold transition duration-200 cursor-pointer border-0 shadow-sm"
                             >
                               <CreditCard size={12} />
                               Manage Fees
@@ -788,18 +788,18 @@ export default function StudentManager({ onManageFees, selectedSession = "2025-2
               className="absolute right-4 top-4 text-slate-400 hover:text-slate-600 bg-transparent border-0 cursor-pointer">
               <X size={18} />
             </button>
-            <h3 className="text-sm font-black text-brand-green-dark mb-4 flex items-center gap-2">
+            <h3 className="text-sm font-bold text-brand-green-dark mb-4 flex items-center gap-2">
               Edit Student Details
             </h3>
             <form onSubmit={handleEditSubmit} className="space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-[10px] font-black uppercase tracking-wider text-slate-400 mb-1.5">Full Name</label>
+                  <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Full Name</label>
                   <input type="text" required value={editFormData.name}
                     onChange={(e) => setEditFormData({ ...editFormData, name: e.target.value })} className={inputCls} />
                 </div>
                 <div>
-                  <label className="block text-[10px] font-black uppercase tracking-wider text-slate-400 mb-1.5">Student Class</label>
+                  <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Student Class</label>
                   <select required value={editFormData.studentClass}
                     onChange={(e) => setEditFormData({ ...editFormData, studentClass: e.target.value })} className={inputCls}>
                     <option value="" disabled>Select Class</option>
@@ -807,37 +807,37 @@ export default function StudentManager({ onManageFees, selectedSession = "2025-2
                   </select>
                 </div>
                 <div>
-                  <label className="block text-[10px] font-black uppercase tracking-wider text-slate-400 mb-1.5">Father&apos;s Name</label>
+                  <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Father&apos;s Name</label>
                   <input type="text" required value={editFormData.fatherName}
                     onChange={(e) => setEditFormData({ ...editFormData, fatherName: e.target.value })} className={inputCls} />
                 </div>
                 <div>
-                  <label className="block text-[10px] font-black uppercase tracking-wider text-slate-400 mb-1.5">Mother&apos;s Name</label>
+                  <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Mother&apos;s Name</label>
                   <input type="text" required value={editFormData.motherName}
                     onChange={(e) => setEditFormData({ ...editFormData, motherName: e.target.value })} className={inputCls} />
                 </div>
                 <div>
-                  <label className="block text-[10px] font-black uppercase tracking-wider text-slate-400 mb-1.5">Admission Date</label>
+                  <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Admission Date</label>
                   <input type="date" required value={editFormData.dateOfAdmission}
                     onChange={(e) => setEditFormData({ ...editFormData, dateOfAdmission: e.target.value })} className={inputCls} />
                 </div>
                 <div>
-                  <label className="block text-[10px] font-black uppercase tracking-wider text-slate-400 mb-1.5">Date of Birth</label>
+                  <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Date of Birth</label>
                   <input type="date" required value={editFormData.dob}
                     onChange={(e) => setEditFormData({ ...editFormData, dob: e.target.value })} className={inputCls} />
                 </div>
                 <div>
-                  <label className="block text-[10px] font-black uppercase tracking-wider text-slate-400 mb-1.5">Card No (Unique)</label>
+                  <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Card No (Unique)</label>
                   <input type="text" required value={editFormData.cardNo}
                     onChange={(e) => setEditFormData({ ...editFormData, cardNo: e.target.value })} className={inputCls} />
                 </div>
                 <div>
-                  <label className="block text-[10px] font-black uppercase tracking-wider text-slate-400 mb-1.5">Contact Number</label>
+                  <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Contact Number</label>
                   <input type="tel" required value={editFormData.contactNo}
                     onChange={(e) => setEditFormData({ ...editFormData, contactNo: e.target.value })} className={inputCls} />
                 </div>
                 <div className="sm:col-span-2">
-                  <label className="block text-[10px] font-black uppercase tracking-wider text-slate-400 mb-1.5">Bus Station (Optional)</label>
+                  <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Bus Station (Optional)</label>
                   <select value={editFormData.station}
                     onChange={(e) => setEditFormData({ ...editFormData, station: e.target.value })} className={inputCls}>
                     <option value="">None / Day Scholar</option>
@@ -852,9 +852,9 @@ export default function StudentManager({ onManageFees, selectedSession = "2025-2
               )}
               <div className="flex justify-end gap-3 pt-2">
                 <button type="button" onClick={() => setShowEditModal(false)}
-                  className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-xl text-xs font-bold transition cursor-pointer border-0">Cancel</button>
+                  className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-xl text-xs font-semibold transition cursor-pointer border-0">Cancel</button>
                 <button type="submit" disabled={submitLoading}
-                  className="px-5 py-2 bg-brand-green hover:bg-brand-green text-white rounded-xl text-xs font-bold transition disabled:bg-slate-300 cursor-pointer border-0 flex items-center gap-1.5">
+                  className="px-5 py-2 bg-brand-green hover:bg-brand-green text-white rounded-xl text-xs font-semibold transition disabled:bg-slate-300 cursor-pointer border-0 flex items-center gap-1.5">
                   {submitLoading ? <Loader2 size={13} className="animate-spin" /> : null}
                   Save Changes
                 </button>
@@ -868,14 +868,14 @@ export default function StudentManager({ onManageFees, selectedSession = "2025-2
       {showDeleteConfirm && (
         <div className="fixed inset-0 bg-slate-900/40 backdrop-blur-xs flex items-center justify-center p-4 z-50">
           <div className="bg-white rounded-2xl border border-slate-200 max-w-md w-full p-6 shadow-xl relative animate-in zoom-in-95 duration-200">
-            <h3 className="text-base font-black text-rose-600 mb-3 flex items-center gap-2">
+            <h3 className="text-base font-bold text-rose-600 mb-3 flex items-center gap-2">
               <AlertTriangle size={20} />
               Confirm Student Deletion
             </h3>
-            <p className="text-xs text-slate-600 leading-relaxed font-semibold">
+            <p className="text-xs text-slate-600 leading-relaxed font-medium">
               Are you sure you want to permanently delete <strong className="text-slate-800">{selectedStudentForDetail?.name}</strong>?
             </p>
-            <p className="text-xs text-slate-500 leading-relaxed mt-2 bg-rose-50 border border-rose-100 p-3 rounded-xl font-bold">
+            <p className="text-xs text-slate-500 leading-relaxed mt-2 bg-rose-50 border border-rose-100 p-3 rounded-xl font-semibold">
               This action will permanently delete all associated fee structures, monthly demands, payment history, and logs. This cannot be undone.
             </p>
             {error && (
@@ -885,9 +885,9 @@ export default function StudentManager({ onManageFees, selectedSession = "2025-2
             )}
             <div className="flex justify-end gap-3 mt-6">
               <button type="button" onClick={() => { setShowDeleteConfirm(false); setError(null); }}
-                className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-xl text-xs font-bold transition cursor-pointer border-0">Cancel</button>
+                className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-xl text-xs font-semibold transition cursor-pointer border-0">Cancel</button>
               <button type="button" onClick={handleDeleteStudent} disabled={submitLoading}
-                className="px-5 py-2 bg-rose-600 hover:bg-rose-700 text-white rounded-xl text-xs font-bold transition disabled:bg-slate-300 cursor-pointer border-0 flex items-center gap-1.5">
+                className="px-5 py-2 bg-rose-600 hover:bg-rose-700 text-white rounded-xl text-xs font-semibold transition disabled:bg-slate-300 cursor-pointer border-0 flex items-center gap-1.5">
                 {submitLoading ? <Loader2 size={13} className="animate-spin" /> : null}
                 Yes, Delete Permanently
               </button>
@@ -909,54 +909,54 @@ export default function StudentManager({ onManageFees, selectedSession = "2025-2
                 <Users size={24} />
               </div>
               <div>
-                <h3 className="text-sm font-black text-brand-green-dark">Promote Student</h3>
-                <p className="text-[10px] font-bold text-slate-400 mt-0.5">Move Student to Next Academic Session</p>
+                <h3 className="text-sm font-bold text-brand-green-dark">Promote Student</h3>
+                <p className="text-[10px] font-semibold text-slate-400 mt-0.5">Move Student to Next Academic Session</p>
               </div>
             </div>
             <div className="space-y-3 leading-relaxed text-xs">
-              <p className="font-semibold text-slate-600">
-                You are promoting <strong className="text-brand-green-dark font-black">{promoteStudentData.name}</strong> to the next academic session.
+              <p className="font-medium text-slate-600">
+                You are promoting <strong className="text-brand-green-dark font-bold">{promoteStudentData.name}</strong> to the next academic session.
               </p>
               <div className="grid grid-cols-2 gap-4 p-4 bg-slate-50 border border-slate-100 rounded-2xl">
                 <div>
-                  <p className="text-[9px] font-black uppercase tracking-wider text-slate-400">Current State</p>
-                  <p className="text-xs font-black text-slate-700 mt-1">
+                  <p className="text-[9px] font-bold uppercase tracking-wider text-slate-400">Current State</p>
+                  <p className="text-xs font-bold text-slate-700 mt-1">
                     Class: {promoteStudentData.studentclass?.className || promoteStudentData.studentClass}
                   </p>
-                  <p className="text-[10px] font-semibold text-slate-500 mt-0.5">
+                  <p className="text-[10px] font-medium text-slate-500 mt-0.5">
                     Session: {promoteStudentData.session?.year || selectedSession}
                   </p>
-                  <p className="text-[10px] font-semibold text-slate-500">
+                  <p className="text-[10px] font-medium text-slate-500">
                     Roll No: {promoteStudentData.cardNo}
                   </p>
                 </div>
                 <div>
-                  <p className="text-[9px] font-black uppercase tracking-wider text-brand-green">Target State</p>
+                  <p className="text-[9px] font-bold uppercase tracking-wider text-brand-green">Target State</p>
                   {getNextClass(promoteStudentData.studentclass?.className || promoteStudentData.studentClass || "") ? (
                     <>
-                      <p className="text-xs font-black text-brand-green-dark mt-1">
+                      <p className="text-xs font-bold text-brand-green-dark mt-1">
                         Class: {getNextClass(promoteStudentData.studentclass?.className || promoteStudentData.studentClass || "")}
                       </p>
-                      <p className="text-[10px] font-semibold text-brand-green mt-0.5">
+                      <p className="text-[10px] font-medium text-brand-green mt-0.5">
                         Session: {getNextSession(promoteStudentData.session?.year || selectedSession || "")}
                       </p>
-                      <p className="text-[10px] font-semibold text-brand-green/80 italic mt-0.5">
+                      <p className="text-[10px] font-medium text-brand-green/80 italic mt-0.5">
                         Roll No: Auto-generated
                       </p>
                     </>
                   ) : (
-                    <p className="text-xs font-black text-rose-600 mt-1">
+                    <p className="text-xs font-bold text-rose-600 mt-1">
                       Highest class (12th) reached.
                     </p>
                   )}
                 </div>
               </div>
               {getNextClass(promoteStudentData.studentclass?.className || promoteStudentData.studentClass || "") ? (
-                <div className="bg-brand-green/5 border border-brand-green/10 text-brand-green-dark p-3.5 rounded-2xl text-[10px] font-semibold leading-normal">
+                <div className="bg-brand-green/5 border border-brand-green/10 text-brand-green-dark p-3.5 rounded-2xl text-[10px] font-medium leading-normal">
                   <strong>Note:</strong> Promoting this student will automatically assign them to the next session in the promoted class with auto-generated roll numbers and fee structures.
                 </div>
               ) : (
-                <div className="bg-rose-50 border border-rose-100 text-rose-800 p-3.5 rounded-2xl text-[10px] font-semibold leading-normal">
+                <div className="bg-rose-50 border border-rose-100 text-rose-800 p-3.5 rounded-2xl text-[10px] font-medium leading-normal">
                   <strong>Warning:</strong> Student is currently in the highest class (12th). They cannot be promoted further.
                 </div>
               )}
@@ -968,10 +968,10 @@ export default function StudentManager({ onManageFees, selectedSession = "2025-2
             )}
             <div className="flex justify-end gap-3 pt-2">
               <button type="button" onClick={() => { setShowPromoteModal(false); setError(null); setSuccess(null); }}
-                className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-xl text-xs font-bold transition cursor-pointer border-0">Cancel</button>
+                className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-xl text-xs font-semibold transition cursor-pointer border-0">Cancel</button>
               <button type="button" onClick={handlePromote}
                 disabled={promoteLoading || !getNextClass(promoteStudentData.studentclass?.className || promoteStudentData.studentClass || "")}
-                className="px-5 py-2 bg-brand-green hover:bg-brand-green text-white rounded-xl text-xs font-bold transition disabled:bg-slate-300 disabled:cursor-not-allowed cursor-pointer border-0 flex items-center gap-1.5 shadow-md shadow-brand-green/10">
+                className="px-5 py-2 bg-brand-green hover:bg-brand-green text-white rounded-xl text-xs font-semibold transition disabled:bg-slate-300 disabled:cursor-not-allowed cursor-pointer border-0 flex items-center gap-1.5 shadow-md shadow-brand-green/10">
                 {promoteLoading ? <Loader2 size={13} className="animate-spin" /> : null}
                 Confirm Promotion
               </button>

@@ -140,7 +140,7 @@ export default function CalendarManager() {
       
       {/* Header */}
       <div className="flex justify-between items-center">
-        <h2 className="text-xl sm:text-2xl font-bold font-serif text-slate-900">Academic Calendar</h2>
+        <h2 className="text-xl sm:text-2xl font-semibold font-serif text-slate-900">Academic Calendar</h2>
         {!showForm && (
           <button 
             onClick={() => {
@@ -148,7 +148,7 @@ export default function CalendarManager() {
               setNewEvent({ title: "", description: "", dateStr: `${monthKey}-${dStr}`, endDateStr: "" });
               setShowForm(true);
             }}
-            className="bg-brand-green hover:bg-brand-green-dark text-white px-4 py-2 rounded-lg text-sm font-bold flex items-center gap-1.5 transition shadow-sm border-0 cursor-pointer"
+            className="bg-brand-green hover:bg-brand-green-dark text-white px-4 py-2 rounded-lg text-sm font-semibold flex items-center gap-1.5 transition shadow-sm border-0 cursor-pointer"
           >
             <Plus size={16} /> Add Event
           </button>
@@ -163,8 +163,8 @@ export default function CalendarManager() {
             <button onClick={handlePrevMonth} className="text-slate-400 hover:text-slate-600 transition-colors p-1 bg-transparent border-none cursor-pointer">
               <ChevronLeft className="w-5 h-5 stroke-[2.5]" />
             </button>
-            <h3 className="text-base md:text-lg font-semibold md:font-extrabold text-slate-700 tracking-tight flex items-center gap-1.5 w-32 justify-center">
-              <span className="font-normal md:font-semibold text-slate-800">{monthName}</span>
+            <h3 className="text-base md:text-lg font-medium md:font-bold text-slate-700 tracking-tight flex items-center gap-1.5 w-32 justify-center">
+              <span className="font-normal md:font-medium text-slate-800">{monthName}</span>
               <span className="text-brand-green">{year}</span>
             </h3>
             <button onClick={handleNextMonth} className="text-slate-400 hover:text-slate-600 transition-colors p-1 bg-transparent border-none cursor-pointer">
@@ -172,7 +172,7 @@ export default function CalendarManager() {
             </button>
           </div>
 
-          <div className="grid grid-cols-7 gap-y-4 text-center text-xs md:text-sm font-semibold md:font-bold text-slate-400 mb-4 select-none">
+          <div className="grid grid-cols-7 gap-y-4 text-center text-xs md:text-sm font-medium md:font-semibold text-slate-400 mb-4 select-none">
             <span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span>
           </div>
 
@@ -199,7 +199,7 @@ export default function CalendarManager() {
                       onClick={() => { setSelectedDay(dayNum); setShowForm(false); }}
                       whileHover={{ scale: 1.08 }}
                       whileTap={{ scale: 0.92 }}
-                      className={`w-9 h-9 md:w-10 md:h-10 flex items-center justify-center font-semibold md:font-bold text-xs md:text-sm rounded-full transition-colors select-none cursor-pointer border-none ${
+                      className={`w-9 h-9 md:w-10 md:h-10 flex items-center justify-center font-medium md:font-semibold text-xs md:text-sm rounded-full transition-colors select-none cursor-pointer border-none ${
                         isSelected
                           ? "bg-brand-green text-white shadow-sm"
                           : hasEvent
@@ -222,7 +222,7 @@ export default function CalendarManager() {
           {showForm ? (
             <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="flex-1 flex flex-col">
               <div className="flex justify-between items-center mb-6">
-                <h3 className="font-semibold md:font-bold text-slate-800 text-base md:text-lg tracking-tight">Add New Event</h3>
+                <h3 className="font-medium md:font-semibold text-slate-800 text-base md:text-lg tracking-tight">Add New Event</h3>
                 <button type="button" onClick={() => setShowForm(false)} className="text-slate-400 hover:text-slate-600 bg-transparent border-0 cursor-pointer p-1">
                   <X size={18} />
                 </button>
@@ -230,24 +230,24 @@ export default function CalendarManager() {
               
               <form onSubmit={handleSaveEvent} className="flex flex-col gap-4 flex-1">
                 <div>
-                  <label className="block text-[11px] font-black uppercase tracking-wider text-slate-400 mb-1.5">Event Title *</label>
+                  <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Event Title *</label>
                   <input type="text" required value={newEvent.title} onChange={(e) => setNewEvent({...newEvent, title: e.target.value})} placeholder="e.g., Annual Sports Day" className="w-full px-3 py-2 bg-white border border-slate-200 text-sm rounded-lg focus:outline-none focus:border-brand-green font-medium transition" />
                 </div>
                 <div>
-                  <label className="block text-[11px] font-black uppercase tracking-wider text-slate-400 mb-1.5">Description (Optional)</label>
+                  <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Description (Optional)</label>
                   <textarea rows={2} value={newEvent.description} onChange={(e) => setNewEvent({...newEvent, description: e.target.value})} placeholder="Short details about the event..." className="w-full px-3 py-2 bg-white border border-slate-200 text-sm rounded-lg focus:outline-none focus:border-brand-green font-medium transition resize-none" />
                 </div>
                 <div>
-                  <label className="block text-[11px] font-black uppercase tracking-wider text-slate-400 mb-1.5">Start Date *</label>
+                  <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Start Date *</label>
                   <input type="date" required value={newEvent.dateStr} onChange={(e) => setNewEvent({...newEvent, dateStr: e.target.value})} className="w-full px-3 py-2 bg-white border border-slate-200 text-sm rounded-lg focus:outline-none focus:border-brand-green font-medium transition" />
                 </div>
                 <div>
-                  <label className="block text-[11px] font-black uppercase tracking-wider text-slate-400 mb-1.5">End Date (Optional)</label>
+                  <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">End Date (Optional)</label>
                   <input type="date" value={newEvent.endDateStr} onChange={(e) => setNewEvent({...newEvent, endDateStr: e.target.value})} className="w-full px-3 py-2 bg-white border border-slate-200 text-sm rounded-lg focus:outline-none focus:border-brand-green font-medium transition" />
                 </div>
                 
                 <div className="mt-auto pt-6">
-                  <button type="submit" className="w-full bg-brand-green hover:bg-brand-green-dark text-white py-2.5 rounded-lg text-sm font-bold transition shadow-sm border-0 cursor-pointer">
+                  <button type="submit" className="w-full bg-brand-green hover:bg-brand-green-dark text-white py-2.5 rounded-lg text-sm font-semibold transition shadow-sm border-0 cursor-pointer">
                     Save Event
                   </button>
                 </div>
@@ -255,7 +255,7 @@ export default function CalendarManager() {
             </motion.div>
           ) : (
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex-1 flex flex-col">
-              <h3 className="font-semibold md:font-bold text-slate-800 text-base md:text-lg tracking-tight select-none">
+              <h3 className="font-medium md:font-semibold text-slate-800 text-base md:text-lg tracking-tight select-none">
                 {selectedDay ? `Events on ${monthName} ${selectedDay}` : `All Events in ${monthName}`}
               </h3>
               <div className="w-full h-[2px] bg-brand-green/20 mt-3 mb-5 select-none" />
@@ -268,7 +268,7 @@ export default function CalendarManager() {
                       .map((evt) => (
                       <div key={evt.id} className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm group">
                         <div className="flex justify-between items-start mb-1">
-                          <h4 className="text-sm font-bold text-slate-800 leading-tight pr-4">{evt.title}</h4>
+                          <h4 className="text-sm font-semibold text-slate-800 leading-tight pr-4">{evt.title}</h4>
                           <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity shrink-0">
                             <button className="text-slate-400 hover:text-blue-600 bg-transparent border-0 cursor-pointer p-1"><Edit2 size={13} /></button>
                             <button onClick={() => handleDelete(evt.id)} className="text-slate-400 hover:text-rose-600 bg-transparent border-0 cursor-pointer p-1"><Trash2 size={13} /></button>
@@ -277,7 +277,7 @@ export default function CalendarManager() {
                         {evt.description && (
                           <p className="text-xs text-slate-500 mb-2 mt-1 leading-relaxed">{evt.description}</p>
                         )}
-                        <div className="flex items-center gap-1.5 text-xs font-semibold text-slate-500 mt-2">
+                        <div className="flex items-center gap-1.5 text-xs font-medium text-slate-500 mt-2">
                           <Calendar size={12} className="text-emerald-500 shrink-0" />
                           <span className="leading-tight">{formatDateDisplay(evt.dateStr, evt.endDateStr)}</span>
                         </div>

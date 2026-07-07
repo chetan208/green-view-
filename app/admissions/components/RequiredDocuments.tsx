@@ -43,10 +43,10 @@ export default function RequiredDocuments() {
         
         {/* Header */}
         <div className="text-left w-full mb-10 md:mb-12">
-          <span className="text-[9px] md:text-xs font-bold text-brand-green uppercase tracking-[0.2em] mb-1.5 md:mb-2 block">
+          <span className="text-[9px] md:text-xs font-semibold text-brand-green uppercase tracking-[0.2em] mb-1.5 md:mb-2 block">
             BE PREPARED
           </span>
-          <h2 className="text-2xl md:text-4xl font-semibold text-slate-800 tracking-tight">
+          <h2 className="text-2xl md:text-4xl font-medium text-slate-800 tracking-tight">
             Required <span className="text-brand-green">Documents</span>
           </h2>
           <p className="text-[11px] md:text-sm text-slate-500 font-medium mt-2 md:mt-4 max-w-2xl">
@@ -69,7 +69,7 @@ export default function RequiredDocuments() {
 
               {/* Text Content */}
               <div className="flex flex-col">
-                <h3 className="text-sm font-bold text-slate-900 mb-1.5">{doc.title}</h3>
+                <h3 className="text-sm font-semibold text-slate-900 mb-1.5">{doc.title}</h3>
                 <p className="text-xs text-slate-500 font-medium leading-relaxed">
                   {doc.description}
                 </p>

@@ -462,23 +462,23 @@ export default function FeePortal({
         <div className="flex items-center gap-3">
           <CreditCard className="text-brand-green" size={22} />
           <div>
-            <h2 className="text-base font-black text-slate-800 leading-none">Fee Management Portal</h2>
-            <p className="text-[10px] text-slate-400 font-semibold mt-1">Manage, collect, and configure fees</p>
+            <h2 className="text-base font-bold text-slate-800 leading-none">Fee Management Portal</h2>
+            <p className="text-[10px] text-slate-400 font-medium mt-1">Manage, collect, and configure fees</p>
           </div>
         </div>
 
         <div className="flex items-center gap-2 self-stretch sm:self-auto">
           <button 
             onClick={handleSoftRefresh}
-            className="flex items-center gap-1.5 bg-white border border-slate-200 hover:bg-slate-50 text-slate-500 hover:text-brand-green px-3 py-1.5 rounded-xl shadow-xs transition-colors cursor-pointer text-xs font-bold"
+            className="flex items-center gap-1.5 bg-white border border-slate-200 hover:bg-slate-50 text-slate-500 hover:text-brand-green px-3 py-1.5 rounded-xl shadow-xs transition-colors cursor-pointer text-xs font-semibold"
           >
             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
             Refresh Data
           </button>
           
           <div className="flex items-center gap-2 bg-white border border-slate-200 rounded-xl px-3 py-1.5 shadow-xs">
-            <span className="text-[10px] font-black uppercase tracking-wider text-slate-400">Academic Session:</span>
-            <span className="text-xs font-bold text-brand-green">{selectedSession}</span>
+            <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Academic Session:</span>
+            <span className="text-xs font-semibold text-brand-green">{selectedSession}</span>
           </div>
         </div>
       </div>
@@ -487,8 +487,8 @@ export default function FeePortal({
       <div className="flex border-b border-slate-200/60 p-0.5 space-x-1 bg-slate-100 rounded-2xl w-full sm:w-fit overflow-x-auto">
         <button
           onClick={() => { setActiveTab("dashboard"); setError(null); setSuccess(null); }}
-          className={`flex-1 min-w-[120px] flex items-center justify-center gap-2 py-2 rounded-xl text-xs font-bold border-0 cursor-pointer transition ${
-            activeTab === "dashboard" ? "bg-brand-green/[0.04] text-brand-green font-bold" : "text-slate-500 hover:text-brand-green bg-transparent"
+          className={`flex-1 min-w-[120px] flex items-center justify-center gap-2 py-2 rounded-xl text-xs font-semibold border-0 cursor-pointer transition ${
+            activeTab === "dashboard" ? "bg-brand-green/[0.04] text-brand-green font-semibold" : "text-slate-500 hover:text-brand-green bg-transparent"
           }`}
         >
           <DollarSign size={14} />
@@ -497,8 +497,8 @@ export default function FeePortal({
 
         <button
           onClick={() => { setActiveTab("class-config"); setError(null); setSuccess(null); }}
-          className={`flex-1 min-w-[130px] flex items-center justify-center gap-2 py-2 rounded-xl text-xs font-bold border-0 cursor-pointer transition ${
-            activeTab === "class-config" ? "bg-brand-green/[0.04] text-brand-green font-bold" : "text-slate-500 hover:text-brand-green bg-transparent"
+          className={`flex-1 min-w-[130px] flex items-center justify-center gap-2 py-2 rounded-xl text-xs font-semibold border-0 cursor-pointer transition ${
+            activeTab === "class-config" ? "bg-brand-green/[0.04] text-brand-green font-semibold" : "text-slate-500 hover:text-brand-green bg-transparent"
           }`}
         >
           <Settings2 size={14} />
@@ -506,8 +506,8 @@ export default function FeePortal({
         </button>
         <button
           onClick={() => { setActiveTab("automation"); setError(null); setSuccess(null); }}
-          className={`flex-1 min-w-[130px] flex items-center justify-center gap-2 py-2 rounded-xl text-xs font-bold border-0 cursor-pointer transition ${
-            activeTab === "automation" ? "bg-brand-green/[0.04] text-brand-green font-bold" : "text-slate-500 hover:text-brand-green bg-transparent"
+          className={`flex-1 min-w-[130px] flex items-center justify-center gap-2 py-2 rounded-xl text-xs font-semibold border-0 cursor-pointer transition ${
+            activeTab === "automation" ? "bg-brand-green/[0.04] text-brand-green font-semibold" : "text-slate-500 hover:text-brand-green bg-transparent"
           }`}
         >
           <MessageSquare size={14} />
@@ -518,13 +518,13 @@ export default function FeePortal({
       {/* Feedback Alert banners */}
       <AnimatePresence>
         {error && (
-          <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="p-4 bg-rose-50 border border-rose-200 text-rose-800 rounded-2xl flex items-center gap-3 text-xs font-bold">
+          <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="p-4 bg-rose-50 border border-rose-200 text-rose-800 rounded-2xl flex items-center gap-3 text-xs font-semibold">
             <AlertTriangle size={15} className="shrink-0" />
             <span>{error}</span>
           </motion.div>
         )}
         {success && (
-          <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="p-4 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-2xl flex items-center gap-3 text-xs font-bold">
+          <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="p-4 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-2xl flex items-center gap-3 text-xs font-semibold">
             <CheckCircle2 size={15} className="shrink-0" />
             <span>{success}</span>
           </motion.div>
@@ -542,8 +542,8 @@ export default function FeePortal({
                   <Users size={18} />
                 </div>
                 <div>
-                  <p className="text-lg font-black text-slate-800 tracking-tight">{statsLoading ? "..." : stats?.totalStudents ?? 0}</p>
-                  <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mt-0.5">Students in Session</p>
+                  <p className="text-lg font-bold text-slate-800 tracking-tight">{statsLoading ? "..." : stats?.totalStudents ?? 0}</p>
+                  <p className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider mt-0.5">Students in Session</p>
                 </div>
               </div>
               
@@ -552,8 +552,8 @@ export default function FeePortal({
                   <AlertTriangle size={18} />
                 </div>
                 <div>
-                  <p className="text-lg font-black text-amber-800 tracking-tight">{statsLoading ? "..." : stats?.currentPendingCount ?? 0}</p>
-                  <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mt-0.5">Current Month Pending</p>
+                  <p className="text-lg font-bold text-amber-800 tracking-tight">{statsLoading ? "..." : stats?.currentPendingCount ?? 0}</p>
+                  <p className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider mt-0.5">Current Month Pending</p>
                 </div>
               </div>
 
@@ -562,8 +562,8 @@ export default function FeePortal({
                   <AlertTriangle size={18} />
                 </div>
                 <div>
-                  <p className="text-lg font-black text-rose-800 tracking-tight">{statsLoading ? "..." : stats?.prevPendingCount ?? 0}</p>
-                  <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mt-0.5">Previous Months Pending</p>
+                  <p className="text-lg font-bold text-rose-800 tracking-tight">{statsLoading ? "..." : stats?.prevPendingCount ?? 0}</p>
+                  <p className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider mt-0.5">Previous Months Pending</p>
                 </div>
               </div>
             </div>
@@ -575,14 +575,14 @@ export default function FeePortal({
                   {/* Left Column: Student Search & Pending List */}
                   <div className="lg:col-span-5 space-y-5">
                     <div className="space-y-1.5 relative" ref={searchContainerRef}>
-                      <label className="text-[10px] font-black uppercase tracking-wider text-slate-400">Search Student Ledger</label>
+                      <label className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Search Student Ledger</label>
                       <div className="relative">
                         <input
                           type="text"
                           placeholder="Enter Student Name or Card No..."
                           value={searchQuery}
                           onChange={handleSearchChange}
-                          className="w-full pl-9 pr-4 py-2 text-xs font-bold text-slate-800 border border-slate-200 rounded-xl focus:outline-none focus:border-brand-green"
+                          className="w-full pl-9 pr-4 py-2 text-xs font-semibold text-slate-800 border border-slate-200 rounded-xl focus:outline-none focus:border-brand-green"
                         />
                         <Search className="absolute left-3 top-2.5 text-slate-400" size={13} />
                         {searchLoading && (
@@ -600,10 +600,10 @@ export default function FeePortal({
                               className="w-full text-left px-4 py-2.5 hover:bg-slate-50 transition border-0 border-b border-slate-100 last:border-b-0 cursor-pointer flex items-center justify-between text-xs"
                             >
                               <div>
-                                <p className="font-bold text-slate-800">{st.name}</p>
+                                <p className="font-semibold text-slate-800">{st.name}</p>
                                 <p className="text-[10px] text-slate-400 mt-0.5">Class: {st.studentclass?.className} | Father: {st.fatherName}</p>
                               </div>
-                              <span className="text-[9px] font-black uppercase tracking-wider text-slate-400 bg-slate-100 px-2 py-0.5 rounded-md">Roll No: {st.cardNo}</span>
+                              <span className="text-[9px] font-bold uppercase tracking-wider text-slate-400 bg-slate-100 px-2 py-0.5 rounded-md">Roll No: {st.cardNo}</span>
                             </button>
                           ))}
                         </div>
@@ -615,7 +615,7 @@ export default function FeePortal({
                       <div className="flex border-b border-slate-200/50">
                         <button
                           onClick={() => setPendingListTab("prev")}
-                          className={`flex-1 py-2.5 text-[10px] font-black uppercase tracking-wider border-0 cursor-pointer transition ${
+                          className={`flex-1 py-2.5 text-[10px] font-bold uppercase tracking-wider border-0 cursor-pointer transition ${
                             pendingListTab === "prev" ? "bg-white text-rose-600 border-b-2 border-rose-600" : "bg-transparent text-slate-500"
                           }`}
                         >
@@ -623,7 +623,7 @@ export default function FeePortal({
                         </button>
                         <button
                           onClick={() => setPendingListTab("current")}
-                          className={`flex-1 py-2.5 text-[10px] font-black uppercase tracking-wider border-0 cursor-pointer transition ${
+                          className={`flex-1 py-2.5 text-[10px] font-bold uppercase tracking-wider border-0 cursor-pointer transition ${
                             pendingListTab === "current" ? "bg-white text-amber-600 border-b-2 border-amber-600" : "bg-transparent text-slate-500"
                           }`}
                         >
@@ -633,9 +633,9 @@ export default function FeePortal({
 
                       <div className="max-h-60 overflow-y-auto p-2 space-y-1.5">
                         {statsLoading ? (
-                          <div className="text-center py-8 text-xs font-semibold text-slate-400">Loading pending lists...</div>
+                          <div className="text-center py-8 text-xs font-medium text-slate-400">Loading pending lists...</div>
                         ) : (pendingListTab === "prev" ? stats?.prevPendingList : stats?.currentPendingList)?.length === 0 ? (
-                          <div className="text-center py-8 text-xs font-semibold text-slate-400">No pending student records found.</div>
+                          <div className="text-center py-8 text-xs font-medium text-slate-400">No pending student records found.</div>
                         ) : (pendingListTab === "prev" ? stats?.prevPendingList : stats?.currentPendingList)?.map((st: any) => (
                           <button
                             key={st.id}
@@ -643,10 +643,10 @@ export default function FeePortal({
                             className="w-full text-left p-3 hover:bg-white border border-transparent hover:border-slate-200 rounded-xl transition flex justify-between items-center cursor-pointer bg-transparent"
                           >
                             <div>
-                              <p className="text-xs font-bold text-slate-800">{st.name}</p>
-                              <p className="text-[9px] text-slate-400 font-semibold mt-0.5">Card No: {st.cardNo} | {st.studentClass}</p>
+                              <p className="text-xs font-semibold text-slate-800">{st.name}</p>
+                              <p className="text-[9px] text-slate-400 font-medium mt-0.5">Card No: {st.cardNo} | {st.studentClass}</p>
                             </div>
-                            <span className="text-xs font-black text-rose-600 bg-rose-50 border border-rose-100 px-2.5 py-0.5 rounded-lg">₹{st.pendingAmount}</span>
+                            <span className="text-xs font-bold text-rose-600 bg-rose-50 border border-rose-100 px-2.5 py-0.5 rounded-lg">₹{st.pendingAmount}</span>
                           </button>
                         ))}
                       </div>
@@ -657,7 +657,7 @@ export default function FeePortal({
                   <div className="lg:col-span-7 space-y-5">
                     <div className="h-64 border-2 border-dashed border-slate-200 rounded-3xl flex flex-col items-center justify-center text-center p-6 text-slate-400 bg-slate-50/50">
                       <CreditCard size={28} className="text-slate-300 mb-3" />
-                      <h4 className="text-xs font-bold text-slate-500">No Student Ledger Loaded</h4>
+                      <h4 className="text-xs font-semibold text-slate-500">No Student Ledger Loaded</h4>
                       <p className="text-[10px] text-slate-400 max-w-xs mt-1">Search for a student on the left panel or click a student from the pending list to view their monthly fee ledger matrix.</p>
                     </div>
                   </div>
@@ -667,14 +667,14 @@ export default function FeePortal({
                 <div className="lg:col-span-12 space-y-5">
                   <div className="flex flex-col sm:flex-row gap-4 items-center justify-between bg-slate-50 p-4 border border-slate-200/50 rounded-2xl">
                     <div className="w-full sm:max-w-md relative" ref={searchContainerRef}>
-                      <label className="text-[10px] font-black uppercase tracking-wider text-slate-400">Search Another Student</label>
+                      <label className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Search Another Student</label>
                       <div className="relative mt-1">
                         <input
                           type="text"
                           placeholder="Enter Student Name or Card No..."
                           value={searchQuery}
                           onChange={handleSearchChange}
-                          className="w-full pl-9 pr-4 py-2 text-xs font-bold text-slate-800 border border-slate-200 rounded-xl focus:outline-none focus:border-brand-green"
+                          className="w-full pl-9 pr-4 py-2 text-xs font-semibold text-slate-800 border border-slate-200 rounded-xl focus:outline-none focus:border-brand-green"
                         />
                         <Search className="absolute left-3 top-2.5 text-slate-400" size={13} />
                         {searchLoading && (
@@ -692,10 +692,10 @@ export default function FeePortal({
                               className="w-full text-left px-4 py-2.5 hover:bg-slate-50 transition border-0 border-b border-slate-100 last:border-b-0 cursor-pointer flex items-center justify-between text-xs"
                             >
                               <div>
-                                <p className="font-bold text-slate-800">{st.name}</p>
+                                <p className="font-semibold text-slate-800">{st.name}</p>
                                 <p className="text-[10px] text-slate-400 mt-0.5">Class: {st.studentclass?.className} | Father: {st.fatherName}</p>
                               </div>
-                              <span className="text-[9px] font-black uppercase tracking-wider text-slate-400 bg-slate-100 px-2 py-0.5 rounded-md">Roll No: {st.cardNo}</span>
+                              <span className="text-[9px] font-bold uppercase tracking-wider text-slate-400 bg-slate-100 px-2 py-0.5 rounded-md">Roll No: {st.cardNo}</span>
                             </button>
                           ))}
                         </div>
@@ -706,7 +706,7 @@ export default function FeePortal({
                       <button
                         type="button"
                         onClick={() => { setSelectedStudent(null); setSearchQuery(""); }}
-                        className="px-4 py-2 bg-slate-200 hover:bg-slate-300 text-slate-700 text-xs font-bold rounded-xl border-0 cursor-pointer transition active:scale-95"
+                        className="px-4 py-2 bg-slate-200 hover:bg-slate-300 text-slate-700 text-xs font-semibold rounded-xl border-0 cursor-pointer transition active:scale-95"
                       >
                         Back to Pending List
                       </button>
@@ -719,7 +719,7 @@ export default function FeePortal({
                             setSearchQuery("");
                             setActiveModule("students");
                           }}
-                          className="px-4 py-2 bg-brand-green hover:bg-[#fa5370] text-white text-xs font-bold rounded-xl border-0 cursor-pointer transition active:scale-95 flex items-center gap-1.5 shadow-sm shadow-brand-green/15"
+                          className="px-4 py-2 bg-brand-green hover:bg-[#fa5370] text-white text-xs font-semibold rounded-xl border-0 cursor-pointer transition active:scale-95 flex items-center gap-1.5 shadow-sm shadow-brand-green/15"
                         >
                           <ArrowLeft size={13} />
                           Back to Student Management
@@ -733,30 +733,30 @@ export default function FeePortal({
                     <div className="absolute right-0 top-0 w-24 h-24 bg-white/5 rounded-full blur-xl -mr-6 -mt-6" />
                     <div className="flex justify-between items-start">
                       <div>
-                        <h3 className="text-base font-black tracking-tight leading-none">{selectedStudent.name}</h3>
-                        <p className="text-[10px] text-slate-200 font-bold mt-1.5">
+                        <h3 className="text-base font-bold tracking-tight leading-none">{selectedStudent.name}</h3>
+                        <p className="text-[10px] text-slate-200 font-semibold mt-1.5">
                           Father: {selectedStudent.fatherName} | Contact: {selectedStudent.contactNo}
                         </p>
                       </div>
-                      <span className="text-[9px] font-black uppercase tracking-widest text-brand-green bg-brand-green/20 border border-brand-green/30 px-3 py-1 rounded-full">
+                      <span className="text-[9px] font-bold uppercase tracking-widest text-brand-green bg-brand-green/20 border border-brand-green/30 px-3 py-1 rounded-full">
                         {selectedStudent.studentclass?.className || selectedStudent.studentClass}
                       </span>
                     </div>
                     
                     <div className="mt-4 pt-3 border-t border-white/10 flex justify-between items-center text-xs">
-                      <span className="font-semibold text-slate-200">Roll Number/Card No: <strong className="text-white">{selectedStudent.cardNo}</strong></span>
+                      <span className="font-medium text-slate-200">Roll Number/Card No: <strong className="text-white">{selectedStudent.cardNo}</strong></span>
                       <div className="flex gap-2">
                         <button
                           type="button"
                           onClick={() => setShowDetailedFees(!showDetailedFees)}
-                          className="bg-brand-green/30 border border-white/15 hover:bg-brand-green/50 text-white font-black text-[10px] uppercase tracking-wider px-3 py-2 rounded-xl transition cursor-pointer active:scale-95"
+                          className="bg-brand-green/30 border border-white/15 hover:bg-brand-green/50 text-white font-bold text-[10px] uppercase tracking-wider px-3 py-2 rounded-xl transition cursor-pointer active:scale-95"
                         >
                           {showDetailedFees ? "Hide Detailed Fees" : "Show Detailed Fees"}
                         </button>
                         <button
                           type="button"
                           onClick={() => setShowPaymentModal(true)}
-                          className="bg-brand-green hover:bg-[#439678] text-white font-black text-[10px] uppercase tracking-wider px-4 py-2 rounded-xl transition border-0 cursor-pointer active:scale-95"
+                          className="bg-brand-green hover:bg-[#439678] text-white font-bold text-[10px] uppercase tracking-wider px-4 py-2 rounded-xl transition border-0 cursor-pointer active:scale-95"
                         >
                           Collect Fees
                         </button>
@@ -767,26 +767,26 @@ export default function FeePortal({
                   {/* Monthly Ledger Table */}
                   <div className="border border-slate-200/60 rounded-2xl overflow-hidden bg-white">
                     <div className="overflow-x-auto">
-                      <table className="w-full border-collapse text-left text-xs font-semibold">
+                      <table className="w-full border-collapse text-left text-xs font-medium">
                         <thead>
                           <tr className="bg-slate-50 border-b border-slate-200/60 text-slate-800">
-                            <th className="p-3 text-[10px] font-black uppercase tracking-wider">Month</th>
-                            {showDetailedFees && <th className="p-3 text-[10px] font-black uppercase tracking-wider">Admission</th>}
-                            <th className="p-3 text-[10px] font-black uppercase tracking-wider">Tuition</th>
-                            {showDetailedFees && <th className="p-3 text-[10px] font-black uppercase tracking-wider">Exam</th>}
-                            {showDetailedFees && <th className="p-3 text-[10px] font-black uppercase tracking-wider">Computer</th>}
-                            <th className="p-3 text-[10px] font-black uppercase tracking-wider">Transport</th>
-                            {showDetailedFees && <th className="p-3 text-[10px] font-black uppercase tracking-wider">PTM Fine</th>}
-                            {showDetailedFees && <th className="p-3 text-[10px] font-black uppercase tracking-wider">Tie & Belt</th>}
-                            {showDetailedFees && <th className="p-3 text-[10px] font-black uppercase tracking-wider">Building</th>}
-                            {showDetailedFees && <th className="p-3 text-[10px] font-black uppercase tracking-wider">Annual</th>}
-                            {showDetailedFees && <th className="p-3 text-[10px] font-black uppercase tracking-wider">Prev Dues</th>}
-                            {!showDetailedFees && <th className="p-3 text-[10px] font-black uppercase tracking-wider">Other</th>}
-                            <th className="p-3 text-[10px] font-black uppercase tracking-wider font-serif">Total</th>
-                            <th className="p-3 text-[10px] font-black uppercase tracking-wider">Paid</th>
-                            <th className="p-3 text-[10px] font-black uppercase tracking-wider">Remaining</th>
-                            <th className="p-3 text-[10px] font-black uppercase tracking-wider">Status</th>
-                            <th className="p-3 text-right text-[10px] font-black uppercase tracking-wider">Action</th>
+                            <th className="p-3 text-[10px] font-bold uppercase tracking-wider">Month</th>
+                            {showDetailedFees && <th className="p-3 text-[10px] font-bold uppercase tracking-wider">Admission</th>}
+                            <th className="p-3 text-[10px] font-bold uppercase tracking-wider">Tuition</th>
+                            {showDetailedFees && <th className="p-3 text-[10px] font-bold uppercase tracking-wider">Exam</th>}
+                            {showDetailedFees && <th className="p-3 text-[10px] font-bold uppercase tracking-wider">Computer</th>}
+                            <th className="p-3 text-[10px] font-bold uppercase tracking-wider">Transport</th>
+                            {showDetailedFees && <th className="p-3 text-[10px] font-bold uppercase tracking-wider">PTM Fine</th>}
+                            {showDetailedFees && <th className="p-3 text-[10px] font-bold uppercase tracking-wider">Tie & Belt</th>}
+                            {showDetailedFees && <th className="p-3 text-[10px] font-bold uppercase tracking-wider">Building</th>}
+                            {showDetailedFees && <th className="p-3 text-[10px] font-bold uppercase tracking-wider">Annual</th>}
+                            {showDetailedFees && <th className="p-3 text-[10px] font-bold uppercase tracking-wider">Prev Dues</th>}
+                            {!showDetailedFees && <th className="p-3 text-[10px] font-bold uppercase tracking-wider">Other</th>}
+                            <th className="p-3 text-[10px] font-bold uppercase tracking-wider font-serif">Total</th>
+                            <th className="p-3 text-[10px] font-bold uppercase tracking-wider">Paid</th>
+                            <th className="p-3 text-[10px] font-bold uppercase tracking-wider">Remaining</th>
+                            <th className="p-3 text-[10px] font-bold uppercase tracking-wider">Status</th>
+                            <th className="p-3 text-right text-[10px] font-bold uppercase tracking-wider">Action</th>
                           </tr>
                         </thead>
                         <tbody className="divide-y divide-slate-100 text-slate-600">
@@ -812,7 +812,7 @@ export default function FeePortal({
                               parseFloat(fee.previousSessionDues || "0");
                             return (
                               <tr key={fee.id} className="hover:bg-slate-50/50 transition">
-                                <td className="p-3 font-bold text-slate-800">{fee.month}</td>
+                                <td className="p-3 font-semibold text-slate-800">{fee.month}</td>
                                 {showDetailedFees && <td className="p-3">₹{fee.admissionFee}</td>}
                                 <td className="p-3">₹{fee.tuitionFee}</td>
                                 {showDetailedFees && <td className="p-3">₹{fee.examFee}</td>}
@@ -824,11 +824,11 @@ export default function FeePortal({
                                 {showDetailedFees && <td className="p-3">₹{fee.annualCharges}</td>}
                                 {showDetailedFees && <td className="p-3">₹{fee.previousSessionDues || 0}</td>}
                                 {!showDetailedFees && <td className="p-3">₹{other.toFixed(2)}</td>}
-                                <td className="p-3 font-bold text-slate-700">₹{fee.total}</td>
-                                <td className="p-3 text-emerald-600 font-bold">₹{paid.toFixed(2)}</td>
-                                <td className="p-3 text-rose-600 font-bold">₹{remaining.toFixed(2)}</td>
+                                <td className="p-3 font-semibold text-slate-700">₹{fee.total}</td>
+                                <td className="p-3 text-emerald-600 font-semibold">₹{paid.toFixed(2)}</td>
+                                <td className="p-3 text-rose-600 font-semibold">₹{remaining.toFixed(2)}</td>
                                 <td className="p-3">
-                                  <span className={`inline-flex px-2 py-0.5 rounded-full text-[9px] font-black uppercase tracking-wider border ${
+                                  <span className={`inline-flex px-2 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider border ${
                                     fee.status === "PAID" 
                                       ? "bg-emerald-50 border-emerald-200 text-emerald-700" 
                                       : fee.status === "PARTIALLY_PAID"
@@ -866,26 +866,26 @@ export default function FeePortal({
 
                     {/* Summary Bar inside the Ledger table container */}
                     {studentFees.length > 0 && (
-                      <div className="bg-brand-green text-white p-4 flex flex-wrap items-center justify-between gap-4 font-bold text-xs sticky bottom-0 z-10 shadow-lg border-t border-brand-green/20">
+                      <div className="bg-brand-green text-white p-4 flex flex-wrap items-center justify-between gap-4 font-semibold text-xs sticky bottom-0 z-10 shadow-lg border-t border-brand-green/20">
                         <div>
-                          <span className="text-[10px] font-black uppercase tracking-wider text-slate-300">Student Ledger Summary</span>
+                          <span className="text-[10px] font-bold uppercase tracking-wider text-slate-300">Student Ledger Summary</span>
                         </div>
                         <div className="flex items-center gap-6">
                           <div className="flex flex-col">
                             <span className="text-[9px] uppercase tracking-wider text-slate-300">Total Billing</span>
-                            <span className="text-sm font-black">
+                            <span className="text-sm font-bold">
                               ₹{studentFees.reduce((sum: number, fee: any) => sum + parseFloat(fee.total), 0).toFixed(2)}
                             </span>
                           </div>
                           <div className="flex flex-col">
                             <span className="text-[9px] uppercase tracking-wider text-slate-300">Total Paid</span>
-                            <span className="text-sm font-black text-emerald-400">
+                            <span className="text-sm font-bold text-emerald-400">
                               ₹{studentFees.reduce((sum: number, fee: any) => sum + (fee.payments?.reduce((s: number, p: any) => s + parseFloat(p.amountPaid), 0) ?? 0), 0).toFixed(2)}
                             </span>
                           </div>
                           <div className="flex flex-col">
                             <span className="text-[9px] uppercase tracking-wider text-slate-300">Total Remaining</span>
-                            <span className="text-sm font-black text-brand-green">
+                            <span className="text-sm font-bold text-brand-green">
                               ₹{(
                                 studentFees.reduce((sum: number, fee: any) => sum + parseFloat(fee.total), 0) -
                                 studentFees.reduce((sum: number, fee: any) => sum + (fee.payments?.reduce((s: number, p: any) => s + parseFloat(p.amountPaid), 0) ?? 0), 0)
@@ -906,30 +906,30 @@ export default function FeePortal({
         {false && (
           <form onSubmit={handleAddStudent} className="space-y-6 max-w-3xl">
             <div>
-              <h3 className="text-sm font-black text-slate-800 mb-1">Student Registration & Monthly Setup</h3>
-              <p className="text-[10px] text-slate-400 font-semibold">Registering a student automatically generates monthly fee structures based on their admission date.</p>
+              <h3 className="text-sm font-bold text-slate-800 mb-1">Student Registration & Monthly Setup</h3>
+              <p className="text-[10px] text-slate-400 font-medium">Registering a student automatically generates monthly fee structures based on their admission date.</p>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-1">
-                <label className="text-[10px] font-black uppercase tracking-wider text-slate-400">Full Name</label>
+                <label className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Full Name</label>
                 <input
                   type="text"
                   required
                   placeholder="Student's Name"
                   value={studentForm.name}
                   onChange={(e) => setStudentForm(prev => ({ ...prev, name: e.target.value }))}
-                  className="w-full px-3 py-2 text-xs font-bold text-slate-800 border border-slate-200 rounded-xl focus:outline-none focus:border-brand-green"
+                  className="w-full px-3 py-2 text-xs font-semibold text-slate-800 border border-slate-200 rounded-xl focus:outline-none focus:border-brand-green"
                 />
               </div>
 
               <div className="space-y-1">
-                <label className="text-[10px] font-black uppercase tracking-wider text-slate-400">Class Enrolled</label>
+                <label className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Class Enrolled</label>
                 <select
                   required
                   value={studentForm.className}
                   onChange={(e) => setStudentForm(prev => ({ ...prev, className: e.target.value }))}
-                  className="w-full px-3 py-2 text-xs font-bold text-slate-800 border border-slate-200 rounded-xl focus:outline-none cursor-pointer bg-white"
+                  className="w-full px-3 py-2 text-xs font-semibold text-slate-800 border border-slate-200 rounded-xl focus:outline-none cursor-pointer bg-white"
                 >
                   <option value="">-- Select Class --</option>
                   {classes.map(c => (
@@ -939,80 +939,80 @@ export default function FeePortal({
               </div>
 
               <div className="space-y-1">
-                <label className="text-[10px] font-black uppercase tracking-wider text-slate-400">Date of Admission</label>
+                <label className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Date of Admission</label>
                 <input
                   type="date"
                   required
                   value={studentForm.admissionDate}
                   onChange={(e) => setStudentForm(prev => ({ ...prev, admissionDate: e.target.value }))}
-                  className="w-full px-3 py-2 text-xs font-bold text-slate-800 border border-slate-200 rounded-xl focus:outline-none focus:border-brand-green"
+                  className="w-full px-3 py-2 text-xs font-semibold text-slate-800 border border-slate-200 rounded-xl focus:outline-none focus:border-brand-green"
                 />
               </div>
 
               <div className="space-y-1">
-                <label className="text-[10px] font-black uppercase tracking-wider text-slate-400">Date of Birth</label>
+                <label className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Date of Birth</label>
                 <input
                   type="date"
                   required
                   value={studentForm.dob}
                   onChange={(e) => setStudentForm(prev => ({ ...prev, dob: e.target.value }))}
-                  className="w-full px-3 py-2 text-xs font-bold text-slate-800 border border-slate-200 rounded-xl focus:outline-none focus:border-brand-green"
+                  className="w-full px-3 py-2 text-xs font-semibold text-slate-800 border border-slate-200 rounded-xl focus:outline-none focus:border-brand-green"
                 />
               </div>
 
               <div className="space-y-1">
-                <label className="text-[10px] font-black uppercase tracking-wider text-slate-400">Card No. (Roll No)</label>
+                <label className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Card No. (Roll No)</label>
                 <input
                   type="text"
                   required
                   placeholder="e.g. 101"
                   value={studentForm.cardNo}
                   onChange={(e) => setStudentForm(prev => ({ ...prev, cardNo: e.target.value }))}
-                  className="w-full px-3 py-2 text-xs font-bold text-slate-800 border border-slate-200 rounded-xl focus:outline-none focus:border-brand-green"
+                  className="w-full px-3 py-2 text-xs font-semibold text-slate-800 border border-slate-200 rounded-xl focus:outline-none focus:border-brand-green"
                 />
               </div>
 
               <div className="space-y-1">
-                <label className="text-[10px] font-black uppercase tracking-wider text-slate-400">Father's Name</label>
+                <label className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Father's Name</label>
                 <input
                   type="text"
                   required
                   placeholder="Father's Full Name"
                   value={studentForm.fatherName}
                   onChange={(e) => setStudentForm(prev => ({ ...prev, fatherName: e.target.value }))}
-                  className="w-full px-3 py-2 text-xs font-bold text-slate-800 border border-slate-200 rounded-xl focus:outline-none focus:border-brand-green"
+                  className="w-full px-3 py-2 text-xs font-semibold text-slate-800 border border-slate-200 rounded-xl focus:outline-none focus:border-brand-green"
                 />
               </div>
 
               <div className="space-y-1">
-                <label className="text-[10px] font-black uppercase tracking-wider text-slate-400">Mother's Name</label>
+                <label className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Mother's Name</label>
                 <input
                   type="text"
                   placeholder="Mother's Full Name"
                   value={studentForm.motherName}
                   onChange={(e) => setStudentForm(prev => ({ ...prev, motherName: e.target.value }))}
-                  className="w-full px-3 py-2 text-xs font-bold text-slate-800 border border-slate-200 rounded-xl focus:outline-none focus:border-brand-green"
+                  className="w-full px-3 py-2 text-xs font-semibold text-slate-800 border border-slate-200 rounded-xl focus:outline-none focus:border-brand-green"
                 />
               </div>
 
               <div className="space-y-1">
-                <label className="text-[10px] font-black uppercase tracking-wider text-slate-400">Contact Number</label>
+                <label className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Contact Number</label>
                 <input
                   type="tel"
                   required
                   placeholder="10-digit mobile"
                   value={studentForm.contactNo}
                   onChange={(e) => setStudentForm(prev => ({ ...prev, contactNo: e.target.value }))}
-                  className="w-full px-3 py-2 text-xs font-bold text-slate-800 border border-slate-200 rounded-xl focus:outline-none focus:border-brand-green"
+                  className="w-full px-3 py-2 text-xs font-semibold text-slate-800 border border-slate-200 rounded-xl focus:outline-none focus:border-brand-green"
                 />
               </div>
 
               <div className="space-y-1">
-                <label className="text-[10px] font-black uppercase tracking-wider text-slate-400">Transit / Transport Station</label>
+                <label className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Transit / Transport Station</label>
                 <select
                   value={studentForm.station}
                   onChange={(e) => setStudentForm(prev => ({ ...prev, station: e.target.value }))}
-                  className="w-full px-3 py-2 text-xs font-bold text-slate-800 border border-slate-200 rounded-xl focus:outline-none cursor-pointer bg-white"
+                  className="w-full px-3 py-2 text-xs font-semibold text-slate-800 border border-slate-200 rounded-xl focus:outline-none cursor-pointer bg-white"
                 >
                   <option value="">Day Scholar (No Bus)</option>
                   {stations.map(st => (
@@ -1022,22 +1022,22 @@ export default function FeePortal({
               </div>
 
               <div className="space-y-1">
-                <label className="text-[10px] font-black uppercase tracking-wider text-slate-400">Initial Amount Collected (Upfront Deposit)</label>
+                <label className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Initial Amount Collected (Upfront Deposit)</label>
                 <input
                   type="number"
                   placeholder="e.g. 5000 (0 if none)"
                   value={studentForm.initialAmountPaid}
                   onChange={(e) => setStudentForm(prev => ({ ...prev, initialAmountPaid: e.target.value }))}
-                  className="w-full px-3 py-2 text-xs font-bold text-slate-800 border border-slate-200 rounded-xl focus:outline-none focus:border-brand-green"
+                  className="w-full px-3 py-2 text-xs font-semibold text-slate-800 border border-slate-200 rounded-xl focus:outline-none focus:border-brand-green"
                 />
               </div>
 
               <div className="space-y-1">
-                <label className="text-[10px] font-black uppercase tracking-wider text-slate-400">Payment Mode (Upfront)</label>
+                <label className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Payment Mode (Upfront)</label>
                 <select
                   value={studentForm.paymentMode}
                   onChange={(e) => setStudentForm(prev => ({ ...prev, paymentMode: e.target.value as "CASH" | "UPI" }))}
-                  className="w-full px-3 py-2 text-xs font-bold text-slate-800 border border-slate-200 rounded-xl focus:outline-none cursor-pointer bg-white"
+                  className="w-full px-3 py-2 text-xs font-semibold text-slate-800 border border-slate-200 rounded-xl focus:outline-none cursor-pointer bg-white"
                 >
                   <option value="CASH">CASH</option>
                   <option value="UPI">UPI (Digital)</option>
@@ -1048,7 +1048,7 @@ export default function FeePortal({
             <button
               type="submit"
               disabled={submitLoading}
-              className="px-5 py-2.5 bg-brand-green hover:bg-blue-950 text-white rounded-xl text-xs font-bold transition border-0 cursor-pointer active:scale-95 flex items-center justify-center gap-2"
+              className="px-5 py-2.5 bg-brand-green hover:bg-blue-950 text-white rounded-xl text-xs font-semibold transition border-0 cursor-pointer active:scale-95 flex items-center justify-center gap-2"
             >
               {submitLoading && <Loader2 className="animate-spin" size={13} />}
               Register Student
@@ -1079,29 +1079,29 @@ export default function FeePortal({
             </button>
 
             <div>
-              <h3 className="text-sm font-black text-slate-800 leading-none">Collect Payments</h3>
-              <p className="text-[10px] text-slate-400 font-semibold mt-1">Allocate payment sequentially for {selectedStudent.name}</p>
+              <h3 className="text-sm font-bold text-slate-800 leading-none">Collect Payments</h3>
+              <p className="text-[10px] text-slate-400 font-medium mt-1">Allocate payment sequentially for {selectedStudent.name}</p>
             </div>
 
             <form onSubmit={handleCollectPayment} className="space-y-4">
               <div className="space-y-1">
-                <label className="text-[10px] font-black uppercase tracking-wider text-slate-400">Amount to Collect (₹)</label>
+                <label className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Amount to Collect (₹)</label>
                 <input
                   type="number"
                   required
                   placeholder="e.g. 1500"
                   value={paymentForm.amountPaid}
                   onChange={(e) => setPaymentForm(prev => ({ ...prev, amountPaid: e.target.value }))}
-                  className="w-full px-3 py-2 text-xs font-bold text-slate-800 border border-slate-200 rounded-xl focus:outline-none focus:border-brand-green"
+                  className="w-full px-3 py-2 text-xs font-semibold text-slate-800 border border-slate-200 rounded-xl focus:outline-none focus:border-brand-green"
                 />
               </div>
 
               <div className="space-y-1">
-                <label className="text-[10px] font-black uppercase tracking-wider text-slate-400">Payment Mode</label>
+                <label className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Payment Mode</label>
                 <select
                   value={paymentForm.paymentMode}
                   onChange={(e) => setPaymentForm(prev => ({ ...prev, paymentMode: e.target.value as "CASH" | "UPI" }))}
-                  className="w-full px-3 py-2 text-xs font-bold text-slate-800 border border-slate-200 rounded-xl focus:outline-none cursor-pointer bg-white"
+                  className="w-full px-3 py-2 text-xs font-semibold text-slate-800 border border-slate-200 rounded-xl focus:outline-none cursor-pointer bg-white"
                 >
                   <option value="CASH">CASH</option>
                   <option value="UPI">UPI (Digital Scan)</option>
@@ -1111,7 +1111,7 @@ export default function FeePortal({
               <button
                 type="submit"
                 disabled={submitLoading}
-                className="w-full py-2.5 bg-brand-green hover:bg-[#439678] text-white rounded-xl text-xs font-bold transition border-0 cursor-pointer active:scale-95 flex items-center justify-center gap-2"
+                className="w-full py-2.5 bg-brand-green hover:bg-[#439678] text-white rounded-xl text-xs font-semibold transition border-0 cursor-pointer active:scale-95 flex items-center justify-center gap-2"
               >
                 {submitLoading && <Loader2 className="animate-spin" size={13} />}
                 Confirm Collection
@@ -1137,119 +1137,119 @@ export default function FeePortal({
             </button>
 
             <div>
-              <h3 className="text-sm font-black text-slate-800 leading-none">Edit Dues - {editingFee.month}</h3>
-              <p className="text-[10px] text-slate-400 font-semibold mt-1">Modify monthly dues for {selectedStudent.name}</p>
+              <h3 className="text-sm font-bold text-slate-800 leading-none">Edit Dues - {editingFee.month}</h3>
+              <p className="text-[10px] text-slate-400 font-medium mt-1">Modify monthly dues for {selectedStudent.name}</p>
             </div>
 
             <form onSubmit={handleSaveFeeUpdate} className="space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 <div className="space-y-1">
-                  <label className="text-[9px] font-black uppercase tracking-wider text-slate-400">Admission Fee (₹)</label>
+                  <label className="text-[9px] font-bold uppercase tracking-wider text-slate-400">Admission Fee (₹)</label>
                   <input
                     type="number"
                     step="any"
                     value={editFeeForm.admissionFee}
                     onChange={(e) => setEditFeeForm(prev => ({ ...prev, admissionFee: e.target.value }))}
-                    className="w-full px-3 py-1.5 text-xs font-bold text-slate-800 border border-slate-200 rounded-xl focus:outline-none focus:border-brand-green"
+                    className="w-full px-3 py-1.5 text-xs font-semibold text-slate-800 border border-slate-200 rounded-xl focus:outline-none focus:border-brand-green"
                   />
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-[9px] font-black uppercase tracking-wider text-slate-400">Tuition Fee (₹)</label>
+                  <label className="text-[9px] font-bold uppercase tracking-wider text-slate-400">Tuition Fee (₹)</label>
                   <input
                     type="number"
                     step="any"
                     value={editFeeForm.tuitionFee}
                     onChange={(e) => setEditFeeForm(prev => ({ ...prev, tuitionFee: e.target.value }))}
-                    className="w-full px-3 py-1.5 text-xs font-bold text-slate-800 border border-slate-200 rounded-xl focus:outline-none focus:border-brand-green"
+                    className="w-full px-3 py-1.5 text-xs font-semibold text-slate-800 border border-slate-200 rounded-xl focus:outline-none focus:border-brand-green"
                   />
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-[9px] font-black uppercase tracking-wider text-slate-400">Bus Charges (₹)</label>
+                  <label className="text-[9px] font-bold uppercase tracking-wider text-slate-400">Bus Charges (₹)</label>
                   <input
                     type="number"
                     step="any"
                     value={editFeeForm.schoolBusCharges}
                     onChange={(e) => setEditFeeForm(prev => ({ ...prev, schoolBusCharges: e.target.value }))}
-                    className="w-full px-3 py-1.5 text-xs font-bold text-slate-800 border border-slate-200 rounded-xl focus:outline-none focus:border-brand-green"
+                    className="w-full px-3 py-1.5 text-xs font-semibold text-slate-800 border border-slate-200 rounded-xl focus:outline-none focus:border-brand-green"
                   />
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-[9px] font-black uppercase tracking-wider text-slate-400">Exam Fee (₹)</label>
+                  <label className="text-[9px] font-bold uppercase tracking-wider text-slate-400">Exam Fee (₹)</label>
                   <input
                     type="number"
                     step="any"
                     value={editFeeForm.examFee}
                     onChange={(e) => setEditFeeForm(prev => ({ ...prev, examFee: e.target.value }))}
-                    className="w-full px-3 py-1.5 text-xs font-bold text-slate-800 border border-slate-200 rounded-xl focus:outline-none focus:border-brand-green"
+                    className="w-full px-3 py-1.5 text-xs font-semibold text-slate-800 border border-slate-200 rounded-xl focus:outline-none focus:border-brand-green"
                   />
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-[9px] font-black uppercase tracking-wider text-slate-400">Computer Fee (₹)</label>
+                  <label className="text-[9px] font-bold uppercase tracking-wider text-slate-400">Computer Fee (₹)</label>
                   <input
                     type="number"
                     step="any"
                     value={editFeeForm.computerFee}
                     onChange={(e) => setEditFeeForm(prev => ({ ...prev, computerFee: e.target.value }))}
-                    className="w-full px-3 py-1.5 text-xs font-bold text-slate-800 border border-slate-200 rounded-xl focus:outline-none focus:border-brand-green"
+                    className="w-full px-3 py-1.5 text-xs font-semibold text-slate-800 border border-slate-200 rounded-xl focus:outline-none focus:border-brand-green"
                   />
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-[9px] font-black uppercase tracking-wider text-slate-400">PTM Fine (₹)</label>
+                  <label className="text-[9px] font-bold uppercase tracking-wider text-slate-400">PTM Fine (₹)</label>
                   <input
                     type="number"
                     step="any"
                     value={editFeeForm.ptmFine}
                     onChange={(e) => setEditFeeForm(prev => ({ ...prev, ptmFine: e.target.value }))}
-                    className="w-full px-3 py-1.5 text-xs font-bold text-slate-800 border border-slate-200 rounded-xl focus:outline-none focus:border-brand-green"
+                    className="w-full px-3 py-1.5 text-xs font-semibold text-slate-800 border border-slate-200 rounded-xl focus:outline-none focus:border-brand-green"
                   />
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-[9px] font-black uppercase tracking-wider text-slate-400">Tie & Belt (₹)</label>
+                  <label className="text-[9px] font-bold uppercase tracking-wider text-slate-400">Tie & Belt (₹)</label>
                   <input
                     type="number"
                     step="any"
                     value={editFeeForm.tieBeltBooks}
                     onChange={(e) => setEditFeeForm(prev => ({ ...prev, tieBeltBooks: e.target.value }))}
-                    className="w-full px-3 py-1.5 text-xs font-bold text-slate-800 border border-slate-200 rounded-xl focus:outline-none focus:border-brand-green"
+                    className="w-full px-3 py-1.5 text-xs font-semibold text-slate-800 border border-slate-200 rounded-xl focus:outline-none focus:border-brand-green"
                   />
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-[9px] font-black uppercase tracking-wider text-slate-400">Building Fund (₹)</label>
+                  <label className="text-[9px] font-bold uppercase tracking-wider text-slate-400">Building Fund (₹)</label>
                   <input
                     type="number"
                     step="any"
                     value={editFeeForm.buildingFund}
                     onChange={(e) => setEditFeeForm(prev => ({ ...prev, buildingFund: e.target.value }))}
-                    className="w-full px-3 py-1.5 text-xs font-bold text-slate-800 border border-slate-200 rounded-xl focus:outline-none focus:border-brand-green"
+                    className="w-full px-3 py-1.5 text-xs font-semibold text-slate-800 border border-slate-200 rounded-xl focus:outline-none focus:border-brand-green"
                   />
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-[9px] font-black uppercase tracking-wider text-slate-400">Annual Dues (₹)</label>
+                  <label className="text-[9px] font-bold uppercase tracking-wider text-slate-400">Annual Dues (₹)</label>
                   <input
                     type="number"
                     step="any"
                     value={editFeeForm.annualCharges}
                     onChange={(e) => setEditFeeForm(prev => ({ ...prev, annualCharges: e.target.value }))}
-                    className="w-full px-3 py-1.5 text-xs font-bold text-slate-800 border border-slate-200 rounded-xl focus:outline-none focus:border-brand-green"
+                    className="w-full px-3 py-1.5 text-xs font-semibold text-slate-800 border border-slate-200 rounded-xl focus:outline-none focus:border-brand-green"
                   />
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-[9px] font-black uppercase tracking-wider text-slate-400">Previous Dues (₹)</label>
+                  <label className="text-[9px] font-bold uppercase tracking-wider text-slate-400">Previous Dues (₹)</label>
                   <input
                     type="number"
                     step="any"
                     value={editFeeForm.previousSessionDues}
                     onChange={(e) => setEditFeeForm(prev => ({ ...prev, previousSessionDues: e.target.value }))}
-                    className="w-full px-3 py-1.5 text-xs font-bold text-slate-800 border border-slate-200 rounded-xl focus:outline-none focus:border-brand-green"
+                    className="w-full px-3 py-1.5 text-xs font-semibold text-slate-800 border border-slate-200 rounded-xl focus:outline-none focus:border-brand-green"
                   />
                 </div>
               </div>
@@ -1258,14 +1258,14 @@ export default function FeePortal({
                 <button
                   type="button"
                   onClick={() => setEditingFee(null)}
-                  className="px-4 py-2 border border-slate-200 text-slate-600 rounded-xl text-xs font-bold hover:bg-slate-50 transition active:scale-95"
+                  className="px-4 py-2 border border-slate-200 text-slate-600 rounded-xl text-xs font-semibold hover:bg-slate-50 transition active:scale-95"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={submitLoading}
-                  className="px-5 py-2 bg-brand-green hover:bg-blue-950 text-white rounded-xl text-xs font-bold transition border-0 cursor-pointer active:scale-95 flex items-center gap-1.5"
+                  className="px-5 py-2 bg-brand-green hover:bg-blue-950 text-white rounded-xl text-xs font-semibold transition border-0 cursor-pointer active:scale-95 flex items-center gap-1.5"
                 >
                   {submitLoading && <Loader2 className="animate-spin" size={13} />}
                   Save Changes

@@ -36,7 +36,7 @@ export default function HowToApply() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-3xl md:text-4xl font-normal md:font-semibold text-slate-900 tracking-tight mb-4"
+            className="text-3xl md:text-4xl font-normal md:font-medium text-slate-900 tracking-tight mb-4"
           >
             How to Apply Online
           </motion.h2>
@@ -63,11 +63,11 @@ export default function HowToApply() {
             >
               <div className="w-16 h-16 rounded-2xl bg-white shadow-lg shadow-slate-200/50 flex items-center justify-center mb-6 relative z-10 border border-slate-100">
                 {step.icon}
-                <div className="absolute -top-3 -right-3 w-8 h-8 rounded-full bg-brand-green text-white text-sm font-normal md:font-semibold flex items-center justify-center border-4 border-slate-50">
+                <div className="absolute -top-3 -right-3 w-8 h-8 rounded-full bg-brand-green text-white text-sm font-normal md:font-medium flex items-center justify-center border-4 border-slate-50">
                   {idx + 1}
                 </div>
               </div>
-              <h3 className="text-lg font-normal md:font-semibold text-slate-900 mb-3">{step.title}</h3>
+              <h3 className="text-lg font-normal md:font-medium text-slate-900 mb-3">{step.title}</h3>
               <p className="text-sm text-slate-500 font-medium leading-relaxed">
                 {step.desc}
               </p>
@@ -89,9 +89,9 @@ export default function HowToApply() {
         >
           <p className="text-slate-500 font-medium mb-2">Need assistance with your application?</p>
           <div className="inline-flex gap-4 items-center">
-            <span className="text-brand-navy font-normal md:font-semibold">Call: 01894-252115</span>
+            <span className="text-brand-navy font-normal md:font-medium">Call: 01894-252115</span>
             <span className="w-1 h-1 rounded-full bg-slate-300"></span>
-            <span className="text-brand-navy font-normal md:font-semibold">9816521168</span>
+            <span className="text-brand-navy font-normal md:font-medium">9816521168</span>
           </div>
         </motion.div>
       </div>

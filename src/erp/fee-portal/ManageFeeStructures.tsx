@@ -144,18 +144,18 @@ export default function ManageFeeStructures({ selectedSession, onRefreshStats }:
     );
   });
 
-  const inputCls = "w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-mono font-bold focus:outline-none focus:ring-2 focus:ring-[#093C5D]/15 focus:border-brand-green-dark transition-all";
+  const inputCls = "w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-mono font-semibold focus:outline-none focus:ring-2 focus:ring-[#093C5D]/15 focus:border-brand-green-dark transition-all";
 
   return (
     <div className="space-y-6">
       {/* Filters card */}
       <div className="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-sm flex flex-col sm:flex-row items-center gap-4">
         <div className="flex items-center gap-2 bg-slate-50 border border-slate-200 rounded-xl p-2.5 w-full sm:w-auto flex-1">
-          <label className="text-xs font-black uppercase tracking-wider text-brand-green-dark shrink-0">Class:</label>
+          <label className="text-xs font-bold uppercase tracking-wider text-brand-green-dark shrink-0">Class:</label>
           <select
             value={targetClass}
             onChange={(e) => setTargetClass(e.target.value)}
-            className="flex-1 bg-transparent border-0 text-xs font-bold text-slate-700 focus:outline-none cursor-pointer"
+            className="flex-1 bg-transparent border-0 text-xs font-semibold text-slate-700 focus:outline-none cursor-pointer"
           >
             <option value="All">All Classes</option>
             {dbClasses.map((cls) => (
@@ -167,11 +167,11 @@ export default function ManageFeeStructures({ selectedSession, onRefreshStats }:
         </div>
 
         <div className="flex items-center gap-2 bg-slate-50 border border-slate-200 rounded-xl p-2.5 w-full sm:w-auto flex-1">
-          <label className="text-xs font-black uppercase tracking-wider text-brand-green-dark shrink-0">Month:</label>
+          <label className="text-xs font-bold uppercase tracking-wider text-brand-green-dark shrink-0">Month:</label>
           <select
             value={targetMonth}
             onChange={(e) => setTargetMonth(e.target.value)}
-            className="flex-1 bg-transparent border-0 text-xs font-bold text-slate-700 focus:outline-none cursor-pointer"
+            className="flex-1 bg-transparent border-0 text-xs font-semibold text-slate-700 focus:outline-none cursor-pointer"
           >
             {months.map((m) => (
               <option key={m} value={m}>
@@ -188,7 +188,7 @@ export default function ManageFeeStructures({ selectedSession, onRefreshStats }:
             placeholder="Search by name, roll no..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-9 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-[#093C5D]/15 focus:border-brand-green-dark transition-all"
+            className="w-full pl-9 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium focus:outline-none focus:ring-2 focus:ring-[#093C5D]/15 focus:border-brand-green-dark transition-all"
           />
         </div>
       </div>
@@ -196,10 +196,10 @@ export default function ManageFeeStructures({ selectedSession, onRefreshStats }:
       {/* Main Table */}
       <div className="bg-white rounded-3xl border border-slate-200/80 p-5 shadow-sm">
         <div className="border-b border-slate-100 pb-3 mb-4">
-          <h3 className="text-sm font-black text-brand-green-dark uppercase tracking-wider">
+          <h3 className="text-sm font-bold text-brand-green-dark uppercase tracking-wider">
             Fee Structures for {targetMonth} ({targetClass === "All" ? "All Classes" : targetClass})
           </h3>
-          <p className="text-[10px] font-semibold text-slate-400 mt-0.5">
+          <p className="text-[10px] font-medium text-slate-400 mt-0.5">
             Showing rolled out structures. Only Owner can modify fee amounts.
           </p>
         </div>
@@ -207,17 +207,17 @@ export default function ManageFeeStructures({ selectedSession, onRefreshStats }:
         {loading ? (
           <div className="flex flex-col items-center justify-center py-20 gap-3">
             <Loader2 className="animate-spin text-brand-green-dark" size={26} />
-            <span className="text-xs font-bold text-slate-400 uppercase tracking-widest animate-pulse">Loading fee structures...</span>
+            <span className="text-xs font-semibold text-slate-400 uppercase tracking-widest animate-pulse">Loading fee structures...</span>
           </div>
         ) : filteredList.length === 0 ? (
-          <div className="text-center py-16 text-slate-400 font-semibold italic text-xs">
+          <div className="text-center py-16 text-slate-400 font-medium italic text-xs">
             No fee structures found for this class and month. Make sure to roll out demand first.
           </div>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full border-collapse text-left whitespace-nowrap text-xs">
               <thead>
-                <tr className="border-b border-slate-200 bg-slate-50 text-[10px] font-black uppercase tracking-wider text-slate-450">
+                <tr className="border-b border-slate-200 bg-slate-50 text-[10px] font-bold uppercase tracking-wider text-slate-450">
                   <th className="py-2.5 px-4">Roll No</th>
                   <th className="py-2.5 px-4">Student Name</th>
                   <th className="py-2.5 px-4">Class</th>
@@ -228,7 +228,7 @@ export default function ManageFeeStructures({ selectedSession, onRefreshStats }:
                   <th className="py-2.5 px-4 text-right">Building</th>
                   <th className="py-2.5 px-4 text-right">Annual</th>
                   <th className="py-2.5 px-4 text-right">Other/Prev</th>
-                  <th className="py-2.5 px-4 text-right font-bold bg-slate-100/50">Net Total</th>
+                  <th className="py-2.5 px-4 text-right font-semibold bg-slate-100/50">Net Total</th>
                   <th className="py-2.5 px-4 text-center">Status</th>
                   <th className="py-2.5 px-4 text-center">Actions</th>
                 </tr>
@@ -238,9 +238,9 @@ export default function ManageFeeStructures({ selectedSession, onRefreshStats }:
                   const otherPrev = Number(fs.admissionFee) + Number(fs.ptmFine) + Number(fs.tieBeltBooks) + Number(fs.previousBalance);
                   return (
                     <tr key={fs.id} className="border-b border-slate-100 hover:bg-slate-50/50">
-                      <td className="py-2.5 px-4 font-mono font-bold text-brand-green-dark">{fs.student.cardNo}</td>
-                      <td className="py-2.5 px-4 font-black text-slate-700">{fs.student.name}</td>
-                      <td className="py-2.5 px-4 font-bold text-slate-500">{fs.studentClass}</td>
+                      <td className="py-2.5 px-4 font-mono font-semibold text-brand-green-dark">{fs.student.cardNo}</td>
+                      <td className="py-2.5 px-4 font-bold text-slate-700">{fs.student.name}</td>
+                      <td className="py-2.5 px-4 font-semibold text-slate-500">{fs.studentClass}</td>
                       <td className="py-2.5 px-4 text-right font-mono text-slate-600">₹{fs.tuitionFee}</td>
                       <td className="py-2.5 px-4 text-right font-mono text-slate-600">₹{fs.schoolBusCharges}</td>
                       <td className="py-2.5 px-4 text-right font-mono text-slate-500">₹{fs.examFee}</td>
@@ -248,9 +248,9 @@ export default function ManageFeeStructures({ selectedSession, onRefreshStats }:
                       <td className="py-2.5 px-4 text-right font-mono text-slate-500">₹{fs.buildingFund}</td>
                       <td className="py-2.5 px-4 text-right font-mono text-slate-500">₹{fs.annualCharges}</td>
                       <td className="py-2.5 px-4 text-right font-mono text-slate-500" title="Admission, PTM Fine, Books & Prev Balance">₹{otherPrev}</td>
-                      <td className="py-2.5 px-4 text-right font-mono font-bold text-slate-800 bg-slate-55/30">₹{fs.totalDemand}</td>
+                      <td className="py-2.5 px-4 text-right font-mono font-semibold text-slate-800 bg-slate-55/30">₹{fs.totalDemand}</td>
                       <td className="py-2.5 px-4 text-center">
-                        <span className={`inline-flex px-2 py-0.5 rounded text-[9px] font-black uppercase tracking-widest border ${
+                        <span className={`inline-flex px-2 py-0.5 rounded text-[9px] font-bold uppercase tracking-widest border ${
                           fs.status === "PAID"
                             ? "bg-emerald-50 border-emerald-200 text-emerald-700"
                             : fs.status === "PARTIALLY_PAID"
@@ -264,7 +264,7 @@ export default function ManageFeeStructures({ selectedSession, onRefreshStats }:
                         <button
                           type="button"
                           onClick={() => handleOpenEdit(fs)}
-                          className="inline-flex items-center gap-1 px-2.5 py-1 bg-slate-100 hover:bg-brand-green text-slate-700 hover:text-white border border-slate-200 hover:border-brand-green-dark rounded-lg text-[10px] font-bold transition cursor-pointer"
+                          className="inline-flex items-center gap-1 px-2.5 py-1 bg-slate-100 hover:bg-brand-green text-slate-700 hover:text-white border border-slate-200 hover:border-brand-green-dark rounded-lg text-[10px] font-semibold transition cursor-pointer"
                         >
                           <Edit2 size={10} /> Edit
                         </button>
@@ -291,9 +291,9 @@ export default function ManageFeeStructures({ selectedSession, onRefreshStats }:
               {/* Modal Header */}
               <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/60 shrink-0">
                 <div>
-                  <h3 className="text-base font-black text-brand-green-dark uppercase tracking-wider">Edit Fee Structure</h3>
-                  <p className="text-xs text-slate-400 font-semibold mt-0.5">
-                    Editing: <span className="font-bold text-brand-green-dark">{editingStructure.student.name}</span> (Roll: {editingStructure.student.cardNo}) for <span className="font-bold text-brand-green-dark">{editingStructure.month}</span>
+                  <h3 className="text-base font-bold text-brand-green-dark uppercase tracking-wider">Edit Fee Structure</h3>
+                  <p className="text-xs text-slate-400 font-medium mt-0.5">
+                    Editing: <span className="font-semibold text-brand-green-dark">{editingStructure.student.name}</span> (Roll: {editingStructure.student.cardNo}) for <span className="font-semibold text-brand-green-dark">{editingStructure.month}</span>
                   </p>
                 </div>
                 <button
@@ -308,7 +308,7 @@ export default function ManageFeeStructures({ selectedSession, onRefreshStats }:
               <form onSubmit={handleSaveEdit} className="flex-1 overflow-y-auto p-6 space-y-5">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-[10px] font-black uppercase tracking-wider text-slate-400 mb-1.5">Tuition Fee</label>
+                    <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Tuition Fee</label>
                     <input
                       type="number"
                       min="0"
@@ -320,7 +320,7 @@ export default function ManageFeeStructures({ selectedSession, onRefreshStats }:
                   </div>
 
                   <div>
-                    <label className="block text-[10px] font-black uppercase tracking-wider text-slate-400 mb-1.5">Bus Charges</label>
+                    <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Bus Charges</label>
                     <input
                       type="number"
                       min="0"
@@ -332,7 +332,7 @@ export default function ManageFeeStructures({ selectedSession, onRefreshStats }:
                   </div>
 
                   <div>
-                    <label className="block text-[10px] font-black uppercase tracking-wider text-slate-400 mb-1.5">Exam Fee</label>
+                    <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Exam Fee</label>
                     <input
                       type="number"
                       min="0"
@@ -344,7 +344,7 @@ export default function ManageFeeStructures({ selectedSession, onRefreshStats }:
                   </div>
 
                   <div>
-                    <label className="block text-[10px] font-black uppercase tracking-wider text-slate-400 mb-1.5">Computer Fee</label>
+                    <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Computer Fee</label>
                     <input
                       type="number"
                       min="0"
@@ -356,7 +356,7 @@ export default function ManageFeeStructures({ selectedSession, onRefreshStats }:
                   </div>
 
                   <div>
-                    <label className="block text-[10px] font-black uppercase tracking-wider text-slate-400 mb-1.5">Building Fund</label>
+                    <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Building Fund</label>
                     <input
                       type="number"
                       min="0"
@@ -368,7 +368,7 @@ export default function ManageFeeStructures({ selectedSession, onRefreshStats }:
                   </div>
 
                   <div>
-                    <label className="block text-[10px] font-black uppercase tracking-wider text-slate-400 mb-1.5">Annual Charges</label>
+                    <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Annual Charges</label>
                     <input
                       type="number"
                       min="0"
@@ -380,7 +380,7 @@ export default function ManageFeeStructures({ selectedSession, onRefreshStats }:
                   </div>
 
                   <div>
-                    <label className="block text-[10px] font-black uppercase tracking-wider text-slate-400 mb-1.5">Tie, Belt & Books</label>
+                    <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Tie, Belt & Books</label>
                     <input
                       type="number"
                       min="0"
@@ -392,7 +392,7 @@ export default function ManageFeeStructures({ selectedSession, onRefreshStats }:
                   </div>
 
                   <div>
-                    <label className="block text-[10px] font-black uppercase tracking-wider text-slate-400 mb-1.5">Admission Fee</label>
+                    <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Admission Fee</label>
                     <input
                       type="number"
                       min="0"
@@ -404,7 +404,7 @@ export default function ManageFeeStructures({ selectedSession, onRefreshStats }:
                   </div>
 
                   <div>
-                    <label className="block text-[10px] font-black uppercase tracking-wider text-slate-400 mb-1.5">PTM Fine</label>
+                    <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">PTM Fine</label>
                     <input
                       type="number"
                       min="0"
@@ -416,12 +416,12 @@ export default function ManageFeeStructures({ selectedSession, onRefreshStats }:
                   </div>
 
                   <div>
-                    <label className="block text-[10px] font-black uppercase tracking-wider text-brand-green-dark mb-1.5">Previous Balance (Locked)</label>
+                    <label className="block text-[10px] font-bold uppercase tracking-wider text-brand-green-dark mb-1.5">Previous Balance (Locked)</label>
                     <input
                       type="text"
                       disabled
                       value={`₹${editingStructure.previousBalance}`}
-                      className="w-full px-4 py-2.5 bg-slate-100 border border-slate-200 rounded-xl text-sm font-mono font-bold text-slate-500 cursor-not-allowed focus:outline-none"
+                      className="w-full px-4 py-2.5 bg-slate-100 border border-slate-200 rounded-xl text-sm font-mono font-semibold text-slate-500 cursor-not-allowed focus:outline-none"
                     />
                   </div>
                 </div>
@@ -434,13 +434,13 @@ export default function ManageFeeStructures({ selectedSession, onRefreshStats }:
                 </div>
 
                 {error && (
-                  <div className="p-3.5 bg-rose-50 border border-rose-200 text-rose-700 text-xs font-bold rounded-xl">
+                  <div className="p-3.5 bg-rose-50 border border-rose-200 text-rose-700 text-xs font-semibold rounded-xl">
                     {error}
                   </div>
                 )}
 
                 {success && (
-                  <div className="p-3.5 bg-emerald-50 border border-emerald-250 text-emerald-700 text-xs font-bold rounded-xl">
+                  <div className="p-3.5 bg-emerald-50 border border-emerald-250 text-emerald-700 text-xs font-semibold rounded-xl">
                     {success}
                   </div>
                 )}
@@ -450,7 +450,7 @@ export default function ManageFeeStructures({ selectedSession, onRefreshStats }:
                   <button
                     type="button"
                     onClick={() => setEditingStructure(null)}
-                    className="px-4 py-2.5 bg-white border border-slate-200 text-slate-500 hover:text-slate-700 rounded-xl text-xs font-black uppercase tracking-wider cursor-pointer hover:bg-slate-50"
+                    className="px-4 py-2.5 bg-white border border-slate-200 text-slate-500 hover:text-slate-700 rounded-xl text-xs font-bold uppercase tracking-wider cursor-pointer hover:bg-slate-50"
                   >
                     Cancel
                   </button>
@@ -458,7 +458,7 @@ export default function ManageFeeStructures({ selectedSession, onRefreshStats }:
                     <button
                       type="submit"
                       disabled={saving}
-                      className="px-5 py-2.5 bg-brand-green hover:bg-[#0b4870] text-white rounded-xl text-xs font-black uppercase tracking-wider cursor-pointer border-0 shadow-sm transition active:scale-95 flex items-center gap-1.5"
+                      className="px-5 py-2.5 bg-brand-green hover:bg-[#0b4870] text-white rounded-xl text-xs font-bold uppercase tracking-wider cursor-pointer border-0 shadow-sm transition active:scale-95 flex items-center gap-1.5"
                     >
                       {saving ? <Loader2 size={13} className="animate-spin" /> : <Save size={13} />}
                       Save Changes

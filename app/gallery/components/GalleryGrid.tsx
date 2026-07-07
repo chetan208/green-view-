@@ -184,7 +184,7 @@ export default function GalleryGrid() {
             {/* Top Toolbar */}
             <div className="w-full p-4 md:p-6 flex justify-between items-center z-50 bg-gradient-to-b from-black/60 to-transparent">
               <div className="flex flex-col pointer-events-none">
-                <span className="text-white font-semibold text-sm md:text-base tracking-wide drop-shadow-md">
+                <span className="text-white font-medium text-sm md:text-base tracking-wide drop-shadow-md">
                   {activeAlbum.name}
                 </span>
                 <span className="text-white/80 font-medium text-xs drop-shadow-md">
@@ -277,7 +277,7 @@ export default function GalleryGrid() {
                 <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center">
                   <Share2 className="w-5 h-5" />
                 </div>
-                <span className="text-[10px] font-semibold uppercase tracking-wider">Share</span>
+                <span className="text-[10px] font-medium uppercase tracking-wider">Share</span>
               </button>
               
               {activeMediaItem?.type === 'image' && (
@@ -288,7 +288,7 @@ export default function GalleryGrid() {
                   <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center">
                     <Download className="w-5 h-5" />
                   </div>
-                  <span className="text-[10px] font-semibold uppercase tracking-wider">Download</span>
+                  <span className="text-[10px] font-medium uppercase tracking-wider">Download</span>
                 </button>
               )}
             </div>
@@ -312,8 +312,8 @@ export default function GalleryGrid() {
               className="w-full"
             >
               <div className="flex flex-col mb-10">
-                <span className="text-brand-green font-bold tracking-[0.2em] uppercase text-xs mb-2">Our Campus</span>
-                <h1 className="text-3xl md:text-5xl font-black text-slate-900 tracking-tight">Photo & Video Albums</h1>
+                <span className="text-brand-green font-semibold tracking-[0.2em] uppercase text-xs mb-2">Our Campus</span>
+                <h1 className="text-3xl md:text-5xl font-bold text-slate-900 tracking-tight">Photo & Video Albums</h1>
                 <p className="text-slate-500 font-medium mt-3 max-w-lg">
                   Explore memories, moments, and videos captured across various events and campus life at Green View.
                 </p>
@@ -340,10 +340,10 @@ export default function GalleryGrid() {
                     </div>
                     
                     <div className="flex flex-col px-2">
-                      <h2 className="text-base md:text-lg font-bold text-slate-900 group-hover:text-brand-green transition-colors truncate">
+                      <h2 className="text-base md:text-lg font-semibold text-slate-900 group-hover:text-brand-green transition-colors truncate">
                         {album.name}
                       </h2>
-                      <span className="text-sm text-slate-500 font-semibold mt-1">
+                      <span className="text-sm text-slate-500 font-medium mt-1">
                         {album.media.length} Items
                       </span>
                     </div>
@@ -366,14 +366,14 @@ export default function GalleryGrid() {
               <div className="flex flex-col mb-10">
                 <button 
                   onClick={() => setActiveAlbum(null)}
-                  className="text-sm font-bold text-slate-500 hover:text-brand-green transition-colors self-start mb-4 uppercase tracking-widest"
+                  className="text-sm font-semibold text-slate-500 hover:text-brand-green transition-colors self-start mb-4 uppercase tracking-widest"
                 >
                   &larr; Back to Albums
                 </button>
-                <h1 className="text-3xl md:text-5xl font-black text-slate-900 tracking-tight">
+                <h1 className="text-3xl md:text-5xl font-bold text-slate-900 tracking-tight">
                   {activeAlbum.name}
                 </h1>
-                <span className="text-brand-green font-semibold mt-2">{activeAlbum.media.length} Items</span>
+                <span className="text-brand-green font-medium mt-2">{activeAlbum.media.length} Items</span>
               </div>
 
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 md:gap-4">

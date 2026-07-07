@@ -142,13 +142,13 @@ export default function FeeAutomationSettings() {
             <Activity className="text-brand-green-dark" size={24} />
           </div>
           <div>
-            <h2 className="text-xl font-black text-brand-green-dark">Fee Automation & Reminders</h2>
+            <h2 className="text-xl font-bold text-brand-green-dark">Fee Automation & Reminders</h2>
             <p className="text-sm text-slate-500 mt-1">Configure automatic background fee generation and WhatsApp reminders.</p>
           </div>
         </div>
 
         {message && (
-          <div className={`mb-6 px-4 py-3 rounded-xl text-sm font-bold border ${message.type === "success" ? "bg-emerald-50 text-emerald-700 border-emerald-200" : "bg-red-50 text-red-700 border-red-200"}`}>
+          <div className={`mb-6 px-4 py-3 rounded-xl text-sm font-semibold border ${message.type === "success" ? "bg-emerald-50 text-emerald-700 border-emerald-200" : "bg-red-50 text-red-700 border-red-200"}`}>
             {message.text}
           </div>
         )}
@@ -157,7 +157,7 @@ export default function FeeAutomationSettings() {
           {/* Toggle Switch */}
           <div className="flex items-center justify-between p-5 bg-slate-50 border border-slate-100 rounded-xl">
             <div>
-              <h3 className="font-bold text-slate-800">Enable Automation</h3>
+              <h3 className="font-semibold text-slate-800">Enable Automation</h3>
               <p className="text-xs text-slate-500 mt-0.5">Allow the system to automatically generate fees and send WhatsApp reminders.</p>
             </div>
             <label className="relative inline-flex items-center cursor-pointer">
@@ -169,13 +169,13 @@ export default function FeeAutomationSettings() {
           {/* Configuration Inputs */}
           <div className={`grid grid-cols-1 md:grid-cols-2 gap-6 transition-opacity ${!isEnabled ? "opacity-50 pointer-events-none" : "opacity-100"}`}>
             <div>
-              <label className="block text-xs font-black uppercase tracking-wider text-slate-500 mb-2">Start Day of Month</label>
+              <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">Start Day of Month</label>
               <div className="relative">
                 <CalendarClock className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
                 <select 
                   value={startDay} 
                   onChange={(e) => setStartDay(parseInt(e.target.value))}
-                  className="w-full pl-10 pr-4 py-3 bg-white border border-slate-200 rounded-xl text-sm font-bold text-slate-700 focus:outline-none focus:ring-2 focus:ring-[#093C5D]"
+                  className="w-full pl-10 pr-4 py-3 bg-white border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 focus:outline-none focus:ring-2 focus:ring-[#093C5D]"
                 >
                   {Array.from({ length: 28 }, (_, i) => i + 1).map(day => (
                     <option key={day} value={day}>{day}{day === 1 ? 'st' : day === 2 ? 'nd' : day === 3 ? 'rd' : 'th'} of the month</option>
@@ -186,7 +186,7 @@ export default function FeeAutomationSettings() {
             </div>
 
             <div>
-              <label className="block text-xs font-black uppercase tracking-wider text-slate-500 mb-2">Processing Window</label>
+              <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">Processing Window</label>
               <div className="flex items-center gap-2">
                 <input 
                   type="number" 
@@ -194,9 +194,9 @@ export default function FeeAutomationSettings() {
                   max="15"
                   value={windowDays || ""}
                   onChange={(e) => setWindowDays(parseInt(e.target.value) || 1)}
-                  className="w-24 px-4 py-3 bg-white border border-slate-200 rounded-xl text-sm font-bold text-slate-700 focus:outline-none focus:ring-2 focus:ring-[#093C5D]"
+                  className="w-24 px-4 py-3 bg-white border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 focus:outline-none focus:ring-2 focus:ring-[#093C5D]"
                 />
-                <span className="text-sm font-bold text-slate-600">Days</span>
+                <span className="text-sm font-semibold text-slate-600">Days</span>
               </div>
               <p className="text-[10px] text-slate-400 mt-1.5 ml-1">Spreads out the messages over multiple days to prevent WhatsApp bans.</p>
             </div>
@@ -206,7 +206,7 @@ export default function FeeAutomationSettings() {
             <button
               onClick={handleSave}
               disabled={saving || isRunning}
-              className="w-full sm:w-auto px-8 py-3 bg-brand-green hover:bg-[#0b4870] text-white rounded-xl text-sm font-bold shadow-md transition-all disabled:bg-slate-300 flex items-center justify-center gap-2 border-0 cursor-pointer"
+              className="w-full sm:w-auto px-8 py-3 bg-brand-green hover:bg-[#0b4870] text-white rounded-xl text-sm font-semibold shadow-md transition-all disabled:bg-slate-300 flex items-center justify-center gap-2 border-0 cursor-pointer"
             >
               {saving ? <Loader2 size={16} className="animate-spin" /> : <Save size={16} />}
               {saving ? "Saving Configuration..." : "Save Settings"}
@@ -215,7 +215,7 @@ export default function FeeAutomationSettings() {
             <button
               onClick={handleTriggerNow}
               disabled={isTriggering || isRunning}
-              className={`w-full sm:w-auto px-8 py-3 rounded-xl text-sm font-bold shadow-md transition-all flex items-center justify-center gap-2 border cursor-pointer ${
+              className={`w-full sm:w-auto px-8 py-3 rounded-xl text-sm font-semibold shadow-md transition-all flex items-center justify-center gap-2 border cursor-pointer ${
                 isRunning 
                   ? "bg-amber-50 text-amber-700 border-amber-200 cursor-not-allowed" 
                   : "bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border-emerald-200"
@@ -240,11 +240,11 @@ export default function FeeAutomationSettings() {
               <FileText className="text-slate-500" size={20} />
             </div>
             <div>
-              <h2 className="text-lg font-black text-brand-green-dark">Automation Logs</h2>
+              <h2 className="text-lg font-bold text-brand-green-dark">Automation Logs</h2>
               <p className="text-xs text-slate-500 mt-0.5">Track which students have been processed (Last 200).</p>
             </div>
           </div>
-          <div className="text-xs font-bold bg-brand-green/5 text-brand-green-dark px-3 py-1.5 rounded-lg border border-brand-green-dark/10">
+          <div className="text-xs font-semibold bg-brand-green/5 text-brand-green-dark px-3 py-1.5 rounded-lg border border-brand-green-dark/10">
             {logs.length} Entries
           </div>
         </div>
@@ -252,49 +252,49 @@ export default function FeeAutomationSettings() {
         {logs.length === 0 ? (
           <div className="p-12 text-center">
             <Activity className="mx-auto text-slate-300 mb-3" size={32} />
-            <p className="text-sm font-bold text-slate-500">No automation logs found yet.</p>
+            <p className="text-sm font-semibold text-slate-500">No automation logs found yet.</p>
           </div>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse">
               <thead>
                 <tr className="bg-slate-50 border-b border-slate-100">
-                  <th className="px-6 py-4 text-[10px] font-black uppercase tracking-wider text-slate-500">Date & Time</th>
-                  <th className="px-6 py-4 text-[10px] font-black uppercase tracking-wider text-slate-500">Student</th>
-                  <th className="px-6 py-4 text-[10px] font-black uppercase tracking-wider text-slate-500">Roll No</th>
-                  <th className="px-6 py-4 text-[10px] font-black uppercase tracking-wider text-slate-500">Class</th>
-                  <th className="px-6 py-4 text-[10px] font-black uppercase tracking-wider text-slate-500">Billing Month</th>
-                  <th className="px-6 py-4 text-[10px] font-black uppercase tracking-wider text-slate-500 text-center">Status</th>
+                  <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-wider text-slate-500">Date & Time</th>
+                  <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-wider text-slate-500">Student</th>
+                  <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-wider text-slate-500">Roll No</th>
+                  <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-wider text-slate-500">Class</th>
+                  <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-wider text-slate-500">Billing Month</th>
+                  <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-wider text-slate-500 text-center">Status</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100">
                 {logs.map((log) => (
                   <tr key={log.id} className="hover:bg-slate-50/50 transition-colors">
-                    <td className="px-6 py-4 text-xs font-semibold text-slate-600">
+                    <td className="px-6 py-4 text-xs font-medium text-slate-600">
                       {new Date(log.createdAt).toLocaleString("en-IN", { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" })}
                     </td>
-                    <td className="px-6 py-4 text-sm font-bold text-slate-800">
+                    <td className="px-6 py-4 text-sm font-semibold text-slate-800">
                       {log.student?.name || "Unknown"}
                     </td>
-                    <td className="px-6 py-4 text-xs font-mono font-bold text-brand-green-dark">
+                    <td className="px-6 py-4 text-xs font-mono font-semibold text-brand-green-dark">
                       {log.student?.cardNo || "N/A"}
                     </td>
-                    <td className="px-6 py-4 text-xs font-semibold text-slate-600">
+                    <td className="px-6 py-4 text-xs font-medium text-slate-600">
                       {log.student?.studentclass?.className || "N/A"}
                     </td>
-                    <td className="px-6 py-4 text-xs font-bold text-slate-700">
+                    <td className="px-6 py-4 text-xs font-semibold text-slate-700">
                       {log.monthStr}
                     </td>
                     <td className="px-6 py-4 text-center">
                       {log.status === "PROCESSED" ? (
                         <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-emerald-50 text-emerald-700 border border-emerald-200">
                           <CheckCircle2 size={12} className="text-emerald-500" />
-                          <span className="text-[10px] font-black tracking-wide uppercase">Processed</span>
+                          <span className="text-[10px] font-bold tracking-wide uppercase">Processed</span>
                         </div>
                       ) : (
                         <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-red-50 text-red-700 border border-red-200">
                           <XCircle size={12} className="text-red-500" />
-                          <span className="text-[10px] font-black tracking-wide uppercase">Failed</span>
+                          <span className="text-[10px] font-bold tracking-wide uppercase">Failed</span>
                         </div>
                       )}
                     </td>

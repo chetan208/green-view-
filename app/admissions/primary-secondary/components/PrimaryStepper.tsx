@@ -33,7 +33,7 @@ export default function PrimaryStepper({ currentStep }: PrimaryStepperProps) {
           return (
             <div key={step.num} className="relative z-10 flex flex-col items-center gap-2">
               <div 
-                className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-normal md:font-semibold transition-all duration-300 shadow-sm ${
+                className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-normal md:font-medium transition-all duration-300 shadow-sm ${
                   isCompleted ? "bg-brand-green text-white ring-4 ring-emerald-50" :
                   isCurrent ? "bg-brand-green text-white ring-4 ring-emerald-100 scale-110 shadow-emerald-500/30" :
                   "bg-white text-slate-400 border-2 border-slate-200"
@@ -41,7 +41,7 @@ export default function PrimaryStepper({ currentStep }: PrimaryStepperProps) {
               >
                 {isCompleted ? <Check className="w-5 h-5" /> : step.num}
               </div>
-              <span className={`text-xs font-normal md:font-semibold whitespace-nowrap transition-colors duration-300 ${
+              <span className={`text-xs font-normal md:font-medium whitespace-nowrap transition-colors duration-300 ${
                 isCurrent ? "text-emerald-700" :
                 isCompleted ? "text-slate-700" :
                 "text-slate-400"

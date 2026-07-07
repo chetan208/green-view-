@@ -83,7 +83,7 @@ export default function FacilitiesGrid() {
       <div className="max-w-7xl mx-auto">
         
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-black text-slate-900 tracking-tight mb-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight mb-4">
             Explore Our Campus
           </h2>
           <p className="text-slate-500 font-medium max-w-2xl mx-auto">
@@ -116,7 +116,7 @@ export default function FacilitiesGrid() {
 
               {/* Content Body */}
               <div className="p-6 flex flex-col flex-1">
-                <h3 className="text-lg font-bold text-slate-900 mb-2">{fac.title}</h3>
+                <h3 className="text-lg font-semibold text-slate-900 mb-2">{fac.title}</h3>
                 <p className="text-sm text-slate-500 font-medium leading-relaxed flex-1">
                   {fac.desc}
                 </p>

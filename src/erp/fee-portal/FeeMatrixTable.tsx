@@ -46,7 +46,7 @@ function fmt(v: number | string) {
 }
 
 function StatusBadge({ status }: { status: string }) {
-  const base = "inline-flex items-center text-[10px] font-black uppercase tracking-widest px-2.5 py-1 rounded-lg border";
+  const base = "inline-flex items-center text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-lg border";
   if (status === "PAID")
     return <span className={`${base} bg-brand-green/8 border-brand-green-dark/20 text-brand-green-dark`}>Settled</span>;
   if (status === "PARTIALLY_PAID")
@@ -76,14 +76,14 @@ export default function FeeMatrixTable({
         <div className="flex items-center gap-2">
           <Receipt size={15} className="text-brand-green-dark" />
           <div>
-            <h3 className="text-sm font-black uppercase tracking-wider text-brand-green-dark">Academic Fee Ledger</h3>
+            <h3 className="text-sm font-bold uppercase tracking-wider text-brand-green-dark">Academic Fee Ledger</h3>
             <p className="text-[10px] text-slate-400 font-medium mt-0.5">Oldest to newest — current month at bottom</p>
           </div>
         </div>
 
         {/* Totals */}
         {sorted.length > 0 && (
-          <div className="flex items-center gap-2 text-[10px] font-black">
+          <div className="flex items-center gap-2 text-[10px] font-bold">
             <span className="bg-brand-green/8 border border-brand-green-dark/15 text-brand-green-dark px-3 py-1.5 rounded-lg">
               Total: <span className="font-mono">₹{totalDemand.toLocaleString("en-IN")}</span>
             </span>
@@ -104,14 +104,14 @@ export default function FeeMatrixTable({
         {feesLoading ? (
           <div className="flex flex-col items-center justify-center py-20 gap-3">
             <Loader2 className="animate-spin text-brand-green-dark" size={26} />
-            <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">Loading Fee Ledger…</span>
+            <span className="text-xs font-semibold text-slate-400 uppercase tracking-widest">Loading Fee Ledger…</span>
           </div>
         ) : sorted.length > 0 ? (
           <table className="w-full border-collapse text-left whitespace-nowrap">
 
             {/* Column headers */}
             <thead>
-              <tr className="bg-slate-50 border-b border-slate-200 text-[10px] font-black uppercase tracking-widest text-slate-500">
+              <tr className="bg-slate-50 border-b border-slate-200 text-[10px] font-bold uppercase tracking-widest text-slate-500">
                 <th className="sticky left-0 bg-slate-50 z-10 px-5 py-3.5 border-r border-slate-100 shadow-[2px_0_4px_-2px_rgba(0,0,0,0.07)]">Month</th>
                 <th className="px-5 py-3.5 text-left">Breakdown</th>
                 <th className="px-5 py-3.5 text-right">Arrears</th>
@@ -146,10 +146,10 @@ export default function FeeMatrixTable({
                         ${isLatest ? "bg-brand-green/[0.03]" : isEven ? "bg-white" : "bg-slate-50/40"}
                         group-hover:bg-brand-green/[0.04]`}
                       >
-                        <p className="text-sm font-black text-slate-800 leading-tight">{fee.month.split("-")[0]}</p>
-                        <p className="text-[10px] text-slate-400 font-semibold">{fee.month.split("-")[1]}</p>
+                        <p className="text-sm font-bold text-slate-800 leading-tight">{fee.month.split("-")[0]}</p>
+                        <p className="text-[10px] text-slate-400 font-medium">{fee.month.split("-")[1]}</p>
                         {isLatest && (
-                          <span className="inline-block mt-1 text-[8px] font-black uppercase tracking-widest text-white bg-brand-green px-1.5 py-0.5 rounded-full">
+                          <span className="inline-block mt-1 text-[8px] font-bold uppercase tracking-widest text-white bg-brand-green px-1.5 py-0.5 rounded-full">
                             Current
                           </span>
                         )}
@@ -159,7 +159,7 @@ export default function FeeMatrixTable({
                       <td className="px-5 py-4">
                         <button
                           onClick={() => setExpandedRow(isExpanded ? null : fee.id)}
-                          className="inline-flex items-center gap-2 px-3 py-1.5 bg-slate-50 border border-slate-200 text-slate-700 rounded-lg text-[10px] font-black uppercase tracking-wider hover:border-brand-green-dark/30 hover:bg-slate-100 transition cursor-pointer"
+                          className="inline-flex items-center gap-2 px-3 py-1.5 bg-slate-50 border border-slate-200 text-slate-700 rounded-lg text-[10px] font-bold uppercase tracking-wider hover:border-brand-green-dark/30 hover:bg-slate-100 transition cursor-pointer"
                         >
                           <span className="font-mono text-[11px] text-slate-800">₹{itemized.toLocaleString("en-IN")}</span>
                           {isExpanded ? <ChevronUp size={10} className="text-slate-500" /> : <ChevronDown size={10} className="text-slate-500" />}
@@ -168,24 +168,24 @@ export default function FeeMatrixTable({
 
                       {/* Arrears */}
                       <td className="px-5 py-4 text-right">
-                        <span className="font-mono text-[11px] font-bold text-slate-500">{fmt(fee.previousBalance)}</span>
+                        <span className="font-mono text-[11px] font-semibold text-slate-500">{fmt(fee.previousBalance)}</span>
                       </td>
 
                       {/* Net Demand */}
                       <td className="px-5 py-4 text-right">
-                        <span className="inline-block font-mono text-[11px] font-black text-white bg-brand-green px-3 py-1.5 rounded-lg">
+                        <span className="inline-block font-mono text-[11px] font-bold text-white bg-brand-green px-3 py-1.5 rounded-lg">
                           {fmt(fee.total || fee.totalDemand || 0)}
                         </span>
                       </td>
 
                       {/* Paid */}
                       <td className="px-5 py-4 text-right">
-                        <span className="font-mono text-[11px] font-bold text-slate-700">{fmt(amountPaid)}</span>
+                        <span className="font-mono text-[11px] font-semibold text-slate-700">{fmt(amountPaid)}</span>
                       </td>
 
                       {/* Balance */}
                       <td className="px-5 py-4 text-right">
-                        <span className={`font-mono text-[11px] font-bold ${balance < 0 ? "text-emerald-600" : balance > 0 ? "text-rose-600" : "text-slate-400"}`}>
+                        <span className={`font-mono text-[11px] font-semibold ${balance < 0 ? "text-emerald-600" : balance > 0 ? "text-rose-600" : "text-slate-400"}`}>
                           {fmt(balance)}
                         </span>
                       </td>
@@ -201,14 +201,14 @@ export default function FeeMatrixTable({
                           {isLatest && totalBalance > 0 && (
                             <button
                               onClick={() => onPay(fee)}
-                              className="inline-flex items-center gap-1 px-3 py-1.5 bg-brand-green hover:bg-[#0b4870] text-white rounded-lg text-[10px] font-black uppercase tracking-wider border-0 cursor-pointer transition active:scale-95"
+                              className="inline-flex items-center gap-1 px-3 py-1.5 bg-brand-green hover:bg-[#0b4870] text-white rounded-lg text-[10px] font-bold uppercase tracking-wider border-0 cursor-pointer transition active:scale-95"
                             >
                               <DollarSign size={11} /> Pay
                             </button>
                           )}
                           <button
                             onClick={() => onPrint(fee)}
-                            className="inline-flex items-center gap-1 px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-[10px] font-black uppercase tracking-wider border border-slate-200 cursor-pointer transition active:scale-95"
+                            className="inline-flex items-center gap-1 px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-[10px] font-bold uppercase tracking-wider border border-slate-200 cursor-pointer transition active:scale-95"
                           >
                             <Printer size={11} /> Receipt
                           </button>
@@ -227,15 +227,15 @@ export default function FeeMatrixTable({
                               exit={{ opacity: 0, height: 0 }}
                               transition={{ duration: 0.18 }}
                             >
-                              <p className="text-[9px] font-black uppercase tracking-widest text-slate-400 mb-2">Fee Head Breakdown</p>
+                              <p className="text-[9px] font-bold uppercase tracking-widest text-slate-400 mb-2">Fee Head Breakdown</p>
                               <div className="flex flex-wrap gap-2">
                                 {FEE_HEADS.map(({ key, label }) => {
                                   const val = Number((fee as any)[key]);
                                   if (val <= 0) return null;
                                   return (
                                     <div key={key} className="flex items-center gap-2 bg-white border border-slate-200 rounded-lg px-3 py-1.5">
-                                      <span className="text-[10px] text-slate-500 font-semibold">{label}</span>
-                                      <span className="font-mono text-[10px] font-black text-slate-800">₹{val.toLocaleString("en-IN")}</span>
+                                      <span className="text-[10px] text-slate-500 font-medium">{label}</span>
+                                      <span className="font-mono text-[10px] font-bold text-slate-800">₹{val.toLocaleString("en-IN")}</span>
                                     </div>
                                   );
                                 })}
@@ -255,13 +255,13 @@ export default function FeeMatrixTable({
 
             {/* ── Totals footer row ── */}
             <tfoot>
-              <tr className="bg-slate-50 border-t-2 border-slate-200 text-[10px] font-black uppercase tracking-wider text-slate-600">
+              <tr className="bg-slate-50 border-t-2 border-slate-200 text-[10px] font-bold uppercase tracking-wider text-slate-600">
                 <td className="sticky left-0 bg-slate-50 z-10 px-5 py-3.5 border-r border-slate-100 shadow-[2px_0_4px_-2px_rgba(0,0,0,0.07)]" colSpan={2}>
                   Totals ({sorted.length} month{sorted.length !== 1 ? "s" : ""})
                 </td>
                 <td className="px-5 py-3.5 text-right">—</td>
                 <td className="px-5 py-3.5 text-right">
-                  <span className="font-mono text-[11px] font-black text-white bg-brand-green px-3 py-1.5 rounded-lg">
+                  <span className="font-mono text-[11px] font-bold text-white bg-brand-green px-3 py-1.5 rounded-lg">
                     ₹{totalDemand.toLocaleString("en-IN")}
                   </span>
                 </td>

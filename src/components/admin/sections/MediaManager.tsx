@@ -136,8 +136,8 @@ export default function MediaManager() {
       {/* Header */}
       <div className="flex justify-between items-center">
         <div>
-          <h2 className="text-xl sm:text-2xl font-bold font-serif text-slate-900">Media Gallery Manager</h2>
-          <p className="text-xs font-semibold text-slate-500 mt-1">Organize photos and videos into albums for the public gallery.</p>
+          <h2 className="text-xl sm:text-2xl font-semibold font-serif text-slate-900">Media Gallery Manager</h2>
+          <p className="text-xs font-medium text-slate-500 mt-1">Organize photos and videos into albums for the public gallery.</p>
         </div>
       </div>
 
@@ -156,7 +156,7 @@ export default function MediaManager() {
               {!showAlbumForm && (
                 <button 
                   onClick={() => setShowAlbumForm(true)}
-                  className="bg-brand-green hover:bg-brand-green-dark text-white px-5 py-2.5 rounded-xl text-sm font-bold flex items-center gap-2 transition shadow-sm border-0 cursor-pointer"
+                  className="bg-brand-green hover:bg-brand-green-dark text-white px-5 py-2.5 rounded-xl text-sm font-semibold flex items-center gap-2 transition shadow-sm border-0 cursor-pointer"
                 >
                   <FolderHeart size={16} /> Create Album
                 </button>
@@ -166,16 +166,16 @@ export default function MediaManager() {
             {showAlbumForm && (
               <form onSubmit={handleCreateAlbum} className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-5 animate-in fade-in slide-in-from-top-2 duration-150">
                 <div className="flex justify-between items-center border-b border-slate-100 pb-3">
-                  <h3 className="text-sm font-bold text-slate-900">Create New Album</h3>
-                  <button type="button" onClick={() => setShowAlbumForm(false)} className="text-xs font-bold text-slate-400 hover:text-slate-600 transition bg-transparent border-0 cursor-pointer">Cancel</button>
+                  <h3 className="text-sm font-semibold text-slate-900">Create New Album</h3>
+                  <button type="button" onClick={() => setShowAlbumForm(false)} className="text-xs font-semibold text-slate-400 hover:text-slate-600 transition bg-transparent border-0 cursor-pointer">Cancel</button>
                 </div>
                 
                 <div>
-                  <label className="block text-[11px] font-black uppercase tracking-wider text-slate-400 mb-1.5">Album Name *</label>
+                  <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Album Name *</label>
                   <input type="text" autoFocus required value={newAlbumName} onChange={e => setNewAlbumName(e.target.value)} placeholder="e.g., Annual Sports Day 2026" className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 text-sm rounded-xl focus:outline-none focus:border-brand-green font-medium transition" />
                 </div>
 
-                <button type="submit" className="w-full bg-brand-green hover:bg-brand-green-dark text-white py-3 rounded-xl text-sm font-bold transition flex items-center justify-center gap-1.5 shadow-sm border-0 cursor-pointer">
+                <button type="submit" className="w-full bg-brand-green hover:bg-brand-green-dark text-white py-3 rounded-xl text-sm font-semibold transition flex items-center justify-center gap-1.5 shadow-sm border-0 cursor-pointer">
                   Save Album
                 </button>
               </form>
@@ -199,10 +199,10 @@ export default function MediaManager() {
                   </div>
                   <div className="p-4 flex items-center justify-between bg-white relative z-10">
                     <div className="flex flex-col">
-                      <h3 className="text-base font-bold text-slate-800 group-hover:text-brand-green transition-colors truncate pr-2">
+                      <h3 className="text-base font-semibold text-slate-800 group-hover:text-brand-green transition-colors truncate pr-2">
                         {album.name}
                       </h3>
-                      <span className="text-xs font-semibold text-slate-400 mt-0.5">
+                      <span className="text-xs font-medium text-slate-400 mt-0.5">
                         {album.media.length} Items
                       </span>
                     </div>
@@ -238,8 +238,8 @@ export default function MediaManager() {
                   <ArrowLeft className="w-4 h-4" />
                 </button>
                 <div className="flex flex-col">
-                  <span className="text-[10px] font-bold text-brand-green uppercase tracking-widest leading-tight">Album</span>
-                  <h3 className="text-sm sm:text-base font-extrabold text-slate-800 leading-tight truncate max-w-[200px] sm:max-w-md">
+                  <span className="text-[10px] font-semibold text-brand-green uppercase tracking-widest leading-tight">Album</span>
+                  <h3 className="text-sm sm:text-base font-bold text-slate-800 leading-tight truncate max-w-[200px] sm:max-w-md">
                     {activeAlbum.name}
                   </h3>
                 </div>
@@ -248,7 +248,7 @@ export default function MediaManager() {
               {!showMediaForm && (
                 <button 
                   onClick={() => setShowMediaForm(true)}
-                  className="bg-brand-green hover:bg-brand-green-dark text-white px-4 py-2 rounded-lg text-xs font-bold flex items-center gap-1.5 transition shadow-sm border-0 cursor-pointer shrink-0"
+                  className="bg-brand-green hover:bg-brand-green-dark text-white px-4 py-2 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition shadow-sm border-0 cursor-pointer shrink-0"
                 >
                   <Plus size={14} /> Add Media
                 </button>
@@ -259,42 +259,42 @@ export default function MediaManager() {
             {showMediaForm && (
               <form onSubmit={handleAddMedia} className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-5 animate-in fade-in slide-in-from-top-2 duration-150">
                 <div className="flex justify-between items-center border-b border-slate-100 pb-3">
-                  <h3 className="text-sm font-bold text-slate-900">Upload to {activeAlbum.name}</h3>
-                  <button type="button" onClick={() => setShowMediaForm(false)} className="text-xs font-bold text-slate-400 hover:text-slate-600 transition bg-transparent border-0 cursor-pointer">Cancel</button>
+                  <h3 className="text-sm font-semibold text-slate-900">Upload to {activeAlbum.name}</h3>
+                  <button type="button" onClick={() => setShowMediaForm(false)} className="text-xs font-semibold text-slate-400 hover:text-slate-600 transition bg-transparent border-0 cursor-pointer">Cancel</button>
                 </div>
 
                 <div>
-                  <label className="block text-[11px] font-black uppercase tracking-wider text-slate-400 mb-1.5">Media Type</label>
+                  <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Media Type</label>
                   <div className="flex gap-4">
                     <label className={`flex-1 flex flex-col items-center justify-center p-4 rounded-xl border-2 cursor-pointer transition-all ${newMediaType === 'image' ? 'border-brand-green bg-emerald-50 text-brand-green' : 'border-slate-100 bg-white text-slate-500 hover:border-slate-200'}`}>
                       <input type="radio" name="mediaType" value="image" checked={newMediaType === 'image'} onChange={() => setNewMediaType('image')} className="hidden" />
                       <ImageIcon size={20} className="mb-2" />
-                      <span className="text-xs font-bold uppercase tracking-wider">Photo File</span>
+                      <span className="text-xs font-semibold uppercase tracking-wider">Photo File</span>
                     </label>
                     <label className={`flex-1 flex flex-col items-center justify-center p-4 rounded-xl border-2 cursor-pointer transition-all ${newMediaType === 'youtube' ? 'border-red-500 bg-red-50 text-red-600' : 'border-slate-100 bg-white text-slate-500 hover:border-slate-200'}`}>
                       <input type="radio" name="mediaType" value="youtube" checked={newMediaType === 'youtube'} onChange={() => setNewMediaType('youtube')} className="hidden" />
                       <Video size={20} className="mb-2" />
-                      <span className="text-xs font-bold uppercase tracking-wider">YouTube Video</span>
+                      <span className="text-xs font-semibold uppercase tracking-wider">YouTube Video</span>
                     </label>
                   </div>
                 </div>
 
                 {newMediaType === 'image' ? (
                   <div>
-                    <label className="block text-[11px] font-black uppercase tracking-wider text-slate-400 mb-1.5">Select Image</label>
+                    <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Select Image</label>
                     <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-slate-200 border-dashed rounded-xl cursor-pointer bg-slate-50 hover:bg-slate-100/50 transition-all">
                       <Upload size={24} className="text-slate-400 mb-2" />
-                      <p className="text-sm font-bold text-slate-600">Click to upload photo (.jpg, .png)</p>
+                      <p className="text-sm font-semibold text-slate-600">Click to upload photo (.jpg, .png)</p>
                     </label>
                   </div>
                 ) : (
                   <div>
-                    <label className="block text-[11px] font-black uppercase tracking-wider text-slate-400 mb-1.5">YouTube Video Link</label>
+                    <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">YouTube Video Link</label>
                     <input type="url" required value={newMediaYoutubeUrl} onChange={e => setNewMediaYoutubeUrl(e.target.value)} placeholder="https://www.youtube.com/watch?v=..." className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 text-sm rounded-xl focus:outline-none focus:border-red-500 font-medium transition" />
                   </div>
                 )}
 
-                <button type="submit" className={`w-full text-white py-3 rounded-xl text-sm font-bold transition flex items-center justify-center gap-1.5 shadow-sm border-0 cursor-pointer ${newMediaType === 'image' ? 'bg-brand-green hover:bg-brand-green-dark' : 'bg-red-600 hover:bg-red-700'}`}>
+                <button type="submit" className={`w-full text-white py-3 rounded-xl text-sm font-semibold transition flex items-center justify-center gap-1.5 shadow-sm border-0 cursor-pointer ${newMediaType === 'image' ? 'bg-brand-green hover:bg-brand-green-dark' : 'bg-red-600 hover:bg-red-700'}`}>
                   {newMediaType === 'image' ? 'Upload Photo' : 'Add Video'}
                 </button>
               </form>
@@ -344,8 +344,8 @@ export default function MediaManager() {
                 <div className="w-16 h-16 rounded-full bg-slate-50 flex items-center justify-center text-slate-300 mb-4">
                   <ImageIcon size={28} />
                 </div>
-                <h3 className="text-sm font-bold text-slate-800 mb-1">Album is Empty</h3>
-                <p className="text-xs font-semibold text-slate-500">Upload photos or link YouTube videos to fill this album.</p>
+                <h3 className="text-sm font-semibold text-slate-800 mb-1">Album is Empty</h3>
+                <p className="text-xs font-medium text-slate-500">Upload photos or link YouTube videos to fill this album.</p>
               </div>
             )}
           </motion.div>

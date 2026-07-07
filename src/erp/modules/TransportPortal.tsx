@@ -148,10 +148,10 @@ export default function TransportPortal() {
     <div className="space-y-6 relative">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h2 className="text-lg font-bold font-serif text-slate-900">Transport Management</h2>
-          <p className="text-xs font-semibold text-slate-500 mt-1">Manage routes, stations, and station-specific fees.</p>
+          <h2 className="text-lg font-semibold font-serif text-slate-900">Transport Management</h2>
+          <p className="text-xs font-medium text-slate-500 mt-1">Manage routes, stations, and station-specific fees.</p>
         </div>
-        <button className="bg-brand-green hover:bg-brand-green text-white px-4 py-2 rounded-lg text-xs font-bold flex items-center gap-1.5 transition shadow-sm border-0 cursor-pointer">
+        <button className="bg-brand-green hover:bg-brand-green text-white px-4 py-2 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition shadow-sm border-0 cursor-pointer">
           <Plus size={16} /> Add New Route
         </button>
       </div>
@@ -171,19 +171,19 @@ export default function TransportPortal() {
                 </div>
                 <div>
                   <div className="flex items-center gap-2">
-                    <h3 className="font-bold text-base text-slate-900">{route.busNo}</h3>
-                    <span className={`text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full ${route.status === 'Active' ? 'bg-brand-green/10 text-brand-green-dark' : 'bg-slate-200 text-slate-600'}`}>
+                    <h3 className="font-semibold text-base text-slate-900">{route.busNo}</h3>
+                    <span className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full ${route.status === 'Active' ? 'bg-brand-green/10 text-brand-green-dark' : 'bg-slate-200 text-slate-600'}`}>
                       {route.status}
                     </span>
                   </div>
-                  <p className="text-[13px] font-semibold text-slate-500 mt-0.5">{route.busCode} • Driver: {route.driver}</p>
+                  <p className="text-[13px] font-medium text-slate-500 mt-0.5">{route.busCode} • Driver: {route.driver}</p>
                 </div>
               </div>
               
               <div className="flex items-center gap-3">
                 <div className="text-right hidden sm:block mr-4">
-                  <p className="text-[10px] font-black uppercase tracking-wider text-slate-400">Capacity</p>
-                  <p className={`text-[13px] font-bold ${route.enrolled >= route.capacity ? 'text-rose-600' : 'text-slate-700'}`}>
+                  <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Capacity</p>
+                  <p className={`text-[13px] font-semibold ${route.enrolled >= route.capacity ? 'text-rose-600' : 'text-slate-700'}`}>
                     {route.enrolled} / {route.capacity}
                   </p>
                 </div>
@@ -192,7 +192,7 @@ export default function TransportPortal() {
                     e.stopPropagation();
                     toggleRouteStatus(route.id);
                   }}
-                  className={`p-2 rounded-lg border text-[13px] font-bold flex items-center gap-1.5 transition cursor-pointer ${
+                  className={`p-2 rounded-lg border text-[13px] font-semibold flex items-center gap-1.5 transition cursor-pointer ${
                     route.status === "Active" 
                       ? "bg-white border-brand-green-dark/20 text-brand-green-dark hover:bg-brand-green/5" 
                       : "bg-white border-brand-green/20 text-brand-green hover:bg-brand-green/5"
@@ -215,7 +215,7 @@ export default function TransportPortal() {
                 <div className="p-0 overflow-x-auto">
               <table className="w-full text-left border-collapse min-w-[600px]">
                 <thead>
-                  <tr className="bg-white border-b border-slate-100 text-[10px] font-black uppercase tracking-wider text-slate-400">
+                  <tr className="bg-white border-b border-slate-100 text-[10px] font-bold uppercase tracking-wider text-slate-400">
                     <th className="px-6 py-3">Station / Stop Name</th>
                     <th className="px-6 py-3">Arrival Time</th>
                     <th className="px-6 py-3">Students</th>
@@ -228,10 +228,10 @@ export default function TransportPortal() {
                     <tr key={station.id} className="hover:bg-slate-50/50 group">
                       <td className="px-6 py-3">
                         <div className="flex items-center gap-3">
-                          <div className="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-[10px] font-bold text-slate-400 shrink-0">
+                          <div className="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-[10px] font-semibold text-slate-400 shrink-0">
                             {idx + 1}
                           </div>
-                          <span className="font-bold text-slate-700">{station.name}</span>
+                          <span className="font-semibold text-slate-700">{station.name}</span>
                         </div>
                       </td>
                       <td className="px-6 py-3">
@@ -240,10 +240,10 @@ export default function TransportPortal() {
                         </span>
                       </td>
                       <td className="px-6 py-3">
-                        <span className="font-bold text-slate-700">{station.students}</span>
+                        <span className="font-semibold text-slate-700">{station.students}</span>
                       </td>
                       <td className="px-6 py-3">
-                        <span className="font-bold text-slate-700">₹{station.fee.toLocaleString()}</span>
+                        <span className="font-semibold text-slate-700">₹{station.fee.toLocaleString()}</span>
                       </td>
                       <td className="px-6 py-3">
                         <div className="flex justify-end gap-1">
@@ -265,11 +265,11 @@ export default function TransportPortal() {
             <div className="px-6 py-4 border-t border-slate-100 bg-slate-50 flex justify-between items-center">
               <button 
                 onClick={() => handleOpenStationForm(route.id)}
-                className="text-xs font-bold text-brand-green hover:text-brand-green-dark flex items-center gap-1.5 transition bg-transparent border-0 cursor-pointer"
+                className="text-xs font-semibold text-brand-green hover:text-brand-green-dark flex items-center gap-1.5 transition bg-transparent border-0 cursor-pointer"
               >
                 <Plus size={14} /> Add Station
               </button>
-              <button className="text-xs font-bold text-slate-500 hover:text-slate-800 flex items-center gap-1.5 transition bg-transparent border-0 cursor-pointer">
+              <button className="text-xs font-semibold text-slate-500 hover:text-slate-800 flex items-center gap-1.5 transition bg-transparent border-0 cursor-pointer">
                 <Eye size={14} /> View Enrolled Students
               </button>
             </div>
@@ -282,7 +282,7 @@ export default function TransportPortal() {
         {routes.length === 0 && (
           <div className="col-span-full py-12 flex flex-col items-center justify-center text-slate-400 border-2 border-dashed border-slate-200 rounded-xl bg-slate-50/50">
             <Bus size={32} className="mb-2 opacity-50" />
-            <p className="font-semibold text-xs">No transport routes available.</p>
+            <p className="font-medium text-xs">No transport routes available.</p>
           </div>
         )}
       </div>
@@ -292,31 +292,31 @@ export default function TransportPortal() {
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm animate-in fade-in duration-200">
           <div className="bg-white rounded-2xl shadow-xl w-full max-w-sm overflow-hidden">
             <div className="px-6 py-4 border-b border-slate-100 flex justify-between items-center bg-slate-50">
-              <h3 className="font-bold text-slate-800">{stationFormOpen.stationId ? "Edit Station" : "Add New Station"}</h3>
+              <h3 className="font-semibold text-slate-800">{stationFormOpen.stationId ? "Edit Station" : "Add New Station"}</h3>
               <button onClick={() => setStationFormOpen(null)} className="text-slate-400 hover:text-slate-600 bg-transparent border-0 cursor-pointer"><X size={20}/></button>
             </div>
             <form onSubmit={handleSaveStation} className="p-6 space-y-4">
               <div>
-                <label className="block text-[10px] font-black uppercase tracking-wider text-slate-400 mb-1.5">Station Name *</label>
+                <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Station Name *</label>
                 <input type="text" required value={stationFormData.name} onChange={(e) => setStationFormData({...stationFormData, name: e.target.value})} placeholder="e.g. Gopal Nagar" className="w-full px-3 py-2 bg-white border border-slate-200 text-xs rounded-lg focus:outline-none focus:border-brand-green font-medium transition" />
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-[10px] font-black uppercase tracking-wider text-slate-400 mb-1.5">Time *</label>
+                  <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Time *</label>
                   <input type="text" required value={stationFormData.time} onChange={(e) => setStationFormData({...stationFormData, time: e.target.value})} placeholder="e.g. 07:15 AM" className="w-full px-3 py-2 bg-white border border-slate-200 text-xs rounded-lg focus:outline-none focus:border-brand-green font-medium transition" />
                 </div>
                 <div>
-                  <label className="block text-[10px] font-black uppercase tracking-wider text-slate-400 mb-1.5">Fee (₹) *</label>
+                  <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Fee (₹) *</label>
                   <input type="number" required min="0" value={stationFormData.fee} onChange={(e) => setStationFormData({...stationFormData, fee: Number(e.target.value)})} className="w-full px-3 py-2 bg-white border border-slate-200 text-xs rounded-lg focus:outline-none focus:border-brand-green font-medium transition" />
                 </div>
                 <div className="col-span-2">
-                  <label className="block text-[10px] font-black uppercase tracking-wider text-slate-400 mb-1.5">Enrolled Students</label>
+                  <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Enrolled Students</label>
                   <input type="number" required min="0" value={stationFormData.students} onChange={(e) => setStationFormData({...stationFormData, students: Number(e.target.value)})} className="w-full px-3 py-2 bg-white border border-slate-200 text-xs rounded-lg focus:outline-none focus:border-brand-green font-medium transition" />
                 </div>
               </div>
               <div className="pt-4 flex gap-3">
-                <button type="button" onClick={() => setStationFormOpen(null)} className="flex-1 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-bold transition border-0 cursor-pointer">Cancel</button>
-                <button type="submit" className="flex-1 py-2 bg-brand-green hover:bg-brand-green text-white rounded-lg text-xs font-bold transition shadow-sm border-0 cursor-pointer">{stationFormOpen.stationId ? "Save Changes" : "Add Station"}</button>
+                <button type="button" onClick={() => setStationFormOpen(null)} className="flex-1 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-semibold transition border-0 cursor-pointer">Cancel</button>
+                <button type="submit" className="flex-1 py-2 bg-brand-green hover:bg-brand-green text-white rounded-lg text-xs font-semibold transition shadow-sm border-0 cursor-pointer">{stationFormOpen.stationId ? "Save Changes" : "Add Station"}</button>
               </div>
             </form>
           </div>

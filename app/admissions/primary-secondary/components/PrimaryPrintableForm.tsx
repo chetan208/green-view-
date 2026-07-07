@@ -31,15 +31,15 @@ export default function PrimaryPrintableForm() {
 
         {/* Header */}
         <div className="text-center mb-3">
-          <h1 className="text-2xl font-normal md:font-semibold uppercase mb-1">Green View Public School</h1>
-          <h2 className="text-lg font-normal md:font-semibold">DADH</h2>
+          <h1 className="text-2xl font-normal md:font-medium uppercase mb-1">Green View Public School</h1>
+          <h2 className="text-lg font-normal md:font-medium">DADH</h2>
           <p className="text-sm">Teh. Palampur, Distt. Kangra (H.P.)</p>
           <p className="text-sm font-sans font-medium tracking-wide">Off.: 01894-252115 M.: 9816521168</p>
         </div>
 
         <div className="text-center mb-3 md:mb-4">
-          <h2 className="text-xl font-normal md:font-semibold uppercase underline">Application for Registration</h2>
-          <h3 className="text-lg font-normal md:font-semibold">SESSION {session}</h3>
+          <h2 className="text-xl font-normal md:font-medium uppercase underline">Application for Registration</h2>
+          <h3 className="text-lg font-normal md:font-medium">SESSION {session}</h3>
         </div>
 
         {/* Photo Box */}
@@ -180,7 +180,7 @@ export default function PrimaryPrintableForm() {
 
         {/* Declaration */}
         <div className="mt-6 text-center">
-          <h3 className="font-normal md:font-semibold underline text-lg mb-3">DECLARATION</h3>
+          <h3 className="font-normal md:font-medium underline text-lg mb-3">DECLARATION</h3>
           <p className="text-left leading-relaxed">
             I <span className="inline-block w-64 border-b border-dotted border-black font-normal text-[13px] uppercase text-blue-700 px-2 text-left">{parentName}</span> Father/Mother/Guardian of <span className="inline-block w-64 border-b border-dotted border-black font-normal text-[13px] uppercase text-blue-700 px-2 text-left">{data.studentDetails.studentName}</span> Solemnly declare that the above information regarding my son/daughter/ward are true to the best of my knowledge.
           </p>

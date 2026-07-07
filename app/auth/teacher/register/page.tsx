@@ -45,7 +45,7 @@ export default function TeacherRegisterPage() {
     <div className="w-full min-h-screen bg-[#f9fafb] flex flex-col justify-center items-center py-10 px-4 relative">
       
       {/* Screen Title */}
-      <h1 className="text-2xl md:text-3xl font-bold text-slate-800 text-center mb-8 mt-12 md:mt-0 tracking-tight">
+      <h1 className="text-2xl md:text-3xl font-semibold text-slate-800 text-center mb-8 mt-12 md:mt-0 tracking-tight">
         Create your School account
       </h1>
 
@@ -63,24 +63,24 @@ export default function TeacherRegisterPage() {
 
         {/* Card Header Title */}
         <div className="text-center flex flex-col items-center">
-          <h2 className="text-2xl font-bold tracking-tight">
+          <h2 className="text-2xl font-semibold tracking-tight">
             <span className="text-[#0fa958]">Sign Up as </span>
             <span className="text-[#0c3c86]">Teacher</span>
           </h2>
-          <p className="text-slate-400 text-[11px] font-semibold mt-2.5 leading-relaxed max-w-[290px]">
+          <p className="text-slate-400 text-[11px] font-medium mt-2.5 leading-relaxed max-w-[290px]">
             Please register your account with a valid school email.
           </p>
         </div>
 
         {error && (
-          <div className="bg-red-50 border border-red-100 rounded-xl p-3 flex items-start gap-2 text-red-700 text-xs font-semibold">
+          <div className="bg-red-50 border border-red-100 rounded-xl p-3 flex items-start gap-2 text-red-700 text-xs font-medium">
             <AlertCircle className="w-4 h-4 shrink-0 text-red-500 mt-0.5" />
             <span>{error}</span>
           </div>
         )}
 
         {success && (
-          <div className="bg-emerald-50 border border-emerald-100 rounded-xl p-3 flex items-start gap-2 text-[#0fa958] text-xs font-semibold">
+          <div className="bg-emerald-50 border border-emerald-100 rounded-xl p-3 flex items-start gap-2 text-[#0fa958] text-xs font-medium">
             <CheckCircle2 className="w-4 h-4 shrink-0 text-[#0fa958] mt-0.5" />
             <span>{success}</span>
           </div>
@@ -89,7 +89,7 @@ export default function TeacherRegisterPage() {
         {/* Signup Form */}
         <form onSubmit={handleRegister} className="flex flex-col gap-4">
           <div className="flex flex-col">
-            <label className="text-xs font-semibold text-slate-500 mb-2">
+            <label className="text-xs font-medium text-slate-500 mb-2">
               Email Address
             </label>
             <input 
@@ -97,12 +97,12 @@ export default function TeacherRegisterPage() {
               placeholder="teacher@email.com" 
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-4 py-3 rounded-xl border border-slate-200 outline-none text-xs md:text-sm font-semibold placeholder:text-slate-400 text-slate-800 bg-white focus:border-brand-green focus:ring-1 focus:ring-brand-green/20 transition-all"
+              className="w-full px-4 py-3 rounded-xl border border-slate-200 outline-none text-xs md:text-sm font-medium placeholder:text-slate-400 text-slate-800 bg-white focus:border-brand-green focus:ring-1 focus:ring-brand-green/20 transition-all"
             />
           </div>
 
           <div className="flex flex-col">
-            <label className="text-xs font-semibold text-slate-500 mb-2">
+            <label className="text-xs font-medium text-slate-500 mb-2">
               Password
             </label>
             <input 
@@ -110,12 +110,12 @@ export default function TeacherRegisterPage() {
               placeholder="Enter your password" 
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-4 py-3 rounded-xl border border-slate-200 outline-none text-xs md:text-sm font-semibold placeholder:text-slate-400 text-slate-800 bg-white focus:border-brand-green focus:ring-1 focus:ring-brand-green/20 transition-all"
+              className="w-full px-4 py-3 rounded-xl border border-slate-200 outline-none text-xs md:text-sm font-medium placeholder:text-slate-400 text-slate-800 bg-white focus:border-brand-green focus:ring-1 focus:ring-brand-green/20 transition-all"
             />
           </div>
 
           <div className="flex flex-col">
-            <label className="text-xs font-semibold text-slate-500 mb-2">
+            <label className="text-xs font-medium text-slate-500 mb-2">
               Confirm Password
             </label>
             <input 
@@ -123,14 +123,14 @@ export default function TeacherRegisterPage() {
               placeholder="Confirm your password" 
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
-              className="w-full px-4 py-3 rounded-xl border border-slate-200 outline-none text-xs md:text-sm font-semibold placeholder:text-slate-400 text-slate-800 bg-white focus:border-brand-green focus:ring-1 focus:ring-brand-green/20 transition-all"
+              className="w-full px-4 py-3 rounded-xl border border-slate-200 outline-none text-xs md:text-sm font-medium placeholder:text-slate-400 text-slate-800 bg-white focus:border-brand-green focus:ring-1 focus:ring-brand-green/20 transition-all"
             />
           </div>
 
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full bg-[#0fa958] hover:bg-[#147a42] text-white rounded-xl py-3.5 font-bold text-xs md:text-sm transition-all shadow-md shadow-emerald-500/10 cursor-pointer flex items-center justify-center gap-2 mt-2"
+            className="w-full bg-[#0fa958] hover:bg-[#147a42] text-white rounded-xl py-3.5 font-semibold text-xs md:text-sm transition-all shadow-md shadow-emerald-500/10 cursor-pointer flex items-center justify-center gap-2 mt-2"
           >
             {isLoading ? "Signing up..." : "Sign UP Now"}
           </button>
@@ -139,7 +139,7 @@ export default function TeacherRegisterPage() {
         {/* Switch to Login link */}
         <div className="text-xs text-slate-500 font-medium text-center pt-4 border-t border-slate-50">
           Already have an account?{" "}
-          <Link href="/auth/teacher/login" className="text-[#0c3c86] font-bold hover:underline">
+          <Link href="/auth/teacher/login" className="text-[#0c3c86] font-semibold hover:underline">
             Sign in
           </Link>
         </div>

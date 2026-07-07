@@ -28,7 +28,7 @@ export default function StudentSelector({
 }: StudentSelectorProps) {
   return (
     <div ref={searchContainerRef} className="relative w-full max-w-2xl mx-auto z-20">
-      <label className="block text-xs font-black uppercase tracking-wider text-brand-green-dark mb-2 text-center sm:text-left">
+      <label className="block text-xs font-bold uppercase tracking-wider text-brand-green-dark mb-2 text-center sm:text-left">
         Search Student by Roll Number
       </label>
       <div className="relative flex items-center">
@@ -47,7 +47,7 @@ export default function StudentSelector({
           onFocus={() => {
             if (searchQuery) setShowDropdown(true);
           }}
-          className="w-full pl-12 pr-10 py-3 bg-white border-2 border-slate-200/80 text-sm font-mono font-semibold tracking-widest rounded-2xl shadow-sm focus:outline-none focus:ring-4 focus:ring-[#093C5D]/10 focus:border-brand-green-dark transition-all"
+          className="w-full pl-12 pr-10 py-3 bg-white border-2 border-slate-200/80 text-sm font-mono font-medium tracking-widest rounded-2xl shadow-sm focus:outline-none focus:ring-4 focus:ring-[#093C5D]/10 focus:border-brand-green-dark transition-all"
         />
         {searchQuery && (
           <button
@@ -80,11 +80,11 @@ export default function StudentSelector({
                 <button
                   key={st.id}
                   onClick={() => onSelectStudent(st)}
-                  className="w-full flex items-center justify-between px-5 py-3 hover:bg-slate-50 transition text-left cursor-pointer border-0 text-xs font-bold text-slate-700"
+                  className="w-full flex items-center justify-between px-5 py-3 hover:bg-slate-50 transition text-left cursor-pointer border-0 text-xs font-semibold text-slate-700"
                 >
                   <div>
-                    <p className="text-sm font-black text-brand-green-dark">{st.name}</p>
-                    <p className="text-[10px] text-slate-400 font-extrabold uppercase mt-0.5">{st.studentClass}</p>
+                    <p className="text-sm font-bold text-brand-green-dark">{st.name}</p>
+                    <p className="text-[10px] text-slate-400 font-bold uppercase mt-0.5">{st.studentClass}</p>
                   </div>
                   <span className="font-mono text-xs text-slate-500 bg-slate-100 border border-slate-200 px-2 py-0.5 rounded-lg">
                     Roll: {st.cardNo}

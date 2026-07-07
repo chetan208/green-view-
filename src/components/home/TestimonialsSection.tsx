@@ -51,7 +51,7 @@ export default function TestimonialsSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="text-[10px] md:text-xs font-semibold md:font-bold text-brand-green uppercase tracking-[0.25em] mb-2.5"
+            className="text-[10px] md:text-xs font-medium md:font-semibold text-brand-green uppercase tracking-[0.25em] mb-2.5"
           >
             Testimonials
           </motion.span>
@@ -60,7 +60,7 @@ export default function TestimonialsSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, ease: "easeOut" }}
-            className="text-3xl md:text-4xl font-semibold md:font-extrabold text-slate-800 tracking-tight leading-tight"
+            className="text-3xl md:text-4xl font-medium md:font-semibold text-slate-800 tracking-tight leading-tight"
           >
             What Parents <span className="text-brand-green">Say About Us</span>
           </motion.h2>
@@ -78,8 +78,8 @@ export default function TestimonialsSection() {
             <motion.div
               key={idx}
               variants={cardVariants}
-              whileHover={{ y: -6 }}
-              className="bg-white p-7 md:p-8 rounded-[20px] shadow-sm border border-slate-100/50 flex flex-col justify-between relative group hover:shadow-md transition-shadow duration-300"
+             
+              className="bg-white p-7 md:p-8 rounded-[20px] shadow-sm border border-slate-100/50 flex flex-col justify-between relative group transition-shadow duration-300"
             >
               {/* Soft coral quote icon watermark */}
               <motion.span 
@@ -110,10 +110,10 @@ export default function TestimonialsSection() {
                   />
                 </div>
                 <div className="flex flex-col">
-                  <span className="font-semibold md:font-extrabold text-slate-800 text-sm md:text-base leading-none">
+                  <span className="font-medium md:font-semibold text-slate-800 text-sm md:text-base leading-none">
                     {t.name}
                   </span>
-                  <span className="text-[10px] md:text-xs font-semibold md:font-bold text-slate-400 mt-1.5 leading-none">
+                  <span className="text-[10px] md:text-xs font-medium md:font-semibold text-slate-400 mt-1.5 leading-none">
                     {t.role}
                   </span>
                 </div>

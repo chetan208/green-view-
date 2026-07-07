@@ -128,7 +128,7 @@ export default function Header() {
             <span className="font-serif font-semibold md:font-black text-brand-navy text-lg md:text-xl leading-none tracking-tight">
               Green View
             </span>
-            <span className="text-[7px] text-brand-navy font-semibold md:font-black tracking-widest uppercase mt-1.5 leading-none">
+            <span className="text-[7px] text-brand-navy font-medium md:font-bold tracking-widest uppercase mt-1.5 leading-none">
               Senior Secondary School
             </span>
           </div>
@@ -140,7 +140,7 @@ export default function Header() {
           variants={navContainerVariants}
           initial="hidden"
           animate="show"
-          className="hidden lg:flex items-center gap-6 xl:gap-8 font-semibold md:font-bold text-slate-700 text-xs tracking-wider"
+          className="hidden lg:flex items-center gap-6 xl:gap-8 font-medium md:font-semibold text-slate-700 text-xs tracking-wider"
         >
           {navItems.filter(item => !item.mobileOnly).map((item) => {
             const isItemActive = pathname === item.href || (item.hasDropdown && item.dropdownItems?.some(sub => pathname.startsWith(sub.href)));
@@ -149,7 +149,7 @@ export default function Header() {
               key={item.name} 
               variants={navItemVariants} 
               whileHover={{ y: -1 }}
-              className="relative group py-4"
+              className="relative group py-0"
             >
               <Link
                 href={item.href}

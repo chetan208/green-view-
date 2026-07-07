@@ -20,15 +20,15 @@ export default function StudentProfileBanner({
       <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full blur-2xl pointer-events-none" />
       <div className="space-y-2">
         <div className="flex items-center gap-2">
-          <span className="bg-emerald-500/20 text-emerald-300 text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full border border-emerald-400/20">
+          <span className="bg-emerald-500/20 text-emerald-300 text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full border border-emerald-400/20">
             Active Account
           </span>
-          <span className="font-mono text-xs font-bold text-[#14B8A6] bg-white/10 px-2 py-0.5 rounded border border-white/5">
+          <span className="font-mono text-xs font-semibold text-[#14B8A6] bg-white/10 px-2 py-0.5 rounded border border-white/5">
             Roll No: {selectedStudent.cardNo}
           </span>
         </div>
-        <h3 className="text-xl font-black tracking-tight">{selectedStudent.name}</h3>
-        <p className="text-xs text-white/80 font-semibold flex items-center gap-4 flex-wrap">
+        <h3 className="text-xl font-bold tracking-tight">{selectedStudent.name}</h3>
+        <p className="text-xs text-white/80 font-medium flex items-center gap-4 flex-wrap">
           <span><strong>Class:</strong> {selectedStudent.studentClass}</span>
           <span>&middot;</span>
           <span><strong>Father:</strong> {selectedStudent.fatherName || "N/A"}</span>
@@ -48,7 +48,7 @@ export default function StudentProfileBanner({
       </div>
       <button
         onClick={onClearSelection}
-        className="px-4 py-2 bg-white/10 hover:bg-white/20 border border-white/10 rounded-xl text-xs font-bold text-white transition active:scale-95 cursor-pointer shrink-0"
+        className="px-4 py-2 bg-white/10 hover:bg-white/20 border border-white/10 rounded-xl text-xs font-semibold text-white transition active:scale-95 cursor-pointer shrink-0"
       >
         Clear Selection
       </button>

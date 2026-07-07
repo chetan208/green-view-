@@ -28,7 +28,7 @@ export default function Step5Review({ onEdit }: Step5ReviewProps) {
           <ClipboardList className="w-6 h-6 text-brand-green" />
         </div>
         <div>
-          <h2 className="text-xl md:text-2xl font-normal md:font-semibold text-slate-800 tracking-tight flex items-center justify-between">
+          <h2 className="text-xl md:text-2xl font-normal md:font-medium text-slate-800 tracking-tight flex items-center justify-between">
             <span>Review & Declaration</span>
           </h2>
           <p className="text-sm text-slate-500 font-medium mt-1">
@@ -50,9 +50,9 @@ export default function Step5Review({ onEdit }: Step5ReviewProps) {
                 <User className="w-10 h-10 text-white/50" />
               )}
             </div>
-            <h3 className="text-lg font-normal md:font-semibold text-slate-800 tracking-wider uppercase text-center">{data.studentDetails.studentName || "ANONYMOUS USER"}</h3>
+            <h3 className="text-lg font-normal md:font-medium text-slate-800 tracking-wider uppercase text-center">{data.studentDetails.studentName || "ANONYMOUS USER"}</h3>
             
-            <div className="mt-2 bg-emerald-50 border border-emerald-200 text-emerald-700 px-3 py-1 rounded-full text-xs font-normal md:font-semibold tracking-wide">
+            <div className="mt-2 bg-emerald-50 border border-emerald-200 text-emerald-700 px-3 py-1 rounded-full text-xs font-normal md:font-medium tracking-wide">
               {data.courseDetails.selectedClass || "Class Not Selected"}
             </div>
 
@@ -61,15 +61,15 @@ export default function Step5Review({ onEdit }: Step5ReviewProps) {
             <div className="w-full flex flex-col gap-4 text-xs md:text-sm font-medium">
               <div className="flex justify-between items-center">
                 <span className="text-slate-400">Date of Birth:</span>
-                <span className="text-slate-800 font-normal md:font-semibold">{data.studentDetails.dateOfBirthFigures || "N/A"}</span>
+                <span className="text-slate-800 font-normal md:font-medium">{data.studentDetails.dateOfBirthFigures || "N/A"}</span>
               </div>
               <div className="flex justify-between items-center">
                 <span className="text-slate-400">Gender:</span>
-                <span className="text-slate-800 font-normal md:font-semibold">{data.studentDetails.sex || "N/A"}</span>
+                <span className="text-slate-800 font-normal md:font-medium">{data.studentDetails.sex || "N/A"}</span>
               </div>
               <div className="flex justify-between items-center">
                 <span className="text-slate-400">Category:</span>
-                <span className="text-slate-800 font-normal md:font-semibold">{data.studentDetails.socialCategory}</span>
+                <span className="text-slate-800 font-normal md:font-medium">{data.studentDetails.socialCategory}</span>
               </div>
             </div>
 
@@ -82,8 +82,8 @@ export default function Step5Review({ onEdit }: Step5ReviewProps) {
           {/* Card 1: Personal & Family */}
           <div className="w-full border border-slate-100 rounded-2xl p-6 relative group hover:border-emerald-100 hover:shadow-sm transition-all">
             <div className="flex items-center justify-between mb-5">
-              <h4 className="text-xs font-normal md:font-semibold text-slate-400 tracking-widest uppercase">PERSONAL & FAMILY</h4>
-              <button onClick={() => onEdit(2)} className="flex items-center gap-1.5 text-xs font-normal md:font-semibold text-emerald-600 hover:text-emerald-700 cursor-pointer">
+              <h4 className="text-xs font-normal md:font-medium text-slate-400 tracking-widest uppercase">PERSONAL & FAMILY</h4>
+              <button onClick={() => onEdit(2)} className="flex items-center gap-1.5 text-xs font-normal md:font-medium text-emerald-600 hover:text-emerald-700 cursor-pointer">
                 <Edit className="w-3.5 h-3.5" /> Edit
               </button>
             </div>
@@ -91,27 +91,27 @@ export default function Step5Review({ onEdit }: Step5ReviewProps) {
             <div className="grid grid-cols-2 gap-y-5 gap-x-4">
               <div className="flex flex-col">
                 <span className="text-[10px] text-slate-400 mb-0.5">Father's Name:</span>
-                <span className="text-xs font-normal md:font-semibold text-slate-800">{data.familyDetails.fatherName || "N/A"}</span>
+                <span className="text-xs font-normal md:font-medium text-slate-800">{data.familyDetails.fatherName || "N/A"}</span>
               </div>
               <div className="flex flex-col">
                 <span className="text-[10px] text-slate-400 mb-0.5">Mother's Name:</span>
-                <span className="text-xs font-normal md:font-semibold text-slate-800">{data.familyDetails.motherName || "N/A"}</span>
+                <span className="text-xs font-normal md:font-medium text-slate-800">{data.familyDetails.motherName || "N/A"}</span>
               </div>
               <div className="flex flex-col">
                 <span className="text-[10px] text-slate-400 mb-0.5">Guardian Name:</span>
-                <span className="text-xs font-normal md:font-semibold text-slate-800">{data.familyDetails.guardianName || "N/A"}</span>
+                <span className="text-xs font-normal md:font-medium text-slate-800">{data.familyDetails.guardianName || "N/A"}</span>
               </div>
               <div className="flex flex-col">
                 <span className="text-[10px] text-slate-400 mb-0.5">Guardian Occupation:</span>
-                <span className="text-xs font-normal md:font-semibold text-slate-800">{data.familyDetails.guardianOccupation || "N/A"}</span>
+                <span className="text-xs font-normal md:font-medium text-slate-800">{data.familyDetails.guardianOccupation || "N/A"}</span>
               </div>
               <div className="flex flex-col">
                 <span className="text-[10px] text-slate-400 mb-0.5">Religion:</span>
-                <span className="text-xs font-normal md:font-semibold text-slate-800">{data.studentDetails.religion || "N/A"}</span>
+                <span className="text-xs font-normal md:font-medium text-slate-800">{data.studentDetails.religion || "N/A"}</span>
               </div>
               <div className="flex flex-col">
                 <span className="text-[10px] text-slate-400 mb-0.5">Mother Tongue:</span>
-                <span className="text-xs font-normal md:font-semibold text-slate-800">{data.studentDetails.motherTongue || "N/A"}</span>
+                <span className="text-xs font-normal md:font-medium text-slate-800">{data.studentDetails.motherTongue || "N/A"}</span>
               </div>
             </div>
           </div>
@@ -119,8 +119,8 @@ export default function Step5Review({ onEdit }: Step5ReviewProps) {
           {/* Card 2: Contact Details */}
           <div className="w-full border border-slate-100 rounded-2xl p-6 relative group hover:border-emerald-100 hover:shadow-sm transition-all">
             <div className="flex items-center justify-between mb-5">
-              <h4 className="text-xs font-normal md:font-semibold text-slate-400 tracking-widest uppercase">CONTACT DETAILS</h4>
-              <button onClick={() => onEdit(4)} className="flex items-center gap-1.5 text-xs font-normal md:font-semibold text-emerald-600 hover:text-emerald-700 cursor-pointer">
+              <h4 className="text-xs font-normal md:font-medium text-slate-400 tracking-widest uppercase">CONTACT DETAILS</h4>
+              <button onClick={() => onEdit(4)} className="flex items-center gap-1.5 text-xs font-normal md:font-medium text-emerald-600 hover:text-emerald-700 cursor-pointer">
                 <Edit className="w-3.5 h-3.5" /> Edit
               </button>
             </div>
@@ -128,19 +128,19 @@ export default function Step5Review({ onEdit }: Step5ReviewProps) {
             <div className="grid grid-cols-2 gap-y-5 gap-x-4">
               <div className="flex flex-col col-span-2">
                 <span className="text-[10px] text-slate-400 mb-0.5">Present Address:</span>
-                <span className="text-xs font-normal md:font-semibold text-slate-800 leading-tight">
+                <span className="text-xs font-normal md:font-medium text-slate-800 leading-tight">
                   {data.contactDetails.presentAddress || "N/A"}
                 </span>
               </div>
               <div className="flex flex-col col-span-2">
                 <span className="text-[10px] text-slate-400 mb-0.5">Permanent Address:</span>
-                <span className="text-xs font-normal md:font-semibold text-slate-800 leading-tight">
+                <span className="text-xs font-normal md:font-medium text-slate-800 leading-tight">
                   {data.contactDetails.permanentAddress || "N/A"}
                 </span>
               </div>
               <div className="flex flex-col col-span-2">
                 <span className="text-[10px] text-slate-400 mb-0.5">Telephone No:</span>
-                <span className="text-xs font-normal md:font-semibold text-slate-800">{data.contactDetails.telephoneNo || "N/A"}</span>
+                <span className="text-xs font-normal md:font-medium text-slate-800">{data.contactDetails.telephoneNo || "N/A"}</span>
               </div>
             </div>
           </div>
@@ -152,10 +152,10 @@ export default function Step5Review({ onEdit }: Step5ReviewProps) {
       <div className="w-full mt-8 p-6 rounded-2xl border border-slate-200 bg-slate-50 print:hidden">
         <div className="flex items-center gap-3 mb-4">
           <FileText className="w-5 h-5 text-slate-500" />
-          <h3 className="text-sm font-normal md:font-semibold text-slate-800 uppercase tracking-widest">Declaration</h3>
+          <h3 className="text-sm font-normal md:font-medium text-slate-800 uppercase tracking-widest">Declaration</h3>
         </div>
         <p className="text-sm font-medium text-slate-600 leading-relaxed italic mb-6">
-          "I <span className="font-normal md:font-semibold underline decoration-slate-300 underline-offset-4 mx-1">{parentName || "[Parent/Guardian Name]"}</span> Father/Mother/Guardian of <span className="font-normal md:font-semibold underline decoration-slate-300 underline-offset-4 mx-1">{data.studentDetails.studentName || "[Student Name]"}</span> Solemnly declare that the above information regarding my son/daughter/ward are true to the best of my knowledge."
+          "I <span className="font-normal md:font-medium underline decoration-slate-300 underline-offset-4 mx-1">{parentName || "[Parent/Guardian Name]"}</span> Father/Mother/Guardian of <span className="font-normal md:font-medium underline decoration-slate-300 underline-offset-4 mx-1">{data.studentDetails.studentName || "[Student Name]"}</span> Solemnly declare that the above information regarding my son/daughter/ward are true to the best of my knowledge."
         </p>
 
         <label className={`flex items-start gap-4 p-4 rounded-xl border cursor-pointer transition-all ${data.additionalDetails.acceptedDeclaration ? "border-brand-green bg-emerald-50" : "border-slate-300 bg-white hover:border-brand-green"} ${data.meta.showErrors && !data.additionalDetails.acceptedDeclaration ? "border-red-400 bg-red-50" : ""}`}>
@@ -168,7 +168,7 @@ export default function Step5Review({ onEdit }: Step5ReviewProps) {
             />
           </div>
           <div className="flex flex-col">
-            <span className={`text-sm font-normal md:font-semibold ${data.additionalDetails.acceptedDeclaration ? "text-emerald-900" : "text-slate-700"} ${data.meta.showErrors && !data.additionalDetails.acceptedDeclaration ? "text-red-700" : ""}`}>
+            <span className={`text-sm font-normal md:font-medium ${data.additionalDetails.acceptedDeclaration ? "text-emerald-900" : "text-slate-700"} ${data.meta.showErrors && !data.additionalDetails.acceptedDeclaration ? "text-red-700" : ""}`}>
               I accept the declaration terms *
             </span>
             <span className={`text-[11px] font-medium mt-1 ${data.additionalDetails.acceptedDeclaration ? "text-emerald-700" : "text-slate-500"} ${data.meta.showErrors && !data.additionalDetails.acceptedDeclaration ? "text-red-600" : ""}`}>

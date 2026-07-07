@@ -31,7 +31,7 @@ export default function AuthCard({ title, subtitle, userType, children, alternat
         <div className="absolute -bottom-12 -right-12 w-64 h-64 bg-emerald-500/10 rounded-full blur-[85px] pointer-events-none" />
 
         {/* Back Link */}
-        <Link href="/" className="inline-flex items-center gap-2.5 text-xs font-semibold text-slate-400 hover:text-white transition-colors group z-10">
+        <Link href="/" className="inline-flex items-center gap-2.5 text-xs font-medium text-slate-400 hover:text-white transition-colors group z-10">
           <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" /> Back to Homepage
         </Link>
 
@@ -42,12 +42,12 @@ export default function AuthCard({ title, subtitle, userType, children, alternat
               <img src="/images/logo.png" alt="Green View Logo" className="w-full h-full object-contain" />
             </div>
             <div className="flex flex-col">
-              <span className="font-serif font-semibold text-white text-xl leading-none tracking-tight">Green View</span>
-              <span className="text-[9px] text-emerald-400 font-bold tracking-widest uppercase mt-1 leading-none">Sr. Sec. School</span>
+              <span className="font-serif font-medium text-white text-xl leading-none tracking-tight">Green View</span>
+              <span className="text-[9px] text-emerald-400 font-semibold tracking-widest uppercase mt-1 leading-none">Sr. Sec. School</span>
             </div>
           </div>
 
-          <h2 className="text-2xl md:text-3xl font-semibold md:font-extrabold tracking-tight leading-snug">
+          <h2 className="text-2xl md:text-3xl font-medium md:font-bold tracking-tight leading-snug">
             {userType === "student" ? "Your Academic Journey Starts Here" : "Empowering Minds, Shaping Futures"}
           </h2>
           
@@ -57,7 +57,7 @@ export default function AuthCard({ title, subtitle, userType, children, alternat
               : "Manage student marks, record attendance logs, post announcements, and coordinate parent communication logs efficiently."}
           </p>
 
-          <div className="flex flex-col gap-4 mt-2 text-xs font-semibold text-slate-300">
+          <div className="flex flex-col gap-4 mt-2 text-xs font-medium text-slate-300">
             <div className="flex items-center gap-3.5 group/item">
               <div className="w-7 h-7 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-brand-green group-hover/item:bg-brand-green/20 transition-all duration-300">
                 <ShieldCheck className="w-4 h-4 shrink-0" />
@@ -90,20 +90,20 @@ export default function AuthCard({ title, subtitle, userType, children, alternat
         
         {/* Mobile Header Link */}
         <div className="flex justify-between items-center lg:hidden">
-          <Link href="/" className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-500 hover:text-slate-800 transition-colors">
+          <Link href="/" className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-slate-800 transition-colors">
             <ArrowLeft className="w-3.5 h-3.5" /> Home
           </Link>
-          <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest bg-slate-150 px-2 py-0.5 rounded">
+          <span className="text-[10px] font-semibold text-slate-400 uppercase tracking-widest bg-slate-150 px-2 py-0.5 rounded">
             {userType === "student" ? "Student Hub" : "Teacher Hub"}
           </span>
         </div>
 
         {/* Header Block */}
         <div className="flex flex-col">
-          <span className="text-[10px] font-semibold text-brand-green uppercase tracking-[0.25em] mb-1.5">
+          <span className="text-[10px] font-medium text-brand-green uppercase tracking-[0.25em] mb-1.5">
             {userType === "student" ? "Student Portal" : "Faculty Portal"}
           </span>
-          <h1 className="text-2xl font-semibold md:font-extrabold text-brand-navy tracking-tight leading-tight">
+          <h1 className="text-2xl font-medium md:font-bold text-brand-navy tracking-tight leading-tight">
             {title}
           </h1>
           <p className="text-slate-400 text-xs font-medium mt-1 leading-relaxed">
@@ -119,7 +119,7 @@ export default function AuthCard({ title, subtitle, userType, children, alternat
         {/* Bottom Alternative Link */}
         <div className="text-xs text-slate-500 text-center font-medium pt-4 border-t border-slate-100/60">
           {alternativeLink.label}{" "}
-          <Link href={alternativeLink.href} className="text-brand-green font-bold hover:underline">
+          <Link href={alternativeLink.href} className="text-brand-green font-semibold hover:underline">
             {alternativeLink.text}
           </Link>
         </div>

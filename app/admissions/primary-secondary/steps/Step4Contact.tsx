@@ -41,7 +41,7 @@ export default function Step4Contact() {
           <MapPin className="w-6 h-6 text-brand-green" />
         </div>
         <div>
-          <h2 className="text-xl md:text-2xl font-normal md:font-semibold text-slate-800 tracking-tight">
+          <h2 className="text-xl md:text-2xl font-normal md:font-medium text-slate-800 tracking-tight">
             Contact Details
           </h2>
           <p className="text-sm text-slate-500 font-medium mt-1">
@@ -54,7 +54,7 @@ export default function Step4Contact() {
         
         {/* Present Address */}
         <div className="flex flex-col">
-          <label className="text-[11px] font-normal md:font-semibold text-slate-800 mb-2 uppercase tracking-wider">Present Address with PIN Code *</label>
+          <label className="text-[11px] font-normal md:font-medium text-slate-800 mb-2 uppercase tracking-wider">Present Address with PIN Code *</label>
           <textarea 
             placeholder="Enter full present residential address including PIN code" 
             value={data.contactDetails.presentAddress}
@@ -62,13 +62,13 @@ export default function Step4Contact() {
             rows={3}
             className={`w-full px-3 py-2.5 md:px-4 md:py-3 rounded-xl border outline-none transition-all text-xs md:text-sm font-medium placeholder:text-slate-400 resize-none ${getErrorClass(data.contactDetails.presentAddress)}`}
           />
-          {data.meta.showErrors && !data.contactDetails.presentAddress && <span className="text-[10px] font-normal md:font-semibold text-red-500 mt-1.5">Required field.</span>}
+          {data.meta.showErrors && !data.contactDetails.presentAddress && <span className="text-[10px] font-normal md:font-medium text-red-500 mt-1.5">Required field.</span>}
         </div>
 
         {/* Permanent Address */}
         <div className="flex flex-col">
           <div className="flex items-center justify-between mb-2">
-            <label className="text-[11px] font-normal md:font-semibold text-slate-800 uppercase tracking-wider">Permanent Address *</label>
+            <label className="text-[11px] font-normal md:font-medium text-slate-800 uppercase tracking-wider">Permanent Address *</label>
             <label className="flex items-center gap-2 cursor-pointer group">
               <div className={`w-4 h-4 rounded border flex items-center justify-center transition-colors ${sameAsPresent ? "bg-brand-green border-brand-green" : "border-slate-300 group-hover:border-brand-green"}`}>
                 {sameAsPresent && <div className="w-2 h-2 bg-white rounded-[1px]" />}
@@ -79,7 +79,7 @@ export default function Step4Contact() {
                 checked={sameAsPresent}
                 onChange={handleSameAsPresentChange}
               />
-              <span className="text-[10px] font-normal md:font-semibold text-slate-500 group-hover:text-slate-800 transition-colors uppercase">Same as Present</span>
+              <span className="text-[10px] font-normal md:font-medium text-slate-500 group-hover:text-slate-800 transition-colors uppercase">Same as Present</span>
             </label>
           </div>
           <textarea 
@@ -94,14 +94,14 @@ export default function Step4Contact() {
               sameAsPresent ? "bg-slate-50 text-slate-500 cursor-not-allowed border-slate-200" : getErrorClass(data.contactDetails.permanentAddress)
             }`}
           />
-          {data.meta.showErrors && !data.contactDetails.permanentAddress && !sameAsPresent && <span className="text-[10px] font-normal md:font-semibold text-red-500 mt-1.5">Required field.</span>}
+          {data.meta.showErrors && !data.contactDetails.permanentAddress && !sameAsPresent && <span className="text-[10px] font-normal md:font-medium text-red-500 mt-1.5">Required field.</span>}
         </div>
 
         <div className="w-full h-px bg-slate-200 my-2" />
 
         {/* Telephone */}
         <div className="flex flex-col md:w-1/2">
-          <label className="text-[11px] font-normal md:font-semibold text-slate-800 mb-2 uppercase tracking-wider">Telephone No. (if any)</label>
+          <label className="text-[11px] font-normal md:font-medium text-slate-800 mb-2 uppercase tracking-wider">Telephone No. (if any)</label>
           <input 
             type="text" 
             placeholder="e.g., +91 9876543210" 
