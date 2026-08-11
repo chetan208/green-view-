@@ -1,25 +1,27 @@
 "use client";
 
 import React, { useState } from "react";
-import { AlertCircle, CheckCircle2, ArrowLeft } from "lucide-react";
+import { AlertCircle, CheckCircle2, Phone, KeyRound, Edit2, ArrowRight } from "lucide-react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 export default function TeacherLoginPage() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [mobile, setMobile] = useState("");
+  const [otp, setOtp] = useState("");
+  const [step, setStep] = useState<"MOBILE" | "OTP">("MOBILE");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleSendOtp = (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
     setSuccess("");
 
-    if (!email.trim() || !password.trim()) {
-      setError("Please enter your Email Address and Password.");
+    const cleanMobile = mobile.replace(/\D/g, "");
+    if (cleanMobile.length !== 10) {
+      setError("Please enter a valid 10-digit mobile number.");
       return;
     }
 
@@ -27,25 +29,63 @@ export default function TeacherLoginPage() {
 
     setTimeout(() => {
       setIsLoading(false);
-      const cleanEmail = email.trim().toLowerCase();
-      if (
-        (cleanEmail === "teacher@email.com" && password === "teacher123") ||
-        (cleanEmail === "demo" && password === "demo")
-      ) {
+      setStep("OTP");
+      setSuccess(`OTP sent to +91 ${cleanMobile}. (Demo OTP: 1234)`);
+    }, 800);
+  };
+
+  const handleVerifyOtp = (e: React.FormEvent) => {
+    e.preventDefault();
+    setError("");
+    setSuccess("");
+
+    if (!otp.trim() || otp.trim().length < 4) {
+      setError("Please enter a valid 4-digit OTP.");
+      return;
+    }
+
+    setIsLoading(true);
+
+    setTimeout(() => {
+      setIsLoading(false);
+      const cleanMobile = mobile.replace(/\D/g, "");
+
+      if (cleanMobile === "7018152657" || cleanMobile.length === 10) {
         setSuccess("Login successful! Redirecting to dashboard...");
+        
+        const isChetan = cleanMobile === "7018152657";
+        localStorage.setItem(
+          "gv_teacher",
+          JSON.stringify({
+            name: isChetan ? "Chetan" : "Faculty Member",
+            mobile: `+91 ${cleanMobile}`,
+            department: "Senior Secondary Faculty",
+            employeeId: "GV-TCH-408"
+          })
+        );
+
         setTimeout(() => {
           router.push("/admin");
         }, 1200);
       } else {
-        setError("Invalid credentials. Try using the Quick Demo auto-fill option below.");
+        setError("Invalid OTP or Mobile Number. Please try again.");
       }
     }, 1000);
   };
 
   const handleDemoLogin = () => {
-    setEmail("teacher@email.com");
-    setPassword("teacher123");
+    setMobile("7018152657");
+    setOtp("1234");
+    setStep("OTP");
     setError("");
+    setSuccess("Demo credentials auto-filled! Click 'Verify & Login'.");
+  };
+
+  const handleEditMobile = () => {
+    setStep("MOBILE");
+    setOtp("");
+    setError("");
+    setSuccess("");
   };
 
   return (
@@ -74,8 +114,10 @@ export default function TeacherLoginPage() {
             <span className="text-[#0fa958]">Sign In as </span>
             <span className="text-[#0c3c86]">Teacher</span>
           </h2>
-          <p className="text-slate-400 text-[11px] font-medium mt-2.5 leading-relaxed max-w-[290px]">
-            Please log in with your official school registration credentials.
+          <p className="text-slate-400 text-[11px] font-medium mt-2.5 leading-relaxed max-w-[310px]">
+            {step === "MOBILE" 
+              ? "Enter your official registered 10-digit mobile number to receive an OTP." 
+              : `Enter the 4-digit verification code sent to +91 ${mobile}.`}
           </p>
         </div>
 
@@ -93,45 +135,78 @@ export default function TeacherLoginPage() {
           </div>
         )}
 
-        {/* Login Form */}
-        <form onSubmit={handleLogin} className="flex flex-col gap-4">
-          <div className="flex flex-col">
-            <label className="text-xs font-medium text-slate-500 mb-2">
-              Email Address
-            </label>
-            <input 
-              type="email" 
-              placeholder="teacher@email.com" 
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-4 py-3 rounded-xl border border-slate-200 outline-none text-xs md:text-sm font-medium placeholder:text-slate-400 text-slate-800 bg-white focus:border-brand-green focus:ring-1 focus:ring-brand-green/20 transition-all"
-            />
-          </div>
+        {/* STEP 1: MOBILE NUMBER ENTRY */}
+        {step === "MOBILE" ? (
+          <form onSubmit={handleSendOtp} className="flex flex-col gap-4">
+            <div className="flex flex-col">
+              <label className="text-xs font-medium text-slate-500 mb-2">
+                Mobile Number
+              </label>
+              <div className="flex items-center rounded-xl border border-slate-200 overflow-hidden bg-white focus-within:border-brand-green focus-within:ring-1 focus-within:ring-brand-green/20 transition-all">
+                <span className="px-3.5 py-3 text-xs md:text-sm font-semibold text-slate-500 bg-slate-50 border-r border-slate-200 flex items-center gap-1.5 shrink-0">
+                  <Phone className="w-3.5 h-3.5 text-brand-green" /> +91
+                </span>
+                <input 
+                  type="tel" 
+                  maxLength={10}
+                  placeholder="Enter 10-digit mobile number" 
+                  value={mobile}
+                  onChange={(e) => setMobile(e.target.value.replace(/\D/g, ""))}
+                  className="w-full px-4 py-3 outline-none text-xs md:text-sm font-medium placeholder:text-slate-400 text-slate-800 bg-transparent"
+                />
+              </div>
+            </div>
 
-          <div className="flex flex-col relative">
-            <label className="text-xs font-medium text-slate-500 mb-2">
-              Password
-            </label>
-            <input 
-              type="password" 
-              placeholder="Enter your password" 
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-4 py-3 rounded-xl border border-slate-200 outline-none text-xs md:text-sm font-medium placeholder:text-slate-400 text-slate-800 bg-white focus:border-brand-green focus:ring-1 focus:ring-brand-green/20 transition-all"
-            />
-            <Link href="#" className="text-[11px] font-semibold text-[#0c3c86] hover:underline block text-right mt-1.5 self-end">
-              Forgot Password?
-            </Link>
-          </div>
+            <button
+              type="submit"
+              disabled={isLoading}
+              className="w-full bg-[#0fa958] hover:bg-[#147a42] text-white rounded-xl py-3.5 font-semibold text-xs md:text-sm transition-all shadow-md shadow-emerald-500/10 cursor-pointer flex items-center justify-center gap-2 mt-2"
+            >
+              {isLoading ? "Sending OTP..." : "Get OTP to Login"}
+              <ArrowRight className="w-4 h-4" />
+            </button>
+          </form>
+        ) : (
+          /* STEP 2: OTP VERIFICATION */
+          <form onSubmit={handleVerifyOtp} className="flex flex-col gap-4">
+            <div className="flex flex-col">
+              <div className="flex justify-between items-center mb-2">
+                <label className="text-xs font-medium text-slate-500">
+                  Enter 4-Digit OTP
+                </label>
+                <button
+                  type="button"
+                  onClick={handleEditMobile}
+                  className="text-[11px] font-semibold text-[#0c3c86] hover:underline flex items-center gap-1 cursor-pointer"
+                >
+                  <Edit2 className="w-3 h-3" /> Change Number
+                </button>
+              </div>
 
-          <button
-            type="submit"
-            disabled={isLoading}
-            className="w-full bg-[#0fa958] hover:bg-[#147a42] text-white rounded-xl py-3.5 font-semibold text-xs md:text-sm transition-all shadow-md shadow-emerald-500/10 cursor-pointer flex items-center justify-center gap-2 mt-2"
-          >
-            {isLoading ? "Logging in..." : "Login Now"}
-          </button>
-        </form>
+              <div className="relative flex items-center">
+                <span className="absolute left-3.5 text-slate-400">
+                  <KeyRound className="w-4 h-4 text-brand-green" />
+                </span>
+                <input 
+                  type="text" 
+                  maxLength={4}
+                  placeholder="Enter 4-digit OTP (e.g. 1234)" 
+                  value={otp}
+                  onChange={(e) => setOtp(e.target.value.replace(/\D/g, ""))}
+                  className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 outline-none text-xs md:text-sm font-semibold tracking-widest text-slate-800 bg-white focus:border-brand-green focus:ring-1 focus:ring-brand-green/20 transition-all"
+                />
+              </div>
+            </div>
+
+            <button
+              type="submit"
+              disabled={isLoading}
+              className="w-full bg-[#0fa958] hover:bg-[#147a42] text-white rounded-xl py-3.5 font-semibold text-xs md:text-sm transition-all shadow-md shadow-emerald-500/10 cursor-pointer flex items-center justify-center gap-2 mt-2"
+            >
+              {isLoading ? "Verifying OTP..." : "Verify & Login"}
+            </button>
+          </form>
+        )}
 
         {/* OR Divider */}
         <div className="w-full flex items-center justify-center gap-3 my-1">
@@ -142,18 +217,19 @@ export default function TeacherLoginPage() {
 
         {/* Demo Helper Box */}
         <div className="bg-emerald-50/30 border border-emerald-100/50 rounded-2xl p-4 flex flex-col items-center">
-          <span className="text-[9px] font-semibold text-emerald-700 uppercase tracking-widest mb-2.5">
-            Quick Demo Login
+          <span className="text-[9px] font-semibold text-emerald-700 uppercase tracking-widest mb-2">
+            Quick Demo Teacher Login
           </span>
-          <div className="flex flex-col gap-1 text-center text-xs text-slate-600 font-medium mb-2.5">
-            <div>Email: <code className="bg-emerald-50 border border-emerald-100/30 px-1.5 py-0.5 rounded text-emerald-800 font-mono">teacher@email.com</code></div>
-            <div>Password: <code className="bg-emerald-50 border border-emerald-100/30 px-1.5 py-0.5 rounded text-emerald-800 font-mono">teacher123</code></div>
+          <div className="flex flex-col gap-1 text-center text-xs text-slate-600 font-medium mb-3">
+            <div>Name: <strong className="text-slate-800">Chetan</strong></div>
+            <div>Mobile: <code className="bg-emerald-50 border border-emerald-100/40 px-1.5 py-0.5 rounded text-emerald-800 font-mono font-semibold">7018152657</code></div>
           </div>
           <button
+            type="button"
             onClick={handleDemoLogin}
-            className="text-[#0fa958] hover:text-[#147a42] text-xs font-semibold underline cursor-pointer flex items-center gap-1.5"
+            className="text-[#0fa958] hover:text-[#147a42] bg-white border border-emerald-200 px-3.5 py-2 rounded-xl text-xs font-semibold shadow-xs transition-all hover:bg-emerald-50 cursor-pointer flex items-center gap-1.5"
           >
-            <CheckCircle2 className="w-3.5 h-3.5" /> Auto-Fill Demo Credentials
+            <CheckCircle2 className="w-3.5 h-3.5 text-[#0fa958]" /> Auto-Fill Demo Credentials
           </button>
         </div>
 
