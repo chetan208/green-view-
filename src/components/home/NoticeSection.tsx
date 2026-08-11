@@ -1,73 +1,52 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { ArrowUpRight, Bell, ArrowRight, X, FileText, Download, Clock, ShieldAlert, ShieldCheck, Briefcase } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { getNoticesApi } from "@/lib/api";
 
 export default function BoardNotices() {
   const [selectedNotice, setSelectedNotice] = useState<any>(null);
+  const [notices, setNotices] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const scrollingNotices = [
-    "Admissions Open for Session 2026-27 — Register online today!",
-    "Hiring started for academic session 2026 — Check careers section",
-    "Notice: Mid-term examinations schedule has been uploaded on the portal",
-  ];
+  useEffect(() => {
+    let isMounted = true;
+    getNoticesApi()
+      .then(res => {
+        if (isMounted && res && res.notices) {
+          const mapped = res.notices.map((n: any) => ({
+            id: n._id,
+            title: n.title,
+            desc: n.description || "",
+            details: n.description || "",
+            date: n.createdAt ? new Date(n.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : 'Recent',
+            category: n.category || 'Academic',
+            isNew: true,
+            hasAttachment: !!n.documentUrl,
+            documentUrl: n.documentUrl
+          }));
+          setNotices(mapped);
+        }
+      })
+      .catch((err) => {
+        console.error("Error fetching notices for section:", err);
+      })
+      .finally(() => {
+        if (isMounted) setLoading(false);
+      });
+    return () => { isMounted = false; };
+  }, []);
 
-  // Repeat scrolling notices for infinite seamless effect
-  const repeatedScrollNotices = [...scrollingNotices, ...scrollingNotices, ...scrollingNotices];
-
-  const mainNotices = [
-    {
-      id: 2,
-      title: "hiring started for the 2026 session recruitment drive",
-      date: "18 Jun 2026",
-      category: "Urgent",
-      desc: "Teacher recruitment drives are officially open for senior secondary English, Physics, and Chemistry positions for the 2026-27 term.",
-      details: "Candidates are requested to submit their updated resumes at careers@greenview.edu.in. Shortlisted candidates will be notified for offline interviews within a week.",
-      isNew: true,
-      hasAttachment: true,
-      isHighlight: true,
-    },
-    {
-      id: 3,
-      title: "Holiday: summer holidays calendar updates",
-      date: "18 Jun 2026",
-      category: "Academic",
-      desc: "Summer vacations duration has been updated. The revised calendar has been approved by the school education board.",
-      details: "The summer break will conclude on June 30, and regular classes will start from July 1, 2026. The principal's advisory on uniforms must be strictly adhered to.",
-      isNew: true,
-      hasAttachment: true,
-      isHighlight: false,
-    },
-    {
-      id: 4,
-      title: "Exam: Mid sem exams schedules released for Classes V to XII",
-      date: "18 Jun 2026",
-      category: "Academic",
-      desc: "Detailed schedules for Mid Semester Examinations have been finalized and are available for download.",
-      details: "Students must maintain 75% attendance to qualify for the exams. Admit cards will be distributed from the administrative wing starting July 10.",
-      isNew: true,
-      hasAttachment: true,
-      isHighlight: false,
-    },
-    {
-      id: 5,
-      title: "Admissions Open for Session 2026-27 - Limited Seats",
-      date: "18 Jun 2026",
-      category: "Academic",
-      desc: "Registration portal is open for nursery to primary grade levels. Admissions are based on seat availability.",
-      details: "Documents required: Birth certificate, Aadhaar card copy, past year report card (if applicable), and 4 passport-size photographs of the candidate.",
-      isNew: true,
-      hasAttachment: true,
-      isHighlight: false,
-    },
-  ];
+  const urgentCount = notices.filter(n => n.category === 'Urgent').length;
+  const academicCount = notices.filter(n => n.category === 'Academic' || !n.category).length;
+  const careersCount = notices.filter(n => n.category === 'Careers').length;
 
   const stats = [
-    { value: "1", label: "URGENT", color: "text-red-500" },
-    { value: "9", label: "ACADEMIC", color: "text-emerald-700" },
-    { value: "0", label: "CAREERS", color: "text-slate-600" },
+    { value: String(urgentCount), label: "URGENT", color: "text-red-500" },
+    { value: String(academicCount), label: "ACADEMIC", color: "text-emerald-700" },
+    { value: String(careersCount), label: "CAREERS", color: "text-slate-600" },
   ];
 
   const getCategoryBadge = (cat: string) => {
@@ -135,44 +114,32 @@ export default function BoardNotices() {
   return (
     <section className="w-full py-16 md:py-20 px-6 bg-slate-50/50 flex flex-col items-center font-sans overflow-hidden">
       
-      {/* CSS Animation Keyframes for Marquee */}
-      <style dangerouslySetInnerHTML={{ __html: `
-        @keyframes marquee {
-          0% { transform: translateX(0%); }
-          100% { transform: translateX(-33.33%); }
-        }
-        .animate-marquee-infinite {
-          animation: marquee 25s linear infinite;
-        }
-        .animate-marquee-infinite:hover {
-          animation-play-state: paused;
-        }
-      `}} />
-
-      {/* 1. Top Horizontal Scrolling Live Notice Bar */}
-      <motion.div 
-        initial={{ opacity: 0, y: -20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-80px" }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
-        className="w-full max-w-6xl mb-12"
-      >
-        <div className="bg-white border border-slate-100 shadow-sm rounded-full p-2.5 px-6 flex items-center overflow-hidden gap-4">
-          <div className="flex items-center gap-1.5 bg-brand-green text-white text-[9px] font-semibold md:font-black px-3.5 py-1.5 rounded-full shrink-0">
-            <span className="w-1.5 h-1.5 bg-white rounded-full animate-ping" />
-            <span>LIVE</span>
-          </div>
-          <div className="w-full overflow-hidden relative flex">
-            <div className="flex gap-16 whitespace-nowrap animate-marquee-infinite text-xs font-semibold md:font-bold text-slate-600">
-              {repeatedScrollNotices.map((text, idx) => (
-                <span key={idx} className="hover:text-emerald-600 cursor-pointer transition-colors">
-                  {text}
-                </span>
-              ))}
+      {/* 1. Top Horizontal Live Notice Bar (Only if notices exist) */}
+      {notices.length > 0 && (
+        <motion.div 
+          initial={{ opacity: 0, y: -20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className="w-full max-w-6xl mb-12"
+        >
+          <div className="bg-white border border-slate-100 shadow-sm rounded-full p-2.5 px-6 flex items-center overflow-hidden gap-4">
+            <div className="flex items-center gap-1.5 bg-brand-green text-white text-[9px] font-semibold md:font-black px-3.5 py-1.5 rounded-full shrink-0">
+              <span className="w-1.5 h-1.5 bg-white rounded-full animate-ping" />
+              <span>LIVE</span>
+            </div>
+            <div className="w-full overflow-hidden relative flex">
+              <div className="flex gap-16 whitespace-nowrap text-xs font-semibold md:font-bold text-slate-600">
+                {notices.map((n, idx) => (
+                  <span key={idx} className="hover:text-emerald-600 cursor-pointer transition-colors">
+                    {n.title}
+                  </span>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
-      </motion.div>
+        </motion.div>
+      )}
 
       {/* 2. Main Notice Board Content */}
       <div className="max-w-6xl w-full flex flex-col lg:flex-row items-stretch justify-between gap-12 lg:gap-16">
@@ -234,35 +201,48 @@ export default function BoardNotices() {
           className="flex-[1.5] flex flex-col items-center lg:items-start gap-6 w-full"
         >
           <div className="flex flex-col w-full gap-4">
-            {mainNotices.map((notice, idx) => (
-              <motion.div
-                key={idx}
-                variants={itemVariants}
-                whileHover={{ y: -3, scale: 1.005 }}
-                onClick={() => setSelectedNotice(notice)}
-                className={`group flex items-center justify-between bg-white p-4 px-6 rounded-2xl border transition-all duration-300 hover:shadow-md cursor-pointer ${
-                  notice.isHighlight
-                    ? "border-brand-green shadow-sm shadow-emerald-50"
-                    : "border-slate-100 shadow-sm shadow-slate-100/40"
-                }`}
-              >
-                <div className="flex items-center gap-3 overflow-hidden">
-                  <span className="bg-red-500 text-white text-[8px] font-semibold md:font-bold px-1.5 py-0.5 rounded uppercase tracking-wider animate-pulse shrink-0">
-                    NEW
-                  </span>
-                  <p className="text-slate-800 font-medium md:font-semibold text-xs md:text-sm group-hover:text-brand-green transition-colors truncate">
-                    {notice.title}
-                  </p>
-                </div>
+            {loading ? (
+              <div className="bg-white border border-slate-100 rounded-2xl p-8 text-center text-slate-400 text-xs font-medium">
+                Loading official notices...
+              </div>
+            ) : notices.length > 0 ? (
+              notices.slice(0, 4).map((notice, idx) => (
+                <motion.div
+                  key={idx}
+                  variants={itemVariants}
+                  whileHover={{ y: -3, scale: 1.005 }}
+                  onClick={() => setSelectedNotice(notice)}
+                  className="group flex items-center justify-between bg-white p-4 px-6 rounded-2xl border border-slate-100 shadow-sm shadow-slate-100/40 transition-all duration-300 hover:shadow-md cursor-pointer"
+                >
+                  <div className="flex items-center gap-3 overflow-hidden">
+                    <span className="bg-red-500 text-white text-[8px] font-semibold md:font-bold px-1.5 py-0.5 rounded uppercase tracking-wider animate-pulse shrink-0">
+                      NEW
+                    </span>
+                    <p className="text-slate-800 font-medium md:font-semibold text-xs md:text-sm group-hover:text-brand-green transition-colors truncate">
+                      {notice.title}
+                    </p>
+                  </div>
 
-                <div className="flex items-center gap-4 shrink-0 pl-4">
-                  <span className="text-[10px] font-semibold md:font-bold text-slate-400">
-                    {notice.date}
-                  </span>
-                  <ArrowUpRight className="w-4 h-4 text-brand-green group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                  <div className="flex items-center gap-4 shrink-0 pl-4">
+                    <span className="text-[10px] font-semibold md:font-bold text-slate-400">
+                      {notice.date}
+                    </span>
+                    <ArrowUpRight className="w-4 h-4 text-brand-green group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                  </div>
+                </motion.div>
+              ))
+            ) : (
+              /* Empty / Coming Soon Component */
+              <div className="bg-white border border-slate-100 rounded-2xl p-10 flex flex-col items-center text-center shadow-sm w-full">
+                <div className="w-12 h-12 rounded-full bg-emerald-50 text-brand-green flex items-center justify-center mb-3">
+                  <Bell className="w-5 h-5" />
                 </div>
-              </motion.div>
-            ))}
+                <h3 className="text-sm font-bold text-slate-800 uppercase tracking-wider mb-1">No Notices Published Yet</h3>
+                <p className="text-xs text-slate-400 max-w-sm leading-relaxed">
+                  Official announcements will appear here once published from the admin control desk.
+                </p>
+              </div>
+            )}
           </div>
 
           <motion.div 
@@ -309,7 +289,7 @@ export default function BoardNotices() {
                   {getCategoryBadge(selectedNotice.category)}
                   <div className="flex flex-col gap-0.5">
                     <span className="text-[9px] text-slate-400 font-semibold md:font-bold flex items-center gap-1">
-                      <Clock className="w-3 h-3 text-slate-300" /> Circular Date: {selectedNotice.date}
+                      <Clock className="w-3 h-3 text-slate-300" /> Date: {selectedNotice.date}
                     </span>
                   </div>
                 </div>
@@ -328,27 +308,28 @@ export default function BoardNotices() {
                 <h3 className="font-semibold md:font-bold text-slate-900 text-base md:text-lg leading-snug">
                   {selectedNotice.title}
                 </h3>
-                <p className="text-slate-600 text-xs md:text-sm font-normal md:font-semibold leading-relaxed">
-                  {selectedNotice.desc}
-                </p>
-                <div className="bg-slate-50 border border-slate-100 rounded-2xl p-5 text-slate-800 text-xs md:text-sm font-semibold md:font-bold leading-relaxed">
-                  {selectedNotice.details}
-                </div>
+                {selectedNotice.desc && (
+                  <p className="text-slate-650 text-xs md:text-sm font-normal md:font-medium leading-relaxed">
+                    {selectedNotice.desc}
+                  </p>
+                )}
               </div>
 
               {/* Footer / Attachments */}
-              {selectedNotice.hasAttachment && (
+              {selectedNotice.hasAttachment && selectedNotice.documentUrl && (
                 <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-emerald-50/30 border border-emerald-100/30 rounded-2xl p-4 mt-1">
                   <div className="flex items-center gap-2">
                     <FileText className="w-4 h-4 text-brand-green" />
-                    <span className="text-xs font-semibold md:font-bold text-slate-700">Official_Circular_{selectedNotice.id}.pdf</span>
+                    <span className="text-xs font-semibold md:font-bold text-slate-700">Official Document</span>
                   </div>
-                  <button
-                    onClick={() => alert(`Downloading Circular PDF for Notice ID: ${selectedNotice.id}`)}
+                  <a
+                    href={selectedNotice.documentUrl}
+                    target="_blank"
+                    rel="noreferrer"
                     className="inline-flex items-center gap-1.5 bg-brand-green text-white hover:bg-emerald-700 px-4 py-2 rounded-xl text-xs font-semibold md:font-bold transition-all cursor-pointer shadow-sm shadow-emerald-500/10 border-transparent"
                   >
-                    <Download className="w-3.5 h-3.5" /> Download Circular
-                  </button>
+                    <Download className="w-3.5 h-3.5" /> View / Download Document
+                  </a>
                 </div>
               )}
             </motion.div>

@@ -1,47 +1,38 @@
 'use client';
 
 import React, { useState } from "react";
-import { BarChart3, FileText, BookOpen, Image, Menu, X, GraduationCap, Users, Mail, Calendar, Trophy, ExternalLink, School } from "lucide-react";
-import NoticeManager from "./sections/NoticeManager";
-import PaperManager from "./sections/PaperManager";
-import MediaManager from "./sections/MediaManager";
-import AdmissionsManager from "./sections/AdmissionsManager";
-import ContactManager from "./sections/ContactManager";
-import CalendarManager from "./sections/CalendarManager";
-import ResultsManager from "./sections/ResultsManager";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { Menu, X, GraduationCap, Mail, Calendar, Trophy, ExternalLink, School, FileText, BookOpen, Image } from "lucide-react";
 
-type TabIdType = "notices" | "papers" | "media" | "admissions" | "contact" | "calendar" | "results";
-
-export default function AdminDashboard() {
-  const [activeTab, setActiveTab] = useState<TabIdType>("notices");
+export default function AdminLayoutShell({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
-  const TabComponents: Record<TabIdType, React.ReactNode> = {
-    notices: <NoticeManager />,
-    papers: <PaperManager />,
-    media: <MediaManager />,
-    admissions: <AdmissionsManager />,
-    contact: <ContactManager />,
-    calendar: <CalendarManager />,
-    results: <ResultsManager />
-  };
-
   const menuItems = [
-    { id: "contact", label: "Contact Inquiries", icon: <Mail size={15} /> },
-    { id: "calendar", label: "Manage Calendar", icon: <Calendar size={15} /> },
-    { id: "results", label: "Top Results", icon: <Trophy size={15} /> },
-    { id: "notices", label: "Notices Archive", icon: <FileText size={15} /> },
-    { id: "papers", label: "Study Materials", icon: <BookOpen size={15} /> },
-    { id: "media", label: "Media Gallery", icon: <Image size={15} /> },
-    { id: "admissions", label: "Admissions", icon: <GraduationCap size={15} /> },
+    { href: "/admin/contact", label: "Contact Inquiries", icon: <Mail size={15} /> },
+    { href: "/admin/calendar", label: "Manage Calendar", icon: <Calendar size={15} /> },
+    { href: "/admin/results", label: "Top Results", icon: <Trophy size={15} /> },
+    { href: "/admin/notices", label: "Notices Archive", icon: <FileText size={15} /> },
+    { href: "/admin/papers", label: "Study Materials", icon: <BookOpen size={15} /> },
+    { href: "/admin/media", label: "Media Gallery", icon: <Image size={15} /> },
+    { href: "/admin/admissions", label: "Admissions", icon: <GraduationCap size={15} /> },
   ];
+
+  const checkIsActive = (href: string) => {
+    if (pathname === href) return true;
+    if (href === "/admin/notices" && (pathname === "/admin" || pathname === "/admin/")) return true;
+    return false;
+  };
 
   return (
     <div className="w-full min-h-screen bg-slate-50 text-slate-800 flex flex-col lg:flex-row font-sans relative">
       
+      {/* Mobile Toggle Button */}
       <button 
         onClick={() => setIsSidebarOpen(!isSidebarOpen)} 
         className="lg:hidden fixed bottom-6 right-6 z-50 p-3 bg-brand-green text-white rounded-full shadow-lg border border-brand-green flex items-center justify-center hover:bg-brand-green-dark transition-all active:scale-95 cursor-pointer"
+        aria-label="Toggle Navigation Menu"
       >
         {isSidebarOpen ? <X size={20} /> : <Menu size={20} />}
       </button>
@@ -64,11 +55,12 @@ export default function AdminDashboard() {
         
         <nav className="p-4 space-y-1 overflow-y-auto max-h-[calc(100vh-14rem)] custom-scrollbar">
           {menuItems.map((item) => {
-            const isTabActive = activeTab === item.id;
+            const isTabActive = checkIsActive(item.href);
             return (
-              <button
-                key={item.id}
-                onClick={() => { setActiveTab(item.id as TabIdType); setIsSidebarOpen(false); }}
+              <Link
+                key={item.href}
+                href={item.href}
+                onClick={() => setIsSidebarOpen(false)}
                 className={`w-full flex items-center gap-3 px-3.5 py-3 rounded-lg text-[13px] font-semibold transition-all border cursor-pointer ${
                   isTabActive 
                     ? "bg-brand-green border-brand-green text-white shadow-sm" 
@@ -77,12 +69,12 @@ export default function AdminDashboard() {
               >
                 {item.icon}
                 <span>{item.label}</span>
-              </button>
+              </Link>
             );
           })}
         </nav>
 
-        {/* ERP Button */}
+        {/* ERP Link */}
         <div className="px-4 pb-6 mt-2 absolute bottom-0 w-full bg-white border-t border-slate-100 pt-4">
           <p className="text-[9px] font-bold uppercase tracking-widest text-slate-400 px-0.5 mb-2.5">System</p>
           <a
@@ -103,10 +95,10 @@ export default function AdminDashboard() {
         <div onClick={() => setIsSidebarOpen(false)} className="fixed inset-0 bg-slate-900/20 backdrop-blur-sm z-30 lg:hidden" />
       )}
 
-      {/* Operational Active Target Form Viewport Grid */}
+      {/* Main Content Area */}
       <main className="flex-1 min-w-0 bg-transparent lg:ml-64">
         <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 pb-20">
-          {TabComponents[activeTab]}
+          {children}
         </div>
       </main>
 

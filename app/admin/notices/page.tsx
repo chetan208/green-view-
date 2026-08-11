@@ -2,6 +2,6 @@
 
 import NoticeManager from "@/components/admin/sections/NoticeManager";
 
-export default function AdminPage() {
+export default function AdminNoticesPage() {
   return <NoticeManager />;
 }

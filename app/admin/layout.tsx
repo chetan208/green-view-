@@ -1,5 +1,6 @@
 import React from "react";
 import { Metadata } from "next";
+import AdminLayoutShell from "@/components/admin/AdminLayoutShell";
 
 export const metadata: Metadata = {
   title: "Green View School | Admin Panel",
@@ -7,5 +8,5 @@ export const metadata: Metadata = {
 };
 
 export default function AdminControlLayout({ children }: { children: React.ReactNode }) {
-  return <>{children}</>;
+  return <AdminLayoutShell>{children}</AdminLayoutShell>;
 }

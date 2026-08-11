@@ -1,121 +1,61 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Search, Clock, ShieldAlert, ShieldCheck, Briefcase, X, FileText, Download, ArrowUpRight, Bell } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { getNoticesApi } from "@/lib/api";
 
 interface Notice {
-  id: number;
+  id: string | number;
   date: string;
   category: "Academic" | "Urgent" | "Careers" | "General";
   title: string;
   desc: string;
-  details: string;
+  details?: string;
   isNew: boolean;
   hasAttachment?: boolean;
+  documentUrl?: string;
 }
-
-const dummyNotices: Notice[] = [
-  {
-    id: 1,
-    date: "25 Jun 2026",
-    category: "Academic",
-    title: "Holiday: The school will remain closed on 29th June",
-    desc: "The school will remain closed on Monday, 29th June on account of the state gazetted holiday. Normal classes will resume on Tuesday.",
-    details: "All scheduled examinations, online classes, and parent-teacher interactive meets stand postponed to July 2nd. School transport services will not operate on this day.",
-    isNew: true,
-    hasAttachment: true
-  },
-  {
-    id: 2,
-    date: "18 Jun 2026",
-    category: "Urgent",
-    title: "hiring started for the 2026 session recruitment drive",
-    desc: "Teacher recruitment drives are officially open for senior secondary English, Physics, and Chemistry positions for the 2026-27 term.",
-    details: "Candidates are requested to submit their updated resumes at careers@greenview.edu.in. Shortlisted candidates will be notified for offline interviews within a week.",
-    isNew: true,
-    hasAttachment: false
-  },
-  {
-    id: 3,
-    date: "18 Jun 2026",
-    category: "Academic",
-    title: "Holiday: summer holidays calendar updates",
-    desc: "Summer vacations duration has been updated. The revised calendar has been approved by the school education board.",
-    details: "The summer break will conclude on June 30, and regular classes will start from July 1, 2026. The principal's advisory on uniforms must be strictly adhered to.",
-    isNew: true,
-    hasAttachment: true
-  },
-  {
-    id: 4,
-    date: "18 Jun 2026",
-    category: "Academic",
-    title: "Exam: Mid sem exams schedules released for Classes V to XII",
-    desc: "Detailed schedules for Mid Semester Examinations have been finalized and are available for download.",
-    details: "Students must maintain 75% attendance to qualify for the exams. Admit cards will be distributed from the administrative wing starting July 10.",
-    isNew: true,
-    hasAttachment: false
-  },
-  {
-    id: 5,
-    date: "18 Jun 2026",
-    category: "Academic",
-    title: "Admissions Open for Session 2026-27 - Limited Seats",
-    desc: "Registration portal is open for nursery to primary grade levels. Admissions are based on seat availability.",
-    details: "Documents required: Birth certificate, Aadhaar card copy, past year report card (if applicable), and 4 passport-size photographs of the candidate.",
-    isNew: true,
-    hasAttachment: true
-  },
-  {
-    id: 6,
-    date: "18 Jun 2026",
-    category: "Academic",
-    title: "Holiday: sadflka local festival circular",
-    desc: "Notice regarding regional holidays scheduled in late June for cultural celebrations.",
-    details: "The administration has announced a local holiday. The non-teaching departments will function during shortened office timings (09:00 AM to 01:00 PM).",
-    isNew: false,
-    hasAttachment: false
-  },
-  {
-    id: 7,
-    date: "17 Jun 2026",
-    category: "Academic",
-    title: "Admissions Closed for Session 2026-27 High School Streams",
-    desc: "Admission admissions for classes IX and X have officially concluded for the active academic cycle.",
-    details: "No further applications or requests for direct transfer will be processed for middle school levels. Admission to higher grades remains open.",
-    isNew: false,
-    hasAttachment: false
-  },
-  {
-    id: 8,
-    date: "17 Jun 2026",
-    category: "Academic",
-    title: "Holiday: Mahavir Jayanti gazetted circular",
-    desc: "School will observe holiday on Mahavir Jayanti as per the standard HPBOSE notification logs.",
-    details: "All classes, laboratories, and physical education clubs will remain non-operational. Bus drivers have been notified to cease routing.",
-    isNew: false,
-    hasAttachment: false
-  },
-  {
-    id: 9,
-    date: "17 Jun 2026",
-    category: "Academic",
-    title: "Admissions Open for Session 2026-27 Senior Secondary Streams",
-    desc: "Registration remains open for Medical, Non-Medical, and Commerce streams in Class XI.",
-    details: "Eligible candidates must produce board marks sheets and school leaving certificates during the counseling session at school desk.",
-    isNew: false,
-    hasAttachment: true
-  }
-];
 
 export default function NoticesList() {
   const [activeTab, setActiveTab] = useState<string>("All");
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [selectedNotice, setSelectedNotice] = useState<Notice | null>(null);
+  const [notices, setNotices] = useState<Notice[]>([]);
+  const [loading, setLoading] = useState(true);
 
   const categories = ["All", "Urgent", "Academic", "Careers"];
 
-  const filteredNotices = dummyNotices.filter(notice => {
+  useEffect(() => {
+    let isMounted = true;
+    setLoading(true);
+    getNoticesApi()
+      .then(res => {
+        if (isMounted && res && res.notices) {
+          const mapped: Notice[] = res.notices.map((n: any) => ({
+            id: n._id,
+            title: n.title,
+            desc: n.description || "",
+            details: n.description || "",
+            date: n.createdAt ? new Date(n.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : 'Recent',
+            category: (n.category as any) || 'Academic',
+            isNew: true,
+            hasAttachment: !!n.documentUrl,
+            documentUrl: n.documentUrl
+          }));
+          setNotices(mapped);
+        }
+      })
+      .catch((err) => {
+        console.error("Error fetching notices:", err);
+      })
+      .finally(() => {
+        if (isMounted) setLoading(false);
+      });
+    return () => { isMounted = false; };
+  }, []);
+
+  const filteredNotices = notices.filter(notice => {
     const matchesCategory = activeTab === "All" || notice.category === activeTab;
     const matchesSearch = notice.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
                           notice.desc.toLowerCase().includes(searchQuery.toLowerCase());
@@ -188,7 +128,11 @@ export default function NoticesList() {
 
       {/* Notices Strip List */}
       <div className="flex flex-col gap-3">
-        {filteredNotices.length > 0 ? (
+        {loading ? (
+          <div className="text-center py-16 bg-white border border-slate-100 rounded-2xl text-slate-400 text-xs font-medium">
+            Loading official notices...
+          </div>
+        ) : filteredNotices.length > 0 ? (
           filteredNotices.map((notice) => (
             <div
               key={notice.id}
@@ -225,8 +169,13 @@ export default function NoticesList() {
           ))
         ) : (
           <div className="text-center py-20 bg-white border border-slate-100 rounded-2xl flex flex-col items-center gap-3">
-            <Bell className="w-10 h-10 text-slate-300" />
-            <span className="text-slate-400 text-sm font-normal md:font-medium">No notices match your search criteria.</span>
+            <div className="w-12 h-12 rounded-full bg-slate-50 text-slate-400 flex items-center justify-center mb-1">
+              <Bell className="w-6 h-6 text-slate-300" />
+            </div>
+            <h4 className="text-sm font-bold text-slate-700 uppercase tracking-wider">No Official Notices</h4>
+            <span className="text-slate-400 text-xs font-normal md:font-medium">
+              There are no notices published matching your selection right now.
+            </span>
           </div>
         )}
       </div>
@@ -277,27 +226,28 @@ export default function NoticesList() {
                 <h3 className="font-medium md:font-semibold text-slate-900 text-base md:text-lg leading-snug">
                   {selectedNotice.title}
                 </h3>
-                <p className="text-slate-650 text-xs md:text-sm font-normal md:font-medium leading-relaxed">
-                  {selectedNotice.desc}
-                </p>
-                <div className="bg-slate-50 border border-slate-100 rounded-2xl p-5 text-slate-800 text-xs md:text-sm font-medium md:font-semibold leading-relaxed">
-                  {selectedNotice.details}
-                </div>
+                {selectedNotice.desc && (
+                  <p className="text-slate-650 text-xs md:text-sm font-normal md:font-medium leading-relaxed">
+                    {selectedNotice.desc}
+                  </p>
+                )}
               </div>
 
               {/* Footer / Attachments */}
-              {selectedNotice.hasAttachment && (
+              {selectedNotice.hasAttachment && selectedNotice.documentUrl && (
                 <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-emerald-50/30 border border-emerald-100/30 rounded-2xl p-4 mt-1">
                   <div className="flex items-center gap-2">
                     <FileText className="w-4 h-4 text-brand-green" />
-                    <span className="text-xs font-medium md:font-semibold text-slate-700">Official_Circular_{selectedNotice.id}.pdf</span>
+                    <span className="text-xs font-medium md:font-semibold text-slate-700">Official Document</span>
                   </div>
-                  <button
-                    onClick={() => alert(`Downloading Circular PDF for Notice ID: ${selectedNotice.id}`)}
+                  <a
+                    href={selectedNotice.documentUrl}
+                    target="_blank"
+                    rel="noreferrer"
                     className="inline-flex items-center gap-1.5 bg-brand-green text-white hover:bg-brand-green-dark px-4 py-2 rounded-xl text-xs font-medium md:font-semibold transition-all cursor-pointer shadow-sm shadow-emerald-500/10 border-transparent"
                   >
-                    <Download className="w-3.5 h-3.5" /> Download Circular
-                  </button>
+                    <Download className="w-3.5 h-3.5" /> View / Download Document
+                  </a>
                 </div>
               )}
             </motion.div>

@@ -1,91 +1,65 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import Link from "next/link";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronLeft, ChevronRight, Download, Share2, X } from "lucide-react";
+import { ChevronLeft, ChevronRight, Download, Share2, X, Image as ImageIcon } from "lucide-react";
+import { getFoldersApi } from "@/lib/api";
 
-type MediaItem = 
-  | { type: 'image', url: string }
-  | { type: 'youtube', videoId: string, thumbnail: string };
+type MediaItem = {
+  type: 'image' | 'youtube';
+  url: string;
+  videoId?: string;
+  thumbnail?: string;
+};
 
 type Album = {
-  id: number;
+  id: string | number;
   name: string;
   cover: string;
   media: MediaItem[];
 };
 
 export default function GalleryGrid() {
-  const allImages = [
-    "/images/hero.png",
-    "/images/hero-students.png",
-    "/images/robotics.png",
-    "/images/classroom.png",
-    "/images/art.png",
-    "/images/facilities-hero.png",
-    "/images/study.png",
-    "/images/library.png"
-  ];
-
-  const mockImageMedia: MediaItem[] = allImages.map(url => ({ type: 'image', url }));
-  const mockYoutubeVideo: MediaItem = { type: 'youtube', videoId: 'M7lc1UVf-VE', thumbnail: '/images/hero.png' };
-  const mockYoutubeVideo2: MediaItem = { type: 'youtube', videoId: 'tO01J-M3g0U', thumbnail: '/images/facilities-hero.png' };
-
-  const albums: Album[] = [
-    {
-      id: 1,
-      name: "Annual Function 2025",
-      media: [mockYoutubeVideo, ...mockImageMedia, ...mockImageMedia].slice(0, 14),
-      cover: "/images/hero.png"
-    },
-    {
-      id: 2,
-      name: "Sports Meet",
-      media: mockImageMedia.slice(1, 6),
-      cover: "/images/hero-students.png"
-    },
-    {
-      id: 3,
-      name: "Science Exhibition",
-      media: [...mockImageMedia].reverse().slice(0, 5),
-      cover: "/images/robotics.png"
-    },
-    {
-      id: 4,
-      name: "Classroom Activities",
-      media: mockImageMedia.slice(2, 8),
-      cover: "/images/classroom.png"
-    },
-    {
-      id: 5,
-      name: "Art & Craft Workshop",
-      media: mockImageMedia.slice(3, 7),
-      cover: "/images/art.png"
-    },
-    {
-      id: 6,
-      name: "Campus Tour",
-      media: [mockYoutubeVideo2, ...mockImageMedia, ...mockImageMedia].slice(0, 12),
-      cover: "/images/facilities-hero.png"
-    },
-    {
-      id: 7,
-      name: "Library & Study Halls",
-      media: mockImageMedia.slice(5, 8),
-      cover: "/images/study.png"
-    },
-    {
-      id: 8,
-      name: "Independence Day",
-      media: mockImageMedia.slice(0, 4),
-      cover: "/images/library.png" 
-    }
-  ];
-
+  const [albums, setAlbums] = useState<Album[]>([]);
   const [activeAlbum, setActiveAlbum] = useState<Album | null>(null);
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let isMounted = true;
+    setLoading(true);
+    getFoldersApi()
+      .then(res => {
+        if (isMounted && res && res.folders) {
+          const mapped: Album[] = res.folders.map((f: any) => {
+            const mediaList: MediaItem[] = (f.media || []).map((m: any) => ({
+              type: m.mediaType === 'video' ? 'youtube' : 'image',
+              url: m.url,
+              videoId: m.publicId || 'M7lc1UVf-VE',
+              thumbnail: m.url
+            }));
+
+            const coverUrl = mediaList.length > 0 ? mediaList[0].url : "/images/hero.png";
+
+            return {
+              id: f._id,
+              name: f.name,
+              cover: coverUrl,
+              media: mediaList
+            };
+          });
+          setAlbums(mapped);
+        }
+      })
+      .catch((err) => {
+        console.error("Error fetching gallery folders:", err);
+      })
+      .finally(() => {
+        if (isMounted) setLoading(false);
+      });
+    return () => { isMounted = false; };
+  }, []);
 
   useEffect(() => {
     if (selectedIndex !== null) {
@@ -148,13 +122,7 @@ export default function GalleryGrid() {
     if (!activeAlbum || selectedIndex === null) return;
     const currentMedia = activeAlbum.media[selectedIndex];
     
-    let urlToShare = window.location.origin;
-    if (currentMedia.type === 'image') {
-      urlToShare += currentMedia.url;
-    } else {
-      urlToShare = `https://www.youtube.com/watch?v=${currentMedia.videoId}`;
-    }
-
+    let urlToShare = currentMedia.url;
     if (navigator.share) {
       try {
         await navigator.share({
@@ -193,7 +161,7 @@ export default function GalleryGrid() {
               </div>
               <button 
                 onClick={() => setSelectedIndex(null)}
-                className="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors"
+                className="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors cursor-pointer border-0"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -204,7 +172,7 @@ export default function GalleryGrid() {
               {/* Prev Button */}
               <button 
                 onClick={(e) => { e.stopPropagation(); handlePrev(); }}
-                className="absolute left-4 md:left-8 z-50 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white backdrop-blur-sm transition-colors hidden sm:flex"
+                className="absolute left-4 md:left-8 z-50 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white backdrop-blur-sm transition-colors hidden sm:flex cursor-pointer border-0"
               >
                 <ChevronLeft className="w-6 h-6" />
               </button>
@@ -235,11 +203,12 @@ export default function GalleryGrid() {
                       sizes="100vw"
                       quality={100}
                       priority
+                      unoptimized
                     />
                   ) : (
                     <div className="w-full max-w-4xl aspect-video bg-black rounded-lg overflow-hidden shadow-2xl relative z-50">
                       <iframe
-                        src={`https://www.youtube.com/embed/${activeMediaItem.videoId}?autoplay=1`}
+                        src={`https://www.youtube.com/embed/${activeMediaItem.videoId || 'M7lc1UVf-VE'}?autoplay=1`}
                         title="YouTube video player"
                         frameBorder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -254,12 +223,12 @@ export default function GalleryGrid() {
               {/* Next Button */}
               <button 
                 onClick={(e) => { e.stopPropagation(); handleNext(); }}
-                className="absolute right-4 md:right-8 z-50 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white backdrop-blur-sm transition-colors hidden sm:flex"
+                className="absolute right-4 md:right-8 z-50 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white backdrop-blur-sm transition-colors hidden sm:flex cursor-pointer border-0"
               >
                 <ChevronRight className="w-6 h-6" />
               </button>
 
-              {/* Mobile swipe overlays (only active for images to not block iframe clicks) */}
+              {/* Mobile swipe overlays */}
               {activeMediaItem.type === 'image' && (
                 <>
                   <div className="absolute inset-y-0 left-0 w-1/4 z-40 sm:hidden" onClick={handlePrev} />
@@ -272,7 +241,7 @@ export default function GalleryGrid() {
             <div className="w-full p-6 flex justify-center items-center gap-8 z-50 bg-gradient-to-t from-black/60 to-transparent">
               <button 
                 onClick={handleShare}
-                className="flex flex-col items-center gap-1.5 text-white/80 hover:text-white transition-colors"
+                className="flex flex-col items-center gap-1.5 text-white/80 hover:text-white transition-colors bg-transparent border-0 cursor-pointer"
               >
                 <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center">
                   <Share2 className="w-5 h-5" />
@@ -283,7 +252,7 @@ export default function GalleryGrid() {
               {activeMediaItem?.type === 'image' && (
                 <button 
                   onClick={handleDownload}
-                  className="flex flex-col items-center gap-1.5 text-white/80 hover:text-white transition-colors"
+                  className="flex flex-col items-center gap-1.5 text-white/80 hover:text-white transition-colors bg-transparent border-0 cursor-pointer"
                 >
                   <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center">
                     <Download className="w-5 h-5" />
@@ -319,37 +288,55 @@ export default function GalleryGrid() {
                 </p>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8 lg:gap-10">
-                {albums.map((album) => (
-                  <div 
-                    key={album.id} 
-                    onClick={() => {
-                      setActiveAlbum(album);
-                      window.scrollTo({ top: 0, behavior: 'smooth' });
-                    }}
-                    className="flex flex-col group cursor-pointer"
-                  >
-                    <div className="relative aspect-square w-full rounded-[2rem] overflow-hidden bg-slate-200 mb-4 shadow-sm group-hover:shadow-xl transition-all duration-500 border border-slate-100">
-                      <Image 
-                        src={album.cover}
-                        alt={album.name}
-                        fill
-                        sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 25vw"
-                        className="object-cover group-hover:scale-110 transition-transform duration-700"
-                      />
+              {loading ? (
+                <div className="text-center py-20 text-slate-400 text-sm font-medium">
+                  Loading gallery albums...
+                </div>
+              ) : albums.length > 0 ? (
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8 lg:gap-10">
+                  {albums.map((album) => (
+                    <div 
+                      key={album.id} 
+                      onClick={() => {
+                        setActiveAlbum(album);
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                      }}
+                      className="flex flex-col group cursor-pointer"
+                    >
+                      <div className="relative aspect-square w-full rounded-[2rem] overflow-hidden bg-slate-200 mb-4 shadow-sm group-hover:shadow-xl transition-all duration-500 border border-slate-100">
+                        <Image 
+                          src={album.cover}
+                          alt={album.name}
+                          fill
+                          sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 25vw"
+                          className="object-cover group-hover:scale-110 transition-transform duration-700"
+                          unoptimized
+                        />
+                      </div>
+                      
+                      <div className="flex flex-col px-2">
+                        <h2 className="text-base md:text-lg font-semibold text-slate-900 group-hover:text-brand-green transition-colors truncate">
+                          {album.name}
+                        </h2>
+                        <span className="text-sm text-slate-500 font-medium mt-1">
+                          {album.media ? album.media.length : 0} Items
+                        </span>
+                      </div>
                     </div>
-                    
-                    <div className="flex flex-col px-2">
-                      <h2 className="text-base md:text-lg font-semibold text-slate-900 group-hover:text-brand-green transition-colors truncate">
-                        {album.name}
-                      </h2>
-                      <span className="text-sm text-slate-500 font-medium mt-1">
-                        {album.media.length} Items
-                      </span>
-                    </div>
+                  ))}
+                </div>
+              ) : (
+                /* Empty / Coming Soon Component */
+                <div className="bg-white border border-slate-200 rounded-3xl p-16 text-center shadow-sm flex flex-col items-center justify-center max-w-md mx-auto my-12">
+                  <div className="w-16 h-16 rounded-full bg-emerald-50 text-brand-green flex items-center justify-center mb-4">
+                    <ImageIcon size={32} />
                   </div>
-                ))}
-              </div>
+                  <h2 className="text-lg font-bold text-slate-800 uppercase tracking-wider mb-2">Photo Gallery — Coming Soon</h2>
+                  <p className="text-xs font-medium text-slate-500 leading-relaxed">
+                    Photo albums and campus video memories are currently being curated. Check back soon for exciting updates!
+                  </p>
+                </div>
+              )}
             </motion.div>
           )}
 
@@ -366,7 +353,7 @@ export default function GalleryGrid() {
               <div className="flex flex-col mb-10">
                 <button 
                   onClick={() => setActiveAlbum(null)}
-                  className="text-sm font-semibold text-slate-500 hover:text-brand-green transition-colors self-start mb-4 uppercase tracking-widest"
+                  className="text-sm font-semibold text-slate-500 hover:text-brand-green transition-colors self-start mb-4 uppercase tracking-widest cursor-pointer bg-transparent border-0"
                 >
                   &larr; Back to Albums
                 </button>
@@ -376,37 +363,43 @@ export default function GalleryGrid() {
                 <span className="text-brand-green font-medium mt-2">{activeAlbum.media.length} Items</span>
               </div>
 
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 md:gap-4">
-                {activeAlbum.media.map((item, idx) => {
-                  const isVideo = item.type === 'youtube';
-                  const src = isVideo ? item.thumbnail : item.url;
-                  return (
-                    <div 
-                      key={idx} 
-                      onClick={() => setSelectedIndex(idx)}
-                      className="relative aspect-square w-full rounded-2xl bg-slate-200 cursor-pointer overflow-hidden group shadow-sm hover:shadow-md transition-shadow border border-slate-100"
-                    >
-                      <Image 
-                        src={src}
-                        alt={`Media ${idx + 1} from ${activeAlbum.name}`}
-                        fill
-                        sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, 20vw"
-                        className="object-cover group-hover:scale-110 transition-transform duration-500"
-                      />
-                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
-                      
-                      {/* Video Badge Overlay (No icon, purely CSS shape) */}
-                      {isVideo && (
-                        <div className="absolute inset-0 flex items-center justify-center">
-                          <div className="w-10 h-10 bg-black/60 backdrop-blur-sm rounded-full flex items-center justify-center border border-white/20 shadow-lg">
-                            <div className="w-0 h-0 border-t-[6px] border-t-transparent border-l-[10px] border-l-white border-b-[6px] border-b-transparent ml-1" />
+              {activeAlbum.media.length > 0 ? (
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 md:gap-4">
+                  {activeAlbum.media.map((item, idx) => {
+                    const isVideo = item.type === 'youtube';
+                    const src = isVideo ? (item.thumbnail || item.url) : item.url;
+                    return (
+                      <div 
+                        key={idx} 
+                        onClick={() => setSelectedIndex(idx)}
+                        className="relative aspect-square w-full rounded-2xl bg-slate-200 cursor-pointer overflow-hidden group shadow-sm hover:shadow-md transition-shadow border border-slate-100"
+                      >
+                        <Image 
+                          src={src}
+                          alt={`Media ${idx + 1} from ${activeAlbum.name}`}
+                          fill
+                          sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, 20vw"
+                          className="object-cover group-hover:scale-110 transition-transform duration-500"
+                          unoptimized
+                        />
+                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
+                        
+                        {isVideo && (
+                          <div className="absolute inset-0 flex items-center justify-center">
+                            <div className="w-10 h-10 bg-black/60 backdrop-blur-sm rounded-full flex items-center justify-center border border-white/20 shadow-lg">
+                              <div className="w-0 h-0 border-t-[6px] border-t-transparent border-l-[10px] border-l-white border-b-[6px] border-b-transparent ml-1" />
+                            </div>
                           </div>
-                        </div>
-                      )}
-                    </div>
-                  );
-                })}
-              </div>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              ) : (
+                <div className="bg-white border border-slate-200 rounded-2xl p-12 text-center text-slate-400 font-medium text-xs">
+                  No media uploaded to this album yet.
+                </div>
+              )}
             </motion.div>
           )}
 

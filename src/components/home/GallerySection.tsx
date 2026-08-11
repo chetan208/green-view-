@@ -1,35 +1,33 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { Image as ImageIcon } from "lucide-react";
+import { getMediaApi } from "@/lib/api";
 
 export default function GallerySection() {
-  const allImages = [
-    { src: "/images/classroom.png", alt: "Smart Classroom Activity" },
-    { src: "/images/robotics.png", alt: "Classroom Activity" },
-    { src: "/images/library.png", alt: "Modern Computer Lab" },
-    { src: "/images/study.png", alt: "Students Study Hall" },
-    { src: "/images/art.png", alt: "Art and Craft Room" },
-    // Fillers for desktop to complete a 3x3 grid
-    { src: "/images/classroom.png", alt: "Smart Classroom Activity (Alt View)" },
-    { src: "/images/library.png", alt: "Modern Computer Lab (Alt View)" },
-    { src: "/images/art.png", alt: "Art and Craft Room (Alt View)" },
-    { src: "/images/study.png", alt: "Students Study Hall (Alt View)" },
-  ];
+  const [images, setImages] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const [images, setImages] = React.useState(allImages);
-
-  React.useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth < 768) {
-        setImages(allImages.slice(0, 5));
-      } else {
-        setImages(allImages);
-      }
-    };
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+  useEffect(() => {
+    let isMounted = true;
+    getMediaApi({ limit: 9 })
+      .then(res => {
+        if (isMounted && res && res.media) {
+          const mapped = res.media.map((m: any) => ({
+            src: m.url,
+            alt: m.title || "Campus Gallery Media"
+          }));
+          setImages(mapped);
+        }
+      })
+      .catch((err) => {
+        console.error("Error fetching gallery media for home section:", err);
+      })
+      .finally(() => {
+        if (isMounted) setLoading(false);
+      });
+    return () => { isMounted = false; };
   }, []);
 
   const gridVariants = {
@@ -48,7 +46,7 @@ export default function GallerySection() {
   } as const;
 
   return (
-    <section id="gallery" className="w-full py-8 md:py-10 px-6 md:px-12  flex justify-center overflow-hidden">
+    <section id="gallery" className="w-full py-8 md:py-10 px-6 md:px-12 flex justify-center overflow-hidden">
       <div className="max-w-6xl w-full flex flex-col items-center">
         
         {/* Section Header */}
@@ -73,31 +71,48 @@ export default function GallerySection() {
           </motion.h2>
         </div>
 
-        {/* Gallery Grid with Staggered Slide In */}
-        <motion.div 
-          variants={gridVariants}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, margin: "-80px" }}
-          className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 w-full"
-        >
-          {images.map((img, idx) => (
-            <motion.div
-              key={idx}
-              variants={imageCardVariants}
-              whileHover={{ scale: 1.025, y: -4 }}
-              transition={{ duration: 0.3 }}
-              className="relative aspect-[1.85] w-full rounded-xl md:rounded-[20px] overflow-hidden shadow-sm border border-slate-100/80 hover:shadow-md bg-slate-50"
-            >
-              <img
-                src={img.src}
-                alt={img.alt}
-                className="w-full h-full object-cover"
-                loading="lazy"
-              />
-            </motion.div>
-          ))}
-        </motion.div>
+        {loading ? (
+          <div className="text-slate-400 text-xs font-medium py-12">
+            Loading campus gallery...
+          </div>
+        ) : images.length > 0 ? (
+          /* Gallery Grid */
+          <motion.div 
+            variants={gridVariants}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, margin: "-80px" }}
+            className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 w-full"
+          >
+            {images.map((img, idx) => (
+              <motion.div
+                key={idx}
+                variants={imageCardVariants}
+                whileHover={{ scale: 1.025, y: -4 }}
+                transition={{ duration: 0.3 }}
+                className="relative aspect-[1.85] w-full rounded-xl md:rounded-[20px] overflow-hidden shadow-sm border border-slate-100/80 hover:shadow-md bg-slate-50"
+              >
+                <img
+                  src={img.src}
+                  alt={img.alt}
+                  className="w-full h-full object-cover"
+                  loading="lazy"
+                />
+              </motion.div>
+            ))}
+          </motion.div>
+        ) : (
+          /* Coming Soon Empty Component */
+          <div className="bg-white border border-slate-200/80 rounded-3xl p-10 flex flex-col items-center justify-center text-center shadow-sm max-w-lg w-full my-4">
+            <div className="w-12 h-12 rounded-full bg-emerald-50 text-brand-green flex items-center justify-center mb-3">
+              <ImageIcon size={24} />
+            </div>
+            <h3 className="text-sm font-bold text-slate-800 uppercase tracking-wider mb-1">Campus Gallery — Coming Soon</h3>
+            <p className="text-xs font-medium text-slate-400 leading-relaxed max-w-sm">
+              Photos and media showcase will be available once uploaded via the admin portal.
+            </p>
+          </div>
+        )}
 
         {/* View All Button */}
         <motion.div 
@@ -119,4 +134,3 @@ export default function GallerySection() {
     </section>
   );
 }
-
