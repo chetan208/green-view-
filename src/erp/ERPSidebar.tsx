@@ -2,6 +2,8 @@ import React from "react";
 import { ChevronRight, LayoutDashboard } from "lucide-react";
 import { ModuleType } from "./types";
 
+import { useAuth } from "@/hooks/useAuth";
+
 interface ERPSidebarProps {
   sidebarOpen: boolean;
   setSidebarOpen: (open: boolean) => void;
@@ -17,7 +19,11 @@ export default function ERPSidebar({
   setActiveModule,
   modules,
 }: ERPSidebarProps) {
-  const user = { name: "Admin User", role: "Owner" };
+  const { user: authUser } = useAuth();
+  const user = {
+    name: authUser?.name || "Admin User",
+    role: authUser?.teacherProfile?.accessRole || authUser?.role || "Staff"
+  };
 
   return (
     <aside className={`

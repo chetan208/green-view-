@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import React from "react";
 import { motion } from "framer-motion";
@@ -34,10 +34,10 @@ export default function LeadershipMessages() {
           {/* Header Area (Above Image and Quotes) */}
           <motion.div variants={itemVariants} className="mb-6 md:mb-8 select-none">
             <span className="text-[9px] md:text-[10px] font-semibold md:font-black text-brand-green uppercase tracking-[0.2em] block mb-2">
-              FROM THE DESK
+              FROM THE DESK OF DIRECTOR
             </span>
             <h2 className="text-3xl md:text-4xl font-semibold md:font-extrabold text-slate-900 tracking-tight leading-none">
-              MD&apos;s <span className="text-brand-green">Message</span>
+              Director&apos;s <span className="text-brand-green">Message</span>
             </h2>
           </motion.div>
 
@@ -51,10 +51,11 @@ export default function LeadershipMessages() {
               {/* Main Image */}
               <div className="w-full h-full rounded-2xl md:rounded-3xl overflow-hidden shadow-xl border border-slate-100 bg-slate-100">
                 <img
-                  src="/images/principal.png"
-                  alt="MD Portrait"
-                  className="w-full h-full object-cover object-top hover:scale-[1.03] transition-transform duration-500"
+                  src="/images/director.png"
+                  alt="Director Portrait"
+                  className="w-full h-full object-cover object-[35%_top] hover:scale-[1.03] transition-transform duration-500"
                   loading="lazy"
+                  onError={(e) => { (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=400'; }}
                 />
               </div>
             </motion.div>
@@ -64,13 +65,13 @@ export default function LeadershipMessages() {
               {/* Paragraphs with left green border */}
               <motion.div variants={itemVariants} className="flex flex-col gap-5 mb-8">
                 <div className="border-l-2 border-brand-green pl-5 md:pl-6">
-                  <p className="italic text-slate-600 font-medium text-xs md:text-[13.5px] leading-relaxed">
-                    &quot;Education is not just about acquiring knowledge; it&apos;s about transforming lives and building character. At Green view, we believe in nurturing not just academic excellence, but also moral values, leadership qualities, and social responsibility.&quot;
+                  <p className="text-slate-600 font-medium text-xs md:text-[13.5px] leading-relaxed">
+                    Our School is committed to provide proper environment of education to promote intellectual, Social & Cultural Vivacity among its learners. We, here in Green View Senior Secondary School are committed to provide a stress free learning environment that will develop competency, confidence & enterprising among citizens who will promote harmony and peace in the society. Our earnest endeavor is to encourage the maximum number of students to come out with their thought & creative talents.
                   </p>
                 </div>
                 <div className="border-l-2 border-brand-green pl-5 md:pl-6">
-                  <p className="italic text-slate-600 font-medium text-xs md:text-[13.5px] leading-relaxed">
-                    &quot;When I founded Green view in 1986, my vision was simple yet profoundâ€”to create an institution that would not only impart quality education but also shape responsible citizens who contribute positively to society. Today, as I look back at our journey, I am proud to see how this vision has become a reality. Our students have excelled academically and grown into compassionate leaders, innovative thinkers, and responsible global citizens.&quot;
+                  <p className="text-slate-600 font-medium text-xs md:text-[13.5px] leading-relaxed">
+                    Green View Senior Secondary School was established in 2001. The school is situated near Chamunda Temple on D/sala, Malan Road, behind Govt. Sen. Sec. School Dadh, in the foot hills of majestic Dhauladhar ranges. The School has its new beautiful building with this the school student strength is likely to increase from its present strength.
                   </p>
                 </div>
               </motion.div>
@@ -78,10 +79,10 @@ export default function LeadershipMessages() {
               {/* Signature Name & Role */}
               <motion.div variants={itemVariants} className="pl-6 select-none border-l-2 border-transparent">
                 <span className="block font-semibold md:font-black text-slate-800 text-sm md:text-base">
-                  Sh. Devraj Sharma
+                  Harbans Lal Koundal
                 </span>
                 <span className="block text-xs font-normal md:font-semibold text-brand-green mt-1">
-                  Managing Director, Green view SR. SEC. School, Kangra
+                  Director
                 </span>
               </motion.div>
             </div>
@@ -99,10 +100,10 @@ export default function LeadershipMessages() {
           {/* Header Area (Above Image and Quotes) */}
           <motion.div variants={itemVariants} className="mb-6 md:mb-8 select-none">
             <span className="text-[9px] md:text-[10px] font-semibold md:font-black text-brand-green uppercase tracking-[0.2em] block mb-2">
-              FROM THE DESK
+              FROM THE DESK OF PRINCIPAL
             </span>
             <h2 className="text-3xl md:text-4xl font-semibold md:font-extrabold text-slate-900 tracking-tight leading-none">
-              Principals <span className="text-brand-green">Message</span>
+              Principal&apos;s <span className="text-brand-green">Message</span>
             </h2>
           </motion.div>
 
@@ -120,6 +121,7 @@ export default function LeadershipMessages() {
                   alt="Principal Portrait"
                   className="w-full h-full object-cover object-top hover:scale-[1.03] transition-transform duration-500"
                   loading="lazy"
+                  onError={(e) => { (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=400'; }}
                 />
               </div>
             </motion.div>
@@ -129,24 +131,31 @@ export default function LeadershipMessages() {
               {/* Paragraphs with left green border */}
               <motion.div variants={itemVariants} className="flex flex-col gap-5 mb-8">
                 <div className="border-l-2 border-brand-green pl-5 md:pl-6">
-                  <p className="italic text-slate-600 font-medium text-xs md:text-[13.5px] leading-relaxed">
-                    &quot;Education is not just about acquiring knowledge; it&apos;s about transforming lives and building character. At Green view, we believe in nurturing not just academic excellence, but also moral values, leadership qualities, and social responsibility.&quot;
+                  <p className="text-slate-600 font-medium text-xs md:text-[13.5px] leading-relaxed">
+                    Dear Parents and Prospective Students,
                   </p>
-                </div>
-                <div className="border-l-2 border-brand-green pl-5 md:pl-6">
-                  <p className="italic text-slate-600 font-medium text-xs md:text-[13.5px] leading-relaxed">
-                    &quot;When I founded Green view in 1986, my vision was simple yet profoundâ€”to create an institution that would not only impart quality education but also shape responsible citizens who contribute positively to society. Today, as I look back at our journey, I am proud to see how this vision has become a reality. Our students have excelled academically and grown into compassionate leaders, innovative thinkers, and responsible global citizens.&quot;
+                  <p className="text-slate-600 font-medium text-xs md:text-[13.5px] leading-relaxed mt-2">
+                    Welcome to our school! We are dedicated to fostering academic excellence, character development, and holistic growth in a nurturing environment.
+                  </p>
+                  <p className="text-slate-600 font-medium text-xs md:text-[13.5px] leading-relaxed mt-2">
+                    Our institution strives to create confident, compassionate leaders equipped for future challenges through innovative teaching and a supportive community. The curriculum blends rigorous academics with extra curriculars to nurture creativity and discipline.
+                  </p>
+                  <p className="text-slate-600 font-medium text-xs md:text-[13.5px] leading-relaxed mt-2">
+                    Experienced faculty and modern facilities ensure every student realizes their potential. We emphasize values like integrity and perseverance, preparing students for global success.
+                  </p>
+                  <p className="text-slate-600 font-medium text-xs md:text-[13.5px] leading-relaxed mt-2">
+                    We invite you to explore our prospectus and visit our campus. Together, let's build a bright future for your child.
                   </p>
                 </div>
               </motion.div>
 
               {/* Signature Name & Role */}
-              <motion.div variants={itemVariants} className="pl-6 select-none border-l-2 border-transparent">
+              <motion.div variants={itemVariants} className="pl-6 select-none border-l-2 border-transparent mt-auto">
                 <span className="block font-semibold md:font-black text-slate-800 text-sm md:text-base">
-                  Mr. Sandeep Sharma
+                  Chandresh Kumari
                 </span>
                 <span className="block text-xs font-normal md:font-semibold text-brand-green mt-1">
-                  Principal, Green view SR. SEC. School, Kangra
+                  Principal
                 </span>
               </motion.div>
             </div>

@@ -50,16 +50,16 @@ export default function Footer() {
               </div>
               <div className="flex flex-col">
                 <span className="font-serif font-medium md:font-bold text-white text-xl leading-none tracking-tight">
-                  Green View
+                  GV Green View
                 </span>
                 <span className="text-[10px] text-emerald-400 font-medium md:font-semibold tracking-widest uppercase mt-1 leading-none">
-                  Sr. Sec. School
+                  Senior Secondary School
                 </span>
               </div>
             </Link>
             
             <p className="text-xs md:text-sm text-slate-500 font-medium leading-relaxed">
-              Fostering excellence, character, and integrity in every student since 1996. Our balanced CBSE curriculum empowers kids to lead globally.
+              Affiliated H.P.B.O.S.E., Dharamshala (Affiliation No. 16175). Fostering excellence, character, and integrity in every student since 2001.
             </p>
             
             {/* Social Media Links */}
@@ -140,13 +140,13 @@ export default function Footer() {
               <div className="flex items-start gap-3">
                 <MapPin className="w-4 h-4 text-emerald-400 shrink-0 mt-1" />
                 <span className="leading-relaxed text-slate-500">
-                  Green Avenue, Sector-12, Near City Park, Chandigarh, India
+                  V.P.O. Dadh, Teh. Palampur, Distt. Kangra, H.P. - 176052
                 </span>
               </div>
               <div className="flex items-center gap-3">
                 <Phone className="w-4 h-4 text-emerald-400 shrink-0" />
                 <span className="text-slate-500">
-                  +91 98765 43210, 0172-2541300
+                  98165 21168, 01892252115
                 </span>
               </div>
               <div className="flex items-center gap-3">

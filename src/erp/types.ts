@@ -5,6 +5,7 @@ import {
   Bus,
   Settings,
   Inbox,
+  BookOpen,
   LucideIcon
 } from "lucide-react";
 
@@ -62,6 +63,15 @@ export const modules: ModuleType[] = [
     color: "#166534",
     bg: "rgba(22,101,52,0.1)",
     description: "Manage online registration applications.",
+    status: "active",
+  },
+  {
+    id: "academics",
+    label: "Academics",
+    icon: BookOpen,
+    color: "#166534",
+    bg: "rgba(22,101,52,0.1)",
+    description: "Manage classes, sections, and subjects.",
     status: "active",
   },
   {

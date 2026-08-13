@@ -136,8 +136,8 @@ export default function FeePortal({
           `${SERVER_URL}/api/erp/classes/monthly-fees?className=${encodeURIComponent(classForm.className)}&monthName=${encodeURIComponent(classForm.monthName)}`, 
           { withCredentials: true }
         );
-        if (res.data.success && res.data.fees && res.data.fees.length > 0) {
-          const config = res.data.fees[0];
+        if (res.data.success && res.data.overrides && res.data.overrides.length > 0) {
+          const config = res.data.overrides[0];
           setClassForm(prev => ({
             ...prev,
             admissionFee: config.admissionFee.toString(),
@@ -212,7 +212,7 @@ export default function FeePortal({
     try {
       const res = await axios.get(`${SERVER_URL}/api/erp/classes/monthly-fees`, { withCredentials: true });
       if (res.data.success) {
-        setMonthlyClassFees(res.data.fees);
+        setMonthlyClassFees(res.data.overrides);
       }
     } catch (err) {
       console.error("Error fetching monthly class fees:", err);
@@ -224,7 +224,7 @@ export default function FeePortal({
   const fetchStats = async () => {
     setStatsLoading(true);
     try {
-      const res = await axios.get(`${SERVER_URL}/api/erp/fees/stats`, {
+      const res = await axios.get(`${SERVER_URL}/api/fees/stats`, {
         params: { session: selectedSession },
         withCredentials: true
       });
@@ -285,7 +285,7 @@ export default function FeePortal({
     setShowDropdown(false);
     setFeesLoading(true);
     try {
-      const res = await axios.get(`${SERVER_URL}/api/erp/students/${student.id}/fees`, { withCredentials: true });
+      const res = await axios.get(`${SERVER_URL}/api/fees/students/${student.id}`, { withCredentials: true });
       if (res.data.success) {
         setStudentFees(res.data.student.feeStructures);
       }
@@ -305,7 +305,7 @@ export default function FeePortal({
     setSuccess(null);
 
     try {
-      const res = await axios.post(`${SERVER_URL}/api/erp/make-payment`, {
+      const res = await axios.post(`${SERVER_URL}/api/payments/make-payment`, {
         studentId: selectedStudent.id,
         amountPaid: parseFloat(paymentForm.amountPaid),
         paymentMode: paymentForm.paymentMode
@@ -337,7 +337,7 @@ export default function FeePortal({
         ...studentForm,
         initialAmountPaid: studentForm.initialAmountPaid ? parseFloat(studentForm.initialAmountPaid) : 0
       };
-      const res = await axios.post(`${SERVER_URL}/api/erp/student`, payload, { withCredentials: true });
+      const res = await axios.post(`${SERVER_URL}/api/erp/students`, payload, { withCredentials: true });
       if (res.data.success) {
         setSuccess(`Student ${studentForm.name} registered and fee structures generated successfully.`);
         setStudentForm({
@@ -428,7 +428,7 @@ export default function FeePortal({
     setSuccess(null);
 
     try {
-      const res = await axios.put(`${SERVER_URL}/api/erp/students/fees/${editingFee.id}`, {
+      const res = await axios.put(`${SERVER_URL}/api/fees/${editingFee.id}`, {
         admissionFee: parseFloat(editFeeForm.admissionFee || "0"),
         tuitionFee: parseFloat(editFeeForm.tuitionFee || "0"),
         schoolBusCharges: parseFloat(editFeeForm.schoolBusCharges || "0"),

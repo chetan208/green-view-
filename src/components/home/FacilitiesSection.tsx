@@ -7,20 +7,24 @@ import { motion } from "framer-motion";
 export default function FacilitiesSection() {
   const cards = [
     {
-      title: "Holistic Education",
-      image: "https://images.unsplash.com/photo-1577896851231-70ee18881754?auto=format&fit=crop&q=80&w=500",
+      title: "Science Lab",
+      description: "Equipped with new technological instruments for Physics, Chemistry, Biology.",
+      image: "https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&q=80&w=500",
     },
     {
-      title: "Smart Classrooms",
+      title: "Computer Lab",
+      description: "Free computer education Nursery-K.G; play-way 1st-12th. Latest software/internet.",
+      image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&q=80&w=500",
+    },
+    {
+      title: "Smart Class",
+      description: "Visual and educomp classes Nursery to 12th.",
       image: "https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&q=80&w=500",
     },
     {
-      title: "Global Curriculum",
-      image: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&q=80&w=500",
-    },
-    {
-      title: "Future Ready Skills",
-      image: "https://images.unsplash.com/photo-1568667256549-094345857637?auto=format&fit=crop&q=80&w=500",
+      title: "Security",
+      description: "CCTV cameras installed in all classrooms and corridors.",
+      image: "https://images.unsplash.com/photo-1557597774-9d273605dfa9?auto=format&fit=crop&q=80&w=500",
     },
   ];
 
@@ -107,9 +111,12 @@ export default function FacilitiesSection() {
               </div>
 
               {/* Text Container */}
-              <div className="py-4 px-4 text-center select-none">
+              <div className="py-4 px-4 text-center select-none flex flex-col gap-1">
                 <span className="text-slate-800 font-semibold md:font-bold text-sm md:text-base tracking-tight block group-hover:text-brand-green transition-colors">
                   {card.title}
+                </span>
+                <span className="text-slate-500 text-xs md:text-sm font-normal">
+                  {card.description}
                 </span>
               </div>
             </motion.div>

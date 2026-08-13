@@ -16,7 +16,7 @@ export default function WelcomeSection() {
     {
       icon: <Award className="w-5 h-5 text-emerald-600" />,
       title: "HPBOSE Affiliation",
-      value: "Aff. No. 14382",
+      value: "Aff. No. 16175",
       description: "Recognized Senior Secondary School (Nursery to Class XII)",
     },
     {
@@ -85,7 +85,7 @@ export default function WelcomeSection() {
               Established
             </span>
             <span className="text-sm font-semibold md:font-black text-slate-800 mt-1 leading-none">
-              1998 <span className="text-brand-green">•</span> <span className="text-brand-green">Kangra</span>
+              2001 <span className="text-brand-green">•</span> <span className="text-brand-green">Dadh, Palampur</span>
             </span>
           </motion.div>
 
@@ -117,14 +117,24 @@ export default function WelcomeSection() {
 
           {/* Main Heading */}
           <motion.h2 variants={rightItemVariants} className="text-3xl md:text-4xl font-semibold md:font-extrabold text-brand-navy tracking-tight leading-tight mb-4">
-            Welcome to <span className="text-brand-green">Green View</span> <br />
+            Welcome to <span className="text-brand-green">GV Green View</span> <br />
             Sr. Sec. School
           </motion.h2>
 
           {/* Description */}
-          <motion.p variants={rightItemVariants} className="text-slate-500 text-xs md:text-sm font-normal md:font-medium leading-relaxed mb-6">
-            Green View Senior Secondary School was established in 1998 with a vision to provide quality education in a nurturing environment. Affiliated with HPBOSE, the school has grown into a trusted institution for students from Nursery to XII. With experienced faculty, well-equipped labs, sports facilities, and a strong focus on academics and values, Green View has been shaping confident and responsible learners for over 27 years.
-          </motion.p>
+          <motion.div variants={rightItemVariants} className="text-slate-600 text-xs md:text-sm font-normal md:font-medium leading-relaxed mb-6 flex flex-col gap-4">
+            <p>
+              <strong className="text-brand-green text-base block mb-1">From the Desk of Director</strong>
+              Our School is committed to provide proper environment of education to promote intellectual, Social & Cultural Vivacity among its learners. We, here in Green View Senior Secondary School are committed to provide a stress free learning environment that will develop competency, confidence & enterprising among citizens who will promote harmony and peace in the society. Our earnest endeavor is to encourage the maximum number of students to come out with their thought & creative talents.
+            </p>
+            <p>
+              Green View Senior Secondary School was established in 2001. The school is situated near Chamunda Temple on D/sala, Malan Road, behind Govt. Sen. Sec. School Dadh, in the foot hills of majestic Dhauladhar ranges. The School has its new beautiful building with this the school student strength is likely to increase from its present strength.
+            </p>
+            <p className="mt-2 font-bold text-slate-800 italic">
+              Harbans Lal Koundal<br />
+              <span className="text-brand-green font-semibold text-xs not-italic">Director</span>
+            </p>
+          </motion.div>
 
           {/* Official Registrations Section */}
           <motion.div variants={rightItemVariants} className="w-full mt-4 lg:mt-6">

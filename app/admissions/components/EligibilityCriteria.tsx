@@ -108,6 +108,22 @@ export default function EligibilityCriteria() {
           ))}
         </div>
 
+        {/* Admission Procedure */}
+        <div className="mt-16 w-full max-w-4xl bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-slate-100 text-left">
+          <h3 className="text-xl md:text-2xl font-semibold text-slate-800 mb-4">
+            Admission Procedure & Registration
+          </h3>
+          <p className="text-sm text-slate-600 mb-4">
+            For play way and Nursery classes students are admitted on the basis first-come, first served for the number of seats available.
+          </p>
+          <p className="text-sm text-slate-600 mb-4">
+            After confirmation of admission parents are required to deposit admission fee within two days otherwise seat allotted will be cancelled. Registration form is enclosed with this prospectus. 
+          </p>
+          <p className="text-sm text-slate-600">
+            The form should be accompanied by the passport size photograph of the student, a photo copy of DOB Certificate and school leaving certificate (if applicable) and DD/Cheque/cash on account of admission fee. This amount is not refundable.
+          </p>
+        </div>
+
       </div>
     </section>
   );

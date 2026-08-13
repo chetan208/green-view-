@@ -8,17 +8,25 @@ import {
   LogOut,
   User,
   Settings,
-  ArrowLeft,
   X,
-  CheckCircle2
+  CheckCircle2,
+  UserCog,
+  ArrowLeft
 } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
 
 export default function ERPHeader() {
   const router = useRouter();
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
 
-  const user = { name: "Admin User", role: "Owner" };
+  const { user: authUser, logout } = useAuth();
+  
+  const user = {
+    name: authUser?.name || "Admin User",
+    role: authUser?.teacherProfile?.accessRole || authUser?.role || "Staff",
+    photoUrl: authUser?.photoUrl
+  };
 
   return (
     <header className="fixed top-0 left-0 right-0 z-[60] w-full bg-white shadow-sm border-b border-slate-200">
@@ -90,7 +98,11 @@ export default function ERPHeader() {
               className="flex items-center gap-2 pl-2 pr-2.5 py-1 rounded-lg bg-slate-50 hover:bg-slate-100 transition cursor-pointer border border-slate-200 text-slate-700"
             >
               <div className="w-6 h-6 rounded-full bg-brand-green flex items-center justify-center text-white font-bold text-[10px] overflow-hidden shrink-0">
-                {user.name.charAt(0)}
+                {user.photoUrl ? (
+                  <img src={user.photoUrl} alt="User" className="w-full h-full object-cover" />
+                ) : (
+                  user.name.charAt(0)
+                )}
               </div>
               <span className="hidden sm:block text-[11px] font-semibold max-w-[80px] truncate">
                 {user.name}
@@ -108,7 +120,19 @@ export default function ERPHeader() {
                   </div>
                   <div className="py-1">
                     <button
-                      onClick={() => router.push("/auth")}
+                      onClick={() => {
+                        setDropdownOpen(false);
+                        router.push("/erp?module=profile");
+                      }}
+                      className="w-full flex items-center gap-2.5 px-3.5 py-2 text-xs font-medium text-slate-600 hover:bg-slate-50 transition cursor-pointer border-0 bg-transparent hover:text-brand-green"
+                    >
+                      <UserCog size={13} /> My Profile
+                    </button>
+                    <button
+                      onClick={() => {
+                        setDropdownOpen(false);
+                        logout();
+                      }}
                       className="w-full flex items-center gap-2.5 px-3.5 py-2 text-xs font-medium text-red-500 hover:bg-red-50 transition cursor-pointer border-0 bg-transparent"
                     >
                       <LogOut size={13} /> Sign Out

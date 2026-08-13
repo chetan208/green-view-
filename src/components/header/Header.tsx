@@ -2,9 +2,10 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import { ChevronDown, Menu, X, Mail, Phone, Baby, BookOpen, GraduationCap, ClipboardList, Calendar, ArrowUpRight, FlaskConical, User, Headset } from "lucide-react";
+import { ChevronDown, Menu, X, Mail, Phone, Baby, BookOpen, GraduationCap, ClipboardList, Calendar, ArrowUpRight, FlaskConical, User, Headset, UserCog } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { usePathname } from "next/navigation";
+import { useAuth } from "@/hooks/useAuth";
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -12,6 +13,7 @@ export default function Header() {
   const [activeMobileDropdown, setActiveMobileDropdown] = useState<string | null>(null);
   const pathname = usePathname();
   const headerRef = useRef<HTMLElement>(null);
+  const { user, isAuthenticated, logout } = useAuth();
 
   // Close mobile menu on outside click
   useEffect(() => {
@@ -96,7 +98,7 @@ export default function Header() {
         <div className="max-w-7xl w-full px-6 md:px-8 flex justify-between items-center h-full text-[10px] font-semibold md:font-bold tracking-wider uppercase">
           <div className="flex items-center gap-5">
             <span className="flex items-center gap-1.5"><Mail className="w-3 h-3" /> info@greenviewschool.edu.in</span>
-            <span className="flex items-center gap-1.5"><Phone className="w-3 h-3" /> +91 98765 43210</span>
+            <span className="flex items-center gap-1.5"><Phone className="w-3 h-3" /> 98165 21168, 01892252115</span>
           </div>
           <div className="flex items-center gap-5">
             <Link href="/academics/calendar" className="flex items-center gap-1.5 hover:text-emerald-200 transition-colors">
@@ -126,7 +128,7 @@ export default function Header() {
           </div>
           <div className="flex flex-col">
             <span className="font-serif font-semibold md:font-black text-brand-navy text-lg md:text-xl leading-none tracking-tight">
-              Green View
+              GV Green View
             </span>
             <span className="text-[7px] text-brand-navy font-medium md:font-bold tracking-widest uppercase mt-1.5 leading-none">
               Senior Secondary School
@@ -202,31 +204,75 @@ export default function Header() {
         {/* Right Controls: Login & Hamburger */}
         <div className="flex items-center gap-4">
           
-          {/* Login Dropdown Control */}
+          {/* Desktop User Profile / Login Control */}
           <div className="relative group hidden lg:block">
-            <motion.button 
-              whileHover={{ scale: 1.02 }} 
-              whileTap={{ scale: 0.98 }} 
-              className="bg-brand-green hover:bg-brand-green-dark text-white px-6 py-2.5 rounded-xl font-semibold md:font-bold text-xs md:text-sm tracking-wide transition-all shadow-sm shadow-emerald-500/10 cursor-pointer flex items-center gap-1.5"
-            >
-              Login <ChevronDown className="w-3.5 h-3.5 transition-transform duration-300 group-hover:rotate-180" />
-            </motion.button>
+            {isAuthenticated && user ? (
+              <>
+                <motion.button 
+                  whileHover={{ scale: 1.02 }} 
+                  whileTap={{ scale: 0.98 }} 
+                  className="bg-brand-green/10 hover:bg-brand-green/20 text-brand-green border border-brand-green/20 px-4 py-2 rounded-xl font-semibold md:font-bold text-xs md:text-sm tracking-wide transition-all shadow-sm cursor-pointer flex items-center gap-2"
+                >
+                  <div className="w-6 h-6 rounded-full bg-brand-green text-white flex items-center justify-center overflow-hidden">
+                    {user.photoUrl ? (
+                      <img src={user.photoUrl} alt="User" className="w-full h-full object-cover" />
+                    ) : (
+                      <User className="w-3.5 h-3.5" />
+                    )}
+                  </div>
+                  <span className="max-w-[100px] truncate">{user.name || "User"}</span>
+                  <ChevronDown className="w-3.5 h-3.5 transition-transform duration-300 group-hover:rotate-180" />
+                </motion.button>
 
-            {/* Dropdown Options */}
-            <div className="absolute right-0 top-full mt-2 w-48 bg-white border border-slate-100 rounded-2xl shadow-[0_10px_35px_-8px_rgba(0,0,0,0.06)] opacity-0 invisible group-hover:opacity-100 group-hover:visible translate-y-1 group-hover:translate-y-0 transition-all duration-300 z-50 p-2.5 flex flex-col gap-1">
-              <Link
-                href="/auth/student/login"
-                className="flex items-center gap-2 p-2 rounded-xl hover:bg-slate-50 text-slate-700 hover:text-brand-green transition-colors text-left text-xs font-semibold"
-              >
-                <User className="w-4 h-4 text-slate-400" /> Student Login
-              </Link>
-              <Link
-                href="/auth/teacher/login"
-                className="flex items-center gap-2 p-2 rounded-xl hover:bg-slate-50 text-slate-700 hover:text-brand-green transition-colors text-left text-xs font-semibold"
-              >
-                <User className="w-4 h-4 text-slate-400" /> Teacher Login
-              </Link>
-            </div>
+                {/* Profile Dropdown */}
+                <div className="absolute right-0 top-full mt-2 w-48 bg-white border border-slate-100 rounded-2xl shadow-[0_10px_35px_-8px_rgba(0,0,0,0.06)] opacity-0 invisible group-hover:opacity-100 group-hover:visible translate-y-1 group-hover:translate-y-0 transition-all duration-300 z-50 p-2.5 flex flex-col gap-1">
+                  {user.role === 'teacher' ? (
+                    <Link href="/erp" className="flex items-center gap-2 p-2 rounded-xl hover:bg-slate-50 text-slate-700 hover:text-brand-green transition-colors text-left text-xs font-semibold">
+                      <Headset className="w-4 h-4 text-slate-400" /> ERP Portal
+                    </Link>
+                  ) : (
+                    <Link href="/student-portal" className="flex items-center gap-2 p-2 rounded-xl hover:bg-slate-50 text-slate-700 hover:text-brand-green transition-colors text-left text-xs font-semibold">
+                      <GraduationCap className="w-4 h-4 text-slate-400" /> My Dashboard
+                    </Link>
+                  )}
+                  <Link 
+                    href={user.role === 'teacher' ? "/erp?module=profile" : "/student-portal"}
+                    className="flex items-center gap-2 p-2 rounded-xl hover:bg-slate-50 text-slate-700 hover:text-brand-green transition-colors text-left text-xs font-semibold"
+                  >
+                    <UserCog className="w-4 h-4 text-slate-400" /> Profile Settings
+                  </Link>
+                  <button onClick={logout} className="flex items-center w-full gap-2 p-2 rounded-xl hover:bg-rose-50 text-slate-700 hover:text-rose-600 transition-colors text-left text-xs font-semibold cursor-pointer border-0 bg-transparent">
+                    <X className="w-4 h-4 text-rose-400" /> Sign Out
+                  </button>
+                </div>
+              </>
+            ) : (
+              <>
+                <motion.button 
+                  whileHover={{ scale: 1.02 }} 
+                  whileTap={{ scale: 0.98 }} 
+                  className="bg-brand-green hover:bg-brand-green-dark text-white px-6 py-2.5 rounded-xl font-semibold md:font-bold text-xs md:text-sm tracking-wide transition-all shadow-sm shadow-emerald-500/10 cursor-pointer flex items-center gap-1.5"
+                >
+                  Login <ChevronDown className="w-3.5 h-3.5 transition-transform duration-300 group-hover:rotate-180" />
+                </motion.button>
+
+                {/* Login Dropdown Options */}
+                <div className="absolute right-0 top-full mt-2 w-48 bg-white border border-slate-100 rounded-2xl shadow-[0_10px_35px_-8px_rgba(0,0,0,0.06)] opacity-0 invisible group-hover:opacity-100 group-hover:visible translate-y-1 group-hover:translate-y-0 transition-all duration-300 z-50 p-2.5 flex flex-col gap-1">
+                  <Link
+                    href="/auth/student/login"
+                    className="flex items-center gap-2 p-2 rounded-xl hover:bg-slate-50 text-slate-700 hover:text-brand-green transition-colors text-left text-xs font-semibold"
+                  >
+                    <User className="w-4 h-4 text-slate-400" /> Student Login
+                  </Link>
+                  <Link
+                    href="/auth/teacher/login"
+                    className="flex items-center gap-2 p-2 rounded-xl hover:bg-slate-50 text-slate-700 hover:text-brand-green transition-colors text-left text-xs font-semibold"
+                  >
+                    <User className="w-4 h-4 text-slate-400" /> Teacher Login
+                  </Link>
+                </div>
+              </>
+            )}
           </div>
 
           {/* Mobile Hamburger menu toggle */}
@@ -321,7 +367,7 @@ export default function Header() {
                 )}
               </motion.div>
             )})}
-            {/* Mobile Login Links */}
+            {/* Mobile Login / User Profile Links */}
             <motion.div
               initial={{ opacity: 0, x: -10 }}
               animate={{ opacity: 1, x: 0 }}
@@ -329,23 +375,50 @@ export default function Header() {
               className="flex flex-col gap-2.5 pt-4 mt-2 border-t border-slate-100"
             >
               <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
-                Account Sign In
+                {isAuthenticated ? "My Account" : "Account Sign In"}
               </span>
-              <div className="flex gap-3">
-                <Link
-                  href="/auth/student/login"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="flex-1 bg-brand-green hover:bg-brand-green-dark text-white rounded-xl py-3 px-4 font-semibold text-center text-xs tracking-wide transition-colors"
-                >
-                  Student Login
-                </Link>
-                <Link
-                  href="/auth/teacher/login"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl py-3 px-4 font-semibold text-center text-xs tracking-wide transition-colors"
-                >
-                  Teacher Login
-                </Link>
+              <div className="flex gap-2">
+                {isAuthenticated && user ? (
+                  <>
+                    <Link
+                      href={user.role === 'teacher' ? "/erp" : "/student-portal"}
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="flex-1 bg-brand-green hover:bg-brand-green-dark text-white rounded-xl py-2 px-2 font-semibold text-center text-[11px] tracking-wide transition-colors flex items-center justify-center"
+                    >
+                      {user.role === 'teacher' ? "ERP Portal" : "Dashboard"}
+                    </Link>
+                    <Link
+                      href={user.role === 'teacher' ? "/erp?module=profile" : "/student-portal"}
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl py-2 px-2 font-semibold text-center text-[11px] tracking-wide transition-colors flex items-center justify-center"
+                    >
+                      Settings
+                    </Link>
+                    <button
+                      onClick={() => { logout(); setIsMobileMenuOpen(false); }}
+                      className="flex-1 bg-rose-50 hover:bg-rose-100 text-rose-600 border-0 rounded-xl py-2 px-2 font-semibold text-center text-[11px] tracking-wide transition-colors cursor-pointer flex items-center justify-center"
+                    >
+                      Sign Out
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <Link
+                      href="/auth/student/login"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="flex-1 bg-brand-green hover:bg-brand-green-dark text-white rounded-xl py-3 px-4 font-semibold text-center text-xs tracking-wide transition-colors"
+                    >
+                      Student Login
+                    </Link>
+                    <Link
+                      href="/auth/teacher/login"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl py-3 px-4 font-semibold text-center text-xs tracking-wide transition-colors"
+                    >
+                      Teacher Login
+                    </Link>
+                  </>
+                )}
               </div>
             </motion.div>
           </motion.div>

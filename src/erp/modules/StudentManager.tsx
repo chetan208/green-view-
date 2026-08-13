@@ -3,11 +3,14 @@
 import React, { useState, useEffect } from "react";
 import { Plus, Search, Loader2, CheckCircle2, AlertTriangle, X, Users, UserPlus, Calendar, CreditCard, Bus, User, ArrowLeft, ChevronRight, Phone } from "lucide-react";
 import { motion } from "framer-motion";
+import { erpApi } from "@/services/erpApi";
+import { useAuth } from "@/hooks/useAuth";
 
 interface StudentType {
-  id: string;
+  _id: string;
   name: string;
   studentClass: string;
+  section?: string;
   fatherName: string;
   motherName: string;
   dateOfAdmission: string;
@@ -23,14 +26,16 @@ interface StudentType {
   prevSchool?: string;
   studentclass?: {
     className: string;
+    _id?: string;
   };
   session?: {
     year: string;
+    _id?: string;
   };
 }
 
 interface StudentManagerProps {
-  onManageFees?: (student: StudentType) => void;
+  onManageFees?: (student: any) => void;
   selectedSession?: string;
 }
 
@@ -41,70 +46,14 @@ const CLASSES_LIST = [
   "Class 11", "Class 12"
 ];
 
-const DUMMY_STUDENTS: StudentType[] = [
-  {
-    id: "s1", name: "Aarav Sharma", studentClass: "Class 5", fatherName: "Rajesh Sharma", motherName: "Sunita Sharma",
-    dateOfAdmission: "2024-04-01", dob: "2014-08-15", cardNo: "GV-2024-001", contactNo: "9876543210",
-    station: "Sector 12", sex: "Male", religion: "Hindu", socialCategory: "General", motherTongue: "Hindi",
-    address: "123 Green View Colony, Sector 12", prevSchool: "Delhi Public School"
-  },
-  {
-    id: "s2", name: "Priya Verma", studentClass: "Class 8", fatherName: "Amit Verma", motherName: "Meena Verma",
-    dateOfAdmission: "2023-04-05", dob: "2011-03-22", cardNo: "GV-2023-015", contactNo: "9988776655",
-    station: "Sector 5", sex: "Female", religion: "Hindu", socialCategory: "OBC", motherTongue: "Hindi",
-    address: "45 Vidya Nagar, Sector 5", prevSchool: "St. Mary's Convent"
-  },
-  {
-    id: "s3", name: "Rohit Gupta", studentClass: "Class 10", fatherName: "Suresh Gupta", motherName: "Kavita Gupta",
-    dateOfAdmission: "2022-04-10", dob: "2009-11-08", cardNo: "GV-2022-042", contactNo: "9123456789",
-    station: null, sex: "Male", religion: "Hindu", socialCategory: "General", motherTongue: "Hindi",
-    address: "78 Model Town", prevSchool: "Green View Public School"
-  },
-  {
-    id: "s4", name: "Ananya Singh", studentClass: "Class 3", fatherName: "Vikram Singh", motherName: "Pooja Singh",
-    dateOfAdmission: "2025-04-01", dob: "2016-06-30", cardNo: "GV-2025-003", contactNo: "8765432109",
-    station: "Main Market", sex: "Female", religion: "Sikh", socialCategory: "General", motherTongue: "Punjabi",
-    address: "22 Singh Niwas, Main Market Road", prevSchool: "None"
-  },
-  {
-    id: "s5", name: "Mohammed Arif", studentClass: "Class 7", fatherName: "Saleem Khan", motherName: "Nasreen Khan",
-    dateOfAdmission: "2023-07-15", dob: "2012-01-10", cardNo: "GV-2023-028", contactNo: "7654321098",
-    station: "Bus Stand", sex: "Male", religion: "Islam", socialCategory: "General", motherTongue: "Urdu",
-    address: "55 Jama Masjid Road", prevSchool: "Crescent Public School"
-  },
-  {
-    id: "s6", name: "Simran Kaur", studentClass: "Class 12", fatherName: "Harpreet Singh", motherName: "Gurpreet Kaur",
-    dateOfAdmission: "2020-04-01", dob: "2007-09-14", cardNo: "GV-2020-011", contactNo: "6543210987",
-    station: "Sector 12", sex: "Female", religion: "Sikh", socialCategory: "General", motherTongue: "Punjabi",
-    address: "90 Guru Nanak Nagar", prevSchool: "Khalsa Public School"
-  },
-  {
-    id: "s7", name: "Karan Mehta", studentClass: "Nursery", fatherName: "Dinesh Mehta", motherName: "Shilpa Mehta",
-    dateOfAdmission: "2026-04-01", dob: "2021-02-20", cardNo: "GV-2026-005", contactNo: "5432109876",
-    station: null, sex: "Male", religion: "Hindu", socialCategory: "General", motherTongue: "Hindi",
-    address: "12 Rose Garden Society", prevSchool: "None"
-  },
-  {
-    id: "s8", name: "Neha Patel", studentClass: "Class 1", fatherName: "Jayesh Patel", motherName: "Ritu Patel",
-    dateOfAdmission: "2025-04-01", dob: "2019-12-05", cardNo: "GV-2025-018", contactNo: "4321098765",
-    station: "Sector 5", sex: "Female", religion: "Hindu", socialCategory: "General", motherTongue: "Gujarati",
-    address: "34 Shanti Nagar, Sector 5", prevSchool: "Little Flower School"
-  },
-];
-
-const STATIONS = [
-  { station: "Sector 12" },
-  { station: "Sector 5" },
-  { station: "Main Market" },
-  { station: "Bus Stand" },
-  { station: "Railway Station" },
-];
-
 const inputCls = "w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold text-brand-green-dark focus:outline-none focus:ring-2 focus:ring-brand-green/15 focus:border-brand-green transition-all";
 
-export default function StudentManager({ onManageFees, selectedSession = "2025-26" }: StudentManagerProps) {
-  const [students, setStudents] = useState<StudentType[]>(DUMMY_STUDENTS);
-  const [loading, setLoading] = useState(false);
+export default function StudentManager({ onManageFees, selectedSession = "2026-27" }: StudentManagerProps) {
+  const [students, setStudents] = useState<StudentType[]>([]);
+  const [classesList, setClassesList] = useState<any[]>([]);
+  const [stationsList, setStationsList] = useState<any[]>([]);
+  
+  const [loading, setLoading] = useState(true);
   const [submitLoading, setSubmitLoading] = useState(false);
   const [showForm, setShowForm] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -118,6 +67,57 @@ export default function StudentManager({ onManageFees, selectedSession = "2025-2
   const [showPromoteModal, setShowPromoteModal] = useState(false);
   const [promoteLoading, setPromoteLoading] = useState(false);
   const [promoteStudentData, setPromoteStudentData] = useState<StudentType | null>(null);
+
+  const { user } = useAuth();
+
+  const loadData = async () => {
+    setLoading(true);
+    try {
+      const classesRes = await erpApi.classes.list();
+      if (classesRes.success) setClassesList(classesRes.classes);
+
+      const stationsRes = await erpApi.transport.stations.list();
+      if (stationsRes.success) setStationsList(stationsRes.stations);
+
+      await fetchStudents();
+    } catch (err: any) {
+      setError(err.message || "Failed to load data");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchStudents = async () => {
+    setLoading(true);
+    try {
+      const filters: any = { session: selectedSession, limit: 0 };
+      if (searchQuery) filters.search = searchQuery;
+      if (selectedClass !== "All") filters.classId = classesList.find(c => c.className === selectedClass)?._id || selectedClass;
+
+      const res = await erpApi.students.list(filters);
+      if (res.success) {
+        setStudents(res.students);
+      } else {
+        setError(res.message || "Failed to fetch students");
+      }
+    } catch (err: any) {
+      console.error(err);
+      setError("Failed to fetch students");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    loadData();
+  }, [selectedSession]);
+
+  useEffect(() => {
+    const delayDebounceFn = setTimeout(() => {
+      fetchStudents();
+    }, 500);
+    return () => clearTimeout(delayDebounceFn);
+  }, [searchQuery, selectedClass]);
 
   const getNextClass = (currentClass: string) => {
     const CLASS_PROGRESSION: Record<string, string> = {
@@ -140,10 +140,10 @@ export default function StudentManager({ onManageFees, selectedSession = "2025-2
     return currentSession;
   };
 
-  // Form data for adding student - based on Green View admission form fields
   const [formData, setFormData] = useState({
     name: "",
     studentClass: "",
+    section: "",
     fatherName: "",
     motherName: "",
     dateOfAdmission: "",
@@ -164,6 +164,7 @@ export default function StudentManager({ onManageFees, selectedSession = "2025-2
   const [editFormData, setEditFormData] = useState({
     name: "",
     studentClass: "",
+    section: "",
     fatherName: "",
     motherName: "",
     dateOfAdmission: "",
@@ -179,19 +180,9 @@ export default function StudentManager({ onManageFees, selectedSession = "2025-2
     prevSchool: ""
   });
 
-  // Filtering
-  const filteredStudents = students.filter(s => {
-    const matchesSearch = !searchQuery || 
-      s.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      s.cardNo.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      s.contactNo.includes(searchQuery);
-    const matchesClass = selectedClass === "All" || s.studentClass === selectedClass;
-    return matchesSearch && matchesClass;
-  });
-
   const resetForm = () => {
     setFormData({
-      name: "", studentClass: "", fatherName: "", motherName: "",
+      name: "", studentClass: "", section: "", fatherName: "", motherName: "",
       dateOfAdmission: "", dob: "", cardNo: "", contactNo: "",
       station: "", sex: "", religion: "", socialCategory: "",
       motherTongue: "", address: "", prevSchool: "",
@@ -201,37 +192,55 @@ export default function StudentManager({ onManageFees, selectedSession = "2025-2
     setSuccess(null);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitLoading(true);
     setError(null);
 
-    const newStudent: StudentType = {
-      id: `s${Date.now()}`,
-      name: formData.name,
-      studentClass: formData.studentClass,
-      fatherName: formData.fatherName,
-      motherName: formData.motherName,
-      dateOfAdmission: formData.dateOfAdmission,
-      dob: formData.dob,
-      cardNo: formData.cardNo,
-      contactNo: formData.contactNo,
-      station: formData.station || null,
-      sex: formData.sex,
-      religion: formData.religion,
-      socialCategory: formData.socialCategory,
-      motherTongue: formData.motherTongue,
-      address: formData.address,
-      prevSchool: formData.prevSchool,
-    };
+    const submitData = new FormData();
+    submitData.append("name", formData.name);
+    
+    const classObj = classesList.find(c => c.className === formData.studentClass);
+    if (classObj) submitData.append("classId", classObj._id);
+    else submitData.append("classId", formData.studentClass);
+    
+    if (formData.section) submitData.append("section", formData.section);
 
-    setTimeout(() => {
-      setStudents(prev => [newStudent, ...prev]);
-      setSuccess(`${formData.name} registered successfully!`);
-      resetForm();
-      setShowForm(false);
+    submitData.append("fatherName", formData.fatherName);
+    submitData.append("motherName", formData.motherName);
+    submitData.append("dateOfAdmission", formData.dateOfAdmission);
+    if (formData.dob) submitData.append("dob", formData.dob);
+    submitData.append("cardNo", formData.cardNo);
+    submitData.append("contactNo", formData.contactNo);
+    
+    if (formData.station) {
+      const stationObj = stationsList.find(s => s.stationName === formData.station);
+      if (stationObj) submitData.append("transportStationId", stationObj._id);
+    }
+    
+    if (formData.sex) submitData.append("sex", formData.sex);
+    if (formData.religion) submitData.append("religion", formData.religion);
+    if (formData.socialCategory) submitData.append("socialCategory", formData.socialCategory);
+    if (formData.motherTongue) submitData.append("motherTongue", formData.motherTongue);
+    if (formData.address) submitData.append("address", formData.address);
+    if (formData.prevSchool) submitData.append("prevSchool", formData.prevSchool);
+    submitData.append("session", selectedSession);
+
+    try {
+      const res = await erpApi.students.create(submitData);
+      if (res.success) {
+        setSuccess(`${formData.name} registered successfully!`);
+        resetForm();
+        setShowForm(false);
+        fetchStudents();
+      } else {
+        setError(res.message || "Failed to add student");
+      }
+    } catch (err: any) {
+      setError(err.message || "Unable to connect to server");
+    } finally {
       setSubmitLoading(false);
-    }, 500);
+    }
   };
 
   const handleOpenEdit = (student: StudentType) => {
@@ -245,6 +254,7 @@ export default function StudentManager({ onManageFees, selectedSession = "2025-2
     setEditFormData({
       name: student.name || "",
       studentClass: student.studentclass?.className || student.studentClass || "",
+      section: student.section || "",
       fatherName: student.fatherName || "",
       motherName: student.motherName || "",
       dateOfAdmission: formatDateForInput(student.dateOfAdmission),
@@ -264,34 +274,58 @@ export default function StudentManager({ onManageFees, selectedSession = "2025-2
     setShowEditModal(true);
   };
 
-  const handleEditSubmit = (e: React.FormEvent) => {
+  const handleEditSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!selectedStudentForDetail) return;
     setSubmitLoading(true);
 
-    setTimeout(() => {
-      setStudents(prev => prev.map(s =>
-        s.id === selectedStudentForDetail.id
-          ? { ...s, ...editFormData, studentClass: editFormData.studentClass }
-          : s
-      ));
-      setSuccess("Student information updated successfully!");
-      setShowEditModal(false);
-      setSelectedStudentForDetail({ ...selectedStudentForDetail, ...editFormData, studentClass: editFormData.studentClass });
+    const updateData: any = { ...editFormData };
+    const classObj = classesList.find(c => c.className === editFormData.studentClass);
+    if (classObj) updateData.classId = classObj._id;
+    if (editFormData.section) updateData.section = editFormData.section;
+    
+    if (editFormData.station) {
+      const stationObj = stationsList.find(s => s.stationName === editFormData.station);
+      if (stationObj) updateData.transportStationId = stationObj._id;
+    } else {
+      updateData.transportStationId = null;
+    }
+
+    try {
+      const res = await erpApi.students.update(selectedStudentForDetail._id, updateData);
+      if (res.success) {
+        setSuccess("Student information updated successfully!");
+        setShowEditModal(false);
+        fetchStudents();
+        setSelectedStudentForDetail({ ...selectedStudentForDetail, ...editFormData });
+      } else {
+        setError(res.message || "Failed to update student");
+      }
+    } catch (err: any) {
+      setError(err.message || "Unable to connect to server");
+    } finally {
       setSubmitLoading(false);
-    }, 500);
+    }
   };
 
-  const handleDeleteStudent = () => {
+  const handleDeleteStudent = async () => {
     if (!selectedStudentForDetail) return;
     setSubmitLoading(true);
-    setTimeout(() => {
-      setStudents(prev => prev.filter(s => s.id !== selectedStudentForDetail.id));
-      setSuccess("Student deleted successfully!");
-      setShowDeleteConfirm(false);
-      setSelectedStudentForDetail(null);
+    try {
+      const res = await erpApi.students.delete(selectedStudentForDetail._id);
+      if (res.success) {
+        setSuccess("Student deleted successfully!");
+        setShowDeleteConfirm(false);
+        setSelectedStudentForDetail(null);
+        fetchStudents();
+      } else {
+        setError(res.message || "Failed to delete student");
+      }
+    } catch (err: any) {
+      setError(err.message || "Unable to connect to server");
+    } finally {
       setSubmitLoading(false);
-    }, 500);
+    }
   };
 
   const handleOpenPromote = (student: StudentType) => {
@@ -301,25 +335,56 @@ export default function StudentManager({ onManageFees, selectedSession = "2025-2
     setSuccess(null);
   };
 
-  const handlePromote = () => {
+  const handlePromote = async () => {
     if (!promoteStudentData) return;
     setPromoteLoading(true);
-    const currentClass = promoteStudentData.studentclass?.className || promoteStudentData.studentClass || "";
-    const nextClass = getNextClass(currentClass);
     
-    setTimeout(() => {
-      if (nextClass) {
-        setStudents(prev => prev.map(s =>
-          s.id === promoteStudentData.id
-            ? { ...s, studentClass: nextClass }
-            : s
-        ));
-        setSuccess(`Student promoted successfully to ${nextClass}.`);
-      }
-      setShowPromoteModal(false);
-      setSelectedStudentForDetail(null);
+    const currentClass = promoteStudentData.studentclass?.className || promoteStudentData.studentClass || "";
+    const nextClassStr = getNextClass(currentClass);
+    
+    if (!nextClassStr) {
+      setError("Highest class reached.");
       setPromoteLoading(false);
-    }, 500);
+      return;
+    }
+    
+    const nextClassObj = classesList.find(c => c.className === nextClassStr);
+    
+    try {
+      const res = await erpApi.students.promote(promoteStudentData._id, {
+        nextClassId: nextClassObj?._id || nextClassStr
+      });
+      
+      if (res.success) {
+        setSuccess(`Student promoted successfully to ${nextClassStr}.`);
+        setShowPromoteModal(false);
+        setSelectedStudentForDetail(null);
+        fetchStudents();
+      } else {
+        setError(res.message || "Failed to promote student");
+      }
+    } catch (err: any) {
+      setError(err.message || "Unable to connect to server");
+    } finally {
+      setPromoteLoading(false);
+    }
+  };
+
+  const handleClassChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const className = e.target.value;
+    setFormData({ ...formData, studentClass: className });
+    
+    const classObj = classesList.find(c => c.className === className);
+    if (classObj && selectedSession) {
+      try {
+        const res = await erpApi.students.getNextRollNo(classObj._id, selectedSession);
+        if (res.success && res.rollNo) {
+          setFormData(prev => ({ ...prev, cardNo: res.rollNo }));
+        }
+      } catch (err) {
+        console.error("Could not fetch next roll number", err);
+      }
+    }
   };
 
   return (
@@ -378,7 +443,10 @@ export default function StudentManager({ onManageFees, selectedSession = "2025-2
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
                   <div>
                     <p className="text-[9px] font-bold text-slate-400 uppercase tracking-wider">Class Name</p>
-                    <p className="font-semibold text-brand-green-dark mt-1">{selectedStudentForDetail.studentclass?.className || selectedStudentForDetail.studentClass}</p>
+                    <p className="font-semibold text-brand-green-dark mt-1">
+                      {selectedStudentForDetail.studentclass?.className || selectedStudentForDetail.studentClass}
+                      {selectedStudentForDetail.section ? ` - Sec ${selectedStudentForDetail.section}` : ''}
+                    </p>
                   </div>
                   <div>
                     <p className="text-[9px] font-bold text-slate-400 uppercase tracking-wider">Admission / Card Number</p>
@@ -472,22 +540,24 @@ export default function StudentManager({ onManageFees, selectedSession = "2025-2
                 >
                   Promote Student
                 </button>
-                <button
-                  type="button"
-                  onClick={() => setShowDeleteConfirm(true)}
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-rose-50 hover:bg-rose-100 text-rose-600 border border-rose-200 rounded-xl text-xs font-semibold transition duration-200 cursor-pointer active:scale-95"
-                >
-                  Delete Student
-                </button>
+                {user?.teacherProfile?.accessRole === 'Owner' && (
+                  <button
+                    type="button"
+                    onClick={() => setShowDeleteConfirm(true)}
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-rose-50 hover:bg-rose-100 text-rose-600 border border-rose-200 rounded-xl text-xs font-semibold transition duration-200 cursor-pointer active:scale-95"
+                  >
+                    Delete Student
+                  </button>
+                )}
               </div>
 
               <button
                 type="button"
-                onClick={() => onManageFees?.(selectedStudentForDetail)}
+                onClick={() => onManageFees?.({ ...selectedStudentForDetail, id: selectedStudentForDetail._id })}
                 className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-2.5 bg-brand-green-darker hover:bg-brand-green-darker/90 text-white rounded-xl text-xs font-semibold transition duration-200 cursor-pointer border-0 shadow-md shadow-brand-green-darker/10 active:scale-95"
               >
                 <CreditCard size={14} />
-                Go to Fee Management & Ledger
+                Go to Fee Management
               </button>
             </div>
           </motion.div>
@@ -518,7 +588,7 @@ export default function StudentManager({ onManageFees, selectedSession = "2025-2
               </h3>
 
               <form onSubmit={handleSubmit} className="space-y-4">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                   <div>
                     <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Full Name *</label>
                     <input type="text" required placeholder="E.g., Aarav Sharma" value={formData.name}
@@ -527,9 +597,20 @@ export default function StudentManager({ onManageFees, selectedSession = "2025-2
                   <div>
                     <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Student Class *</label>
                     <select required value={formData.studentClass}
-                      onChange={(e) => setFormData({ ...formData, studentClass: e.target.value })} className={inputCls}>
+                      onChange={handleClassChange} className={inputCls}>
                       <option value="" disabled>Select Class</option>
-                      {CLASSES_LIST.map(c => (<option key={c} value={c}>{c}</option>))}
+                      {classesList.map(c => (<option key={c._id} value={c.className}>{c.className}</option>))}
+                      {classesList.length === 0 && CLASSES_LIST.map(c => (<option key={c} value={c}>{c}</option>))}
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Section</label>
+                    <select value={formData.section}
+                      onChange={(e) => setFormData({ ...formData, section: e.target.value })} className={inputCls}>
+                      <option value="">No Section</option>
+                      {formData.studentClass && classesList.find(c => c.className === formData.studentClass)?.sections?.map((s: string) => (
+                        <option key={s} value={s}>{s}</option>
+                      ))}
                     </select>
                   </div>
                   <div>
@@ -610,7 +691,7 @@ export default function StudentManager({ onManageFees, selectedSession = "2025-2
                     <select value={formData.station}
                       onChange={(e) => setFormData({ ...formData, station: e.target.value })} className={inputCls}>
                       <option value="">None / Day Scholar</option>
-                      {STATIONS.map(s => (<option key={s.station} value={s.station}>{s.station}</option>))}
+                      {stationsList.map(s => (<option key={s._id} value={s.stationName}>{s.stationName}</option>))}
                     </select>
                   </div>
                 </div>
@@ -689,13 +770,14 @@ export default function StudentManager({ onManageFees, selectedSession = "2025-2
                   <select value={selectedClass} onChange={(e) => setSelectedClass(e.target.value)}
                     className="bg-transparent border-0 text-xs font-semibold text-slate-700 focus:outline-none cursor-pointer">
                     <option value="All">All Classes</option>
-                    {CLASSES_LIST.map((c) => (<option key={c} value={c}>{c}</option>))}
+                    {classesList.map(c => (<option key={c._id} value={c.className}>{c.className}</option>))}
+                    {classesList.length === 0 && CLASSES_LIST.map((c) => (<option key={c} value={c}>{c}</option>))}
                   </select>
                 </div>
               </div>
               <div className="flex items-center gap-1.5 text-xs text-slate-400 shrink-0">
                 <Users size={13} />
-                <span className="font-semibold">{filteredStudents.length}</span> students found
+                <span className="font-semibold">{students.length}</span> students found
               </div>
             </div>
 
@@ -706,7 +788,7 @@ export default function StudentManager({ onManageFees, selectedSession = "2025-2
                   <Loader2 className="animate-spin text-brand-green-dark" size={24} />
                   <span className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Loading Student Records...</span>
                 </div>
-              ) : filteredStudents.length > 0 ? (
+              ) : students.length > 0 ? (
                 <table className="w-full border-collapse text-left text-xs">
                   <thead>
                     <tr className="bg-slate-50 border-b border-slate-100 text-slate-400">
@@ -719,8 +801,8 @@ export default function StudentManager({ onManageFees, selectedSession = "2025-2
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-slate-100 text-slate-600">
-                    {filteredStudents.map((student) => (
-                      <tr key={student.id} className="hover:bg-slate-50/50 transition duration-150">
+                    {students.map((student) => (
+                      <tr key={student._id} className="hover:bg-slate-50/50 transition duration-150">
                         <td className="px-5 py-3.5">
                           <button
                             onClick={() => setSelectedStudentForDetail(student)}
@@ -728,7 +810,10 @@ export default function StudentManager({ onManageFees, selectedSession = "2025-2
                           >
                             {student.name}
                           </button>
-                          <p className="text-[10px] text-slate-400 font-medium uppercase mt-0.5">{student.studentclass?.className || student.studentClass}</p>
+                          <p className="text-[10px] text-slate-400 font-medium uppercase mt-0.5">
+                            {student.studentclass?.className || student.studentClass}
+                            {student.section ? ` - ${student.section}` : ''}
+                          </p>
                         </td>
                         <td className="px-5 py-3.5 font-mono text-[11px] font-medium text-slate-500">
                           {student.cardNo}
@@ -740,7 +825,7 @@ export default function StudentManager({ onManageFees, selectedSession = "2025-2
                         <td className="px-5 py-3.5 text-slate-400 font-medium">
                           <div className="flex items-center gap-1.5">
                             <Calendar size={12} />
-                            {new Date(student.dateOfAdmission).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" })}
+                            {student.dateOfAdmission ? new Date(student.dateOfAdmission).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" }) : "-"}
                           </div>
                         </td>
                         <td className="px-5 py-3.5 font-semibold text-slate-600">
@@ -757,7 +842,7 @@ export default function StudentManager({ onManageFees, selectedSession = "2025-2
                               View Profile
                             </button>
                             <button
-                              onClick={() => onManageFees?.(student)}
+                              onClick={() => onManageFees?.({ ...student, id: student._id })}
                               title="Manage Fees"
                               className="inline-flex items-center gap-1 px-2.5 py-1.5 bg-brand-green-darker hover:bg-brand-green-darker/90 text-white rounded-xl text-[10px] font-semibold transition duration-200 cursor-pointer border-0 shadow-sm"
                             >
@@ -803,7 +888,18 @@ export default function StudentManager({ onManageFees, selectedSession = "2025-2
                   <select required value={editFormData.studentClass}
                     onChange={(e) => setEditFormData({ ...editFormData, studentClass: e.target.value })} className={inputCls}>
                     <option value="" disabled>Select Class</option>
-                    {CLASSES_LIST.map(c => (<option key={c} value={c}>{c}</option>))}
+                    {classesList.map(c => (<option key={c._id} value={c.className}>{c.className}</option>))}
+                    {classesList.length === 0 && CLASSES_LIST.map((c) => (<option key={c} value={c}>{c}</option>))}
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Section</label>
+                  <select value={editFormData.section}
+                    onChange={(e) => setEditFormData({ ...editFormData, section: e.target.value })} className={inputCls}>
+                    <option value="">No Section</option>
+                    {editFormData.studentClass && classesList.find(c => c.className === editFormData.studentClass)?.sections?.map((s: string) => (
+                      <option key={s} value={s}>{s}</option>
+                    ))}
                   </select>
                 </div>
                 <div>
@@ -841,7 +937,7 @@ export default function StudentManager({ onManageFees, selectedSession = "2025-2
                   <select value={editFormData.station}
                     onChange={(e) => setEditFormData({ ...editFormData, station: e.target.value })} className={inputCls}>
                     <option value="">None / Day Scholar</option>
-                    {STATIONS.map(s => (<option key={s.station} value={s.station}>{s.station}</option>))}
+                    {stationsList.map(s => (<option key={s._id} value={s.stationName}>{s.stationName}</option>))}
                   </select>
                 </div>
               </div>

@@ -56,24 +56,41 @@ export default function SchoolPoliciesPage() {
 
           <div className="flex flex-col gap-2">
             <h2 className="text-sm font-medium md:font-bold text-slate-800 uppercase tracking-wider">
-              3. Uniform Code & Discipline
+              3. Uniform Code
             </h2>
             <p>
-              Students must attend school in clean, pressed uniforms as prescribed for summer and winter seasons. Proper haircuts and clean nails are required. Wearing fancy watches, jewelry, or makeup is not permitted. Mobile phones are strictly banned on school premises.
+              Students must attend school in proper uniform:
             </p>
+            <ul className="list-disc pl-5 flex flex-col gap-1.5 mt-1">
+              <li><strong>Monday, Tuesday, Thursday, Friday:</strong> Cream color shirt (Boys and Girls), Self check Gray Pant (Boys) and trousers/skirt (Girls).</li>
+              <li><strong>Wednesday and Saturday (Summer):</strong> House T-shirt with blue pajama/lower.</li>
+              <li><strong>Wednesday and Saturday (Winter):</strong> Track suit.</li>
+            </ul>
           </div>
 
           <div className="flex flex-col gap-2">
             <h2 className="text-sm font-medium md:font-bold text-slate-800 uppercase tracking-wider">
-              4. Transport & Safety rules
+              4. School Timings & Meetings
+            </h2>
+            <ul className="list-disc pl-5 flex flex-col gap-1.5 mt-1">
+              <li><strong>School Timings:</strong> 9:00 a.m. to 3:00 p.m. (Summer and Winter)</li>
+              <li><strong>Meeting with Principal:</strong> Parents can meet the principal on Monday and Thursday from 9:30 a.m. to 10:00 a.m.</li>
+              <li>Parents can visit the school on Wednesday and Saturday during school timings.</li>
+              <li><strong>PTA/SMC:</strong> P.T.A. is an integral part of school activities. Meetings take place every month.</li>
+            </ul>
+          </div>
+
+          <div className="flex flex-col gap-2">
+            <h2 className="text-sm font-medium md:font-bold text-slate-800 uppercase tracking-wider">
+              5. General Guidelines
             </h2>
             <p>
-              While boarding or traveling in school buses:
+              Punctuality will be insisted upon in all dealing with the school. Unauthorised reading material is not permitted with in the premises of the school.
             </p>
             <ul className="list-disc pl-5 flex flex-col gap-1.5 mt-1">
-              <li>Students must remain seated until the bus halts completely.</li>
-              <li>Discipline must be maintained inside the vehicle to prevent driver distraction.</li>
-              <li>Bus cards must be carried daily for verification by school attendants.</li>
+              <li>Students should be always in proper dress.</li>
+              <li>Parents/guardian should take care to fill in the correct date of birth of the child.</li>
+              <li>Any damage to school property, caused by negligence on the part of any student is likely to be recovered from the student.</li>
             </ul>
           </div>
 

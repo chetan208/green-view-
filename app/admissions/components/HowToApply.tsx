@@ -89,9 +89,9 @@ export default function HowToApply() {
         >
           <p className="text-slate-500 font-medium mb-2">Need assistance with your application?</p>
           <div className="inline-flex gap-4 items-center">
-            <span className="text-brand-navy font-normal md:font-medium">Call: 01894-252115</span>
+            <span className="text-brand-navy font-normal md:font-medium">Call: 01892252115</span>
             <span className="w-1 h-1 rounded-full bg-slate-300"></span>
-            <span className="text-brand-navy font-normal md:font-medium">9816521168</span>
+            <span className="text-brand-navy font-normal md:font-medium">98165 21168</span>
           </div>
         </motion.div>
       </div>

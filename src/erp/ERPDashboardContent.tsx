@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ERPSidebar from "./ERPSidebar";
 import ERPOverview from "./ERPOverview";
 import ERPModuleWrapper from "./ERPModuleWrapper";
@@ -7,7 +7,32 @@ import { Menu, X } from "lucide-react";
 
 export default function ERPDashboardContent() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [activeModule, setActiveModule] = useState<string | null>(null);
+  const [activeModule, setActiveModuleState] = useState<string | null>(null);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const mod = params.get("module");
+    if (mod) setActiveModuleState(mod);
+    
+    // Handle back button navigation
+    const handlePopState = () => {
+      const currentParams = new URLSearchParams(window.location.search);
+      setActiveModuleState(currentParams.get("module"));
+    };
+    window.addEventListener("popstate", handlePopState);
+    return () => window.removeEventListener("popstate", handlePopState);
+  }, []);
+
+  const setActiveModule = (id: string | null) => {
+    setActiveModuleState(id);
+    const url = new URL(window.location.href);
+    if (id) {
+      url.searchParams.set("module", id);
+    } else {
+      url.searchParams.delete("module");
+    }
+    window.history.pushState({}, "", url.toString());
+  };
   
   const [sessions] = useState([
     { id: "1", year: "2026-2027" },

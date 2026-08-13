@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { ModuleType } from "./types";
-import { LucideIcon, RefreshCw } from "lucide-react";
+import { LucideIcon, RefreshCw, GraduationCap, Users, CreditCard, Banknote, ClipboardList, Calendar } from "lucide-react";
+import { erpApi, admissionsApi } from "@/services/erpApi";
+import { useAuth } from "@/hooks/useAuth";
+import ProfileSettings from "./modules/ProfileSettings";
 
 interface ERPOverviewProps {
   modules: ModuleType[];
@@ -24,21 +27,45 @@ export default function ERPOverview({
   setSelectedSession,
   sessions,
 }: ERPOverviewProps) {
-  const [stats, setStats] = useState(initialStats);
+  const [stats, setStats] = useState<{label: string, value: string, color: string, icon: LucideIcon}[]>([]);
   const [loading, setLoading] = useState(false);
+  const { user } = useAuth();
   
-  const user = { name: "Admin User", role: "Owner" };
-
-  const fetchDashboardStats = () => {
+  const fetchDashboardStats = async () => {
+    if (!selectedSession) return;
+    
     setLoading(true);
-    setTimeout(() => {
+    try {
+      // 1. Fetch Students count
+      const studentsRes = await erpApi.students.list({ limit: 0, session: selectedSession });
+      const studentsCount = studentsRes.pagination?.total || 0;
+      
+      // 2. Fetch Teachers count
+      const teachersRes = await erpApi.teachers.list({ limit: 0 });
+      const teachersCount = teachersRes.pagination?.total || 0;
+      
+      // 3. Fetch Fees stats
+      const feesRes = await erpApi.fees.stats(selectedSession);
+      const pendingFees = feesRes.pendingCount || 0;
+      const totalCollection = feesRes.totalCollected || 0;
+      
+      // 4. Fetch Admissions stats
+      const admissionsRes = await admissionsApi.stats();
+      const pendingAdmissions = admissionsRes.pendingCount || 0;
+      
       setStats([
-        { label: "Total Students", value: "1,245", color: "#166534", icon: initialStats[0].icon },
-        { label: "Teaching Staff", value: "84", color: "#166534", icon: initialStats[1].icon },
-        { label: "Pending Fees (Students)", value: "112", color: "#166534", icon: initialStats[2].icon }
+        { label: "Total Students", value: studentsCount.toLocaleString(), color: "#166534", icon: GraduationCap },
+        { label: "Teaching Staff", value: teachersCount.toLocaleString(), color: "#166534", icon: Users },
+        { label: "Pending Fees (Students)", value: pendingFees.toLocaleString(), color: "#166534", icon: CreditCard },
+        { label: "Total Collection", value: `₹${totalCollection.toLocaleString()}`, color: "#166534", icon: Banknote },
+        { label: "Pending Admissions", value: pendingAdmissions.toLocaleString(), color: "#166534", icon: ClipboardList },
+        { label: "Active Session", value: selectedSession, color: "#166534", icon: Calendar },
       ]);
+    } catch (err) {
+      console.error("Failed to fetch dashboard stats", err);
+    } finally {
       setLoading(false);
-    }, 600);
+    }
   };
 
   useEffect(() => {
@@ -54,7 +81,7 @@ export default function ERPOverview({
         <div className="space-y-1.5 relative z-10">
           <span className="text-[10px] font-bold uppercase tracking-widest text-slate-500">Dashboard Overview</span>
           <h1 className="text-2xl sm:text-3xl font-bold tracking-tight leading-none">
-            Welcome, {user.name.split(" ")[0]}
+            Welcome, {user ? user.name.split(" ")[0] : "Admin"}
           </h1>
           <p className="text-xs text-slate-500 font-medium">
             Green View School Management System
@@ -70,7 +97,7 @@ export default function ERPOverview({
               className="bg-transparent text-xs font-bold text-slate-800 focus:outline-none cursor-pointer border-0"
             >
               {sessions.map((s) => (
-                <option key={s.id} value={s.year} className="text-slate-800 bg-white font-semibold">{s.year}</option>
+                <option key={s.id || s.year} value={s.year} className="text-slate-800 bg-white font-semibold">{s.year}</option>
               ))}
             </select>
           </div>
@@ -86,7 +113,7 @@ export default function ERPOverview({
       </div>
 
       {/* Summary Stats Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
         {stats.map(({ label, value, color, icon: Icon }, idx) => (
           <div
             key={label}
@@ -99,7 +126,7 @@ export default function ERPOverview({
               <Icon size={20} style={{ color }} />
             </div>
             <div className="min-w-0 flex-1">
-              <p className="text-2xl font-bold text-slate-900 tracking-tight leading-none">
+              <p className="text-2xl font-bold text-slate-900 tracking-tight leading-none truncate">
                 {loading ? (
                   <span className="inline-block w-8 h-6 bg-slate-100 animate-pulse rounded-md" />
                 ) : (

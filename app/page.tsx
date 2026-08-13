@@ -5,6 +5,7 @@ import WelcomeSection from "@/components/home/WelcomeSection";
 import BoardNotices from "@/components/home/NoticeSection";
 import PrincipalMessage from "@/components/home/PrincipalMessage";
 import FacilitiesSection from "@/components/home/FacilitiesSection";
+import ToppersSection from "@/components/home/ToppersSection";
 import AcademicCalendar from "@/components/home/AcademicCalendar";
 import GallerySection from "@/components/home/GallerySection";
 
@@ -20,6 +21,7 @@ export default function Home() {
       <CategoryBar />
       <StatsSection />
       <WelcomeSection />
+      <ToppersSection />
       <BoardNotices />
       <PrincipalMessage />
       <FacilitiesSection />

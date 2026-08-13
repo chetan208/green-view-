@@ -61,12 +61,11 @@ export default function FeeDefaultsSettings({ selectedSession }: { selectedSessi
   const fetchDefaults = async (cls: string, mode: "default" | "special", month: string) => {
     setLoading(true);
     try {
-      // 1. Fetch default fees as baseline
-      const defaultRes = await axios.get(`${SERVER_URL}/api/erp/classes/fees`, {
-        params: { className: cls },
-        withCredentials: true
-      });
-      const defaultData = defaultRes.data?.data || {};
+      // 1. Fetch default fees as baseline (from all classes)
+      const classesRes = await axios.get(`${SERVER_URL}/api/erp/classes`, { withCredentials: true });
+      const classesList = classesRes.data?.classes || [];
+      const classItem = classesList.find((c: any) => c.className === cls);
+      const defaultData = classItem || {};
       let finalData = { ...defaultData };
 
       // 2. If special mode, fetch specific month and override if exists
@@ -75,7 +74,7 @@ export default function FeeDefaultsSettings({ selectedSession }: { selectedSessi
           params: { className: cls, monthName: month },
           withCredentials: true
         });
-        const specialFees = specialRes.data?.fees || [];
+        const specialFees = specialRes.data?.overrides || [];
         if (specialFees.length > 0) {
           finalData = { ...finalData, ...specialFees[0] };
         }

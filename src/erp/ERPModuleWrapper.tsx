@@ -8,7 +8,10 @@ import StaffManager from "./modules/StaffManager";
 import FeePortal from "./fee-portal/FeePortal";
 import TransportPortal from "./modules/TransportPortal";
 import SettingsPortal from "./modules/SettingsPortal";
+import AcademicsManager from "./modules/AcademicsManager";
 import AdmissionsManager from "@/components/admin/sections/AdmissionsManager";
+import ProfileSettings from "./modules/ProfileSettings";
+import { useAuth } from "@/hooks/useAuth";
 
 interface ERPModuleWrapperProps {
   activeModule: string;
@@ -23,6 +26,8 @@ export default function ERPModuleWrapper({
   setActiveModule,
   selectedSession,
 }: ERPModuleWrapperProps) {
+  const { user } = useAuth();
+
   return (
     <div className="p-5 sm:p-7 mx-auto transition-all duration-300 max-w-6xl">
       {/* Breadcrumb Header */}
@@ -47,8 +52,12 @@ export default function ERPModuleWrapper({
         <TransportPortal />
       ) : activeModule === "settings" ? (
         <SettingsPortal />
+      ) : activeModule === "academics" ? (
+        <AcademicsManager />
       ) : activeModule === "admissions" ? (
         <AdmissionsManager />
+      ) : activeModule === "profile" ? (
+        <ProfileSettings user={user} onProfileUpdated={() => window.location.reload()} />
       ) : (
         <DummyModule title={currentModule?.label || "Module"} />
       )}

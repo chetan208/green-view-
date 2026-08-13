@@ -69,12 +69,18 @@ export default function HeroSection() {
             Sr. Sec. School
           </motion.h1>
 
-          <motion.p 
+          <motion.div 
             variants={itemVariants}
-            className="text-slate-500 text-sm md:text-base max-w-md mb-8 leading-relaxed font-normal md:font-normal text-center lg:text-left select-none"
+            className="text-slate-500 text-sm md:text-base max-w-md mb-8 leading-relaxed font-normal md:font-normal text-center lg:text-left select-none flex flex-col gap-2"
           >
-            A trusted private senior secondary school focused on academic excellence, discipline, values and modern parent communication.
-          </motion.p>
+            <p><strong>Mottos:</strong></p>
+            <ul className="list-disc pl-5">
+              <li>Source of Intelligence, Knowledge & Modesty</li>
+              <li>We Trust in God</li>
+              <li>Aspiring for Excellence</li>
+              <li>Honest Labour Pays</li>
+            </ul>
+          </motion.div>
 
           {/* Action Buttons */}
           <motion.div 
