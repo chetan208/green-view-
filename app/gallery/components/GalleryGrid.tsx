@@ -1,52 +1,102 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronLeft, ChevronRight, Download, Share2, X, Image as ImageIcon } from "lucide-react";
-import { getFoldersApi } from "@/lib/api";
+import { ChevronLeft, ChevronRight, Download, Share2, X, Image as ImageIcon, Sparkles } from "lucide-react";
+import { getFoldersApi, getFolderByIdApi } from "@/lib/api";
 
 type MediaItem = {
+  id?: string;
   type: 'image' | 'youtube';
   url: string;
   videoId?: string;
   thumbnail?: string;
+  title?: string;
 };
 
 type Album = {
-  id: string | number;
+  id: string;
   name: string;
   cover: string;
-  media: MediaItem[];
+  totalMediaCount: number;
 };
+
+const ITEMS_PER_PAGE = 12;
+
+// Helper: Extract YouTube video ID
+const getYoutubeVideoId = (url: string): string | null => {
+  if (!url || typeof url !== 'string') return null;
+  const match = url.trim().match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=|shorts\/))([\w-]{11})/);
+  return match ? match[1] : null;
+};
+
+// Skeleton Card Component
+function SkeletonMediaCard() {
+  return (
+    <div className="relative aspect-square w-full rounded-2xl bg-slate-200 animate-pulse overflow-hidden border border-slate-100">
+      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-slate-100/50 to-transparent animate-shimmer" />
+    </div>
+  );
+}
+
+function SkeletonAlbumCard() {
+  return (
+    <div className="flex flex-col animate-pulse">
+      <div className="relative aspect-square w-full rounded-[2rem] bg-slate-200 mb-4 border border-slate-100 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-slate-100/50 to-transparent animate-shimmer" />
+      </div>
+      <div className="h-4 bg-slate-200 rounded-md w-3/4 mb-2" />
+      <div className="h-3 bg-slate-200 rounded-md w-1/3" />
+    </div>
+  );
+}
 
 export default function GalleryGrid() {
   const [albums, setAlbums] = useState<Album[]>([]);
   const [activeAlbum, setActiveAlbum] = useState<Album | null>(null);
-  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
-  const [loading, setLoading] = useState(true);
+  
+  // Paginated Media State
+  const [mediaItems, setMediaItems] = useState<MediaItem[]>([]);
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
+  const [totalCount, setTotalCount] = useState(0);
+  
+  const [loadingAlbums, setLoadingAlbums] = useState(true);
+  const [loadingInitialMedia, setLoadingInitialMedia] = useState(false);
+  const [loadingMore, setLoadingMore] = useState(false);
 
+  // Lightbox Viewer index
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+
+  // IntersectionObserver sentinel ref
+  const observerTargetRef = useRef<HTMLDivElement | null>(null);
+
+  // Fetch all album folders on mount
   useEffect(() => {
     let isMounted = true;
-    setLoading(true);
+    setLoadingAlbums(true);
     getFoldersApi()
       .then(res => {
         if (isMounted && res && res.folders) {
           const mapped: Album[] = res.folders.map((f: any) => {
-            const mediaList: MediaItem[] = (f.media || []).map((m: any) => ({
-              type: m.mediaType === 'video' ? 'youtube' : 'image',
-              url: m.url,
-              videoId: m.publicId || 'M7lc1UVf-VE',
-              thumbnail: m.url
-            }));
-
-            const coverUrl = mediaList.length > 0 ? mediaList[0].url : "/images/hero.png";
+            const rawMedia = f.media || [];
+            const coverItem = rawMedia[0];
+            let coverUrl = "/images/hero.png";
+            if (coverItem) {
+              if (coverItem.mediaType === 'video' && coverItem.url.includes('youtube')) {
+                const vid = getYoutubeVideoId(coverItem.url);
+                coverUrl = vid ? `https://img.youtube.com/vi/${vid}/hqdefault.jpg` : "/images/hero.png";
+              } else {
+                coverUrl = coverItem.url;
+              }
+            }
 
             return {
-              id: f._id,
+              id: String(f._id || f.id),
               name: f.name,
               cover: coverUrl,
-              media: mediaList
+              totalMediaCount: rawMedia.length
             };
           });
           setAlbums(mapped);
@@ -56,11 +106,100 @@ export default function GalleryGrid() {
         console.error("Error fetching gallery folders:", err);
       })
       .finally(() => {
-        if (isMounted) setLoading(false);
+        if (isMounted) setLoadingAlbums(false);
       });
     return () => { isMounted = false; };
   }, []);
 
+  // Fetch paginated media for single album
+  const loadMediaForAlbum = useCallback(async (folderId: string, pageNum: number, isInitial = false) => {
+    if (isInitial) {
+      setLoadingInitialMedia(true);
+      setPage(1);
+      setMediaItems([]);
+    } else {
+      setLoadingMore(true);
+    }
+
+    try {
+      const res = await getFolderByIdApi(folderId, { page: pageNum, limit: ITEMS_PER_PAGE });
+      if (res && res.folder && res.folder.media) {
+        const mappedItems: MediaItem[] = res.folder.media.map((m: any) => {
+          const isVideo = m.mediaType === 'video' || m.url.includes('youtube');
+          const videoId = isVideo ? getYoutubeVideoId(m.url) || m.publicId || 'M7lc1UVf-VE' : undefined;
+          const thumbnail = isVideo && videoId ? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg` : m.url;
+
+          return {
+            id: m._id || m.id,
+            type: isVideo ? 'youtube' : 'image',
+            url: m.url,
+            videoId,
+            thumbnail,
+            title: m.title
+          };
+        });
+
+        setMediaItems(prev => isInitial ? mappedItems : [...prev, ...mappedItems]);
+
+        if (res.pagination) {
+          setTotalCount(res.pagination.total || mappedItems.length);
+          setHasMore(Boolean(res.pagination.hasMore));
+        } else {
+          setHasMore(mappedItems.length === ITEMS_PER_PAGE);
+        }
+      }
+    } catch (err) {
+      console.error("Error loading paginated media:", err);
+    } finally {
+      if (isInitial) setLoadingInitialMedia(false);
+      else setLoadingMore(false);
+    }
+  }, []);
+
+  // Open an album
+  const handleSelectAlbum = (album: Album) => {
+    setActiveAlbum(album);
+    setSelectedIndex(null);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    loadMediaForAlbum(album.id, 1, true);
+  };
+
+  // Trigger next page fetch
+  const fetchNextPage = useCallback(() => {
+    if (!activeAlbum || !hasMore || loadingMore || loadingInitialMedia) return;
+    const nextPage = page + 1;
+    setPage(nextPage);
+    loadMediaForAlbum(activeAlbum.id, nextPage, false);
+  }, [activeAlbum, hasMore, loadingMore, loadingInitialMedia, page, loadMediaForAlbum]);
+
+  // Infinite Scroll Observer for Grid
+  useEffect(() => {
+    const target = observerTargetRef.current;
+    if (!target || !activeAlbum || !hasMore) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && hasMore && !loadingMore && !loadingInitialMedia) {
+          fetchNextPage();
+        }
+      },
+      { root: null, rootMargin: '250px', threshold: 0.1 }
+    );
+
+    observer.observe(target);
+    return () => {
+      if (target) observer.unobserve(target);
+    };
+  }, [observerTargetRef, activeAlbum, hasMore, loadingMore, loadingInitialMedia, fetchNextPage]);
+
+  // Lightbox Viewer Auto-Fetch Next Page when approaching end
+  useEffect(() => {
+    if (selectedIndex !== null && hasMore && !loadingMore && selectedIndex >= mediaItems.length - 2) {
+      fetchNextPage();
+    }
+  }, [selectedIndex, mediaItems.length, hasMore, loadingMore, fetchNextPage]);
+
+  // Lock body scroll when Lightbox is active
   useEffect(() => {
     if (selectedIndex !== null) {
       document.body.style.overflow = "hidden";
@@ -70,31 +209,31 @@ export default function GalleryGrid() {
     return () => { document.body.style.overflow = "unset"; };
   }, [selectedIndex]);
 
+  // Keyboard navigation for Lightbox
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (selectedIndex === null || !activeAlbum) return;
+      if (selectedIndex === null || mediaItems.length === 0) return;
       if (e.key === "Escape") setSelectedIndex(null);
       if (e.key === "ArrowRight") handleNext();
       if (e.key === "ArrowLeft") handlePrev();
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [selectedIndex, activeAlbum]);
+  }, [selectedIndex, mediaItems]);
 
   const handleNext = () => {
-    if (!activeAlbum || selectedIndex === null) return;
-    setSelectedIndex((prev) => (prev! + 1) % activeAlbum.media.length);
+    if (selectedIndex === null || mediaItems.length === 0) return;
+    setSelectedIndex((prev) => (prev! + 1) % mediaItems.length);
   };
 
   const handlePrev = () => {
-    if (!activeAlbum || selectedIndex === null) return;
-    setSelectedIndex((prev) => (prev! - 1 + activeAlbum.media.length) % activeAlbum.media.length);
+    if (selectedIndex === null || mediaItems.length === 0) return;
+    setSelectedIndex((prev) => (prev! - 1 + mediaItems.length) % mediaItems.length);
   };
 
   const handleDownload = async () => {
-    if (!activeAlbum || selectedIndex === null) return;
-    const currentMedia = activeAlbum.media[selectedIndex];
-    
+    if (selectedIndex === null || !mediaItems[selectedIndex]) return;
+    const currentMedia = mediaItems[selectedIndex];
     if (currentMedia.type !== 'image') return;
     
     try {
@@ -119,10 +258,10 @@ export default function GalleryGrid() {
   };
 
   const handleShare = async () => {
-    if (!activeAlbum || selectedIndex === null) return;
-    const currentMedia = activeAlbum.media[selectedIndex];
+    if (selectedIndex === null || !mediaItems[selectedIndex] || !activeAlbum) return;
+    const currentMedia = mediaItems[selectedIndex];
     
-    let urlToShare = currentMedia.url;
+    const urlToShare = currentMedia.url;
     if (navigator.share) {
       try {
         await navigator.share({
@@ -139,29 +278,29 @@ export default function GalleryGrid() {
     }
   };
 
-  const activeMediaItem = activeAlbum && selectedIndex !== null ? activeAlbum.media[selectedIndex] : null;
+  const activeMediaItem = selectedIndex !== null ? mediaItems[selectedIndex] : null;
 
   return (
     <div className="w-full min-h-screen bg-slate-50/50">
       
-      {/* Lightbox / Fullscreen Viewer */}
+      {/* Lightbox / Fullscreen Media Viewer */}
       <AnimatePresence>
         {selectedIndex !== null && activeAlbum && activeMediaItem && (
           <div className="fixed inset-0 z-[9999] flex flex-col bg-black">
             
             {/* Top Toolbar */}
-            <div className="w-full p-4 md:p-6 flex justify-between items-center z-50 bg-gradient-to-b from-black/60 to-transparent">
+            <div className="w-full p-4 md:p-6 flex justify-between items-center z-50 bg-gradient-to-b from-black/80 via-black/40 to-transparent">
               <div className="flex flex-col pointer-events-none">
-                <span className="text-white font-medium text-sm md:text-base tracking-wide drop-shadow-md">
+                <span className="text-white font-bold text-sm md:text-base tracking-wide drop-shadow-md">
                   {activeAlbum.name}
                 </span>
                 <span className="text-white/80 font-medium text-xs drop-shadow-md">
-                  {selectedIndex + 1} of {activeAlbum.media.length}
+                  {selectedIndex + 1} of {totalCount || mediaItems.length}
                 </span>
               </div>
               <button 
                 onClick={() => setSelectedIndex(null)}
-                className="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors cursor-pointer border-0"
+                className="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors cursor-pointer border-0 shadow-lg"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -172,7 +311,7 @@ export default function GalleryGrid() {
               {/* Prev Button */}
               <button 
                 onClick={(e) => { e.stopPropagation(); handlePrev(); }}
-                className="absolute left-4 md:left-8 z-50 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white backdrop-blur-sm transition-colors hidden sm:flex cursor-pointer border-0"
+                className="absolute left-4 md:left-8 z-50 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white backdrop-blur-sm transition-colors hidden sm:flex cursor-pointer border-0 shadow-lg"
               >
                 <ChevronLeft className="w-6 h-6" />
               </button>
@@ -197,7 +336,7 @@ export default function GalleryGrid() {
                   {activeMediaItem.type === 'image' ? (
                     <Image 
                       src={activeMediaItem.url}
-                      alt={`Fullscreen View ${selectedIndex + 1}`}
+                      alt={activeMediaItem.title || `Fullscreen View ${selectedIndex + 1}`}
                       fill
                       className="object-contain pointer-events-none"
                       sizes="100vw"
@@ -223,12 +362,12 @@ export default function GalleryGrid() {
               {/* Next Button */}
               <button 
                 onClick={(e) => { e.stopPropagation(); handleNext(); }}
-                className="absolute right-4 md:right-8 z-50 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white backdrop-blur-sm transition-colors hidden sm:flex cursor-pointer border-0"
+                className="absolute right-4 md:right-8 z-50 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white backdrop-blur-sm transition-colors hidden sm:flex cursor-pointer border-0 shadow-lg"
               >
                 <ChevronRight className="w-6 h-6" />
               </button>
 
-              {/* Mobile swipe overlays */}
+              {/* Mobile touch swipe areas */}
               {activeMediaItem.type === 'image' && (
                 <>
                   <div className="absolute inset-y-0 left-0 w-1/4 z-40 sm:hidden" onClick={handlePrev} />
@@ -238,7 +377,7 @@ export default function GalleryGrid() {
             </div>
 
             {/* Bottom Toolbar */}
-            <div className="w-full p-6 flex justify-center items-center gap-8 z-50 bg-gradient-to-t from-black/60 to-transparent">
+            <div className="w-full p-6 flex justify-center items-center gap-8 z-50 bg-gradient-to-t from-black/80 via-black/40 to-transparent">
               <button 
                 onClick={handleShare}
                 className="flex flex-col items-center gap-1.5 text-white/80 hover:text-white transition-colors bg-transparent border-0 cursor-pointer"
@@ -282,25 +421,25 @@ export default function GalleryGrid() {
             >
               <div className="flex flex-col mb-10">
                 <span className="text-brand-green font-semibold tracking-[0.2em] uppercase text-xs mb-2">Our Campus</span>
-                <h1 className="text-3xl md:text-5xl font-bold text-slate-900 tracking-tight">Photo & Video Albums</h1>
+                <h1 className="text-3xl md:text-5xl font-bold text-slate-900 tracking-tight">Photo &amp; Video Albums</h1>
                 <p className="text-slate-500 font-medium mt-3 max-w-lg">
                   Explore memories, moments, and videos captured across various events and campus life at Green View.
                 </p>
               </div>
 
-              {loading ? (
-                <div className="text-center py-20 text-slate-400 text-sm font-medium">
-                  Loading gallery albums...
+              {loadingAlbums ? (
+                /* Skeleton Album Cards Grid */
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8 lg:gap-10">
+                  {Array.from({ length: 8 }).map((_, idx) => (
+                    <SkeletonAlbumCard key={idx} />
+                  ))}
                 </div>
               ) : albums.length > 0 ? (
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8 lg:gap-10">
                   {albums.map((album) => (
                     <div 
                       key={album.id} 
-                      onClick={() => {
-                        setActiveAlbum(album);
-                        window.scrollTo({ top: 0, behavior: 'smooth' });
-                      }}
+                      onClick={() => handleSelectAlbum(album)}
                       className="flex flex-col group cursor-pointer"
                     >
                       <div className="relative aspect-square w-full rounded-[2rem] overflow-hidden bg-slate-200 mb-4 shadow-sm group-hover:shadow-xl transition-all duration-500 border border-slate-100">
@@ -319,7 +458,7 @@ export default function GalleryGrid() {
                           {album.name}
                         </h2>
                         <span className="text-sm text-slate-500 font-medium mt-1">
-                          {album.media ? album.media.length : 0} Items
+                          {album.totalMediaCount} Items
                         </span>
                       </div>
                     </div>
@@ -340,7 +479,7 @@ export default function GalleryGrid() {
             </motion.div>
           )}
 
-          {/* VIEW 2: SINGLE ALBUM MEDIA */}
+          {/* VIEW 2: SINGLE ALBUM MEDIA WITH SKELETON & INFINITE AUTO SCROLL */}
           {activeAlbum && (
             <motion.div 
               key="photos-view"
@@ -357,43 +496,77 @@ export default function GalleryGrid() {
                 >
                   &larr; Back to Albums
                 </button>
-                <h1 className="text-3xl md:text-5xl font-bold text-slate-900 tracking-tight">
-                  {activeAlbum.name}
-                </h1>
-                <span className="text-brand-green font-medium mt-2">{activeAlbum.media.length} Items</span>
+                <div className="flex items-baseline gap-3">
+                  <h1 className="text-3xl md:text-5xl font-bold text-slate-900 tracking-tight">
+                    {activeAlbum.name}
+                  </h1>
+                  <span className="text-brand-green font-bold text-base md:text-xl">
+                    ({totalCount || mediaItems.length} Items)
+                  </span>
+                </div>
               </div>
 
-              {activeAlbum.media.length > 0 ? (
+              {loadingInitialMedia ? (
+                /* Initial Skeleton Cards Grid */
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 md:gap-4">
-                  {activeAlbum.media.map((item, idx) => {
-                    const isVideo = item.type === 'youtube';
-                    const src = isVideo ? (item.thumbnail || item.url) : item.url;
-                    return (
-                      <div 
-                        key={idx} 
-                        onClick={() => setSelectedIndex(idx)}
-                        className="relative aspect-square w-full rounded-2xl bg-slate-200 cursor-pointer overflow-hidden group shadow-sm hover:shadow-md transition-shadow border border-slate-100"
-                      >
-                        <Image 
-                          src={src}
-                          alt={`Media ${idx + 1} from ${activeAlbum.name}`}
-                          fill
-                          sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, 20vw"
-                          className="object-cover group-hover:scale-110 transition-transform duration-500"
-                          unoptimized
-                        />
-                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
-                        
-                        {isVideo && (
-                          <div className="absolute inset-0 flex items-center justify-center">
-                            <div className="w-10 h-10 bg-black/60 backdrop-blur-sm rounded-full flex items-center justify-center border border-white/20 shadow-lg">
-                              <div className="w-0 h-0 border-t-[6px] border-t-transparent border-l-[10px] border-l-white border-b-[6px] border-b-transparent ml-1" />
+                  {Array.from({ length: 12 }).map((_, idx) => (
+                    <SkeletonMediaCard key={idx} />
+                  ))}
+                </div>
+              ) : mediaItems.length > 0 ? (
+                <div className="space-y-8">
+                  
+                  {/* Media Items Grid */}
+                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 md:gap-4">
+                    {mediaItems.map((item, idx) => {
+                      const isVideo = item.type === 'youtube';
+                      const src = isVideo ? (item.thumbnail || item.url) : item.url;
+                      return (
+                        <motion.div 
+                          key={item.id || idx} 
+                          initial={{ opacity: 0, scale: 0.95 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          transition={{ duration: 0.3, delay: Math.min((idx % ITEMS_PER_PAGE) * 0.03, 0.3) }}
+                          onClick={() => setSelectedIndex(idx)}
+                          className="relative aspect-square w-full rounded-2xl bg-slate-200 cursor-pointer overflow-hidden group shadow-sm hover:shadow-md transition-shadow border border-slate-100"
+                        >
+                          <Image 
+                            src={src}
+                            alt={item.title || `Media ${idx + 1} from ${activeAlbum.name}`}
+                            fill
+                            sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, 20vw"
+                            className="object-cover group-hover:scale-110 transition-transform duration-500"
+                            unoptimized
+                          />
+                          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
+                          
+                          {isVideo && (
+                            <div className="absolute inset-0 flex items-center justify-center">
+                              <div className="w-10 h-10 bg-black/60 backdrop-blur-sm rounded-full flex items-center justify-center border border-white/20 shadow-lg group-hover:bg-red-600 transition-colors">
+                                <div className="w-0 h-0 border-t-[6px] border-t-transparent border-l-[10px] border-l-white border-b-[6px] border-b-transparent ml-1" />
+                              </div>
                             </div>
-                          </div>
-                        )}
+                          )}
+                        </motion.div>
+                      );
+                    })}
+
+                    {/* SKELETON CARDS FOR AUTO-LOAD ON SCROLL */}
+                    {loadingMore && Array.from({ length: 4 }).map((_, idx) => (
+                      <SkeletonMediaCard key={`more-skeleton-${idx}`} />
+                    ))}
+                  </div>
+
+                  {/* Infinite Scroll Trigger Sentinel */}
+                  <div ref={observerTargetRef} className="py-6 flex flex-col items-center justify-center w-full min-h-[60px]">
+                    {!hasMore && mediaItems.length > 0 && (
+                      <div className="text-slate-400 text-xs font-semibold uppercase tracking-wider flex items-center gap-1.5 pt-4">
+                        <Sparkles size={14} className="text-brand-green" />
+                        <span>You&apos;ve viewed all {totalCount} items in this album</span>
                       </div>
-                    );
-                  })}
+                    )}
+                  </div>
+
                 </div>
               ) : (
                 <div className="bg-white border border-slate-200 rounded-2xl p-12 text-center text-slate-400 font-medium text-xs">

@@ -17,12 +17,18 @@ export interface PrimaryAdmissionData {
     motherTongue: string;
     religion: string;
     socialCategory: string;
+    aadhaarNumber: string;
   };
   familyDetails: {
     fatherName: string;
+    fatherMobile: string;
+    fatherOccupation: string;
     motherName: string;
+    motherMobile: string;
     guardianName: string;
+    guardianMobile: string;
     guardianOccupation: string;
+    annualIncome: string;
   };
   academicDetails: {
     prevSchoolName: string;
@@ -39,6 +45,10 @@ export interface PrimaryAdmissionData {
   };
   additionalDetails: {
     acceptedDeclaration: boolean;
+  };
+  transportDetails: {
+    requiresTransport: boolean;
+    selectedStation: string;
   };
   meta: {
     showErrors: boolean;
@@ -60,12 +70,18 @@ const defaultData: PrimaryAdmissionData = {
     motherTongue: "",
     religion: "",
     socialCategory: "Gen",
+    aadhaarNumber: "",
   },
   familyDetails: {
     fatherName: "",
+    fatherMobile: "",
+    fatherOccupation: "",
     motherName: "",
+    motherMobile: "",
     guardianName: "",
+    guardianMobile: "",
     guardianOccupation: "",
+    annualIncome: "",
   },
   academicDetails: {
     prevSchoolName: "",
@@ -83,6 +99,10 @@ const defaultData: PrimaryAdmissionData = {
   additionalDetails: {
     acceptedDeclaration: false,
   },
+  transportDetails: {
+    requiresTransport: false,
+    selectedStation: "",
+  },
   meta: {
     showErrors: false,
   },
@@ -94,7 +114,7 @@ interface PrimaryAdmissionContextType {
   resetData: () => void;
 }
 
-const PrimaryAdmissionContext = createContext<PrimaryAdmissionContextType | undefined>(undefined);
+export const PrimaryAdmissionContext = createContext<PrimaryAdmissionContextType | undefined>(undefined);
 
 export function PrimaryAdmissionProvider({ children }: { children: ReactNode }) {
   const [data, setData] = useState<PrimaryAdmissionData>(defaultData);

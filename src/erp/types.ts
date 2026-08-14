@@ -83,6 +83,15 @@ export const modules: ModuleType[] = [
     description: "School info, session, academic year, and configurations.",
     status: "active",
   },
+  {
+    id: "whatsapp",
+    label: "WhatsApp",
+    icon: Settings, // Re-use settings icon or import a new one
+    color: "#22c55e",
+    bg: "rgba(34,197,94,0.10)",
+    description: "WhatsApp connection and automation settings.",
+    status: "active",
+  },
 ];
 
 export const summaryStats = [

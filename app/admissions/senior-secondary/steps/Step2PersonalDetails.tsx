@@ -119,6 +119,7 @@ export default function Step2PersonalDetails() {
                   onChange={(e) => updateData({ familyDetails: { ...data.familyDetails, fatherMobile: e.target.value } })}
                   className={`w-full px-4 py-2.5 rounded-xl border outline-none transition-all text-xs md:text-sm font-medium placeholder:text-slate-400 ${getErrorClass(data.familyDetails.fatherMobile)}`}
                 />
+                <span className="text-[10px] text-slate-500 font-medium leading-tight">This will be treated as the primary number for WhatsApp & school communication.</span>
               </div>
             </div>
 

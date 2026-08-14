@@ -4,43 +4,52 @@ import React from "react";
 import { Bus, MapPin, Clock, ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 
-const routes = [
-  {
-    busNo: "Bus Route 01",
-    busCode: "PB-08-AB-1234",
-    stations: [
-      { name: "Gopal Nagar", time: "07:15 AM" },
-      { name: "Shiv Mandir", time: "07:25 AM" },
-      { name: "Main Highway Chowk", time: "07:35 AM" },
-      { name: "Sector-4 Market", time: "07:45 AM" },
-      { name: "School Campus", time: "08:00 AM" }
-    ]
-  },
-  {
-    busNo: "Bus Route 02",
-    busCode: "PB-08-AB-5678",
-    stations: [
-      { name: "Railway Road", time: "07:20 AM" },
-      { name: "Green Valley Residency", time: "07:30 AM" },
-      { name: "New Colony Phase-I", time: "07:40 AM" },
-      { name: "Sector-12 Chowk", time: "07:50 AM" },
-      { name: "School Campus", time: "08:00 AM" }
-    ]
-  },
-  {
-    busNo: "Bus Route 03",
-    busCode: "PB-08-AB-9012",
-    stations: [
-      { name: "Urban Estate Phase I", time: "07:10 AM" },
-      { name: "Police Lines Area", time: "07:22 AM" },
-      { name: "Old Bus Stand Stop", time: "07:35 AM" },
-      { name: "National Highway Bypass", time: "07:48 AM" },
-      { name: "School Campus", time: "08:00 AM" }
-    ]
-  }
-];
+import { getPublicStationsApi } from "@/lib/api";
+
+interface RouteData {
+  busNo: string;
+  busCode: string;
+  stations: { name: string; time: string; fee?: number }[];
+}
 
 export default function TransportInfo() {
+  const [routes, setRoutes] = React.useState<RouteData[]>([]);
+  const [isLoading, setIsLoading] = React.useState(true);
+
+  React.useEffect(() => {
+    const fetchStations = async () => {
+      try {
+        const res = await getPublicStationsApi();
+        const stations = res.stations || res.data || res || [];
+        
+        // Group flat stations by routeNumber
+        const grouped = stations.reduce((acc: any, st: any) => {
+          const rNum = st.routeNumber || "Unassigned Route";
+          if (!acc[rNum]) {
+            acc[rNum] = { 
+              busNo: rNum, 
+              busCode: st.routeCode || "Unknown Code", 
+              stations: [] 
+            };
+          }
+          acc[rNum].stations.push({
+            name: st.station || "Unnamed Station",
+            time: st.pickupTime || "00:00 AM",
+            fee: st.amount || 0
+          });
+          return acc;
+        }, {});
+
+        setRoutes(Object.values(grouped));
+      } catch (err) {
+        console.error("Failed to load stations", err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchStations();
+  }, []);
+
   return (
     <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-16 py-6 flex flex-col gap-14 pb-20">
       

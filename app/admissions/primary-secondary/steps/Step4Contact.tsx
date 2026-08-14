@@ -1,12 +1,31 @@
 "use client";
 
-import React, { useState } from "react";
-import { MapPin } from "lucide-react";
+import React, { useState, useEffect } from "react";
+import { MapPin, Bus, Loader2 } from "lucide-react";
+import { getPublicStationsApi } from "@/lib/api";
 import { usePrimaryAdmissionContext } from "../context/PrimaryAdmissionContext";
 
 export default function Step4Contact() {
   const { data, updateData } = usePrimaryAdmissionContext();
   const [sameAsPresent, setSameAsPresent] = useState(false);
+  const [stations, setStations] = useState<any[]>([]);
+  const [isLoadingStations, setIsLoadingStations] = useState(false);
+
+  useEffect(() => {
+    const fetchStations = async () => {
+      if (!data.transportDetails?.requiresTransport) return;
+      setIsLoadingStations(true);
+      try {
+        const res = await getPublicStationsApi();
+        setStations(res.stations || res.data || res || []);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setIsLoadingStations(false);
+      }
+    };
+    fetchStations();
+  }, [data.transportDetails?.requiresTransport]);
 
   const getErrorClass = (fieldValue: string) => {
     return data.meta.showErrors && !fieldValue 
@@ -109,6 +128,69 @@ export default function Step4Contact() {
             onChange={(e) => updateData({ contactDetails: { ...data.contactDetails, telephoneNo: e.target.value } })}
             className="w-full px-3 py-2.5 md:px-4 md:py-3 rounded-xl border border-slate-200 focus:border-brand-green focus:ring-brand-green/20 outline-none transition-all text-xs md:text-sm font-medium placeholder:text-slate-400"
           />
+        </div>
+
+        <div className="w-full h-px bg-slate-200 my-2" />
+
+        {/* Transport Details */}
+        <div className="flex flex-col">
+          <div className="flex items-center gap-2 mb-4">
+            <div className="w-8 h-8 rounded-lg bg-emerald-50 flex items-center justify-center shrink-0">
+              <Bus className="w-4 h-4 text-brand-green" />
+            </div>
+            <h3 className="text-sm font-medium md:font-bold text-emerald-900 tracking-tight">Transport Facility</h3>
+          </div>
+          
+          <div className="flex flex-col mb-4">
+            <label className="text-[11px] font-medium md:font-semibold text-slate-800 mb-2 uppercase tracking-wider">Does the student require school bus transport? *</label>
+            <div className="flex items-center gap-4">
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input 
+                  type="radio" 
+                  name="requiresTransport" 
+                  checked={data.transportDetails?.requiresTransport === true} 
+                  onChange={() => updateData({ transportDetails: { ...data.transportDetails, requiresTransport: true } })} 
+                  className="w-4 h-4 text-brand-green border-slate-300 focus:ring-brand-green" 
+                />
+                <span className="text-sm font-medium text-slate-700">Yes</span>
+              </label>
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input 
+                  type="radio" 
+                  name="requiresTransport" 
+                  checked={data.transportDetails?.requiresTransport === false} 
+                  onChange={() => updateData({ transportDetails: { ...data.transportDetails, requiresTransport: false, selectedStation: "" } })} 
+                  className="w-4 h-4 text-brand-green border-slate-300 focus:ring-brand-green" 
+                />
+                <span className="text-sm font-medium text-slate-700">No</span>
+              </label>
+            </div>
+          </div>
+
+          {data.transportDetails?.requiresTransport && (
+            <div className="flex flex-col md:w-1/2">
+              <label className="text-[11px] font-medium md:font-semibold text-slate-800 mb-2 uppercase tracking-wider">Select Boarding Station *</label>
+              <div className="relative">
+                <select
+                  value={data.transportDetails.selectedStation}
+                  onChange={(e) => updateData({ transportDetails: { ...data.transportDetails, selectedStation: e.target.value } })}
+                  className={`w-full px-3 py-2.5 md:px-4 md:py-3 rounded-xl border outline-none transition-all text-xs md:text-sm font-medium appearance-none bg-white ${getErrorClass(data.transportDetails.selectedStation)}`}
+                  disabled={isLoadingStations}
+                >
+                  <option value="" disabled>Select a station</option>
+                  {stations.map((st: any, idx: number) => (
+                    <option key={idx} value={st.station || st.name || st._id}>{st.station || st.name || "Unnamed Station"}</option>
+                  ))}
+                </select>
+                {isLoadingStations && (
+                  <div className="absolute right-3 top-1/2 -translate-y-1/2">
+                    <Loader2 className="w-4 h-4 animate-spin text-slate-400" />
+                  </div>
+                )}
+              </div>
+              {data.meta.showErrors && !data.transportDetails.selectedStation && <span className="text-[10px] font-medium md:font-semibold text-red-500 mt-1.5">Please select a station.</span>}
+            </div>
+          )}
         </div>
 
       </div>

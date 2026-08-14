@@ -21,12 +21,64 @@ export default function AdmissionsManager() {
     try {
       const filters: any = {};
       if (searchQuery) filters.search = searchQuery;
-      // You could also add filters for formType=PRIMARY or SENIOR here if needed, 
-      // but for now we fetch all and filter client-side, or you can implement backend filtering
       
       const res = await admissionsApi.list(filters);
       if (res.success) {
-        setAdmissions(res.applications || []);
+        const mappedApps = res.applications.map((app: any) => ({
+          ...app,
+          student: {
+            name: app.studentName,
+            hindiName: app.studentNameHindi,
+            dob: app.dateOfBirth,
+            sex: app.sex,
+            religion: app.religion,
+            category: app.socialCategory,
+            motherTongue: app.motherTongue,
+            aadhaarNo: app.aadhaarNumber,
+            panNo: app.panNumber,
+            isBPL: app.bplStatus,
+            photoUrl: app.photoUrl
+          },
+          course: {
+            class: app.appliedClass,
+            stream: app.stream,
+            provisional: app.isProvisional,
+            subjects: app.selectedSubjects
+          },
+          family: {
+            father: app.fatherName,
+            mother: app.motherName,
+            fatherPhone: app.fatherMobile,
+            motherPhone: app.motherMobile,
+            occupation: app.fatherOccupation || app.guardianOccupation,
+            fatherOccupation: app.fatherOccupation,
+            annualIncome: app.annualIncome
+          },
+          contact: {
+            phone: app.fatherMobile,
+            address: app.address
+          },
+          academic: {
+            prevSchool: app.prevSchoolName,
+            medium: app.prevSchoolMedium,
+            previousExams: app.previousExams
+          },
+          address: {
+            village: app.village,
+            postOffice: app.postOffice,
+            tehsil: app.tehsil,
+            district: app.district,
+            state: app.state,
+            pinCode: app.pinCode
+          },
+          bank: {
+            accountNo: app.bankAccountNo,
+            bankName: app.bankName,
+            branchName: app.bankBranch,
+            ifscCode: app.ifscCode
+          }
+        }));
+        setAdmissions(mappedApps || []);
       } else {
         setError(res.message || "Failed to load admissions");
       }
@@ -44,8 +96,8 @@ export default function AdmissionsManager() {
     return () => clearTimeout(delayDebounceFn);
   }, [searchQuery]);
 
-  const primaryApps = admissions.filter(a => a.formType === "PRIMARY");
-  const seniorApps = admissions.filter(a => a.formType === "SENIOR");
+  const primaryApps = admissions.filter(a => a.applicationType === "primary");
+  const seniorApps = admissions.filter(a => a.applicationType === "senior");
 
   const activeApps = activeTab === "primary" ? primaryApps : seniorApps;
 
@@ -384,9 +436,14 @@ export default function AdmissionsManager() {
 
             {/* Modal Footer */}
             <div className="px-6 py-4 border-t border-slate-100 bg-slate-50 flex justify-between items-center">
-              <button className="text-sm font-semibold text-slate-600 hover:text-brand-green flex items-center gap-2 transition bg-transparent border-0 cursor-pointer">
-                {/* <Download size={16} /> Download PDF */}
-              </button>
+              <a 
+                href={`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/admissions/${selectedApp._id}/pdf`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm font-semibold text-slate-600 hover:text-brand-green flex items-center gap-2 transition bg-transparent border-0 cursor-pointer no-underline"
+              >
+                <Download size={16} /> Download PDF
+              </a>
               {selectedApp.status === "PENDING" && (
                 <div className="flex gap-2">
                   <button 
