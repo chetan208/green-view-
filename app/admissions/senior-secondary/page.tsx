@@ -243,7 +243,7 @@ function SeniorSecondaryAdmissionContent() {
               
             {submittedAppId ? (
               <a 
-                href={`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/admissions/${submittedAppId}/pdf`}
+                href={`${process.env.NEXT_PUBLIC_API_URL || process.env.NEXT_PUBLIC_SERVER_URL || 'https://api.greenviewschool.in'}/api/admissions/${submittedAppId}/pdf`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-center gap-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-8 py-4 rounded-xl text-sm font-medium md:font-bold shadow-lg shadow-blue-500/30 transition-all hover:-translate-y-1 no-underline"

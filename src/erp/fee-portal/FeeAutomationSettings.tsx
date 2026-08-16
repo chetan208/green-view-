@@ -5,7 +5,7 @@ import axios from "./axiosMock";
 import { Save, Loader2, CalendarClock, Activity, FileText, CheckCircle2, XCircle } from "lucide-react";
 import { motion } from "framer-motion";
 
-const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:8000";
+const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL || process.env.NEXT_PUBLIC_API_URL || "https://api.greenviewschool.in";
 
 export default function FeeAutomationSettings() {
   const [isEnabled, setIsEnabled] = useState(false);

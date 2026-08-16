@@ -79,33 +79,7 @@ export default function HighSchoolHero() {
             </motion.div>
           </div>
 
-          {/* Trust Proof */}
-          <div className="flex items-center gap-4 flex-wrap">
-            <div className="flex -space-x-2">
-              {[
-                { name: "A", bg: "bg-orange-500" },
-                { name: "R", bg: "bg-blue-600" },
-                { name: "P", bg: "bg-emerald-500" },
-                { name: "N", bg: "bg-purple-600" },
-              ].map((av, idx) => (
-                <div
-                  key={idx}
-                  className={`w-7 h-7 rounded-full border-2 border-white flex items-center justify-center text-[9px] font-medium md:font-bold text-white cursor-default select-none ${av.bg}`}
-                >
-                  {av.name}
-                </div>
-              ))}
-            </div>
-            <div className="flex flex-col">
-              <div className="flex items-center gap-0.5 text-amber-500 text-[10px]">
-                <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
-                <span className="text-slate-800 font-medium md:font-bold ml-1 text-xs">4.9</span>
-              </div>
-              <span className="text-[9px] text-slate-400 font-medium md:font-semibold mt-0.5">
-                Trusted by 5,000+ families · CBSE since 1986
-              </span>
-            </div>
-          </div>
+
         </div>
 
         {/* Right Layout with Image Slideshow */}

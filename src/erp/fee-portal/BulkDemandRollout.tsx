@@ -52,7 +52,7 @@ export default function BulkDemandRollout({
   React.useEffect(() => {
     const fetchClasses = async () => {
       try {
-        const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:8000";
+        const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL || process.env.NEXT_PUBLIC_API_URL || "https://api.greenviewschool.in";
         const res = await fetch(`${SERVER_URL}/api/erp/classes`);
         const data = await res.json();
         if (data.success && data.classes.length > 0) {

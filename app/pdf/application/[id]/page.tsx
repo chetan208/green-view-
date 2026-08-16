@@ -20,7 +20,7 @@ export default function ApplicationPdfViewer() {
     // Fetch the raw document from backend API
     const fetchApp = async () => {
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/admissions/public/${id}`);
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || process.env.NEXT_PUBLIC_SERVER_URL || 'https://api.greenviewschool.in'}/api/admissions/public/${id}`);
         const data = await res.json();
         if (data.success) {
           setAppData(data.application);

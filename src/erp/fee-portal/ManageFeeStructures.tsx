@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Edit2, Search, Loader2, Save, X, Info, Settings } from "lucide-react";
 import { CLASSES, getMonthsForSession } from "./types";
 
-const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:8000";
+const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL || process.env.NEXT_PUBLIC_API_URL || "https://api.greenviewschool.in";
 
 interface ManageFeeStructuresProps {
   selectedSession: string;

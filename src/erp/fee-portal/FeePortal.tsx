@@ -120,7 +120,7 @@ export default function FeePortal({
   const [monthlyClassFees, setMonthlyClassFees] = useState<any[]>([]);
 
   const searchContainerRef = useRef<HTMLDivElement>(null);
-  const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:8000";
+  const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL || process.env.NEXT_PUBLIC_API_URL || "https://api.greenviewschool.in";
 
   useEffect(() => {
     fetchStations();
