@@ -12,6 +12,7 @@ import AcademicsManager from "./modules/AcademicsManager";
 import AdmissionsManager from "@/components/admin/sections/AdmissionsManager";
 import ProfileSettings from "./modules/ProfileSettings";
 import WhatsAppSettings from "./modules/WhatsAppSettings";
+import ToppersManager from "./modules/ToppersManager";
 import { useAuth } from "@/hooks/useAuth";
 
 interface ERPModuleWrapperProps {
@@ -54,6 +55,8 @@ export default function ERPModuleWrapper({
 
       {activeModule === "staff" ? (
         <StaffManager />
+      ) : activeModule === "toppers" ? (
+        <ToppersManager selectedSession={selectedSession} />
       ) : activeModule === "students" ? (
         <StudentManager selectedSession={selectedSession} onManageFees={handleManageFees} />
       ) : activeModule === "fees" ? (

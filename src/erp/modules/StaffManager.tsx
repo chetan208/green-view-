@@ -17,6 +17,8 @@ type Staff = {
     designation: string;
     department: string;
     dateOfJoining?: string;
+    qualification?: string;
+    bio?: string;
   };
   email?: string;
   avatar?: string;
@@ -37,11 +39,11 @@ export default function StaffManager() {
 
   const [newStaff, setNewStaff] = useState({
     name: "",
-    designation: "",
-    department: "Science Faculty",
+    accessRole: "Teacher",
+    qualification: "",
+    bio: "",
     phone: "",
-    email: "",
-    dateOfJoining: new Date().toISOString().split('T')[0]
+    email: ""
   });
 
   const departments = ["All", "Administration", "Science Faculty", "Primary Faculty", "Transport", "Support Staff"];
@@ -80,7 +82,7 @@ export default function StaffManager() {
 
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!newStaff.name || !newStaff.phone || !newStaff.designation) {
+    if (!newStaff.name || !newStaff.phone || !newStaff.accessRole) {
       setError("Please fill all required fields");
       return;
     }
@@ -91,34 +93,33 @@ export default function StaffManager() {
     const formData = new FormData();
     formData.append("name", newStaff.name);
     formData.append("phone", newStaff.phone);
-    formData.append("designation", newStaff.designation);
-    formData.append("department", newStaff.department);
-    formData.append("dateOfJoining", newStaff.dateOfJoining);
-    // Hardcode access role for new hires for now, can be changed later
-    formData.append("accessRole", "Teacher"); 
+    formData.append("accessRole", newStaff.accessRole);
+    if (newStaff.qualification) formData.append("qualification", newStaff.qualification);
+    if (newStaff.bio) formData.append("bio", newStaff.bio);
+    if (newStaff.email) formData.append("email", newStaff.email);
 
     try {
       const res = await erpApi.teachers.create(formData);
       if (res.success) {
-        setSuccess("Employee added successfully!");
-        setNewStaff({ name: "", designation: "", department: "Science Faculty", phone: "", email: "", dateOfJoining: new Date().toISOString().split('T')[0] });
+        setSuccess("Teacher added successfully!");
+        setNewStaff({ name: "", accessRole: "Teacher", qualification: "", bio: "", phone: "", email: "" });
         setShowForm(false);
         fetchStaff();
       } else {
-        setError(res.message || "Failed to add employee");
+        setError(res.message || "Failed to add teacher");
       }
     } catch (err: any) {
-      setError(err.message || "Failed to add employee");
+      setError(err.message || "Failed to add teacher");
     } finally {
       setSubmitLoading(false);
     }
   };
 
-  const updateRole = async (id: string, newDesignation: string) => {
+  const updateRole = async (id: string, newAccessRole: string) => {
     try {
-      const res = await erpApi.teachers.update(id, { designation: newDesignation });
+      const res = await erpApi.teachers.update(id, { accessRole: newAccessRole });
       if (res.success) {
-        setStaffList(staffList.map(s => s._id === id ? { ...s, teacherProfile: { ...s.teacherProfile, designation: newDesignation } as any } : s));
+        setStaffList(staffList.map(s => s._id === id ? { ...s, teacherProfile: { ...s.teacherProfile, accessRole: newAccessRole } as any } : s));
       }
     } catch (err) {
       console.error(err);
@@ -126,17 +127,17 @@ export default function StaffManager() {
   };
 
   const handleDelete = async (id: string) => {
-    if (confirm("Are you sure you want to remove this staff member?")) {
+    if (confirm("Are you sure you want to remove this teacher?")) {
       try {
         const res = await erpApi.teachers.delete(id);
         if (res.success) {
-          setSuccess("Employee removed");
+          setSuccess("Teacher removed");
           fetchStaff();
         } else {
-          setError(res.message || "Failed to remove employee");
+          setError(res.message || "Failed to remove teacher");
         }
       } catch (err: any) {
-        setError(err.message || "Failed to remove employee");
+        setError(err.message || "Failed to remove teacher");
       }
     }
   };
@@ -147,7 +148,7 @@ export default function StaffManager() {
       {/* Header */}
       <div>
         <h2 className="text-xl sm:text-2xl font-semibold font-serif text-slate-900">Human Resources</h2>
-        <p className="text-xs font-medium text-slate-500 mt-1">Manage employee records, roles, and contact information.</p>
+        <p className="text-xs font-medium text-slate-500 mt-1">Manage teacher records, roles, and contact information.</p>
       </div>
 
       {/* Stats Cards */}
@@ -188,7 +189,7 @@ export default function StaffManager() {
             <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
             <input 
               type="text" 
-              placeholder="Search employee..." 
+              placeholder="Search teacher..." 
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full pl-9 pr-4 py-2 bg-slate-50 border border-slate-200 text-sm rounded-lg focus:outline-none focus:border-brand-green focus:bg-white transition placeholder:text-slate-400 font-medium text-slate-700" 
@@ -211,7 +212,7 @@ export default function StaffManager() {
             onClick={() => setShowForm(true)}
             className="w-full md:w-auto bg-brand-green hover:bg-brand-green-dark text-white px-5 py-2.5 rounded-lg text-sm font-semibold flex items-center justify-center gap-2 transition shadow-sm border-0 cursor-pointer"
           >
-            <Plus size={16} /> Add Employee
+            <Plus size={16} /> Add Teacher
           </button>
         )}
       </div>
@@ -254,7 +255,7 @@ export default function StaffManager() {
             <div className="flex justify-between items-center border-b border-slate-100 pb-4">
               <h3 className="text-sm font-semibold text-slate-900 flex items-center gap-2">
                 <Briefcase className="w-5 h-5 text-brand-green" />
-                Employee Onboarding
+                Teacher Onboarding
               </h3>
               <button type="button" onClick={() => setShowForm(false)} className="text-xs font-semibold text-slate-400 hover:text-slate-600 transition bg-slate-100 hover:bg-slate-200 px-3 py-1.5 rounded-md border-0 cursor-pointer">Cancel</button>
             </div>
@@ -276,24 +277,28 @@ export default function StaffManager() {
                   <input type="text" required value={newStaff.name} onChange={e => setNewStaff({...newStaff, name: e.target.value})} placeholder="e.g., Arvind Patel" className="w-full px-4 py-2 bg-slate-50 border border-slate-200 text-sm rounded-lg focus:outline-none focus:border-brand-green focus:bg-white font-medium transition" />
                 </div>
                 <div>
-                  <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Role / Designation *</label>
-                  <input type="text" required value={newStaff.designation} onChange={e => setNewStaff({...newStaff, designation: e.target.value})} placeholder="e.g., Senior Mathematics Teacher" className="w-full px-4 py-2 bg-slate-50 border border-slate-200 text-sm rounded-lg focus:outline-none focus:border-brand-green focus:bg-white font-medium transition" />
-                </div>
-                <div>
-                  <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Department *</label>
-                  <select value={newStaff.department} onChange={e => setNewStaff({...newStaff, department: e.target.value})} className="w-full px-4 py-2 bg-slate-50 border border-slate-200 text-sm rounded-lg focus:outline-none focus:border-brand-green font-medium transition cursor-pointer">
-                    {departments.filter(d => d !== "All").map(dept => (
-                      <option key={dept} value={dept}>{dept}</option>
-                    ))}
+                  <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Role *</label>
+                  <select required value={newStaff.accessRole} onChange={e => setNewStaff({...newStaff, accessRole: e.target.value})} className="w-full px-4 py-2 bg-slate-50 border border-slate-200 text-sm rounded-lg focus:outline-none focus:border-brand-green font-medium transition cursor-pointer">
+                    <option value="Teacher">Teacher</option>
+                    <option value="Admin">Admin</option>
+                    <option value="Owner">Owner</option>
                   </select>
                 </div>
                 <div>
-                  <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Date of Joining</label>
-                  <input type="date" value={newStaff.dateOfJoining} onChange={e => setNewStaff({...newStaff, dateOfJoining: e.target.value})} className="w-full px-4 py-2 bg-slate-50 border border-slate-200 text-sm rounded-lg focus:outline-none focus:border-brand-green focus:bg-white font-medium transition text-slate-600" />
+                  <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Qualification</label>
+                  <input type="text" value={newStaff.qualification} onChange={e => setNewStaff({...newStaff, qualification: e.target.value})} placeholder="e.g., M.Sc. Mathematics, B.Ed." className="w-full px-4 py-2 bg-slate-50 border border-slate-200 text-sm rounded-lg focus:outline-none focus:border-brand-green focus:bg-white font-medium transition" />
+                </div>
+                <div>
+                  <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Short Bio</label>
+                  <input type="text" value={newStaff.bio} onChange={e => setNewStaff({...newStaff, bio: e.target.value})} placeholder="e.g., 5 years of teaching experience..." className="w-full px-4 py-2 bg-slate-50 border border-slate-200 text-sm rounded-lg focus:outline-none focus:border-brand-green focus:bg-white font-medium transition" />
                 </div>
                 <div>
                   <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Phone Number *</label>
                   <input type="tel" required value={newStaff.phone} onChange={e => setNewStaff({...newStaff, phone: e.target.value})} placeholder="9876543210" className="w-full px-4 py-2 bg-slate-50 border border-slate-200 text-sm rounded-lg focus:outline-none focus:border-brand-green focus:bg-white font-medium transition" />
+                </div>
+                <div>
+                  <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Email Address</label>
+                  <input type="email" value={newStaff.email} onChange={e => setNewStaff({...newStaff, email: e.target.value})} placeholder="teacher@example.com" className="w-full px-4 py-2 bg-slate-50 border border-slate-200 text-sm rounded-lg focus:outline-none focus:border-brand-green focus:bg-white font-medium transition" />
                 </div>
               </div>
             </div>
@@ -301,7 +306,7 @@ export default function StaffManager() {
             <div className="pt-4 border-t border-slate-100 flex justify-end">
               <button type="submit" disabled={submitLoading} className="w-full sm:w-auto bg-slate-900 hover:bg-slate-800 text-white px-8 py-2.5 rounded-lg text-sm font-semibold transition flex items-center justify-center gap-2 shadow-md border-0 cursor-pointer disabled:bg-slate-400">
                 {submitLoading && <Loader2 size={16} className="animate-spin" />}
-                Save Employee Record
+                Save Teacher Record
               </button>
             </div>
           </motion.form>
@@ -320,8 +325,8 @@ export default function StaffManager() {
             <table className="w-full text-left border-collapse">
               <thead>
                 <tr className="bg-slate-50 border-b border-slate-200">
-                  <th className="px-6 py-3 text-[10px] font-bold uppercase tracking-wider text-slate-500 whitespace-nowrap">Employee</th>
-                  <th className="px-6 py-3 text-[10px] font-bold uppercase tracking-wider text-slate-500 whitespace-nowrap">Role & Dept</th>
+                  <th className="px-6 py-3 text-[10px] font-bold uppercase tracking-wider text-slate-500 whitespace-nowrap">Teacher</th>
+                  <th className="px-6 py-3 text-[10px] font-bold uppercase tracking-wider text-slate-500 whitespace-nowrap">Role & Qual</th>
                   <th className="px-6 py-3 text-[10px] font-bold uppercase tracking-wider text-slate-500 whitespace-nowrap">Contact</th>
                   {user?.teacherProfile?.accessRole === 'Owner' && (
                     <th className="px-6 py-3 text-[10px] font-bold uppercase tracking-wider text-slate-500 whitespace-nowrap text-right">Actions</th>
@@ -356,20 +361,15 @@ export default function StaffManager() {
                       </td>
                       <td className="px-6 py-4">
                         <select 
-                          value={staff.teacherProfile?.designation || ""}
+                          value={staff.teacherProfile?.accessRole || "Teacher"}
                           onChange={(e) => updateRole(staff._id, e.target.value)}
                           className="text-sm font-semibold text-slate-700 bg-transparent border-b border-dashed border-slate-300 hover:border-brand-green focus:border-brand-green focus:outline-none cursor-pointer pb-0.5 mb-1 block w-fit"
                         >
-                          <option value="Principal">Principal</option>
-                          <option value="Senior Teacher">Senior Teacher</option>
                           <option value="Teacher">Teacher</option>
-                          <option value="Transport Head">Transport Head</option>
-                          <option value="Driver">Driver</option>
-                          <option value="Librarian">Librarian</option>
-                          <option value="Admin Staff">Admin Staff</option>
-                          <option value={staff.teacherProfile?.designation}>{staff.teacherProfile?.designation}</option>
+                          <option value="Admin">Admin</option>
+                          <option value="Owner">Owner</option>
                         </select>
-                        <p className="text-xs font-medium text-slate-400">{staff.teacherProfile?.department || "Unassigned"}</p>
+                        <p className="text-xs font-medium text-slate-400 max-w-[150px] truncate" title={staff.teacherProfile?.qualification || ""}>{staff.teacherProfile?.qualification || "Not Specified"}</p>
                       </td>
                       <td className="px-6 py-4">
                         <div className="flex items-center gap-2 text-xs font-medium text-slate-600 mb-1">

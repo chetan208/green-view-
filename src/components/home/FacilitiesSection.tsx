@@ -9,33 +9,19 @@ export default function FacilitiesSection() {
   const cards = [
     {
       title: "Science Laboratories",
-      description: "Equipped with technological instruments & experiment kits for Physics, Chemistry, and Biology.",
       image: "/images/science_lab.png",
     },
     {
-      title: "Smart Classrooms",
-      description: "Interactive smart boards, visual modules & digital learning from Nursery to 12th.",
-      image: "/images/smart_classroom.png",
-    },
-    {
       title: "Computer Center",
-      description: "Modern computer labs with high-speed internet & latest programming software.",
       image: "/images/computer_lab.png",
     },
     {
-      title: "Digital Library",
-      description: "Extensive collection of academic books, reference journals, fiction & e-learning resources.",
-      image: "/images/library.png",
-    },
-    {
-      title: "Creative Arts & Activities",
-      description: "Dedicated studio spaces for fine arts, music, crafts, and creative skill development.",
-      image: "/images/art.png",
-    },
-    {
       title: "Sports Complex",
-      description: "Spacious indoor & outdoor sports areas including Basketball, Athletics, and multi-playgrounds.",
       image: "https://images.unsplash.com/photo-1576624302685-618a38525b68?auto=format&fit=crop&q=80&w=500",
+    },
+    {
+      title: "Digital Library",
+      image: "/images/library.png",
     },
   ];
 
@@ -55,8 +41,8 @@ export default function FacilitiesSection() {
   } as const;
 
   return (
-    <section id="facilities" className="w-full py-12 md:py-20 px-4 sm:px-6 md:px-12 lg:px-24 bg-emerald-50/25 flex justify-center overflow-hidden">
-      <div className="max-w-7xl w-full flex flex-col">
+    <section id="facilities" className="w-full py-12 md:py-16 px-4 sm:px-6 md:px-12 lg:px-24 bg-[#ebfbf1] flex justify-center overflow-hidden">
+      <div className="max-w-[1200px] w-full flex flex-col">
         
         {/* Subtitle */}
         <motion.span 
@@ -64,7 +50,7 @@ export default function FacilitiesSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="text-[10px] md:text-xs font-semibold md:font-black text-slate-800 uppercase tracking-[0.25em] text-center mb-3 select-none"
+          className="text-[10px] md:text-xs font-semibold md:font-bold text-slate-800 uppercase tracking-[0.15em] text-center mb-2 select-none"
         >
           Choose Green View?
         </motion.span>
@@ -79,9 +65,9 @@ export default function FacilitiesSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, ease: "easeOut" }}
-            className="text-3xl md:text-4xl font-semibold md:font-extrabold text-slate-900 tracking-tight text-center flex-1"
+            className="text-3xl md:text-[40px] font-bold md:font-extrabold text-[#0B1A28] tracking-tight text-center flex-1 uppercase"
           >
-            Why Learn With Us?
+            FACILITIES
           </motion.h2>
 
           <motion.div whileHover={{ scale: 1.05 }}>
@@ -101,7 +87,7 @@ export default function FacilitiesSection() {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, margin: "-100px" }}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5 w-full"
         >
           {cards.map((card, idx) => (
             <motion.div
@@ -109,10 +95,10 @@ export default function FacilitiesSection() {
               variants={cardVariants}
               whileHover={{ y: -6, scale: 1.01 }}
               transition={{ duration: 0.3 }}
-              className="group flex flex-col bg-white border border-slate-100 rounded-2xl md:rounded-3xl overflow-hidden hover:border-brand-green/20 hover:shadow-md transition-all duration-300"
+              className="group flex flex-col bg-white border border-slate-100/50 rounded-[20px] overflow-hidden hover:shadow-lg transition-all duration-300 shadow-[0_4px_20px_-10px_rgba(0,0,0,0.08)]"
             >
               {/* Image Container */}
-              <div className="relative aspect-[3/2] w-full overflow-hidden bg-slate-800">
+              <div className="relative aspect-[4/3] w-full overflow-hidden bg-slate-100">
                 <img
                   src={card.image}
                   alt={card.title}
@@ -122,12 +108,9 @@ export default function FacilitiesSection() {
               </div>
 
               {/* Text Container */}
-              <div className="py-5 px-5 text-center select-none flex flex-col gap-1.5 flex-grow justify-between">
-                <span className="text-slate-800 font-semibold md:font-bold text-base md:text-lg tracking-tight block group-hover:text-brand-green transition-colors">
+              <div className="py-4 md:py-5 px-4 text-center select-none flex items-center justify-center bg-white min-h-[60px] md:min-h-[70px]">
+                <span className="text-[#0B1A28] font-bold text-sm md:text-[15px] tracking-tight group-hover:text-[#0B9E50] transition-colors">
                   {card.title}
-                </span>
-                <span className="text-slate-500 text-xs md:text-sm font-normal leading-relaxed">
-                  {card.description}
                 </span>
               </div>
             </motion.div>

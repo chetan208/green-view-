@@ -390,5 +390,25 @@ export const erpApi = {
       const res = await authFetch('/api/erp/fee-automation/status');
       return res.json();
     }
+  },
+
+  // Top Results
+  topResults: {
+    list: async (session?: string) => {
+      const url = session ? `/api/top-results?session=${session}` : '/api/top-results';
+      const res = await authFetch(url);
+      return res.json();
+    },
+    create: async (formData: FormData) => {
+      const res = await authFetch('/api/admin/top-result', {
+        method: 'POST',
+        body: formData,
+      });
+      return res.json();
+    },
+    delete: async (id: string) => {
+      const res = await authFetch(`/api/admin/top-result/${id}`, { method: 'DELETE' });
+      return res.json();
+    }
   }
 };

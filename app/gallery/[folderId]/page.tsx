@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { useParams } from "next/navigation";
+import { useParams, useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight, Download, Share2, X, Image as ImageIcon, Sparkles } from "lucide-react";
 import { getFolderByIdApi } from "@/lib/api";
@@ -38,6 +38,8 @@ function SkeletonMediaCard() {
 export default function SingleFolderGalleryPage() {
   const params = useParams();
   const folderId = params?.folderId as string;
+  const searchParams = useSearchParams();
+  const queryMediaId = searchParams?.get('mediaId');
 
   const [folderName, setFolderName] = useState("");
   const [mediaItems, setMediaItems] = useState<MediaItem[]>([]);
@@ -110,6 +112,16 @@ export default function SingleFolderGalleryPage() {
       loadMediaBatch(1, true);
     }
   }, [folderId, loadMediaBatch]);
+
+  // Auto-open lightbox if queryMediaId is present
+  useEffect(() => {
+    if (queryMediaId && mediaItems.length > 0 && selectedIndex === null) {
+      const idx = mediaItems.findIndex(m => m.id === queryMediaId);
+      if (idx !== -1) {
+        setSelectedIndex(idx);
+      }
+    }
+  }, [queryMediaId, mediaItems, selectedIndex]);
 
   // Fetch next page function
   const fetchNextPage = useCallback(() => {
