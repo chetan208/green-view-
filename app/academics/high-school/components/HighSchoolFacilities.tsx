@@ -8,11 +8,11 @@ export default function HighSchoolFacilities() {
   const cards = [
     {
       title: "Science Laboratories",
-      image: "https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&q=80&w=500",
+      image: "/images/science_lab.png",
     },
     {
       title: "Computer Center",
-      image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&q=80&w=500",
+      image: "/images/computer_lab.png",
     },
     {
       title: "Sports Complex",
@@ -20,7 +20,7 @@ export default function HighSchoolFacilities() {
     },
     {
       title: "Digital Library",
-      image: "https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&q=80&w=500",
+      image: "/images/library.png",
     },
   ];
 

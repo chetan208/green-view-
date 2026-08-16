@@ -651,7 +651,7 @@ export default function StudentManager({ onManageFees, selectedSession = "2026-2
                   </div>
                   <div>
                     <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Admission / Card No *</label>
-                    <input type="text" required placeholder="E.g., GV-2026-001" value={formData.cardNo}
+                    <input type="text" required placeholder="E.g., -2026-001" value={formData.cardNo}
                       onChange={(e) => setFormData({ ...formData, cardNo: e.target.value })} className={inputCls} />
                   </div>
                 </div>

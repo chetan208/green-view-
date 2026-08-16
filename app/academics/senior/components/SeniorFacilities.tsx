@@ -7,20 +7,20 @@ import { motion } from "framer-motion";
 export default function SeniorFacilities() {
   const cards = [
     {
-      title: "Advanced Labs",
-      image: "https://images.unsplash.com/photo-1581093458791-9f3c3900df4b?auto=format&fit=crop&q=80&w=500",
+      title: "Advanced Laboratories",
+      image: "/images/science_lab.png",
+    },
+    {
+      title: "Smart Classrooms",
+      image: "/images/smart_classroom.png",
+    },
+    {
+      title: "Computer & IT Center",
+      image: "/images/computer_lab.png",
     },
     {
       title: "Career Counseling",
       image: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&q=80&w=500",
-    },
-    {
-      title: "Smart Classrooms",
-      image: "https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&q=80&w=500",
-    },
-    {
-      title: "Auditorium",
-      image: "https://images.unsplash.com/photo-1588682136069-b541d402120d?auto=format&fit=crop&q=80&w=500",
     },
   ];
 

@@ -4,23 +4,27 @@ export default function CategoryBar() {
   const items = [
     {
       title: "Smart Classrooms",
-      image: "https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&q=80&w=80&h=80",
+      image: "/images/smart_classroom.png",
     },
     {
-      title: "Holistic Education",
-      image: "https://images.unsplash.com/photo-1577896851231-70ee18881754?auto=format&fit=crop&q=80&w=80&h=80",
+      title: "Science & Chemistry Labs",
+      image: "/images/science_lab.png",
     },
     {
-      title: "STEM & Robotics",
-      image: "https://images.unsplash.com/photo-1581092921461-eab62e97a780?auto=format&fit=crop&q=80&w=80&h=80",
+      title: "Computer & IT Lab",
+      image: "/images/computer_lab.png",
     },
     {
       title: "World-Class Library",
-      image: "https://images.unsplash.com/photo-1497633762265-9d179a990aa6?auto=format&fit=crop&q=80&w=80&h=80",
+      image: "/images/library.png",
     },
     {
-      title: "Collaborative Labs",
-      image: "https://images.unsplash.com/photo-1507537297725-24a1c029d3ca?auto=format&fit=crop&q=80&w=80&h=80",
+      title: "Art & Creative Studio",
+      image: "/images/art.png",
+    },
+    {
+      title: "Safe Transport",
+      image: "/images/school_bus.png",
     },
   ];
 
@@ -48,10 +52,10 @@ export default function CategoryBar() {
         {scrollingItems.map((item, idx) => (
           <div
             key={idx}
-            className="flex items-center gap-3 bg-white p-2.5 pr-6 rounded-full border border-slate-100/80 shadow-sm shadow-slate-100/50 hover:shadow-md hover:border-emerald-100 transition-all duration-300 whitespace-nowrap"
+            className="flex items-center gap-3 bg-white p-2.5 pr-6 rounded-full border border-slate-100/80 shadow-sm shadow-slate-100/50 hover:shadow-md hover:border-emerald-100 transition-all duration-300 whitespace-nowrap cursor-pointer"
           >
             {/* Circular Image */}
-            <div className="w-10 h-10 rounded-full overflow-hidden bg-slate-100 border border-slate-50 shrink-0">
+            <div className="w-10 h-10 rounded-full overflow-hidden bg-slate-100 border border-slate-100 shrink-0">
               <img
                 src={item.image}
                 alt={item.title}
