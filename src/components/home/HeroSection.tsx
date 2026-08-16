@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { ArrowRight, Star, Laptop } from "lucide-react";
+import { ArrowRight, Sparkles, Award } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function HeroSection() {
@@ -40,130 +40,81 @@ export default function HeroSection() {
     show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } },
   } as const;
 
+
+
   return (
-    <section className="w-full min-h-[95svh] pt-12 md:pt-20 pb-16 px-6 md:px-12 lg:px-24 flex items-start justify-center overflow-hidden">
-      <div className="max-w-6xl w-full flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-16">
+    <section className="w-full pt-4 sm:pt-8 md:pt-12 lg:pt-16 pb-12 sm:pb-16 md:pb-20 px-4 sm:px-6 md:px-12 lg:px-20 xl:px-24 flex items-center justify-center overflow-hidden">
+      <div className="max-w-6xl w-full flex flex-col lg:flex-row items-center justify-between gap-8 sm:gap-10 md:gap-12 lg:gap-16">
         
         {/* Left Information Column */}
         <motion.div 
           variants={containerVariants}
           initial="hidden"
           animate="show"
-          className="flex-1 flex flex-col items-center lg:items-start text-center lg:text-left pt-0 pb-4 lg:py-4"
+          className="flex-1 flex flex-col items-center lg:items-start text-center lg:text-left w-full"
         >
           
           {/* Badge: Inspiring Excellence Since 1986 */}
           <motion.div 
             variants={itemVariants}
-            className="text-[10px] md:text-xs font-semibold md:font-bold text-brand-green uppercase tracking-[0.2em] mb-4.5 select-none"
+            className="inline-flex items-center gap-2 text-[10px] sm:text-xs font-semibold md:font-bold text-brand-green uppercase tracking-[0.2em] mb-3 sm:mb-4.5 select-none bg-emerald-50/80 px-3.5 py-1.5 rounded-full border border-emerald-100/60"
           >
+            <Sparkles className="w-3 h-3 text-brand-green" />
             Inspiring Excellence Since 1986
           </motion.div>
 
           {/* Main Title */}
           <motion.h1 
             variants={itemVariants}
-            className="text-4xl md:text-5xl lg:text-6xl font-semibold md:font-black text-slate-900 tracking-tight leading-[1.05] mb-6"
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold md:font-black text-slate-900 tracking-tight leading-[1.1] sm:leading-[1.05] mb-4 sm:mb-6"
           >
             <span className="text-brand-green">Green view</span> <br />
             Sr. Sec. School
           </motion.h1>
 
-          <motion.div 
+          {/* Subheading */}
+          <motion.p 
             variants={itemVariants}
-            className="text-slate-500 text-sm md:text-base max-w-md mb-8 leading-relaxed font-normal md:font-normal text-center lg:text-left select-none flex flex-col gap-2"
+            className="text-slate-600 text-sm sm:text-base md:text-lg max-w-xl mb-6 sm:mb-8 leading-relaxed font-normal md:font-medium text-center lg:text-left"
           >
-            <p><strong>Mottos:</strong></p>
-            <ul className="list-disc pl-5">
-              <li>Source of Intelligence, Knowledge & Modesty</li>
-              <li>We Trust in God</li>
-              <li>Aspiring for Excellence</li>
-              <li>Honest Labour Pays</li>
-            </ul>
-          </motion.div>
+            We believe in nurturing intelligence, knowledge, and humility while inspiring every student to strive for excellence through honest effort, strong values, and faith in God.
+          </motion.p>
 
           {/* Action Buttons */}
           <motion.div 
             variants={itemVariants}
-            className="flex flex-wrap items-center justify-center lg:justify-start gap-4 mb-10 w-full sm:w-auto"
+            className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3 sm:gap-4 mb-4 sm:mb-6 w-full sm:w-auto"
           >
-            <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }} className="w-full sm:w-auto">
+            <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="w-full sm:w-auto">
               <Link
                 href="/admissions"
-                className="inline-flex items-center justify-center gap-2 bg-brand-green text-white hover:bg-emerald-700 px-6 md:px-8 py-3.5 rounded-full font-semibold md:font-bold text-xs md:text-sm tracking-wide transition-all duration-300 shadow-md shadow-emerald-600/10 w-full sm:w-auto"
+                className="inline-flex items-center justify-center gap-2 bg-brand-green text-white hover:bg-emerald-700 px-6 sm:px-8 py-3 sm:py-3.5 rounded-full font-semibold md:font-bold text-xs sm:text-sm tracking-wide transition-all duration-300 shadow-md shadow-emerald-600/10 w-full sm:w-auto cursor-pointer"
               >
                 Admission Enquiry
                 <ArrowRight className="w-4 h-4" />
               </Link>
             </motion.div>
-            <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }} className="w-full sm:w-auto">
+            <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="w-full sm:w-auto">
               <Link
                 href="/about"
-                className="inline-flex items-center justify-center bg-white border border-slate-200 hover:bg-slate-50 text-slate-800 px-6 md:px-8 py-3.5 rounded-full font-semibold md:font-bold text-xs md:text-sm tracking-wide transition-all duration-300 text-center w-full sm:w-auto"
+                className="inline-flex items-center justify-center bg-white border border-slate-200 hover:bg-slate-50 text-slate-800 px-6 sm:px-8 py-3 sm:py-3.5 rounded-full font-semibold md:font-bold text-xs sm:text-sm tracking-wide transition-all duration-300 text-center w-full sm:w-auto cursor-pointer"
               >
                 About Us
               </Link>
             </motion.div>
           </motion.div>
 
-          {/* Ratings & Families Proof Row */}
-          <motion.div 
-            variants={itemVariants}
-            className="flex items-center gap-4 flex-wrap relative"
-          >
-            {/* Laptop Icon Floating above the avatars */}
-            <motion.div 
-              animate={{ y: [0, -4, 0] }}
-              transition={{ repeat: Infinity, duration: 2.5, ease: "easeInOut" }}
-              className="absolute -top-6 -left-6 bg-slate-50/50 p-2 rounded-xl border border-emerald-100/50 opacity-40"
-            >
-              <Laptop className="w-4 h-4 text-emerald-500" />
-            </motion.div>
-
-            {/* Avatars */}
-            <div className="flex -space-x-2.5">
-              {[
-                { name: "A", bg: "bg-orange-500" },
-                { name: "R", bg: "bg-blue-600" },
-                { name: "P", bg: "bg-emerald-500" },
-                { name: "N", bg: "bg-purple-600" },
-                { name: "+5k", bg: "bg-emerald-800" },
-              ].map((av, idx) => (
-                <motion.div
-                  key={idx}
-                  whileHover={{ y: -3, zIndex: 10 }}
-                  className={`w-8 h-8 rounded-full border-2 border-white flex items-center justify-center text-[10px] font-semibold md:font-black text-white cursor-default select-none ${av.bg}`}
-                >
-                  {av.name}
-                </motion.div>
-              ))}
-            </div>
-
-            {/* Stars & Text */}
-            <div className="flex flex-col">
-              <div className="flex items-center gap-0.5">
-                {[1, 2, 3, 4, 5].map((s) => (
-                  <Star key={s} className="w-3.5 h-3.5 text-amber-500 fill-amber-500" />
-                ))}
-                <span className="text-xs font-semibold md:font-black text-slate-800 ml-1">4.9</span>
-              </div>
-              <span className="text-[10px] text-slate-400 font-semibold md:font-bold mt-0.5">
-                Trusted by <span className="text-slate-800 font-semibold md:font-extrabold">5,000+ families</span> across HP since 1986
-              </span>
-            </div>
-          </motion.div>
-
         </motion.div>
 
-        {/* Right Slideshow Column */}
-        <div className="flex-1 w-full flex justify-center relative select-none">
+        {/* Right Slideshow Column - ENHANCED IMAGE CONTAINER SIZING */}
+        <div className="flex-1 w-full flex justify-center relative select-none mt-2 lg:mt-0">
           
-          {/* Main Rounded Image Container */}
+          {/* Main Rounded Image Container: Increased size from max-w-md to max-w-lg/max-w-xl/max-w-2xl */}
           <motion.div 
             initial={{ scale: 0.95, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="relative w-full max-w-lg aspect-[4/3] rounded-[1.5rem] md:rounded-[2.5rem] overflow-hidden border-8 md:border-[12px] border-white shadow-xl bg-slate-50"
+            className="relative w-full max-w-lg sm:max-w-xl lg:max-w-2xl aspect-[4/3] sm:aspect-[14/10] md:aspect-[4/3] rounded-[1.5rem] sm:rounded-[2rem] md:rounded-[2.75rem] overflow-hidden border-4 sm:border-8 md:border-[12px] border-white shadow-xl sm:shadow-2xl bg-slate-50"
           >
             <AnimatePresence mode="wait">
               <motion.img
@@ -185,37 +136,40 @@ export default function HeroSection() {
             animate={{ scale: 1, rotate: 0 }}
             transition={{ type: "spring", stiffness: 260, damping: 20, delay: 0.5 }}
             whileHover={{ scale: 1.05 }}
-            className="absolute bottom-6 left-2 md:-left-6 z-20 bg-brand-green text-white w-20 h-20 md:w-28 md:h-28 rounded-full flex flex-col items-center justify-center text-center shadow-lg border-4 md:border-[6px] border-white select-none"
+            className="absolute -bottom-3 -left-2 sm:-bottom-4 sm:-left-4 md:-bottom-6 md:-left-6 z-20 bg-brand-green text-white w-20 h-20 sm:w-26 sm:h-26 md:w-30 md:h-30 rounded-full flex flex-col items-center justify-center text-center shadow-lg border-4 md:border-[6px] border-white select-none"
           >
-            <span className="text-[10px] md:text-sm font-semibold md:font-black tracking-tight leading-none">
+            <span className="text-[11px] sm:text-xs md:text-sm font-semibold md:font-black tracking-tight leading-none">
               2026-27
             </span>
-            <span className="text-[6px] md:text-[8px] font-semibold md:font-black uppercase tracking-wider mt-1 leading-none text-emerald-100">
+            <span className="text-[7px] sm:text-[8px] md:text-[9px] font-semibold md:font-black uppercase tracking-wider mt-0.5 sm:mt-1 leading-none text-emerald-100">
               Admissions
             </span>
-            <span className="text-[6px] md:text-[8px] font-semibold md:font-black uppercase tracking-wider leading-none text-emerald-100">
+            <span className="text-[7px] sm:text-[8px] md:text-[9px] font-semibold md:font-black uppercase tracking-wider leading-none text-emerald-100">
               Open Now
             </span>
           </motion.div>
 
           {/* Offset Badge: Board Results (Bottom-Right) */}
-          <motion.div 
+          {/* <motion.div 
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: 0.6 }}
             whileHover={{ y: -3 }}
-            className="absolute -bottom-4 md:-bottom-8 right-2 md:-right-6 z-20 bg-white p-3 md:p-4 rounded-2xl md:rounded-3xl shadow-lg border border-slate-100/70 flex flex-col max-w-[130px] md:max-w-[170px] select-none hidden md:flex"
+            className="absolute -bottom-3 -right-2 sm:-bottom-4 sm:-right-4 md:-bottom-8 md:-right-6 z-20 bg-white p-2.5 sm:p-3 md:p-4 rounded-xl sm:rounded-2xl md:rounded-3xl shadow-lg border border-slate-100 flex flex-col max-w-[120px] sm:max-w-[140px] md:max-w-[170px] select-none"
           >
-            <span className="text-[8px] md:text-[9px] font-semibold md:font-bold text-slate-400 uppercase tracking-wider">
-              Board Results 2024-25
-            </span>
-            <span className="text-sm md:text-lg font-semibold md:font-black text-emerald-700 mt-1 leading-none">
+            <div className="flex items-center gap-1">
+              <Award className="w-3 h-3 text-amber-500 shrink-0" />
+              <span className="text-[7px] sm:text-[8px] md:text-[9px] font-semibold md:font-bold text-slate-400 uppercase tracking-wider truncate">
+                Board Results
+              </span>
+            </div>
+            <span className="text-xs sm:text-sm md:text-lg font-semibold md:font-black text-emerald-700 mt-0.5 sm:mt-1 leading-none">
               94.2% avg
             </span>
-            <span className="text-[8px] md:text-[9px] font-semibold md:font-bold text-slate-400 uppercase mt-1">
+            <span className="text-[7px] sm:text-[8px] md:text-[9px] font-semibold md:font-bold text-slate-400 uppercase mt-0.5 sm:mt-1">
               Class X & XII
             </span>
-          </motion.div>
+          </motion.div> */}
 
         </div>
 
@@ -223,4 +177,3 @@ export default function HeroSection() {
     </section>
   );
 }
-

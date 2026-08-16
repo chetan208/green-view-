@@ -7,20 +7,20 @@ import { motion } from "framer-motion";
 export default function PrimaryFacilities() {
   const cards = [
     {
-      title: "Activity-Based Learning",
-      image: "https://images.unsplash.com/photo-1577896851231-70ee18881754?auto=format&fit=crop&q=80&w=500",
+      title: "Smart Classroom Learning",
+      image: "/images/smart_classroom.png",
     },
     {
-      title: "Language Development",
-      image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&q=80&w=500",
+      title: "Computer & IT Exposure",
+      image: "/images/computer_lab.png",
     },
     {
-      title: "Basic Mathematics",
-      image: "https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&q=80&w=500",
+      title: "Interactive Science Exploration",
+      image: "/images/science_lab.png",
     },
     {
-      title: "Creative Activities",
-      image: "https://images.unsplash.com/photo-1568667256549-094345857637?auto=format&fit=crop&q=80&w=500",
+      title: "Creative Arts & Activities",
+      image: "/images/art.png",
     },
   ];
 

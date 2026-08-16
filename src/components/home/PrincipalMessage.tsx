@@ -20,7 +20,7 @@ export default function LeadershipMessages() {
   } as const;
 
   return (
-    <section className="w-full py-16 md:py-24 px-6 md:px-12 lg:px-24  flex flex-col items-center overflow-hidden">
+    <section className="w-full py-16 md:py-24 px-6 md:px-12 lg:px-24 flex flex-col items-center overflow-hidden">
       <div className="max-w-6xl w-full flex flex-col gap-24 md:gap-32">
         
         {/* 1. MD's Message Block */}
@@ -42,9 +42,9 @@ export default function LeadershipMessages() {
           </motion.div>
 
           {/* Two Column Layout (Image & Quotes) */}
-          <div className="w-full flex flex-col md:flex-row items-center md:items-start gap-12 lg:gap-16">
-            {/* Left Side: Photo Frame */}
-            <motion.div variants={itemVariants} className="w-64 h-80 md:w-72 md:h-[360px] relative shrink-0">
+          <div className="w-full flex flex-col md:flex-row items-center md:items-start gap-10 md:gap-14 lg:gap-16">
+            {/* Left Side: Photo Frame - ENHANCED SIZE */}
+            <motion.div variants={itemVariants} className="w-72 h-[350px] sm:w-80 sm:h-[400px] md:w-80 md:h-[420px] lg:w-88 lg:h-[440px] relative shrink-0">
               {/* Bottom-left offset green curved decorative border line */}
               <div className="absolute border-l-2 border-b-2 border-brand-green rounded-bl-[20px] md:rounded-bl-[32px] -left-4 -bottom-4 w-full h-full -z-10" />
               
@@ -108,9 +108,9 @@ export default function LeadershipMessages() {
           </motion.div>
 
           {/* Two Column Layout (Image & Quotes) */}
-          <div className="w-full flex flex-col md:flex-row items-center md:items-start gap-12 lg:gap-16">
-            {/* Left Side: Photo Frame */}
-            <motion.div variants={itemVariants} className="w-64 h-80 md:w-72 md:h-[360px] relative shrink-0">
+          <div className="w-full flex flex-col md:flex-row items-center md:items-start gap-10 md:gap-14 lg:gap-16">
+            {/* Left Side: Photo Frame - ENHANCED SIZE */}
+            <motion.div variants={itemVariants} className="w-72 h-[350px] sm:w-80 sm:h-[400px] md:w-80 md:h-[420px] lg:w-88 lg:h-[440px] relative shrink-0">
               {/* Bottom-left offset green curved decorative border line */}
               <div className="absolute border-l-2 border-b-2 border-brand-green rounded-bl-[20px] md:rounded-bl-[32px] -left-4 -bottom-4 w-full h-full -z-10" />
               
@@ -166,4 +166,3 @@ export default function LeadershipMessages() {
     </section>
   );
 }
-

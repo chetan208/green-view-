@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
 export default function CoursesSection() {
@@ -9,6 +10,7 @@ export default function CoursesSection() {
       tag: "FOUNDATIONAL",
       title: "Nursery – Class V",
       description: "Play-based learning, phonics, number sense, motor skills, Hindi & English readiness.",
+      href: "/academics/primary",
       features: [
         "Activity corners & circle time",
         "Early reading programme",
@@ -17,8 +19,9 @@ export default function CoursesSection() {
     },
     {
       tag: "HIGH SCHOOL",
-      title: "Class VI – VIII",
+      title: "Class VI – X",
       description: "Strong core in English, Hindi, Maths, EVS, with value education and computers.",
+      href: "/academics/high-school",
       features: [
         "Olympiad practice",
         "Reading & handwriting focus",
@@ -29,6 +32,7 @@ export default function CoursesSection() {
       tag: "SENIOR SECONDARY",
       title: "Class XI – XII",
       description: "CBSE curriculum with Science, Commerce, Humanities streams in XI-XII.",
+      href: "/academics/senior",
       features: [
         "Physics / Chem / Bio / CS labs",
         "Board exam mentoring",
@@ -84,9 +88,12 @@ export default function CoursesSection() {
                 ))}
               </ul>
               
-              <button className="bg-brand-green hover:bg-[#0e964d] text-white rounded-xl py-3 px-6 font-medium text-xs md:text-sm tracking-wide transition-colors flex items-center justify-center gap-2 mt-auto w-max shadow-sm shadow-brand-green/20">
+              <Link 
+                href={course.href}
+                className="bg-brand-green hover:bg-[#0e964d] text-white rounded-xl py-3 px-6 font-medium text-xs md:text-sm tracking-wide transition-colors flex items-center justify-center gap-2 mt-auto w-max shadow-sm shadow-brand-green/20 cursor-pointer"
+              >
                 Explore Program <ArrowRight className="w-4 h-4" />
-              </button>
+              </Link>
             </div>
           ))}
         </div>

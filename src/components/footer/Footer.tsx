@@ -50,7 +50,7 @@ export default function Footer() {
               </div>
               <div className="flex flex-col">
                 <span className="font-serif font-medium md:font-bold text-white text-xl leading-none tracking-tight">
-                  GV Green View
+                   Green View
                 </span>
                 <span className="text-[10px] text-emerald-400 font-medium md:font-semibold tracking-widest uppercase mt-1 leading-none">
                   Senior Secondary School

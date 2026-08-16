@@ -3,7 +3,6 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Monitor, TestTube, Library, Activity, Bus, Palette, HeartPulse, Trophy } from "lucide-react";
-import Image from "next/image";
 
 export default function FacilitiesGrid() {
   const facilities = [
@@ -11,19 +10,25 @@ export default function FacilitiesGrid() {
       title: "Smart Classrooms",
       desc: "Interactive digital boards, ergonomic seating, and climate-controlled environments for focused learning.",
       icon: Monitor,
-      image: "https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&q=80&w=600",
+      image: "/images/smart_classroom.png",
     },
     {
-      title: "Advanced Laboratories",
-      desc: "State-of-the-art Physics, Chemistry, Biology, and Computer labs equipped with the latest safety gear and tech.",
+      title: "Advanced Science Labs",
+      desc: "State-of-the-art Physics, Chemistry, and Biology labs equipped with comprehensive instruments and safety gear.",
       icon: TestTube,
-      image: "https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&q=80&w=600",
+      image: "/images/science_lab.png",
+    },
+    {
+      title: "Computer & IT Lab",
+      desc: "Modern computer lab with individual workstations, programming software, and high-speed internet access.",
+      icon: Monitor,
+      image: "/images/computer_lab.png",
     },
     {
       title: "Knowledge Center",
       desc: "A massive library with an extensive collection of academic books, journals, fiction, and digital resources.",
       icon: Library,
-      image: "https://images.unsplash.com/photo-1507842217343-583bb7270b66?auto=format&fit=crop&q=80&w=600",
+      image: "/images/library.png",
     },
     {
       title: "Sports Complex",
@@ -33,27 +38,21 @@ export default function FacilitiesGrid() {
     },
     {
       title: "Transport Fleet",
-      desc: "A fleet of GPS-enabled, air-conditioned school buses covering all major routes with trained staff.",
+      desc: "A fleet of GPS-enabled, safe school buses covering all major routes with trained staff.",
       icon: Bus,
-      image: "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&q=80&w=600",
+      image: "/images/school_bus.png",
     },
     {
-      title: "Art & Music Studios",
+      title: "Art & Creative Studio",
       desc: "Dedicated creative spaces to nurture talents in fine arts, classical music, and contemporary dance.",
       icon: Palette,
-      image: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&q=80&w=600",
+      image: "/images/art.png",
     },
     {
       title: "Medical Infirmary",
       desc: "On-campus healthcare facility with a qualified nurse, emergency supplies, and regular health checkups.",
       icon: HeartPulse,
       image: "https://images.unsplash.com/photo-1581594693702-fbdc51b2763b?auto=format&fit=crop&q=80&w=600",
-    },
-    {
-      title: "Activity Center",
-      desc: "Large multi-purpose halls for debates, seminars, cultural events, and indoor games like table tennis.",
-      icon: Activity,
-      image: "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&q=80&w=600",
     }
   ];
 
@@ -68,16 +67,17 @@ export default function FacilitiesGrid() {
   };
 
   const cardVariants = {
-  hidden: { opacity: 0, y: 30 },
-  show: { 
-    opacity: 1, 
-    y: 0, 
-    transition: { 
-      duration: 0.6, 
-      ease: [0.16, 1, 0.3, 1] as const // Added 'as const' here
-    } 
-  },
-};
+    hidden: { opacity: 0, y: 30 },
+    show: { 
+      opacity: 1, 
+      y: 0, 
+      transition: { 
+        duration: 0.6, 
+        ease: [0.16, 1, 0.3, 1] as const
+      } 
+    },
+  };
+
   return (
     <section className="w-full py-20 px-6 bg-slate-50 relative border-t border-slate-100">
       <div className="max-w-7xl mx-auto">
@@ -86,7 +86,7 @@ export default function FacilitiesGrid() {
           <h2 className="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight mb-4">
             Explore Our Campus
           </h2>
-          <p className="text-slate-500 font-medium max-w-2xl mx-auto">
+          <p className="text-slate-500 font-normal max-w-2xl mx-auto">
             Discover the facilities that make Green View a leader in holistic education. We invest heavily in our infrastructure so our students have every resource they need to succeed.
           </p>
         </div>
@@ -117,7 +117,7 @@ export default function FacilitiesGrid() {
               {/* Content Body */}
               <div className="p-6 flex flex-col flex-1">
                 <h3 className="text-lg font-semibold text-slate-900 mb-2">{fac.title}</h3>
-                <p className="text-sm text-slate-500 font-medium leading-relaxed flex-1">
+                <p className="text-sm text-slate-500 font-normal leading-relaxed flex-1">
                   {fac.desc}
                 </p>
               </div>

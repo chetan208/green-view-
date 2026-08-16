@@ -118,7 +118,7 @@ export default function Header() {
         
         {/* Logo */}
         <Link href="/" className="flex items-center gap-3 shrink-0">
-          {/* GV Logo Image */}
+          {/*  Logo Image */}
           <div className="w-13 h-13 relative shrink-0">
             <img
               src="/images/logo.png"
@@ -128,7 +128,7 @@ export default function Header() {
           </div>
           <div className="flex flex-col">
             <span className="font-serif font-semibold md:font-black text-brand-navy text-lg md:text-xl leading-none tracking-tight">
-              GV Green View
+               Green View
             </span>
             <span className="text-[7px] text-brand-navy font-medium md:font-bold tracking-widest uppercase mt-1.5 leading-none">
               Senior Secondary School

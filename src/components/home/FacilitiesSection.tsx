@@ -5,26 +5,37 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 
 export default function FacilitiesSection() {
+  // Facilities cards directly integrated from Academics sections
   const cards = [
     {
-      title: "Science Lab",
-      description: "Equipped with new technological instruments for Physics, Chemistry, Biology.",
-      image: "https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&q=80&w=500",
+      title: "Science Laboratories",
+      description: "Equipped with technological instruments & experiment kits for Physics, Chemistry, and Biology.",
+      image: "/images/science_lab.png",
     },
     {
-      title: "Computer Lab",
-      description: "Free computer education Nursery-K.G; play-way 1st-12th. Latest software/internet.",
-      image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&q=80&w=500",
+      title: "Smart Classrooms",
+      description: "Interactive smart boards, visual modules & digital learning from Nursery to 12th.",
+      image: "/images/smart_classroom.png",
     },
     {
-      title: "Smart Class",
-      description: "Visual and educomp classes Nursery to 12th.",
-      image: "https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&q=80&w=500",
+      title: "Computer Center",
+      description: "Modern computer labs with high-speed internet & latest programming software.",
+      image: "/images/computer_lab.png",
     },
     {
-      title: "Security",
-      description: "CCTV cameras installed in all classrooms and corridors.",
-      image: "https://images.unsplash.com/photo-1557597774-9d273605dfa9?auto=format&fit=crop&q=80&w=500",
+      title: "Digital Library",
+      description: "Extensive collection of academic books, reference journals, fiction & e-learning resources.",
+      image: "/images/library.png",
+    },
+    {
+      title: "Creative Arts & Activities",
+      description: "Dedicated studio spaces for fine arts, music, crafts, and creative skill development.",
+      image: "/images/art.png",
+    },
+    {
+      title: "Sports Complex",
+      description: "Spacious indoor & outdoor sports areas including Basketball, Athletics, and multi-playgrounds.",
+      image: "https://images.unsplash.com/photo-1576624302685-618a38525b68?auto=format&fit=crop&q=80&w=500",
     },
   ];
 
@@ -44,7 +55,7 @@ export default function FacilitiesSection() {
   } as const;
 
   return (
-    <section id="facilities" className="w-full py-10 px-6 md:px-12 lg:px-24 bg-emerald-50/25 flex justify-center overflow-hidden">
+    <section id="facilities" className="w-full py-12 md:py-20 px-4 sm:px-6 md:px-12 lg:px-24 bg-emerald-50/25 flex justify-center overflow-hidden">
       <div className="max-w-7xl w-full flex flex-col">
         
         {/* Subtitle */}
@@ -90,13 +101,13 @@ export default function FacilitiesSection() {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, margin: "-100px" }}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 w-full"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full"
         >
           {cards.map((card, idx) => (
             <motion.div
               key={idx}
               variants={cardVariants}
-              whileHover={{ y: -8, scale: 1.01 }}
+              whileHover={{ y: -6, scale: 1.01 }}
               transition={{ duration: 0.3 }}
               className="group flex flex-col bg-white border border-slate-100 rounded-2xl md:rounded-3xl overflow-hidden hover:border-brand-green/20 hover:shadow-md transition-all duration-300"
             >
@@ -111,11 +122,11 @@ export default function FacilitiesSection() {
               </div>
 
               {/* Text Container */}
-              <div className="py-4 px-4 text-center select-none flex flex-col gap-1">
-                <span className="text-slate-800 font-semibold md:font-bold text-sm md:text-base tracking-tight block group-hover:text-brand-green transition-colors">
+              <div className="py-5 px-5 text-center select-none flex flex-col gap-1.5 flex-grow justify-between">
+                <span className="text-slate-800 font-semibold md:font-bold text-base md:text-lg tracking-tight block group-hover:text-brand-green transition-colors">
                   {card.title}
                 </span>
-                <span className="text-slate-500 text-xs md:text-sm font-normal">
+                <span className="text-slate-500 text-xs md:text-sm font-normal leading-relaxed">
                   {card.description}
                 </span>
               </div>
