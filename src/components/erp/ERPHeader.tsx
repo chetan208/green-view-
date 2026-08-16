@@ -42,7 +42,7 @@ export default function ERPHeader() {
 
           <div className="flex items-center gap-2.5">
             <div className="w-9 h-9 bg-transparent rounded-full flex items-center justify-center shrink-0 overflow-hidden">
-              <img src="/gv-logo.png" alt="GV Logo" className="w-full h-full object-contain" />
+              <img src="/-logo.png" alt=" Logo" className="w-full h-full object-contain" />
             </div>
             <div className="hidden sm:block">
               <p className="text-slate-900 font-bold text-[13px] leading-none tracking-tight">

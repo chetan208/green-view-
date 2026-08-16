@@ -20,9 +20,10 @@ export default function Home() {
       <HeroSection />
       <CategoryBar />
       <StatsSection />
+      <BoardNotices />
       <WelcomeSection />
       <ToppersSection />
-      <BoardNotices />
+      
       <PrincipalMessage />
       <FacilitiesSection />
       <AcademicCalendar />
