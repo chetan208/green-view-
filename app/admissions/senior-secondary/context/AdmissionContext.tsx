@@ -71,6 +71,10 @@ export interface AdmissionData {
     extracurricular: string;
     acceptedTerms: boolean;
   };
+  transportDetails: {
+    requiresTransport: boolean;
+    selectedStation: string;
+  };
   meta: {
     showErrors: boolean;
   };
@@ -156,6 +160,10 @@ const defaultData: AdmissionData = {
     extracurricular: "",
     acceptedTerms: false,
   },
+  transportDetails: {
+    requiresTransport: false,
+    selectedStation: "",
+  },
   meta: {
     showErrors: false,
   }
@@ -166,7 +174,7 @@ interface AdmissionContextType {
   updateData: (fields: Partial<AdmissionData>) => void;
 }
 
-const AdmissionContext = createContext<AdmissionContextType | undefined>(undefined);
+export const AdmissionContext = createContext<AdmissionContextType | undefined>(undefined);
 
 export function AdmissionProvider({ children }: { children: ReactNode }) {
   const [data, setData] = useState<AdmissionData>(defaultData);

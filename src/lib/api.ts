@@ -6,6 +6,24 @@ const api = axios.create({
   baseURL: `${API_BASE_URL}/api/admin`,
 });
 
+const baseApi = axios.create({
+  baseURL: `${API_BASE_URL}/api`,
+});
+
+// ==================== ADMISSIONS API ====================
+export const submitAdmissionApplicationApi = async (formData: FormData) => {
+  const response = await baseApi.post('/admissions/submit', formData, {
+    headers: { 'Content-Type': 'multipart/form-data' },
+  });
+  return response.data;
+};
+
+// ==================== TRANSPORT API ====================
+export const getPublicStationsApi = async () => {
+  const res = await baseApi.get('/stations');
+  return res.data;
+};
+
 // ==================== NOTICES API ====================
 export const getNoticesApi = async () => {
   const response = await api.get('/notices');
@@ -73,8 +91,8 @@ export const getFoldersApi = async () => {
   return response.data;
 };
 
-export const getFolderByIdApi = async (id: string) => {
-  const response = await api.get(`/folder/${id}`);
+export const getFolderByIdApi = async (id: string, params?: { page?: number; limit?: number }) => {
+  const response = await api.get(`/folder/${id}`, { params });
   return response.data;
 };
 

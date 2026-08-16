@@ -135,6 +135,18 @@ export default function Step2PersonalFamily() {
           </div>
         </div>
 
+        {/* Aadhaar */}
+        <div className="flex flex-col md:col-span-2">
+          <label className="text-[11px] font-normal md:font-medium text-slate-800 mb-2 uppercase tracking-wider">Student Aadhaar Number</label>
+          <input 
+            type="text" 
+            placeholder="12-digit Aadhaar Number" 
+            value={data.studentDetails.aadhaarNumber}
+            onChange={(e) => updateData({ studentDetails: { ...data.studentDetails, aadhaarNumber: e.target.value } })}
+            className={`w-full px-3 py-2.5 md:px-4 md:py-3 rounded-xl border outline-none transition-all text-xs md:text-sm font-medium placeholder:text-slate-400 border-slate-200 focus:border-brand-green focus:ring-brand-green/20`}
+          />
+        </div>
+
         <div className="w-full h-px bg-slate-200 col-span-1 md:col-span-2 my-2" />
 
         {/* Parents/Guardian */}
@@ -147,6 +159,20 @@ export default function Step2PersonalFamily() {
             onChange={(e) => updateData({ familyDetails: { ...data.familyDetails, fatherName: e.target.value } })}
             className={`w-full px-3 py-2.5 md:px-4 md:py-3 rounded-xl border outline-none transition-all text-xs md:text-sm font-medium placeholder:text-slate-400 ${getErrorClass(data.familyDetails.fatherName)}`}
           />
+          {data.meta.showErrors && !data.familyDetails.fatherName && <span className="text-[10px] font-normal md:font-medium text-red-500 mt-1.5">Required field.</span>}
+        </div>
+
+        <div className="flex flex-col">
+          <label className="text-[11px] font-normal md:font-medium text-slate-800 mb-2 uppercase tracking-wider">Father's Mobile *</label>
+          <input 
+            type="tel" 
+            placeholder="10-digit mobile number" 
+            value={data.familyDetails.fatherMobile}
+            onChange={(e) => updateData({ familyDetails: { ...data.familyDetails, fatherMobile: e.target.value } })}
+            className={`w-full px-3 py-2.5 md:px-4 md:py-3 rounded-xl border outline-none transition-all text-xs md:text-sm font-medium placeholder:text-slate-400 ${getErrorClass(data.familyDetails.fatherMobile)}`}
+          />
+          <span className="text-[10px] text-slate-500 font-medium mt-1 leading-tight">This will be treated as the primary number for WhatsApp & school communication.</span>
+          {data.meta.showErrors && !data.familyDetails.fatherMobile && <span className="text-[10px] font-normal md:font-medium text-red-500 mt-1.5">Required field.</span>}
         </div>
 
         <div className="flex flex-col">
@@ -157,6 +183,18 @@ export default function Step2PersonalFamily() {
             value={data.familyDetails.motherName}
             onChange={(e) => updateData({ familyDetails: { ...data.familyDetails, motherName: e.target.value } })}
             className={`w-full px-3 py-2.5 md:px-4 md:py-3 rounded-xl border outline-none transition-all text-xs md:text-sm font-medium placeholder:text-slate-400 ${getErrorClass(data.familyDetails.motherName)}`}
+          />
+          {data.meta.showErrors && !data.familyDetails.motherName && <span className="text-[10px] font-normal md:font-medium text-red-500 mt-1.5">Required field.</span>}
+        </div>
+
+        <div className="flex flex-col">
+          <label className="text-[11px] font-normal md:font-medium text-slate-800 mb-2 uppercase tracking-wider">Mother's Mobile</label>
+          <input 
+            type="tel" 
+            placeholder="10-digit mobile number" 
+            value={data.familyDetails.motherMobile}
+            onChange={(e) => updateData({ familyDetails: { ...data.familyDetails, motherMobile: e.target.value } })}
+            className={`w-full px-3 py-2.5 md:px-4 md:py-3 rounded-xl border outline-none transition-all text-xs md:text-sm font-medium placeholder:text-slate-400 border-slate-200 focus:border-brand-green focus:ring-brand-green/20`}
           />
         </div>
 
@@ -172,12 +210,34 @@ export default function Step2PersonalFamily() {
         </div>
 
         <div className="flex flex-col">
-          <label className="text-[11px] font-normal md:font-medium text-slate-800 mb-2 uppercase tracking-wider">Guardian's Occupation</label>
+          <label className="text-[11px] font-normal md:font-medium text-slate-800 mb-2 uppercase tracking-wider">Guardian's Mobile</label>
+          <input 
+            type="tel" 
+            placeholder="Guardian's mobile" 
+            value={data.familyDetails.guardianMobile}
+            onChange={(e) => updateData({ familyDetails: { ...data.familyDetails, guardianMobile: e.target.value } })}
+            className="w-full px-3 py-2.5 md:px-4 md:py-3 rounded-xl border border-slate-200 focus:border-brand-green focus:ring-brand-green/20 outline-none transition-all text-xs md:text-sm font-medium placeholder:text-slate-400"
+          />
+        </div>
+        
+        <div className="flex flex-col">
+          <label className="text-[11px] font-normal md:font-medium text-slate-800 mb-2 uppercase tracking-wider">Father's Occupation</label>
           <input 
             type="text" 
             placeholder="Occupation" 
-            value={data.familyDetails.guardianOccupation}
-            onChange={(e) => updateData({ familyDetails: { ...data.familyDetails, guardianOccupation: e.target.value } })}
+            value={data.familyDetails.fatherOccupation}
+            onChange={(e) => updateData({ familyDetails: { ...data.familyDetails, fatherOccupation: e.target.value } })}
+            className="w-full px-3 py-2.5 md:px-4 md:py-3 rounded-xl border border-slate-200 focus:border-brand-green focus:ring-brand-green/20 outline-none transition-all text-xs md:text-sm font-medium placeholder:text-slate-400"
+          />
+        </div>
+
+        <div className="flex flex-col">
+          <label className="text-[11px] font-normal md:font-medium text-slate-800 mb-2 uppercase tracking-wider">Annual Family Income</label>
+          <input 
+            type="text" 
+            placeholder="e.g. 5,00,000" 
+            value={data.familyDetails.annualIncome}
+            onChange={(e) => updateData({ familyDetails: { ...data.familyDetails, annualIncome: e.target.value } })}
             className="w-full px-3 py-2.5 md:px-4 md:py-3 rounded-xl border border-slate-200 focus:border-brand-green focus:ring-brand-green/20 outline-none transition-all text-xs md:text-sm font-medium placeholder:text-slate-400"
           />
         </div>

@@ -11,6 +11,7 @@ import SettingsPortal from "./modules/SettingsPortal";
 import AcademicsManager from "./modules/AcademicsManager";
 import AdmissionsManager from "@/components/admin/sections/AdmissionsManager";
 import ProfileSettings from "./modules/ProfileSettings";
+import WhatsAppSettings from "./modules/WhatsAppSettings";
 import { useAuth } from "@/hooks/useAuth";
 
 interface ERPModuleWrapperProps {
@@ -52,6 +53,8 @@ export default function ERPModuleWrapper({
         <TransportPortal />
       ) : activeModule === "settings" ? (
         <SettingsPortal />
+      ) : activeModule === "whatsapp" ? (
+        <WhatsAppSettings />
       ) : activeModule === "academics" ? (
         <AcademicsManager />
       ) : activeModule === "admissions" ? (

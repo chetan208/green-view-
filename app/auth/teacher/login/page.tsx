@@ -32,6 +32,9 @@ export default function TeacherLoginPage() {
       if (res.success) {
         setStep("OTP");
         setSuccess(res.message || `OTP sent to +91 ${cleanMobile}.`);
+        if (res.otp) {
+          console.log(`%c[DEV] OTP for testing: ${res.otp}`, 'color: #10b981; font-weight: bold; font-size: 14px;');
+        }
       } else {
         setError(res.message || "Failed to send OTP.");
       }

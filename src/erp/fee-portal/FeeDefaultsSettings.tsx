@@ -202,7 +202,7 @@ export default function FeeDefaultsSettings({ selectedSession }: { selectedSessi
               className="flex-1 px-3 py-2 bg-white border border-slate-200 rounded-lg text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-[#093C5D]/15 focus:border-brand-green-dark transition-all cursor-pointer text-slate-700"
             >
               {dbClasses.map(cls => (
-                <option key={cls.id} value={cls.className}>{cls.className}</option>
+                <option key={cls._id || cls.className} value={cls.className}>{cls.className}</option>
               ))}
             </select>
           </div>
