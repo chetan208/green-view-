@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import { CheckCircle, XCircle, Send, LogOut, Settings, RefreshCw, QrCode } from 'lucide-react';
 import axios from 'axios';
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+const API_BASE = process.env.NEXT_PUBLIC_API_URL || process.env.NEXT_PUBLIC_SERVER_URL || 'https://api.greenviewschool.in';
 
 const toast = {
     success: (msg: string) => alert(msg),

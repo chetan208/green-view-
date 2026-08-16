@@ -291,42 +291,7 @@ export function Hero() {
             </a>
           </div>
 
-          {/* Social Proof */}
-          <div className="flex items-center gap-4 mt-4 flex-wrap sm:flex-nowrap">
-            {/* Avatars */}
-            <div className="flex items-center -space-x-2.5">
-              <div className="w-[34px] h-[34px] rounded-full bg-gradient-to-br from-amber-500 to-red-500 border-2 border-white flex items-center justify-center text-[11.2px] font-poppins font-semibold md:font-bold text-white shadow-md">
-                A
-              </div>
-              <div className="w-[34px] h-[34px] rounded-full bg-gradient-to-br from-blue-500 to-indigo-700 border-2 border-white flex items-center justify-center text-[11.2px] font-poppins font-semibold md:font-bold text-white shadow-md">
-                R
-              </div>
-              <div className="w-[34px] h-[34px] rounded-full bg-gradient-to-br from-emerald-500 to-teal-700 border-2 border-white flex items-center justify-center text-[11.2px] font-poppins font-semibold md:font-bold text-white shadow-md">
-                P
-              </div>
-              <div className="w-[34px] h-[34px] rounded-full bg-gradient-to-br from-violet-500 to-purple-700 border-2 border-white flex items-center justify-center text-[11.2px] font-poppins font-semibold md:font-bold text-white shadow-md">
-                N
-              </div>
-              <div className="w-[34px] h-[34px] rounded-full bg-gradient-to-br from-emerald-600 to-[#026135] border-2 border-white flex items-center justify-center text-[10px] font-poppins font-semibold md:font-bold text-white shadow-md">
-                +5k
-              </div>
-            </div>
 
-            {/* Rating Stars & Details */}
-            <div className="flex flex-col gap-0.5 justify-center">
-              <div className="flex items-center gap-1">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="w-3.5 h-3.5 fill-[#FBBF24] text-[#FBBF24]" />
-                ))}
-                <span className="font-poppins font-semibold md:font-bold text-[13px] text-zinc-900 ml-1.5">
-                  4.9
-                </span>
-              </div>
-              <span className="font-sans font-normal text-[11px] md:text-[12px] text-[#4B5563]">
-                Trusted by <strong className="font-semibold md:font-bold text-zinc-900">5,000+ families</strong> across HP since 2001
-              </span>
-            </div>
-          </div>
         </div>
 
         {/* Right Column: Visual School Image with Overlay Badges */}

@@ -38,7 +38,7 @@ export default function DashboardScreen() {
   useEffect(() => {
     const fetchNotices = async () => {
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/admin/notices`);
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || process.env.NEXT_PUBLIC_SERVER_URL || 'https://api.greenviewschool.in'}/api/admin/notices`);
         const data = await res.json();
         if (data.success && data.notices.length > 0) {
           setNotices(data.notices.slice(0, 3));

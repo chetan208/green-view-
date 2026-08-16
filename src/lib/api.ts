@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const API_BASE_URL = process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:8000';
+export const API_BASE_URL = process.env.NEXT_PUBLIC_SERVER_URL || process.env.NEXT_PUBLIC_API_URL || 'https://api.greenviewschool.in';
 
 const api = axios.create({
   baseURL: `${API_BASE_URL}/api/admin`,

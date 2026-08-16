@@ -9,7 +9,11 @@ export default function AcademicCalendarPage() {
     <div className="w-full min-h-screen bg-[#f9fafb] overflow-hidden pb-20">
       <CalendarHero />
       <div className="max-w-7xl mx-auto px-4 md:px-8">
-        <AcademicCalendarComponent isAdmin={false} />
+        <AcademicCalendarComponent 
+          isAdmin={false} 
+          hideSeeAllLink={true} 
+          showDetailedEventsList={true} 
+        />
       </div>
     </div>
   );

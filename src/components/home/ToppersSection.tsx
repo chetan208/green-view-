@@ -9,7 +9,7 @@ import TopperCard, { Topper } from "@/components/ui/TopperCard";
 export default function ToppersSection() {
   const [toppers, setToppers] = useState<Topper[]>([]);
   const [loading, setLoading] = useState(true);
-  const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:8000";
+  const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL || process.env.NEXT_PUBLIC_API_URL || "https://api.greenviewschool.in";
 
   useEffect(() => {
     const fetchToppers = async () => {
