@@ -51,11 +51,11 @@ export default function LeadershipMessages() {
               {/* Main Image */}
               <div className="w-full h-full rounded-2xl md:rounded-3xl overflow-hidden shadow-xl border border-slate-100 bg-slate-100">
                 <img
-                  src="/images/director.png"
+                  src="/images/teachers/director.png"
                   alt="Director Portrait"
                   className="w-full h-full object-cover object-[35%_top] hover:scale-[1.03] transition-transform duration-500"
                   loading="lazy"
-                  onError={(e) => { (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=400'; }}
+                  onError={(e) => { (e.target as HTMLImageElement).src = '/images/director.png'; }}
                 />
               </div>
             </motion.div>
@@ -117,11 +117,11 @@ export default function LeadershipMessages() {
               {/* Main Image */}
               <div className="w-full h-full rounded-2xl md:rounded-3xl overflow-hidden shadow-xl border border-slate-100 bg-slate-100">
                 <img
-                  src="/images/principal.png"
+                  src="/images/teachers/principal.png"
                   alt="Principal Portrait"
                   className="w-full h-full object-cover object-top hover:scale-[1.03] transition-transform duration-500"
                   loading="lazy"
-                  onError={(e) => { (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=400'; }}
+                  onError={(e) => { (e.target as HTMLImageElement).src = '/images/principal.png'; }}
                 />
               </div>
             </motion.div>

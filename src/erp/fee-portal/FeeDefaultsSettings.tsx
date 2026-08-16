@@ -5,7 +5,7 @@ import axios from "./axiosMock";
 import { motion } from "framer-motion";
 import { Settings, Save, Loader2, Info, AlertCircle } from "lucide-react";
 
-const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:8000";
+const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL || process.env.NEXT_PUBLIC_API_URL || "https://api.greenviewschool.in";
 
 interface FeeDefaults {
   admissionFee: number;

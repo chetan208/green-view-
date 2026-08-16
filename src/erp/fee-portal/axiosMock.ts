@@ -2,7 +2,7 @@ import { authFetch } from "@/services/erpApi";
 
 class RealAxiosWrapper {
   private buildUrl(url: string, config?: any) {
-    const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:8000';
+    const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL || process.env.NEXT_PUBLIC_API_URL || 'https://api.greenviewschool.in';
     let finalUrl = url.replace(serverUrl, '');
     
     if (config?.params) {

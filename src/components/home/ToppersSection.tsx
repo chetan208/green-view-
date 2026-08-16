@@ -17,7 +17,7 @@ interface Topper {
 export default function ToppersSection() {
   const [toppers, setToppers] = useState<Topper[]>([]);
   const [loading, setLoading] = useState(true);
-  const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:8000";
+  const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL || process.env.NEXT_PUBLIC_API_URL || "https://api.greenviewschool.in";
 
   useEffect(() => {
     const fetchToppers = async () => {
@@ -71,14 +71,14 @@ export default function ToppersSection() {
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {displayToppers.map((topper, index) => (
+            {displayToppers.map((topper) => (
               <div 
                 key={topper._id} 
-                className="bg-white rounded-3xl p-6 shadow-sm border border-slate-200/60 relative group hover:-translate-y-2 transition-all duration-300 overflow-hidden"
+                className="bg-white rounded-3xl p-6 shadow-xs border border-slate-200/60 relative group hover:-translate-y-0.5 hover:shadow-md transition-all duration-300 overflow-hidden"
               >
-                {/* Decorative background shape */}
-                <div className="absolute -right-12 -top-12 w-32 h-32 bg-[#E6F4EA] rounded-full group-hover:scale-150 transition-transform duration-500 ease-out z-0" />
-                <div className="absolute right-4 top-4 text-[#006a37] z-10 opacity-20 group-hover:opacity-100 transition-opacity">
+                {/* Subtle decorative background shape */}
+                <div className="absolute -right-12 -top-12 w-32 h-32 bg-[#E6F4EA] rounded-full z-0" />
+                <div className="absolute right-4 top-4 text-[#006a37] z-10 opacity-30">
                    <Award size={32} />
                 </div>
 

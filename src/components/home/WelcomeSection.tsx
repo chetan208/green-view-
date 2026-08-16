@@ -59,9 +59,9 @@ export default function WelcomeSection() {
           >
             <div className="w-full max-w-xl lg:max-w-2xl aspect-[4/3] sm:aspect-[14/10] md:aspect-[4/3] rounded-[1.5rem] md:rounded-[2.5rem] overflow-hidden border-4 sm:border-8 border-white shadow-xl bg-slate-50 relative group">
               <img
-                src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&q=80&w=1000"
-                alt="Green View Classroom Lecture"
-                className="w-full h-full object-cover  transition-transform duration-500"
+                src="/images/hero/hero2.png"
+                alt="Green View School Campus"
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 loading="lazy"
               />
             </div>
@@ -108,8 +108,7 @@ export default function WelcomeSection() {
           <div className="w-full flex sm:grid sm:grid-cols-2 lg:grid-cols-3 overflow-x-auto sm:overflow-visible gap-3 sm:gap-4 md:gap-6 no-scrollbar pb-2 sm:pb-0 max-w-5xl justify-start sm:justify-center">
             {credentials.map((cred, idx) => (
               <motion.div
-                
-
+                key={cred.title || idx}
                 className="bg-slate-50/80 border border-slate-100/90 rounded-xl sm:rounded-2xl p-3.5 sm:p-5 shadow-xs transition-all duration-300 flex flex-col justify-between shrink-0 w-[240px] sm:w-auto"
               >
                 <div className="flex flex-col gap-2.5 sm:gap-3">

@@ -25,9 +25,15 @@ interface CalendarEventItem {
 
 interface AcademicCalendarComponentProps {
   isAdmin?: boolean;
+  hideSeeAllLink?: boolean;
+  showDetailedEventsList?: boolean;
 }
 
-export default function AcademicCalendarComponent({ isAdmin = false }: AcademicCalendarComponentProps) {
+export default function AcademicCalendarComponent({ 
+  isAdmin = false,
+  hideSeeAllLink = false,
+  showDetailedEventsList = false
+}: AcademicCalendarComponentProps) {
   // Always initialize to current system date & current system month
   const [currentDate, setCurrentDate] = useState(() => new Date());
   const [selectedDay, setSelectedDay] = useState<number | null>(() => new Date().getDate());
@@ -83,7 +89,7 @@ export default function AcademicCalendarComponent({ isAdmin = false }: AcademicC
     } catch (err) {
       console.error("Error fetching calendar events:", err);
       setEvents([]);
-    } fiwally: {
+    } finally {
       setLoading(false);
     }
   };
@@ -224,10 +230,29 @@ export default function AcademicCalendarComponent({ isAdmin = false }: AcademicC
     setShowForm(true);
   };
 
+  const formatDateDisplay = (dateString?: string, endDateString?: string) => {
+    if (!dateString) return "";
+    const start = new Date(dateString);
+    if (isNaN(start.getTime())) return dateString;
+    const startStr = start.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    
+    if (endDateString) {
+      const end = new Date(endDateString);
+      if (!isNaN(end.getTime())) {
+        if (start.getFullYear() === end.getFullYear() && start.getMonth() === end.getMonth() && start.getDate() === end.getDate()) {
+          return `${startStr}, ${start.getFullYear()}`;
+        }
+        const endStr = end.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+        return `${startStr} - ${endStr}, ${end.getFullYear()}`;
+      }
+    }
+    return `${startStr}, ${start.getFullYear()}`;
+  };
+
   const selectedEvents = currentMonthEvents.filter(e => !selectedDay || e.days?.includes(selectedDay));
 
   return (
-    <section className={`w-full ${isAdmin ? 'space-y-6' : 'py-10 md:py-16 px-4 md:px-6 flex flex-col items-center justify-center overflow-hidden'}`}>
+    <section className={`w-full ${isAdmin ? 'space-y-6' : 'py-8 md:py-12 px-4 md:px-6 flex flex-col items-center justify-center overflow-hidden'}`}>
       
       {/* Title Header */}
       {isAdmin ? (
@@ -244,7 +269,7 @@ export default function AcademicCalendarComponent({ isAdmin = false }: AcademicC
                 setNewEvent({ title: "", description: "", dateStr: `${monthKey}-${dStr}`, endDateStr: "" });
                 setShowForm(true);
               }}
-              className="bg-[#0fa958] hover:bg-[#147a42] text-white px-4 py-2.5 rounded-lg text-xs sm:text-sm font-normal flex items-center gap-1.5 transition shadow-sm border-0 cursor-pointer"
+              className="bg-[#0fa958] hover:bg-[#147a42] text-white px-4 py-2 rounded-lg text-xs sm:text-sm font-normal flex items-center gap-1.5 transition shadow-sm border-0 cursor-pointer"
             >
               <Plus size={16} /> Add Event
             </button>
@@ -256,19 +281,19 @@ export default function AcademicCalendarComponent({ isAdmin = false }: AcademicC
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.6, ease: "easeOut" }}
-          className="text-center mb-8 md:mb-10 select-none"
+          className="text-center mb-6 md:mb-8 select-none"
         >
-          <h2 className="text-3xl md:text-4xl font-normal md:font-bold text-slate-800 tracking-tight leading-tight">
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-normal md:font-bold text-slate-800 tracking-tight leading-tight">
             Academic <span className="text-[#0fa958]">Calendar</span>
           </h2>
         </motion.div>
       )}
 
-      {/* Main Redesigned Calendar Card (Reference UI) */}
-      <div className="w-full max-w-5xl bg-white border border-slate-100 rounded-[28px] overflow-hidden shadow-xl flex flex-col md:flex-row min-h-[480px]">
+      {/* Main Redesigned Calendar Card - Reduced Size by 10% */}
+      <div className="w-full max-w-4xl bg-white border border-slate-100 rounded-[24px] overflow-hidden shadow-xl flex flex-col md:flex-row min-h-[420px]">
         
         {/* Left Column: Clean White Calendar Grid */}
-        <div className="flex-1 p-5 sm:p-7 md:p-9 flex flex-col justify-between relative z-10 bg-white">
+        <div className="flex-1 p-4 sm:p-6 md:p-7 flex flex-col justify-between relative z-10 bg-white">
           
           <div>
             {/* Top Row: Year Switcher & Reset Today */}
@@ -292,7 +317,7 @@ export default function AcademicCalendarComponent({ isAdmin = false }: AcademicC
             </div>
 
             {/* Month Selector Horizontal Pills (Jan..Dec) */}
-            <div className="flex items-center gap-1 sm:gap-2 overflow-x-auto no-scrollbar py-2 my-2 border-b border-slate-100 select-none">
+            <div className="flex items-center gap-1 sm:gap-1.5 overflow-x-auto no-scrollbar py-1.5 my-1.5 border-b border-slate-100 select-none">
               {shortMonths.map((mName, idx) => (
                 <button
                   key={mName}
@@ -301,7 +326,7 @@ export default function AcademicCalendarComponent({ isAdmin = false }: AcademicC
                     setCurrentDate(new Date(year, idx, 1));
                     setSelectedDay(null);
                   }}
-                  className={`px-3 py-1 text-xs font-normal rounded-full transition-all cursor-pointer border-0 shrink-0 ${
+                  className={`px-2.5 py-0.5 text-[11px] font-normal rounded-full transition-all cursor-pointer border-0 shrink-0 ${
                     idx === month
                       ? "bg-[#0fa958] text-white shadow-xs font-bold"
                       : "text-slate-400 hover:text-slate-800 hover:bg-slate-50"
@@ -313,7 +338,7 @@ export default function AcademicCalendarComponent({ isAdmin = false }: AcademicC
             </div>
 
             {/* Weekday Header */}
-            <div className="grid grid-cols-7 gap-y-2 text-center text-xs font-bold text-slate-400 my-2 select-none uppercase tracking-wider">
+            <div className="grid grid-cols-7 gap-y-1.5 text-center text-[11px] font-bold text-slate-400 my-1.5 select-none uppercase tracking-wider">
               <span>SUN</span>
               <span>MON</span>
               <span>TUE</span>
@@ -324,7 +349,7 @@ export default function AcademicCalendarComponent({ isAdmin = false }: AcademicC
             </div>
 
             {/* Days Grid */}
-            <div className="relative overflow-hidden flex-1 min-h-[220px] my-1">
+            <div className="relative overflow-hidden flex-1 min-h-[200px] my-1">
               <AnimatePresence mode="popLayout" custom={direction}>
                 <motion.div
                   key={monthKey}
@@ -333,10 +358,10 @@ export default function AcademicCalendarComponent({ isAdmin = false }: AcademicC
                   initial="enter"
                   animate="center"
                   exit="exit"
-                  className="grid grid-cols-7 gap-y-3.5 gap-x-1 text-center items-center justify-items-center w-full"
+                  className="grid grid-cols-7 gap-y-2.5 gap-x-1 text-center items-center justify-items-center w-full"
                 >
                   {daysGrid.map((dayNum, idx) => {
-                    if (dayNum === null) return <div key={`empty-${idx}`} className="w-8 h-8 sm:w-10 sm:h-10" />;
+                    if (dayNum === null) return <div key={`empty-${idx}`} className="w-7 h-7 sm:w-8 sm:h-8" />;
 
                     const isSelected = selectedDay === dayNum;
                     const isToday = isTodayMonth && dayNum === todayDateNum;
@@ -360,7 +385,7 @@ export default function AcademicCalendarComponent({ isAdmin = false }: AcademicC
                         onClick={() => { setSelectedDay(dayNum); if (isAdmin) setShowForm(false); }}
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.95 }}
-                        className={`relative w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 flex items-center justify-center font-bold text-xs sm:text-sm rounded-full transition-all select-none cursor-pointer ${
+                        className={`relative w-7 h-7 sm:w-8 sm:h-8 md:w-9 md:h-9 flex items-center justify-center font-bold text-xs rounded-full transition-all select-none cursor-pointer ${
                           isSelected
                             ? "bg-[#0fa958] text-white shadow-md shadow-emerald-600/30 ring-2 ring-[#0fa958] ring-offset-2 border-0"
                             : isToday
@@ -390,30 +415,30 @@ export default function AcademicCalendarComponent({ isAdmin = false }: AcademicC
             </div>
           </div>
 
-          {/* Color Legend Bar (Matching User Reference Screenshot) */}
-          <div className="mt-4 pt-4 border-t border-slate-100 flex flex-wrap items-center justify-center gap-3 sm:gap-6 text-xs font-normal text-slate-600 select-none">
+          {/* Color Legend Bar */}
+          <div className="mt-3 pt-3 border-t border-slate-100 flex flex-wrap items-center justify-center gap-2.5 sm:gap-5 text-[11px] font-normal text-slate-600 select-none">
             <div className="flex items-center gap-1.5">
-              <span className="w-3.5 h-3.5 rounded-full border-2 border-rose-500 bg-rose-50 shrink-0" />
-              <span className="text-rose-700 font-normal text-[11px] sm:text-xs">Sunday / Holiday (Red)</span>
+              <span className="w-3 h-3 rounded-full border-2 border-rose-500 bg-rose-50 shrink-0" />
+              <span className="text-rose-700 font-normal text-[10.5px]">Sunday / Holiday (Red)</span>
             </div>
             <div className="flex items-center gap-1.5">
-              <span className="w-3.5 h-3.5 rounded-full border-2 border-sky-500 bg-sky-50 shrink-0" />
-              <span className="text-sky-700 font-normal text-[11px] sm:text-xs">Scheduled Event (Blue)</span>
+              <span className="w-3 h-3 rounded-full border-2 border-sky-500 bg-sky-50 shrink-0" />
+              <span className="text-sky-700 font-normal text-[10.5px]">Scheduled Event (Blue)</span>
             </div>
             <div className="flex items-center gap-1.5">
-              <span className="w-3.5 h-3.5 rounded-full border-2 border-indigo-500 bg-indigo-50 shrink-0" />
-              <span className="text-indigo-700 font-normal text-[11px] sm:text-xs">Today&apos;s Date</span>
+              <span className="w-3 h-3 rounded-full border-2 border-indigo-500 bg-indigo-50 shrink-0" />
+              <span className="text-indigo-700 font-normal text-[10.5px]">Today&apos;s Date</span>
             </div>
             <div className="flex items-center gap-1.5">
-              <span className="w-3.5 h-3.5 rounded-full bg-[#0fa958] shrink-0" />
-              <span className="text-[#0fa958] font-normal text-[11px] sm:text-xs">Selected Day</span>
+              <span className="w-3 h-3 rounded-full bg-[#0fa958] shrink-0" />
+              <span className="text-[#0fa958] font-normal text-[10.5px]">Selected Day</span>
             </div>
           </div>
 
         </div>
 
-        {/* Right Column: Vibrant Emerald Sidebar (Reference Design) */}
-        <div className="w-full md:w-[320px] lg:w-[370px] bg-gradient-to-br from-[#0fa958] via-[#10a856] to-[#0c8243] text-white p-6 sm:p-8 lg:p-9 shrink-0 flex flex-col justify-between relative select-none">
+        {/* Right Column: Vibrant Emerald Sidebar */}
+        <div className="w-full md:w-[280px] lg:w-[320px] bg-gradient-to-br from-[#0fa958] via-[#10a856] to-[#0c8243] text-white p-5 sm:p-6 lg:p-7 shrink-0 flex flex-col justify-between relative select-none">
           
           {isAdmin && showForm ? (
             <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="flex-1 flex flex-col text-slate-800 bg-white p-5 rounded-2xl">
@@ -454,16 +479,16 @@ export default function AcademicCalendarComponent({ isAdmin = false }: AcademicC
           ) : (
             <>
               {/* Top: Large Prominent Date & Short Month Name */}
-              <div className="flex flex-col mb-4">
-                <div className="flex items-baseline gap-2.5">
-                  <span className="text-5xl sm:text-6xl lg:text-7xl font-black leading-none tracking-tight">
+              <div className="flex flex-col mb-3">
+                <div className="flex items-baseline gap-2">
+                  <span className="text-4xl sm:text-5xl lg:text-6xl font-black leading-none tracking-tight">
                     {String(activeDayNum).padStart(2, '0')}
                   </span>
-                  <span className="text-2xl sm:text-3xl font-bold uppercase opacity-90 tracking-wider">
+                  <span className="text-xl sm:text-2xl font-bold uppercase opacity-90 tracking-wider">
                     {shortMonths[month]}
                   </span>
                 </div>
-                <span className="text-xs sm:text-sm font-bold tracking-[0.25em] uppercase mt-2 opacity-95">
+                <span className="text-xs sm:text-sm font-bold tracking-[0.25em] uppercase mt-1.5 opacity-95">
                   {selectedDayName}
                 </span>
               </div>
@@ -516,30 +541,113 @@ export default function AcademicCalendarComponent({ isAdmin = false }: AcademicC
                 </div>
               </div>
 
-              {/* Bottom: Action Link */}
-              <div className="pt-3 border-t border-white/20 flex justify-between items-center text-xs font-normal">
-                <Link href="/academics/calendar" className="text-white hover:underline flex items-center gap-1">
-                  See all events →
-                </Link>
-                {isAdmin && (
-                  <button 
-                    onClick={() => {
-                      const dStr = selectedDay ? String(selectedDay).padStart(2, '0') : '01';
-                      setEditingEvent(null);
-                      setNewEvent({ title: "", description: "", dateStr: `${monthKey}-${dStr}`, endDateStr: "" });
-                      setShowForm(true);
-                    }}
-                    className="bg-white text-emerald-900 font-bold px-3 py-1.5 rounded-lg text-xs hover:bg-emerald-50 transition cursor-pointer border-0"
-                  >
-                    + Add Event
-                  </button>
-                )}
-              </div>
+              {/* Bottom: Action Link (Hidden when hideSeeAllLink is true) */}
+              {(!hideSeeAllLink || isAdmin) && (
+                <div className="pt-3 border-t border-white/20 flex justify-between items-center text-xs font-normal">
+                  {!hideSeeAllLink && (
+                    <Link href="/academics/calendar" className="text-white hover:underline flex items-center gap-1">
+                      See all events →
+                    </Link>
+                  )}
+                  {isAdmin && (
+                    <button 
+                      onClick={() => {
+                        const dStr = selectedDay ? String(selectedDay).padStart(2, '0') : '01';
+                        setEditingEvent(null);
+                        setNewEvent({ title: "", description: "", dateStr: `${monthKey}-${dStr}`, endDateStr: "" });
+                        setShowForm(true);
+                      }}
+                      className="bg-white text-emerald-900 font-bold px-3 py-1.5 rounded-lg text-xs hover:bg-emerald-50 transition cursor-pointer border-0 ml-auto"
+                    >
+                      + Add Event
+                    </button>
+                  )}
+                </div>
+              )}
             </>
           )}
         </div>
 
       </div>
+
+      {/* Detailed Events List Below Calendar (for Academic Calendar Page) */}
+      {showDetailedEventsList && (
+        <div className="w-full max-w-4xl mt-10 flex flex-col gap-5">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-slate-200/80 pb-4 gap-2">
+            <div>
+              <h3 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
+                All Events for {monthName} {year}
+              </h3>
+              <p className="text-xs sm:text-sm text-slate-500 font-normal mt-1">
+                Detailed schedule of holidays, celebrations, exams, and activities from the backend database.
+              </p>
+            </div>
+            <span className="text-xs font-bold bg-emerald-50 text-emerald-700 px-3.5 py-1.5 rounded-full border border-emerald-200/80 w-max shrink-0">
+              {currentMonthEvents.length} Event(s)
+            </span>
+          </div>
+
+          {loading ? (
+            <div className="w-full py-12 flex items-center justify-center text-slate-400 text-sm font-medium">
+              <Loader2 className="w-5 h-5 animate-spin text-[#0fa958] mr-2" /> Loading calendar events...
+            </div>
+          ) : currentMonthEvents.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
+              {currentMonthEvents.map((evt, idx) => {
+                const isHolidayEvt = (evt.title && (evt.title.toLowerCase().includes('holiday') || evt.title.toLowerCase().includes('vacation') || evt.title.toLowerCase().includes('off'))) ||
+                                     (evt.description && (evt.description.toLowerCase().includes('holiday') || evt.description.toLowerCase().includes('vacation') || evt.description.toLowerCase().includes('off')));
+                
+                return (
+                  <motion.div
+                    key={idx}
+                    initial={{ opacity: 0, y: 15 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3, delay: idx * 0.05 }}
+                    className="bg-white border border-slate-200/80 rounded-2xl p-5 shadow-xs hover:shadow-md transition-all flex flex-col justify-between"
+                  >
+                    <div className="flex flex-col gap-2.5">
+                      <div className="flex items-center justify-between gap-2">
+                        <span className={`text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full ${
+                          isHolidayEvt 
+                            ? "bg-rose-50 text-rose-700 border border-rose-200" 
+                            : "bg-sky-50 text-sky-700 border border-sky-200"
+                        }`}>
+                          {isHolidayEvt ? "Holiday" : "Scheduled Event"}
+                        </span>
+                        
+                        <span className="text-xs font-semibold text-slate-500 flex items-center gap-1.5">
+                          <CalendarIcon size={13} className={isHolidayEvt ? "text-rose-500" : "text-sky-500"} />
+                          {formatDateDisplay(evt.dateStr, evt.endDateStr)}
+                        </span>
+                      </div>
+
+                      <h4 className="text-base font-bold text-slate-900 mt-1">
+                        {evt.title}
+                      </h4>
+
+                      {evt.description ? (
+                        <p className="text-xs text-slate-600 font-normal leading-relaxed">
+                          {evt.description}
+                        </p>
+                      ) : (
+                        <p className="text-xs text-slate-400 italic font-normal">
+                          No additional details provided.
+                        </p>
+                      )}
+                    </div>
+                  </motion.div>
+                );
+              })}
+            </div>
+          ) : (
+            <div className="bg-white border border-slate-200/80 rounded-2xl p-8 text-center flex flex-col items-center justify-center">
+              <CalendarIcon className="w-10 h-10 text-slate-300 mb-2" />
+              <h4 className="text-sm font-bold text-slate-700">No Events Scheduled</h4>
+              <p className="text-xs text-slate-400 mt-1 font-normal">There are no events listed for {monthName} {year} in the database.</p>
+            </div>
+          )}
+        </div>
+      )}
 
       {/* ==================== CUSTOM MODAL: CALENDAR EVENT DELETE CONFIRMATION (ADMIN) ==================== */}
       <AnimatePresence>

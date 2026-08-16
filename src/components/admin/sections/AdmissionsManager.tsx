@@ -437,7 +437,7 @@ export default function AdmissionsManager() {
             {/* Modal Footer */}
             <div className="px-6 py-4 border-t border-slate-100 bg-slate-50 flex justify-between items-center">
               <a 
-                href={`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/admissions/${selectedApp._id}/pdf`}
+                href={`${process.env.NEXT_PUBLIC_API_URL || process.env.NEXT_PUBLIC_SERVER_URL || 'https://api.greenviewschool.in'}/api/admissions/${selectedApp._id}/pdf`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-sm font-semibold text-slate-600 hover:text-brand-green flex items-center gap-2 transition bg-transparent border-0 cursor-pointer no-underline"

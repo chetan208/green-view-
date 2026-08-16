@@ -7,12 +7,12 @@ import { motion, AnimatePresence } from "framer-motion";
 
 export default function HeroSection() {
   const images = [
-    "/images/hero.png",
-    "/images/classroom.png",
-    "/images/robotics.png",
-    "/images/library.png",
-    "/images/study.png",
-    "/images/art.png",
+    "/images/hero/hero1.png",
+    "/images/hero/hero2.png",
+    "/images/hero/hero3.png",
+    "/images/hero/hero4.png",
+    "/images/hero/hero5.png",
+    "/images/hero/hero6.png",
   ];
 
   const [currentImageIdx, setCurrentImageIdx] = useState(0);
