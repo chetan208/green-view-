@@ -1,7 +1,7 @@
 'use client';
 
-import NoticeManager from "@/components/admin/sections/NoticeManager";
+import AdminHomeOverview from "@/components/admin/sections/AdminHomeOverview";
 
 export default function AdminPage() {
-  return <NoticeManager />;
+  return <AdminHomeOverview />;
 }

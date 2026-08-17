@@ -437,27 +437,31 @@ export default function MediaManager() {
               </div>
             ) : albums.length > 0 ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full">
-                {albums.map((album) => {
+                {albums.map((album: any) => {
                   const albumIdStr = (album._id || album.id) as string;
                   let coverUrl = "/images/hero.png";
-                  if (album.media && album.media.length > 0) {
-                    const first = album.media[0];
-                    coverUrl = first.mediaType === 'video' && first.url.includes('youtube') 
-                      ? getYoutubeEmbedThumbnailUrl(first.url) 
-                      : first.url;
+                  
+                  // Backend provides coverMedia or media
+                  const firstMedia = album.coverMedia || (album.media && album.media[0]);
+                  
+                  if (firstMedia) {
+                    coverUrl = firstMedia.mediaType === 'video' && firstMedia.url?.includes('youtube') 
+                      ? getYoutubeEmbedThumbnailUrl(firstMedia.url) 
+                      : firstMedia.url || "/images/hero.png";
                   }
+
                   return (
                     <div 
                       key={albumIdStr}
                       onClick={() => { setActiveAlbumId(albumIdStr); setShowAlbumForm(false); }}
-                      className="group bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-xl hover:border-brand-green/30 transition-all duration-300 cursor-pointer flex flex-col w-full"
+                      className="group bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm transition-all duration-300 cursor-pointer flex flex-col w-full"
                     >
                       <div className="relative aspect-video w-full bg-slate-100 overflow-hidden">
                         <Image 
                           src={coverUrl}
                           alt={album.name}
                           fill
-                          className="object-cover group-hover:scale-105 transition-transform duration-700"
+                          className="object-cover"
                           unoptimized
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -468,7 +472,7 @@ export default function MediaManager() {
                             {album.name}
                           </h3>
                           <span className="text-xs font-medium text-slate-400 mt-0.5">
-                            {album.media ? album.media.length : 0} Items
+                            {album.totalMediaCount !== undefined ? album.totalMediaCount : (album.media ? album.media.length : 0)} Items
                           </span>
                         </div>
                         <div className="flex items-center">

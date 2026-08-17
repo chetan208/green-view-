@@ -15,6 +15,7 @@ import { AdmissionProvider, useAdmissionContext } from "./context/AdmissionConte
 import PrintableForm from "./components/PrintableForm";
 
 import { submitAdmissionApplicationApi } from "@/lib/api";
+import { erpApi } from "@/services/erpApi";
 
 function SeniorSecondaryAdmissionContent() {
   const [currentStep, setCurrentStep] = useState(1);
@@ -22,9 +23,16 @@ function SeniorSecondaryAdmissionContent() {
   const [submittedAppId, setSubmittedAppId] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
+  const [isAdmissionsOpen, setIsAdmissionsOpen] = useState<boolean | null>(null);
   const totalSteps = 6;
 
   const { data, updateData } = useAdmissionContext();
+
+  React.useEffect(() => {
+    erpApi.sessions.getAdmissionStatus()
+      .then(res => setIsAdmissionsOpen(res.success ? res.open : false))
+      .catch(() => setIsAdmissionsOpen(false));
+  }, []);
 
   const handleNext = async () => {
     let isValid = true;
@@ -142,6 +150,35 @@ function SeniorSecondaryAdmissionContent() {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
+
+  if (isAdmissionsOpen === null) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-[50vh]">
+        <Loader2 className="w-8 h-8 text-brand-green animate-spin mb-4" />
+        <p className="text-slate-500 font-medium">Checking admission status...</p>
+      </div>
+    );
+  }
+
+  if (isAdmissionsOpen === false) {
+    return (
+      <div className="max-w-3xl mx-auto mt-12 bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 p-12 text-center">
+        <div className="w-20 h-20 bg-amber-50 rounded-full flex items-center justify-center mx-auto mb-6">
+          <AlertCircle className="w-10 h-10 text-amber-500" />
+        </div>
+        <h2 className="text-2xl sm:text-3xl font-bold text-slate-800 mb-4 font-serif">Admissions Closed</h2>
+        <p className="text-slate-600 text-lg mb-8 max-w-xl mx-auto leading-relaxed">
+          Admissions for the current academic session are currently closed. Please check back later or contact the administration office for more details.
+        </p>
+        <Link 
+          href="/"
+          className="inline-flex items-center justify-center px-8 py-3 bg-brand-green hover:bg-brand-green-dark text-white font-semibold rounded-xl transition-colors duration-200"
+        >
+          Return to Home
+        </Link>
+      </div>
+    );
+  }
 
   return (
     <div className="w-full min-h-screen bg-[#f9fafb] relative">

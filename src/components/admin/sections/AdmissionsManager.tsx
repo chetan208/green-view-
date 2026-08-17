@@ -1,8 +1,8 @@
 'use client';
 
 import React, { useState, useEffect } from "react";
-import { GraduationCap, CheckCircle2, Clock, XCircle, Search, Eye, X, Download, User, Loader2, AlertTriangle } from "lucide-react";
-import { admissionsApi } from "@/services/erpApi";
+import { GraduationCap, CheckCircle2, Clock, XCircle, Search, Eye, X, Download, User, Loader2, AlertTriangle, Power } from "lucide-react";
+import { admissionsApi, erpApi } from "@/services/erpApi";
 
 type AppStatus = "PENDING" | "APPROVED" | "REJECTED";
 
@@ -15,6 +15,9 @@ export default function AdmissionsManager() {
   const [error, setError] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [actionLoading, setActionLoading] = useState(false);
+  const [activeSessionId, setActiveSessionId] = useState<string | null>(null);
+  const [admissionsOpen, setAdmissionsOpen] = useState(false);
+  const [toggleLoading, setToggleLoading] = useState(false);
 
   const fetchAdmissions = async () => {
     setLoading(true);
@@ -22,7 +25,19 @@ export default function AdmissionsManager() {
       const filters: any = {};
       if (searchQuery) filters.search = searchQuery;
       
-      const res = await admissionsApi.list(filters);
+      const [res, sessionRes] = await Promise.all([
+        admissionsApi.list(filters),
+        erpApi.sessions.list()
+      ]);
+
+      if (sessionRes.success) {
+        const active = sessionRes.sessions.find((s: any) => s.isActive);
+        if (active) {
+          setActiveSessionId(active._id);
+          setAdmissionsOpen(active.admissionsOpen || false);
+        }
+      }
+
       if (res.success) {
         const mappedApps = res.applications.map((app: any) => ({
           ...app,
@@ -101,6 +116,24 @@ export default function AdmissionsManager() {
 
   const activeApps = activeTab === "primary" ? primaryApps : seniorApps;
 
+  const handleToggleAdmissions = async () => {
+    if (!activeSessionId) return;
+    setToggleLoading(true);
+    try {
+      const newStatus = !admissionsOpen;
+      const res = await erpApi.sessions.toggleAdmissionStatus(activeSessionId, newStatus);
+      if (res.success) {
+        setAdmissionsOpen(newStatus);
+      } else {
+        alert(res.message || "Failed to toggle admissions status");
+      }
+    } catch (err: any) {
+      alert("Error toggling admissions status");
+    } finally {
+      setToggleLoading(false);
+    }
+  };
+
   const handleApprove = async (id: string) => {
     setActionLoading(true);
     try {
@@ -176,7 +209,24 @@ export default function AdmissionsManager() {
   return (
     <div className="space-y-6 text-slate-800 relative">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-        <h2 className="text-xl sm:text-2xl font-semibold font-serif text-slate-900">Admissions Processing</h2>
+        <div className="flex items-center gap-4">
+          <h2 className="text-xl sm:text-2xl font-semibold font-serif text-slate-900">Admissions Processing</h2>
+          
+          {activeSessionId && (
+            <button
+              onClick={handleToggleAdmissions}
+              disabled={toggleLoading}
+              className={`flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider transition-colors border ${
+                admissionsOpen 
+                  ? "bg-emerald-50 text-emerald-700 border-emerald-200 hover:bg-emerald-100" 
+                  : "bg-slate-100 text-slate-500 border-slate-200 hover:bg-slate-200"
+              }`}
+            >
+              {toggleLoading ? <Loader2 size={14} className="animate-spin" /> : <Power size={14} />}
+              {admissionsOpen ? "Admissions Open" : "Admissions Closed"}
+            </button>
+          )}
+        </div>
         <div className="relative">
           <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
           <input 

@@ -3,13 +3,14 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, GraduationCap, Mail, Calendar, Trophy, ExternalLink, School, FileText, BookOpen, Image } from "lucide-react";
+import { Menu, X, GraduationCap, Mail, Calendar, Trophy, ExternalLink, School, FileText, BookOpen, Image, LayoutDashboard } from "lucide-react";
 
 export default function AdminLayoutShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const menuItems = [
+    { href: "/admin", label: "Dashboard Home", icon: <LayoutDashboard size={15} /> },
     { href: "/admin/contact", label: "Contact Inquiries", icon: <Mail size={15} /> },
     { href: "/admin/calendar", label: "Manage Calendar", icon: <Calendar size={15} /> },
     { href: "/admin/results", label: "Top Results", icon: <Trophy size={15} /> },
@@ -20,9 +21,8 @@ export default function AdminLayoutShell({ children }: { children: React.ReactNo
   ];
 
   const checkIsActive = (href: string) => {
-    if (pathname === href) return true;
-    if (href === "/admin/notices" && (pathname === "/admin" || pathname === "/admin/")) return true;
-    return false;
+    if (href === "/admin") return pathname === "/admin" || pathname === "/admin/";
+    return pathname === href;
   };
 
   return (

@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { ArrowRight, Sparkles, Award } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { erpApi } from "@/services/erpApi";
 
 export default function HeroSection() {
   const images = [
@@ -16,6 +17,7 @@ export default function HeroSection() {
   ];
 
   const [currentImageIdx, setCurrentImageIdx] = useState(0);
+  const [isAdmissionsOpen, setIsAdmissionsOpen] = useState(false);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -23,6 +25,12 @@ export default function HeroSection() {
     }, 4000);
     return () => clearInterval(interval);
   }, [images.length]);
+
+  useEffect(() => {
+    erpApi.sessions.getAdmissionStatus()
+      .then(res => setIsAdmissionsOpen(res.success ? res.open : false))
+      .catch(() => setIsAdmissionsOpen(false));
+  }, []);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -131,23 +139,27 @@ export default function HeroSection() {
           </motion.div>
 
           {/* Overlapping Badge: Admissions Open (Bottom-Left) */}
-          <motion.div 
-            initial={{ scale: 0, rotate: -30 }}
-            animate={{ scale: 1, rotate: 0 }}
-            transition={{ type: "spring", stiffness: 260, damping: 20, delay: 0.5 }}
-            whileHover={{ scale: 1.05 }}
-            className="absolute -bottom-3 -left-2 sm:-bottom-4 sm:-left-4 md:-bottom-6 md:-left-6 z-20 bg-brand-green text-white w-20 h-20 sm:w-26 sm:h-26 md:w-30 md:h-30 rounded-full flex flex-col items-center justify-center text-center shadow-lg border-4 md:border-[6px] border-white select-none"
-          >
-            <span className="text-[11px] sm:text-xs md:text-sm font-semibold md:font-black tracking-tight leading-none">
-              2026-27
-            </span>
-            <span className="text-[7px] sm:text-[8px] md:text-[9px] font-semibold md:font-black uppercase tracking-wider mt-0.5 sm:mt-1 leading-none text-emerald-100">
-              Admissions
-            </span>
-            <span className="text-[7px] sm:text-[8px] md:text-[9px] font-semibold md:font-black uppercase tracking-wider leading-none text-emerald-100">
-              Open Now
-            </span>
-          </motion.div>
+          {isAdmissionsOpen && (
+            <Link href="/admissions" className="absolute -bottom-3 -left-2 sm:-bottom-4 sm:-left-4 md:-bottom-6 md:-left-6 z-20">
+              <motion.div 
+                initial={{ scale: 0, rotate: -30 }}
+                animate={{ scale: 1, rotate: 0 }}
+                transition={{ type: "spring", stiffness: 260, damping: 20, delay: 0.5 }}
+                whileHover={{ scale: 1.05 }}
+                className="bg-brand-green text-white w-20 h-20 sm:w-26 sm:h-26 md:w-30 md:h-30 rounded-full flex flex-col items-center justify-center text-center shadow-lg border-4 md:border-[6px] border-white select-none cursor-pointer"
+              >
+                <span className="text-[11px] sm:text-xs md:text-sm font-semibold md:font-black tracking-tight leading-none">
+                  2026-27
+                </span>
+                <span className="text-[7px] sm:text-[8px] md:text-[9px] font-semibold md:font-black uppercase tracking-wider mt-0.5 sm:mt-1 leading-none text-emerald-100">
+                  Admissions
+                </span>
+                <span className="text-[7px] sm:text-[8px] md:text-[9px] font-semibold md:font-black uppercase tracking-wider leading-none text-emerald-100">
+                  Open Now
+                </span>
+              </motion.div>
+            </Link>
+          )}
 
           {/* Offset Badge: Board Results (Bottom-Right) */}
           {/* <motion.div 

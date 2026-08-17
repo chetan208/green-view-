@@ -12,9 +12,7 @@ const baseApi = axios.create({
 
 // ==================== ADMISSIONS API ====================
 export const submitAdmissionApplicationApi = async (formData: FormData) => {
-  const response = await baseApi.post('/admissions/submit', formData, {
-    headers: { 'Content-Type': 'multipart/form-data' },
-  });
+  const response = await baseApi.post('/admissions/submit', formData);
   return response.data;
 };
 
@@ -31,16 +29,12 @@ export const getNoticesApi = async () => {
 };
 
 export const createNoticeApi = async (formData: FormData) => {
-  const response = await api.post('/notice', formData, {
-    headers: { 'Content-Type': 'multipart/form-data' },
-  });
+  const response = await api.post('/notice', formData);
   return response.data;
 };
 
 export const updateNoticeApi = async (id: string, formData: FormData) => {
-  const response = await api.put(`/notice/${id}`, formData, {
-    headers: { 'Content-Type': 'multipart/form-data' },
-  });
+  const response = await api.put(`/notice/${id}`, formData);
   return response.data;
 };
 
@@ -118,9 +112,7 @@ export const getMediaApi = async (params?: { folderId?: string; mediaType?: stri
 
 export const addMediaToFolderApi = async (folderId: string, data: FormData | { title?: string; mediaType: 'video'; youtubeUrl: string }) => {
   if (data instanceof FormData) {
-    const response = await api.post(`/folder/${folderId}/media`, data, {
-      headers: { 'Content-Type': 'multipart/form-data' },
-    });
+    const response = await api.post(`/folder/${folderId}/media`, data);
     return response.data;
   } else {
     const response = await api.post(`/folder/${folderId}/media`, data);
@@ -129,9 +121,7 @@ export const addMediaToFolderApi = async (folderId: string, data: FormData | { t
 };
 
 export const addMultipleMediaToFolderApi = async (folderId: string, formData: FormData) => {
-  const response = await api.post(`/folder/${folderId}/media/batch`, formData, {
-    headers: { 'Content-Type': 'multipart/form-data' },
-  });
+  const response = await api.post(`/folder/${folderId}/media/batch`, formData);
   return response.data;
 };
 

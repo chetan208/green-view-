@@ -40,17 +40,21 @@ export default function ERPHeader() {
             <ArrowLeft size={15} />
           </button>
 
-          <div className="flex items-center gap-2.5">
-            <div className="w-9 h-9 bg-transparent rounded-full flex items-center justify-center shrink-0 overflow-hidden">
-              <img src="/-logo.png" alt=" Logo" className="w-full h-full object-contain" />
+          <div className="flex items-center gap-3 shrink-0 cursor-pointer" onClick={() => router.push("/erp")}>
+            <div className="w-10 h-10 sm:w-11 sm:h-11 relative shrink-0">
+              <img
+                src="/images/logo.png"
+                alt="Green View Logo"
+                className="w-full h-full object-contain"
+              />
             </div>
-            <div className="hidden sm:block">
-              <p className="text-slate-900 font-bold text-[13px] leading-none tracking-tight">
-                Green View ERP
-              </p>
-              <p className="text-slate-500 text-[9px] font-medium uppercase tracking-widest mt-0.5">
+            <div className="hidden sm:flex flex-col">
+              <span className="font-serif font-semibold md:font-black text-brand-navy text-sm md:text-base leading-none tracking-tight">
+                 Green View ERP
+              </span>
+              <span className="text-[7px] text-brand-navy font-medium md:font-bold tracking-widest uppercase mt-1.5 leading-none">
                 School Management System
-              </p>
+              </span>
             </div>
           </div>
         </div>

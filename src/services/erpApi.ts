@@ -285,6 +285,17 @@ export const erpApi = {
         body: JSON.stringify({ year })
       });
       return res.json();
+    },
+    getAdmissionStatus: async () => {
+      const res = await fetch(`${API_BASE}/api/erp/sessions/public/admission-status`);
+      return res.json();
+    },
+    toggleAdmissionStatus: async (id: string, admissionsOpen: boolean) => {
+      const res = await authFetch(`/api/erp/sessions/${id}/toggle-admissions`, {
+        method: 'POST',
+        body: JSON.stringify({ admissionsOpen })
+      });
+      return res.json();
     }
   },
 
