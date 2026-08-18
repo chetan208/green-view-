@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useMemo, useEffect } from "react";
-import { Search, Plus, Mail, Phone, MoreVertical, UserCircle, Briefcase, Trash2, Filter, Upload, Users, GraduationCap, Building2, Loader2, CheckCircle2, AlertTriangle, X } from "lucide-react";
+import { Search, Plus, Mail, Phone, MoreVertical, UserCircle, Briefcase, Trash2, Filter, Upload, Users, GraduationCap, Building2, Loader2, CheckCircle2, AlertTriangle, X, Edit2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { erpApi } from "@/services/erpApi";
@@ -11,9 +11,12 @@ type Staff = {
   _id: string;
   name: string;
   phone: string;
-  role: 'teacher' | 'admin';
-  teacherProfile?: {
-    accessRole: string;
+  role: 'user';
+  accessLevel?: string;
+  photoUrl?: string;
+  staffProfile?: {
+    isTeacher?: boolean;
+    post?: string;
     designation: string;
     department: string;
     dateOfJoining?: string;
@@ -32,18 +35,29 @@ export default function StaffManager() {
   const [staffList, setStaffList] = useState<Staff[]>([]);
   const [loading, setLoading] = useState(true);
   const [submitLoading, setSubmitLoading] = useState(false);
+  const existingPosts = useMemo(() => {
+    const restricted = ['admin', 'superadmin', 'developer', 'super admin'];
+    const posts = staffList
+      .map(s => s.staffProfile?.post)
+      .filter(Boolean)
+      .filter(post => {
+        const p = (post as string).toLowerCase();
+        return !restricted.some(r => p.includes(r));
+      });
+    return Array.from(new Set(posts));
+  }, [staffList]);
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [deleteLoading, setDeleteLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   
   const { user } = useAuth();
 
-  const [newStaff, setNewStaff] = useState({
-    name: "",
-    accessRole: "Teacher",
-    qualification: "",
-    bio: "",
-    phone: "",
-    email: ""
+  const [newStaff, setNewStaff] = useState<{
+    name: string; accessLevel: string; post: string; qualification: string; bio: string; phone: string; email: string; isTeacher: boolean; photo: File | null;
+  }>({
+    name: "", accessLevel: "staff", post: "", qualification: "", bio: "", phone: "", email: "", isTeacher: true, photo: null
   });
 
   const departments = ["All", "Administration", "Science Faculty", "Primary Faculty", "Transport", "Support Staff"];
@@ -75,70 +89,101 @@ export default function StaffManager() {
     return () => clearTimeout(delayDebounceFn);
   }, [searchQuery, filterDept]);
 
-  // Derived Stats
-  const totalStaff = staffList.length;
-  const teachingStaff = staffList.filter(s => s.teacherProfile?.department?.includes("Faculty") || s.teacherProfile?.designation?.toLowerCase().includes("teacher")).length;
-  const adminStaff = staffList.filter(s => s.teacherProfile?.department === "Administration").length;
+
+  const handleEdit = (staff: Staff) => {
+    setEditingId(staff._id);
+    setNewStaff({
+      name: staff.name || "",
+      accessLevel: staff.accessLevel || "staff",
+      post: staff.staffProfile?.post || "",
+      qualification: staff.staffProfile?.qualification || "",
+      bio: staff.staffProfile?.bio || "",
+      phone: staff.phone || "",
+      email: staff.email || "",
+      isTeacher: staff.staffProfile?.isTeacher ?? true,
+      photo: null
+    });
+    setShowForm(true);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!newStaff.name || !newStaff.phone || !newStaff.accessRole) {
+    setSubmitLoading(true);
+    setError("");
+
+    if (!newStaff.name || !newStaff.phone || !newStaff.accessLevel) {
       setError("Please fill all required fields");
+      setSubmitLoading(false);
       return;
     }
 
-    setSubmitLoading(true);
-    setError(null);
     
-    const formData = new FormData();
-    formData.append("name", newStaff.name);
-    formData.append("phone", newStaff.phone);
-    formData.append("accessRole", newStaff.accessRole);
-    if (newStaff.qualification) formData.append("qualification", newStaff.qualification);
-    if (newStaff.bio) formData.append("bio", newStaff.bio);
-    if (newStaff.email) formData.append("email", newStaff.email);
 
     try {
-      const res = await erpApi.teachers.create(formData);
+      let res;
+      const formData = new FormData();
+      formData.append("name", newStaff.name);
+      formData.append("phone", newStaff.phone);
+      formData.append("accessLevel", newStaff.accessLevel);
+      formData.append("isTeacher", newStaff.isTeacher.toString());
+      if (newStaff.post) formData.append("post", newStaff.post);
+      if (newStaff.qualification) formData.append("qualification", newStaff.qualification);
+      if (newStaff.bio) formData.append("bio", newStaff.bio);
+      if (newStaff.email) formData.append("email", newStaff.email);
+      if (newStaff.photo) formData.append("photo", newStaff.photo);
+
+      if (editingId) {
+        res = await erpApi.teachers.update(editingId, formData);
+      } else {
+        res = await erpApi.teachers.create(formData);
+      }
+      
       if (res.success) {
-        setSuccess("Teacher added successfully!");
-        setNewStaff({ name: "", accessRole: "Teacher", qualification: "", bio: "", phone: "", email: "" });
+        setSuccess(editingId ? "Staff updated successfully!" : "Staff added successfully!");
+        setNewStaff({ name: "", accessLevel: "staff", post: "", qualification: "", bio: "", phone: "", email: "", isTeacher: true, photo: null });
+        setEditingId(null);
         setShowForm(false);
         fetchStaff();
       } else {
-        setError(res.message || "Failed to add teacher");
+        setError(res.message || (editingId ? "Failed to update staff" : "Failed to add staff"));
       }
     } catch (err: any) {
-      setError(err.message || "Failed to add teacher");
+      setError(err.message || (editingId ? "Failed to update staff" : "Failed to add staff"));
     } finally {
       setSubmitLoading(false);
     }
   };
 
-  const updateRole = async (id: string, newAccessRole: string) => {
+  const updateRole = async (id: string, newAccessLevel: string) => {
     try {
-      const res = await erpApi.teachers.update(id, { accessRole: newAccessRole });
+      const res = await erpApi.teachers.update(id, { accessLevel: newAccessLevel });
       if (res.success) {
-        setStaffList(staffList.map(s => s._id === id ? { ...s, teacherProfile: { ...s.teacherProfile, accessRole: newAccessRole } as any } : s));
+        setStaffList(staffList.map(s => s._id === id ? { ...s, accessLevel: newAccessLevel } as any : s));
       }
     } catch (err) {
       console.error(err);
     }
   };
 
-  const handleDelete = async (id: string) => {
-    if (confirm("Are you sure you want to remove this teacher?")) {
-      try {
-        const res = await erpApi.teachers.delete(id);
-        if (res.success) {
-          setSuccess("Teacher removed");
-          fetchStaff();
-        } else {
-          setError(res.message || "Failed to remove teacher");
-        }
-      } catch (err: any) {
-        setError(err.message || "Failed to remove teacher");
+  const executeDelete = async () => {
+    if (!deletingId) return;
+    setDeleteLoading(true);
+    try {
+      const res = await erpApi.teachers.delete(deletingId);
+      if (res.success) {
+        setSuccess("Staff removed");
+        setDeletingId(null);
+        fetchStaff();
+      } else {
+        setError(res.message || "Failed to remove staff");
+        setDeletingId(null);
       }
+    } catch (err: any) {
+      setError(err.message || "Failed to remove staff");
+      setDeletingId(null);
+    } finally {
+      setDeleteLoading(false);
     }
   };
 
@@ -148,39 +193,9 @@ export default function StaffManager() {
       {/* Header */}
       <div>
         <h2 className="text-xl sm:text-2xl font-semibold font-serif text-slate-900">Human Resources</h2>
-        <p className="text-xs font-medium text-slate-500 mt-1">Manage teacher records, roles, and contact information.</p>
+        <p className="text-xs font-medium text-slate-500 mt-1">Manage staff records, roles, and contact information.</p>
       </div>
 
-      {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-sm flex items-center gap-4">
-          <div className="w-12 h-12 rounded-full bg-brand-green/10 text-brand-green flex items-center justify-center">
-            <Users size={24} />
-          </div>
-          <div>
-            <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Total Staff</p>
-            <h3 className="text-2xl font-bold text-slate-900">{totalStaff}</h3>
-          </div>
-        </div>
-        <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-sm flex items-center gap-4">
-          <div className="w-12 h-12 rounded-full bg-blue-50 text-blue-500 flex items-center justify-center">
-            <GraduationCap size={24} />
-          </div>
-          <div>
-            <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Teaching Faculty</p>
-            <h3 className="text-2xl font-bold text-slate-900">{teachingStaff}</h3>
-          </div>
-        </div>
-        <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-sm flex items-center gap-4">
-          <div className="w-12 h-12 rounded-full bg-orange-50 text-orange-500 flex items-center justify-center">
-            <Building2 size={24} />
-          </div>
-          <div>
-            <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Administration</p>
-            <h3 className="text-2xl font-bold text-slate-900">{adminStaff}</h3>
-          </div>
-        </div>
-      </div>
 
       {/* Toolbar */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
@@ -195,24 +210,15 @@ export default function StaffManager() {
               className="w-full pl-9 pr-4 py-2 bg-slate-50 border border-slate-200 text-sm rounded-lg focus:outline-none focus:border-brand-green focus:bg-white transition placeholder:text-slate-400 font-medium text-slate-700" 
             />
           </div>
-          <div className="flex items-center gap-2 text-sm font-medium text-slate-600">
-            <Filter size={16} className="text-slate-400" />
-            <select 
-              value={filterDept} 
-              onChange={e => setFilterDept(e.target.value)}
-              className="bg-transparent border-none focus:outline-none cursor-pointer"
-            >
-              {departments.map(dept => <option key={dept} value={dept}>{dept}</option>)}
-            </select>
-          </div>
+          
         </div>
         
-        {!showForm && user?.teacherProfile?.accessRole === 'Owner' && (
+        {!showForm && user?.accessLevel === 'superadmin' && (
           <button 
-            onClick={() => setShowForm(true)}
+            onClick={() => { setEditingId(null); setNewStaff({ name: "", accessLevel: "staff", post: "", qualification: "", bio: "", phone: "", email: "", isTeacher: true, photo: null }); setShowForm(true); }}
             className="w-full md:w-auto bg-brand-green hover:bg-brand-green-dark text-white px-5 py-2.5 rounded-lg text-sm font-semibold flex items-center justify-center gap-2 transition shadow-sm border-0 cursor-pointer"
           >
-            <Plus size={16} /> Add Teacher
+            <Plus size={16} /> Add Staff
           </button>
         )}
       </div>
@@ -255,20 +261,33 @@ export default function StaffManager() {
             <div className="flex justify-between items-center border-b border-slate-100 pb-4">
               <h3 className="text-sm font-semibold text-slate-900 flex items-center gap-2">
                 <Briefcase className="w-5 h-5 text-brand-green" />
-                Teacher Onboarding
+                Staff Onboarding
               </h3>
               <button type="button" onClick={() => setShowForm(false)} className="text-xs font-semibold text-slate-400 hover:text-slate-600 transition bg-slate-100 hover:bg-slate-200 px-3 py-1.5 rounded-md border-0 cursor-pointer">Cancel</button>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
-              {/* Photo Upload Area */}
-              <div className="md:col-span-3 flex flex-col gap-1.5">
-                <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400">Profile Photo</label>
-                <label className="flex flex-col items-center justify-center w-full aspect-square border-2 border-slate-200 border-dashed rounded-xl cursor-pointer bg-slate-50 hover:bg-brand-green/5 hover:border-brand-green/30 transition-all group">
-                  <Upload size={24} className="text-slate-300 group-hover:text-brand-green mb-2 transition-colors" />
-                  <p className="text-[10px] font-semibold text-slate-500 text-center px-4">Upload Headshot</p>
-                </label>
-              </div>
+                {/* Photo Upload Area */}
+                <div className="md:col-span-3 flex flex-col gap-1.5">
+                  <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400">Profile Photo</label>
+                  <label className="flex flex-col items-center justify-center w-full aspect-square border-2 border-slate-200 border-dashed rounded-xl cursor-pointer bg-slate-50 hover:bg-brand-green/5 hover:border-brand-green/30 transition-all group overflow-hidden relative">
+                    {newStaff.photo ? (
+                      <img src={URL.createObjectURL(newStaff.photo)} alt="Preview" className="w-full h-full object-cover" />
+                    ) : (
+                      <>
+                        <Upload size={24} className="text-slate-300 group-hover:text-brand-green mb-2 transition-colors" />
+                        <p className="text-[10px] font-semibold text-slate-500 text-center px-4">Upload Photo</p>
+                      </>
+                    )}
+                    <input type="file" className="hidden" accept="image/*" onChange={(e) => {
+                      if (e.target.files?.[0]) setNewStaff({...newStaff, photo: e.target.files[0]});
+                    }} />
+                  </label>
+                  <label className="flex items-center gap-2 mt-4 cursor-pointer p-3 bg-slate-50 rounded-xl border border-slate-200">
+                    <input type="checkbox" checked={newStaff.isTeacher} onChange={(e) => setNewStaff({...newStaff, isTeacher: e.target.checked})} className="w-4 h-4 text-brand-green rounded border-slate-300 focus:ring-brand-green" />
+                    <span className="text-sm font-semibold text-slate-700">Is Teacher?</span>
+                  </label>
+                </div>
 
               {/* Form Fields */}
               <div className="md:col-span-9 grid grid-cols-1 sm:grid-cols-2 gap-5">
@@ -277,12 +296,16 @@ export default function StaffManager() {
                   <input type="text" required value={newStaff.name} onChange={e => setNewStaff({...newStaff, name: e.target.value})} placeholder="e.g., Arvind Patel" className="w-full px-4 py-2 bg-slate-50 border border-slate-200 text-sm rounded-lg focus:outline-none focus:border-brand-green focus:bg-white font-medium transition" />
                 </div>
                 <div>
-                  <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Role *</label>
-                  <select required value={newStaff.accessRole} onChange={e => setNewStaff({...newStaff, accessRole: e.target.value})} className="w-full px-4 py-2 bg-slate-50 border border-slate-200 text-sm rounded-lg focus:outline-none focus:border-brand-green font-medium transition cursor-pointer">
-                    <option value="Teacher">Teacher</option>
-                    <option value="Admin">Admin</option>
-                    <option value="Owner">Owner</option>
+                  <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Access Level *</label>
+                  <select required value={newStaff.accessLevel} onChange={e => setNewStaff({...newStaff, accessLevel: e.target.value})} className="w-full px-4 py-2 bg-slate-50 border border-slate-200 text-sm rounded-lg focus:outline-none focus:border-brand-green font-medium transition cursor-pointer">
+                    <option value="staff">Staff</option>
+                    <option value="admin">Admin</option>
+                    <option value="superadmin">Super Admin</option>
                   </select>
+                </div>
+                <div>
+                  <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Post / Job Title</label>
+                  <input type="text" value={newStaff.post} onChange={e => setNewStaff({...newStaff, post: e.target.value})} placeholder="e.g., Principal, MD, PGT Math" className="w-full px-4 py-2 bg-slate-50 border border-slate-200 text-sm rounded-lg focus:outline-none focus:border-brand-green focus:bg-white font-medium transition" />
                 </div>
                 <div>
                   <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Qualification</label>
@@ -306,7 +329,7 @@ export default function StaffManager() {
             <div className="pt-4 border-t border-slate-100 flex justify-end">
               <button type="submit" disabled={submitLoading} className="w-full sm:w-auto bg-slate-900 hover:bg-slate-800 text-white px-8 py-2.5 rounded-lg text-sm font-semibold transition flex items-center justify-center gap-2 shadow-md border-0 cursor-pointer disabled:bg-slate-400">
                 {submitLoading && <Loader2 size={16} className="animate-spin" />}
-                Save Teacher Record
+                {editingId ? "Update Staff Record" : "Save Staff Record"}
               </button>
             </div>
           </motion.form>
@@ -325,10 +348,12 @@ export default function StaffManager() {
             <table className="w-full text-left border-collapse">
               <thead>
                 <tr className="bg-slate-50 border-b border-slate-200">
-                  <th className="px-6 py-3 text-[10px] font-bold uppercase tracking-wider text-slate-500 whitespace-nowrap">Teacher</th>
-                  <th className="px-6 py-3 text-[10px] font-bold uppercase tracking-wider text-slate-500 whitespace-nowrap">Role & Qual</th>
+                  <th className="px-6 py-3 text-[10px] font-bold uppercase tracking-wider text-slate-500 whitespace-nowrap">Staff</th>
+                  <th className="px-6 py-3 text-[10px] font-bold uppercase tracking-wider text-slate-500 whitespace-nowrap">Designation</th>
+                  <th className="px-6 py-3 text-[10px] font-bold uppercase tracking-wider text-slate-500 whitespace-nowrap">Access Level</th>
+                  <th className="px-6 py-3 text-[10px] font-bold uppercase tracking-wider text-slate-500 whitespace-nowrap">Qualification</th>
                   <th className="px-6 py-3 text-[10px] font-bold uppercase tracking-wider text-slate-500 whitespace-nowrap">Contact</th>
-                  {user?.teacherProfile?.accessRole === 'Owner' && (
+                  {user?.accessLevel === 'superadmin' && (
                     <th className="px-6 py-3 text-[10px] font-bold uppercase tracking-wider text-slate-500 whitespace-nowrap text-right">Actions</th>
                   )}
                 </tr>
@@ -355,21 +380,30 @@ export default function StaffManager() {
                           </div>
                           <div>
                             <p className="text-sm font-semibold text-slate-900 leading-none mb-1">{staff.name}</p>
-                            <p className="text-[10px] font-bold text-brand-green uppercase tracking-wider">{staff.teacherProfile?.accessRole || 'Staff'}</p>
+                            <p className="text-[10px] font-bold text-brand-green uppercase tracking-wider">{staff.staffProfile?.post || staff.accessLevel || 'Staff'}</p>
                           </div>
                         </div>
                       </td>
                       <td className="px-6 py-4">
+                        <p className="text-sm font-semibold text-slate-700">
+                          {staff.staffProfile?.post || "Not Assigned"}
+                        </p>
+                      </td>
+                      <td className="px-6 py-4">
                         <select 
-                          value={staff.teacherProfile?.accessRole || "Teacher"}
+                          value={staff.accessLevel || "staff"}
                           onChange={(e) => updateRole(staff._id, e.target.value)}
-                          className="text-sm font-semibold text-slate-700 bg-transparent border-b border-dashed border-slate-300 hover:border-brand-green focus:border-brand-green focus:outline-none cursor-pointer pb-0.5 mb-1 block w-fit"
+                          className="text-sm font-semibold text-slate-700 bg-transparent border-b border-dashed border-slate-300 hover:border-brand-green focus:border-brand-green focus:outline-none cursor-pointer pb-0.5 block w-fit"
                         >
-                          <option value="Teacher">Teacher</option>
-                          <option value="Admin">Admin</option>
-                          <option value="Owner">Owner</option>
+                          <option value="staff">Staff</option>
+                          <option value="admin">Admin</option>
+                          <option value="superadmin">Super Admin</option>
                         </select>
-                        <p className="text-xs font-medium text-slate-400 max-w-[150px] truncate" title={staff.teacherProfile?.qualification || ""}>{staff.teacherProfile?.qualification || "Not Specified"}</p>
+                      </td>
+                      <td className="px-6 py-4">
+                        <p className="text-sm font-medium text-slate-600 max-w-[200px] truncate" title={staff.staffProfile?.qualification || ""}>
+                          {staff.staffProfile?.qualification || "Not Specified"}
+                        </p>
                       </td>
                       <td className="px-6 py-4">
                         <div className="flex items-center gap-2 text-xs font-medium text-slate-600 mb-1">
@@ -379,18 +413,23 @@ export default function StaffManager() {
                           <Phone size={12} className="text-slate-400" /> {staff.phone || "N/A"}
                         </div>
                       </td>
-                      {user?.teacherProfile?.accessRole === 'Owner' && (
+                      {user?.accessLevel === 'superadmin' && (
                         <td className="px-6 py-4 text-right">
                           <div className="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                            <button className="w-8 h-8 rounded bg-white border border-slate-200 text-slate-400 hover:text-slate-700 hover:border-slate-300 flex items-center justify-center cursor-pointer transition-colors shadow-sm">
-                              <MoreVertical size={14} />
-                            </button>
                             <button 
-                              onClick={() => handleDelete(staff._id)}
-                              className="w-8 h-8 rounded bg-white border border-slate-200 text-slate-400 hover:text-rose-600 hover:border-rose-200 hover:bg-rose-50 flex items-center justify-center cursor-pointer transition-colors shadow-sm"
+                              onClick={() => handleEdit(staff)}
+                              className="w-8 h-8 rounded bg-white border border-slate-200 text-slate-400 hover:text-brand-green hover:border-emerald-200 hover:bg-emerald-50 flex items-center justify-center cursor-pointer transition-colors shadow-sm"
                             >
-                              <Trash2 size={14} />
+                              <Edit2 size={14} />
                             </button>
+                            {staff.accessLevel !== 'superadmin' && (
+                              <button 
+                                onClick={() => setDeletingId(staff._id)}
+                                className="w-8 h-8 rounded bg-white border border-slate-200 text-slate-400 hover:text-rose-600 hover:border-rose-200 hover:bg-rose-50 flex items-center justify-center cursor-pointer transition-colors shadow-sm"
+                              >
+                                <Trash2 size={14} />
+                              </button>
+                            )}
                           </div>
                         </td>
                       )}
@@ -412,6 +451,44 @@ export default function StaffManager() {
           )}
         </div>
       </div>
+      
+
+      {/* Delete Confirmation Modal */}
+      <AnimatePresence>
+        {deletingId && (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-sm">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              className="bg-white rounded-2xl p-6 max-w-sm w-full shadow-xl"
+            >
+              <div className="w-12 h-12 rounded-full bg-rose-100 text-rose-600 flex items-center justify-center mb-4 mx-auto">
+                <AlertTriangle size={24} />
+              </div>
+              <h3 className="text-lg font-bold text-slate-800 text-center mb-2">Remove Staff?</h3>
+              <p className="text-sm text-slate-500 text-center mb-6">This action cannot be undone. Are you sure you want to permanently remove this staff member?</p>
+              
+              <div className="flex gap-3">
+                <button
+                  onClick={() => setDeletingId(null)}
+                  disabled={deleteLoading}
+                  className="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-700 py-2.5 rounded-xl text-sm font-semibold transition border-0 cursor-pointer disabled:opacity-50"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={executeDelete}
+                  disabled={deleteLoading}
+                  className="flex-1 bg-rose-600 hover:bg-rose-700 text-white py-2.5 rounded-xl text-sm font-semibold transition flex items-center justify-center gap-2 border-0 cursor-pointer shadow-sm shadow-rose-500/20 disabled:opacity-50"
+                >
+                  {deleteLoading ? <Loader2 size={16} className="animate-spin" /> : "Remove"}
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
       
     </div>
   );

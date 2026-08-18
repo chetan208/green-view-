@@ -226,7 +226,7 @@ export default function Header() {
 
                 {/* Profile Dropdown */}
                 <div className="absolute right-0 top-full mt-2 w-48 bg-white border border-slate-100 rounded-2xl shadow-[0_10px_35px_-8px_rgba(0,0,0,0.06)] opacity-0 invisible group-hover:opacity-100 group-hover:visible translate-y-1 group-hover:translate-y-0 transition-all duration-300 z-50 p-2.5 flex flex-col gap-1">
-                  {user.role === 'teacher' ? (
+                  {user.role === 'user' ? (
                     <Link href="/erp" className="flex items-center gap-2 p-2 rounded-xl hover:bg-slate-50 text-slate-700 hover:text-brand-green transition-colors text-left text-xs font-semibold">
                       <Headset className="w-4 h-4 text-slate-400" /> ERP Portal
                     </Link>
@@ -236,7 +236,7 @@ export default function Header() {
                     </Link>
                   )}
                   <Link 
-                    href={user.role === 'teacher' ? "/erp?module=profile" : "/student-portal"}
+                    href={user.role === 'user' ? "/erp?module=profile" : "/student-portal"}
                     className="flex items-center gap-2 p-2 rounded-xl hover:bg-slate-50 text-slate-700 hover:text-brand-green transition-colors text-left text-xs font-semibold"
                   >
                     <UserCog className="w-4 h-4 text-slate-400" /> Profile Settings
@@ -247,31 +247,12 @@ export default function Header() {
                 </div>
               </>
             ) : (
-              <>
-                <motion.button 
-                  whileHover={{ scale: 1.02 }} 
-                  whileTap={{ scale: 0.98 }} 
-                  className="bg-brand-green hover:bg-brand-green-dark text-white px-6 py-2.5 rounded-xl font-semibold md:font-bold text-xs md:text-sm tracking-wide transition-all shadow-sm shadow-emerald-500/10 cursor-pointer flex items-center gap-1.5"
+                <Link
+                  href="/auth/login"
+                  className="bg-brand-green hover:bg-brand-green-dark text-white px-6 py-2.5 rounded-xl font-semibold md:font-bold text-xs md:text-sm tracking-wide transition-all shadow-sm shadow-emerald-500/10 cursor-pointer"
                 >
-                  Login <ChevronDown className="w-3.5 h-3.5 transition-transform duration-300 group-hover:rotate-180" />
-                </motion.button>
-
-                {/* Login Dropdown Options */}
-                <div className="absolute right-0 top-full mt-2 w-48 bg-white border border-slate-100 rounded-2xl shadow-[0_10px_35px_-8px_rgba(0,0,0,0.06)] opacity-0 invisible group-hover:opacity-100 group-hover:visible translate-y-1 group-hover:translate-y-0 transition-all duration-300 z-50 p-2.5 flex flex-col gap-1">
-                  <Link
-                    href="/auth/student/login"
-                    className="flex items-center gap-2 p-2 rounded-xl hover:bg-slate-50 text-slate-700 hover:text-brand-green transition-colors text-left text-xs font-semibold"
-                  >
-                    <User className="w-4 h-4 text-slate-400" /> Student Login
-                  </Link>
-                  <Link
-                    href="/auth/teacher/login"
-                    className="flex items-center gap-2 p-2 rounded-xl hover:bg-slate-50 text-slate-700 hover:text-brand-green transition-colors text-left text-xs font-semibold"
-                  >
-                    <User className="w-4 h-4 text-slate-400" /> Teacher Login
-                  </Link>
-                </div>
-              </>
+                  Login
+                </Link>
             )}
           </div>
 
@@ -381,43 +362,28 @@ export default function Header() {
                 {isAuthenticated && user ? (
                   <>
                     <Link
-                      href={user.role === 'teacher' ? "/erp" : "/student-portal"}
-                      onClick={() => setIsMobileMenuOpen(false)}
-                      className="flex-1 bg-brand-green hover:bg-brand-green-dark text-white rounded-xl py-2 px-2 font-semibold text-center text-[11px] tracking-wide transition-colors flex items-center justify-center"
-                    >
-                      {user.role === 'teacher' ? "ERP Portal" : "Dashboard"}
-                    </Link>
-                    <Link
-                      href={user.role === 'teacher' ? "/erp?module=profile" : "/student-portal"}
-                      onClick={() => setIsMobileMenuOpen(false)}
-                      className="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl py-2 px-2 font-semibold text-center text-[11px] tracking-wide transition-colors flex items-center justify-center"
-                    >
-                      Settings
-                    </Link>
-                    <button
-                      onClick={() => { logout(); setIsMobileMenuOpen(false); }}
-                      className="flex-1 bg-rose-50 hover:bg-rose-100 text-rose-600 border-0 rounded-xl py-2 px-2 font-semibold text-center text-[11px] tracking-wide transition-colors cursor-pointer flex items-center justify-center"
-                    >
-                      Sign Out
-                    </button>
-                  </>
-                ) : (
-                  <>
-                    <Link
-                      href="/auth/student/login"
+                      href={user.role === 'user' ? "/erp" : "/student-portal"}
                       onClick={() => setIsMobileMenuOpen(false)}
                       className="flex-1 bg-brand-green hover:bg-brand-green-dark text-white rounded-xl py-3 px-4 font-semibold text-center text-xs tracking-wide transition-colors"
                     >
-                      Student Login
+                      {user.role === 'user' ? "ERP Portal" : "Dashboard"}
                     </Link>
                     <Link
-                      href="/auth/teacher/login"
+                      href={user.role === 'user' ? "/erp?module=profile" : "/student-portal"}
                       onClick={() => setIsMobileMenuOpen(false)}
                       className="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl py-3 px-4 font-semibold text-center text-xs tracking-wide transition-colors"
                     >
-                      Teacher Login
+                      Profile
                     </Link>
                   </>
+                ) : (
+                  <Link
+                    href="/auth/login"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="flex-1 bg-brand-green hover:bg-brand-green-dark text-white rounded-xl py-3 px-4 font-semibold text-center text-xs tracking-wide transition-colors"
+                  >
+                    Login to Portal
+                  </Link>
                 )}
               </div>
             </motion.div>

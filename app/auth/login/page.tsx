@@ -5,7 +5,7 @@ import { AlertCircle, CheckCircle2, Phone, KeyRound, Edit2, ArrowRight } from "l
 import { useRouter } from "next/navigation";
 import { authApi } from "@/services/erpApi";
 
-export default function TeacherLoginPage() {
+export default function UnifiedLoginPage() {
   const [mobile, setMobile] = useState("");
   const [otp, setOtp] = useState("");
   const [step, setStep] = useState<"MOBILE" | "OTP">("MOBILE");
@@ -28,7 +28,7 @@ export default function TeacherLoginPage() {
     setIsLoading(true);
 
     try {
-      const res = await authApi.sendOtp(cleanMobile, 'teacher');
+      const res = await authApi.sendOtp(cleanMobile, 'user');
       if (res.success) {
         setStep("OTP");
         setSuccess(res.message || `OTP sent to +91 ${cleanMobile}.`);
@@ -59,7 +59,7 @@ export default function TeacherLoginPage() {
 
     try {
       const cleanMobile = mobile.replace(/\D/g, "");
-      const res = await authApi.verifyOtp(cleanMobile, otp.trim(), 'teacher');
+      const res = await authApi.verifyOtp(cleanMobile, otp.trim(), 'user');
       
       if (res.success && res.token && res.user) {
         setSuccess("Login successful! Redirecting...");
@@ -67,11 +67,21 @@ export default function TeacherLoginPage() {
         localStorage.setItem('erp_user', JSON.stringify(res.user));
         
         setTimeout(() => {
-          const role = res.user.teacherProfile?.accessRole;
-          if (role === 'Owner') {
-            router.push('/erp');
+          const userRole = res.user.role;
+          const accessLevel = res.user.accessLevel;
+
+          if (userRole === 'student') {
+            router.push('/student-portal');
+          } else if (userRole === 'user') {
+            if (accessLevel === 'superadmin') {
+              router.push('/erp');
+            } else if (accessLevel === 'admin') {
+              router.push('/admin');
+            } else {
+              router.push('/erp?module=profile');
+            }
           } else {
-            router.push('/admin');
+             router.push('/');
           }
         }, 800);
       } else {
@@ -96,7 +106,7 @@ export default function TeacherLoginPage() {
       
       {/* Screen Title */}
       <h1 className="text-2xl md:text-3xl font-semibold text-slate-800 text-center mb-8 mt-12 md:mt-0 tracking-tight">
-        Welcome, Log into your account
+        Welcome Back! Log in to Green View
       </h1>
 
       {/* Main card */}
@@ -114,8 +124,8 @@ export default function TeacherLoginPage() {
         {/* Card Header Title */}
         <div className="text-center flex flex-col items-center">
           <h2 className="text-2xl font-semibold tracking-tight">
-            <span className="text-brand-green">Sign In as </span>
-            <span className="text-brand-navy">Teacher/Admin</span>
+            <span className="text-brand-green">Portal </span>
+            <span className="text-brand-navy">Login</span>
           </h2>
           <p className="text-slate-400 text-[11px] font-medium mt-2.5 leading-relaxed max-w-[310px]">
             {step === "MOBILE" 

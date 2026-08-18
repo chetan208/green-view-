@@ -21,8 +21,8 @@ export default function ERPSidebar({
 }: ERPSidebarProps) {
   const { user: authUser } = useAuth();
   const user = {
-    name: authUser?.name || "Admin User",
-    role: authUser?.teacherProfile?.accessRole || authUser?.role || "Staff"
+    name: authUser?.name || "Staff Member",
+    role: authUser?.staffProfile?.post || authUser?.accessLevel || "Staff"
   };
 
   return (

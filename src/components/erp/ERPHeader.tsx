@@ -23,8 +23,8 @@ export default function ERPHeader() {
   const { user: authUser, logout } = useAuth();
   
   const user = {
-    name: authUser?.name || "Admin User",
-    role: authUser?.teacherProfile?.accessRole || authUser?.role || "Staff",
+    name: authUser?.name || "Staff Member",
+    role: authUser?.staffProfile?.post || authUser?.accessLevel || "Staff",
     photoUrl: authUser?.photoUrl
   };
 
