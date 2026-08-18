@@ -48,14 +48,14 @@ export default function CategoryBar() {
       `}} />
 
       {/* Scrolling Inner Container */}
-      <div className="flex gap-6 whitespace-nowrap animate-marquee-cat pl-6">
+      <div className="flex gap-3 sm:gap-6 whitespace-nowrap animate-marquee-cat pl-3 sm:pl-6">
         {scrollingItems.map((item, idx) => (
           <div
             key={idx}
-            className="flex items-center gap-3 bg-white p-2.5 pr-6 rounded-full border border-slate-100/80 shadow-sm shadow-slate-100/50 hover:shadow-md hover:border-emerald-100 transition-all duration-300 whitespace-nowrap cursor-pointer"
+            className="flex items-center gap-2 sm:gap-3 bg-white p-1.5 sm:p-2.5 pr-4 sm:pr-6 rounded-full border border-slate-100/80 shadow-sm shadow-slate-100/50 hover:shadow-md hover:border-emerald-100 transition-all duration-300 whitespace-nowrap cursor-pointer"
           >
             {/* Circular Image */}
-            <div className="w-10 h-10 rounded-full overflow-hidden bg-slate-100 border border-slate-100 shrink-0">
+            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full overflow-hidden bg-slate-100 border border-slate-100 shrink-0">
               <img
                 src={item.image}
                 alt={item.title}
@@ -63,7 +63,7 @@ export default function CategoryBar() {
               />
             </div>
             {/* Title */}
-            <span className="font-semibold md:font-extrabold text-slate-800 text-xs md:text-sm tracking-tight">
+            <span className="font-semibold md:font-extrabold text-slate-800 text-[10px] sm:text-xs md:text-sm tracking-tight">
               {item.title}
             </span>
           </div>

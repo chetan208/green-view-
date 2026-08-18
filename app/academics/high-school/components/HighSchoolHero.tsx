@@ -44,8 +44,8 @@ export default function HighSchoolHero() {
         {/* Left Content Column */}
         <div className="flex flex-col items-start text-left">
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-medium md:font-bold text-slate-900 tracking-tight leading-[1.1] mb-4">
-            Your child&apos;s <br />
-            story <br />
+            Empowering <br />
+            their future <br />
             <span className="text-brand-green relative inline-block pb-2">
               starts here.
               <svg className="absolute left-0 bottom-0 w-full h-[12px] text-brand-green" viewBox="0 0 100 10" preserveAspectRatio="none">

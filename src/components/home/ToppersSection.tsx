@@ -7,6 +7,7 @@ import axios from "axios";
 interface Topper {
   _id: string;
   name: string;
+  fatherName?: string;
   class: string;
   marks: number;
   percentage: number;
@@ -38,10 +39,10 @@ export default function ToppersSection() {
   // Use dummy data as fallback if API fails or is empty initially for demo purposes
   // The user provided these specific toppers from 2022-2025
   const fallbackToppers: Topper[] = [
-    { _id: "1", name: "Mannat", class: "10th", marks: 672, percentage: 96, imageUrl: "", session: "2024-2025" },
-    { _id: "2", name: "Vanshika", class: "10th", marks: 672, percentage: 96, imageUrl: "", session: "2023-2024" },
-    { _id: "3", name: "Anshika", class: "10th", marks: 665, percentage: 95, imageUrl: "", session: "2021-2022" },
-    { _id: "4", name: "Divya Sharma", class: "10th", marks: 658, percentage: 94, imageUrl: "", session: "2021-2022" },
+    { _id: "1", name: "Mannat", fatherName: "Rajesh Kumar", class: "10th", marks: 672, percentage: 96, imageUrl: "", session: "2024-2025" },
+    { _id: "2", name: "Vanshika", fatherName: "Sanjay Sharma", class: "10th", marks: 672, percentage: 96, imageUrl: "", session: "2023-2024" },
+    { _id: "3", name: "Anshika", fatherName: "Vijay Singh", class: "10th", marks: 665, percentage: 95, imageUrl: "", session: "2021-2022" },
+    { _id: "4", name: "Divya Sharma", fatherName: "Ramesh Sharma", class: "10th", marks: 658, percentage: 94, imageUrl: "", session: "2021-2022" },
   ];
 
   const displayToppers = toppers.length > 0 ? toppers : fallbackToppers;
@@ -70,48 +71,41 @@ export default function ToppersSection() {
              <div className="animate-pulse flex gap-2 items-center text-slate-400 font-bold"><Trophy className="animate-bounce" /> Loading Toppers...</div>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {displayToppers.map((topper) => (
               <div 
                 key={topper._id} 
-                className="bg-white rounded-3xl p-6 shadow-xs border border-slate-200/60 relative group hover:-translate-y-0.5 hover:shadow-md transition-all duration-300 overflow-hidden"
+                className="bg-[#003823] rounded-2xl p-3 md:p-4 shadow-xl flex flex-col items-center hover:-translate-y-1 transition-transform duration-300"
               >
-                {/* Subtle decorative background shape */}
-                <div className="absolute -right-12 -top-12 w-32 h-32 bg-[#E6F4EA] rounded-full z-0" />
-                <div className="absolute right-4 top-4 text-[#006a37] z-10 opacity-30">
-                   <Award size={32} />
+                {/* Image Container with the Leaf Shape */}
+                <div className="w-full aspect-square md:aspect-[4/4.5] bg-gradient-to-b from-white to-[#4ade80] rounded-tl-[40px] rounded-tr-[40px] rounded-br-[40px] rounded-bl-sm overflow-hidden flex items-end justify-center relative shadow-[3px_3px_10px_rgba(0,0,0,0.3)]">
+                  {topper.imageUrl ? (
+                     <img src={topper.imageUrl} alt={topper.name} className="w-full h-full object-cover" />
+                  ) : (
+                     <div className="w-full h-full flex items-center justify-center text-[#003823] font-bold text-5xl opacity-30">
+                       {topper.name.charAt(0)}
+                     </div>
+                  )}
                 </div>
-
-                <div className="relative z-10">
-                  <div className="w-24 h-24 mx-auto bg-slate-100 rounded-full mb-6 border-4 border-white shadow-md overflow-hidden relative">
-                    {topper.imageUrl ? (
-                       <img src={topper.imageUrl} alt={topper.name} className="w-full h-full object-cover" />
-                    ) : (
-                       <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-[#0fa958] to-[#006a37] text-white font-bold text-3xl">
-                         {topper.name.charAt(0)}
-                       </div>
-                    )}
-                  </div>
+                
+                {/* Text Content */}
+                <div className="text-center mt-3 w-full px-1">
+                  <h3 className="text-[#fde047] font-bold text-[15px] md:text-[16px] leading-tight uppercase tracking-wide">
+                    {topper.name}
+                  </h3>
+                  <p className="text-white text-[12px] md:text-[13px] mt-0.5 leading-snug">
+                    {topper.fatherName ? `D/o Sh. ${topper.fatherName}` : "Student"}
+                  </p>
                   
-                  <div className="text-center space-y-1">
-                    <div className="inline-block px-3 py-1 bg-amber-100 text-amber-700 text-xs font-black rounded-full mb-2">
-                       {topper.session}
-                    </div>
-                    <h3 className="text-xl font-bold text-slate-900">{topper.name}</h3>
-                    <p className="text-sm font-semibold text-slate-500">Class {topper.class}</p>
-                    
-                    <div className="mt-4 pt-4 border-t border-slate-100">
-                      <div className="flex items-end justify-center gap-1">
-                        <span className="text-3xl font-black text-[#0fa958] leading-none">{topper.percentage}%</span>
-                      </div>
-                      <div className="flex justify-center gap-0.5 mt-2 text-amber-400">
-                        <Star size={14} fill="currentColor" />
-                        <Star size={14} fill="currentColor" />
-                        <Star size={14} fill="currentColor" />
-                        <Star size={14} fill="currentColor" />
-                        <Star size={14} fill="currentColor" />
-                      </div>
-                    </div>
+                  <div className="w-full h-[1px] bg-white/20 my-2"></div>
+                  
+                  <div className="flex flex-col gap-0.5 items-center">
+                    <p className="text-white/90 text-xs md:text-[13px] font-medium">
+                      Class {topper.class}
+                    </p>
+                    <p className="text-white text-[13px] md:text-[14px] font-bold tracking-wide">
+                      {topper.percentage}% ({topper.marks} Marks)
+                    </p>
                   </div>
                 </div>
               </div>
