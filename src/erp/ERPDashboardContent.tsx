@@ -8,6 +8,7 @@ import { Menu, X } from "lucide-react";
 export default function ERPDashboardContent() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [activeModule, setActiveModuleState] = useState<string | null>(null);
+  const [preselectedStudent, setPreselectedStudent] = useState<any>(null);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -89,6 +90,8 @@ export default function ERPDashboardContent() {
               currentModule={currentModule}
               setActiveModule={setActiveModule}
               selectedSession={selectedSession}
+              preselectedStudent={preselectedStudent}
+              setPreselectedStudent={setPreselectedStudent}
             />
           )}
         </div>

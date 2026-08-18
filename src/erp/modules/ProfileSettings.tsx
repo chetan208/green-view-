@@ -12,14 +12,14 @@ export default function ProfileSettings({ user, onProfileUpdated }: { user: any;
   
   const [formData, setFormData] = useState({
     name: user?.name || "",
-    subject: user?.teacherProfile?.subject || "",
-    department: user?.teacherProfile?.department || "",
+    subject: user?.staffProfile?.subject || "",
+    department: user?.staffProfile?.department || "",
   });
 
   // Keep phone separately as read-only
   const phone = user?.phone || "";
-  const role = user?.teacherProfile?.accessRole || user?.role || "Staff";
-  const employeeId = user?.teacherProfile?.employeeId || "N/A";
+  const role = user?.staffProfile?.accessRole || user?.role || "Staff";
+  const employeeId = user?.staffProfile?.employeeId || "N/A";
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
@@ -39,7 +39,7 @@ export default function ProfileSettings({ user, onProfileUpdated }: { user: any;
     try {
       const payload = {
         name: formData.name,
-        teacherProfile: {
+        staffProfile: {
           subject: formData.subject,
           department: formData.department
         }

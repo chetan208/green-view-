@@ -1,12 +1,14 @@
 'use client';
 
 import React, { useState, useEffect } from "react";
-import { GraduationCap, CheckCircle2, Clock, XCircle, Search, Eye, X, Download, User, Loader2, AlertTriangle } from "lucide-react";
-import { admissionsApi } from "@/services/erpApi";
+import { GraduationCap, CheckCircle2, Clock, XCircle, Search, Eye, X, Download, User, Loader2, AlertTriangle, Power, ShieldAlert, CheckCircle, Info } from "lucide-react";
+import { admissionsApi, erpApi } from "@/services/erpApi";
+import { getCurrentAcademicSession } from "@/lib/sessionUtils";
 
 type AppStatus = "PENDING" | "APPROVED" | "REJECTED";
 
 export default function AdmissionsManager() {
+  const dynamicSession = getCurrentAcademicSession();
   const [activeTab, setActiveTab] = useState<"primary" | "senior">("primary");
   const [selectedApp, setSelectedApp] = useState<any | null>(null);
   
@@ -15,6 +17,10 @@ export default function AdmissionsManager() {
   const [error, setError] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [actionLoading, setActionLoading] = useState(false);
+  const [activeSessionId, setActiveSessionId] = useState<string | null>(null);
+  const [activeSessionYear, setActiveSessionYear] = useState<string>("");
+  const [admissionsOpen, setAdmissionsOpen] = useState(false);
+  const [toggleLoading, setToggleLoading] = useState(false);
 
   const fetchAdmissions = async () => {
     setLoading(true);
@@ -22,7 +28,20 @@ export default function AdmissionsManager() {
       const filters: any = {};
       if (searchQuery) filters.search = searchQuery;
       
-      const res = await admissionsApi.list(filters);
+      const [res, sessionRes] = await Promise.all([
+        admissionsApi.list(filters),
+        erpApi.sessions.list()
+      ]);
+
+      if (sessionRes.success && sessionRes.sessions) {
+        const active = sessionRes.sessions.find((s: any) => s.isActive);
+        if (active) {
+          setActiveSessionId(active._id);
+          setActiveSessionYear(active.year || "");
+          setAdmissionsOpen(Boolean(active.admissionsOpen));
+        }
+      }
+
       if (res.success) {
         const mappedApps = res.applications.map((app: any) => ({
           ...app,
@@ -92,7 +111,7 @@ export default function AdmissionsManager() {
   useEffect(() => {
     const delayDebounceFn = setTimeout(() => {
       fetchAdmissions();
-    }, 500);
+    }, 400);
     return () => clearTimeout(delayDebounceFn);
   }, [searchQuery]);
 
@@ -100,6 +119,24 @@ export default function AdmissionsManager() {
   const seniorApps = admissions.filter(a => a.applicationType === "senior");
 
   const activeApps = activeTab === "primary" ? primaryApps : seniorApps;
+
+  const handleToggleAdmissions = async () => {
+    if (!activeSessionId) return;
+    setToggleLoading(true);
+    try {
+      const newStatus = !admissionsOpen;
+      const res = await erpApi.sessions.toggleAdmissionStatus(activeSessionId, newStatus);
+      if (res.success) {
+        setAdmissionsOpen(newStatus);
+      } else {
+        alert(res.message || "Failed to toggle admissions status");
+      }
+    } catch (err: any) {
+      alert("Error toggling admissions status");
+    } finally {
+      setToggleLoading(false);
+    }
+  };
 
   const handleApprove = async (id: string) => {
     setActionLoading(true);
@@ -175,8 +212,19 @@ export default function AdmissionsManager() {
 
   return (
     <div className="space-y-6 text-slate-800 relative">
+      
+      {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-        <h2 className="text-xl sm:text-2xl font-semibold font-serif text-slate-900">Admissions Processing</h2>
+        <div>
+          <h2 className="text-xl sm:text-2xl font-semibold font-serif text-slate-900 flex items-center gap-2">
+            <GraduationCap className="w-6 h-6 text-brand-green" />
+            Admissions Processing Center
+          </h2>
+          <p className="text-xs font-medium text-slate-500 mt-1">
+            Manage online student admission applications &amp; control application portal status.
+          </p>
+        </div>
+
         <div className="relative">
           <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
           <input 
@@ -184,34 +232,84 @@ export default function AdmissionsManager() {
             placeholder="Search applicant name..." 
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-9 pr-4 py-2 bg-white border border-slate-200 text-sm rounded-lg focus:outline-none focus:border-brand-green font-medium transition w-64" 
+            className="pl-9 pr-4 py-2 bg-white border border-slate-200 text-sm rounded-xl focus:outline-none focus:border-brand-green font-medium transition w-64 shadow-xs" 
           />
         </div>
       </div>
 
+      {/* Prominent High-Contrast Admission Control Banner */}
+      {activeSessionId && (
+        <div className={`p-6 rounded-3xl border transition-all shadow-sm ${
+          admissionsOpen 
+            ? "bg-gradient-to-r from-emerald-500/10 via-emerald-50/50 to-white border-emerald-200" 
+            : "bg-gradient-to-r from-rose-500/10 via-rose-50/50 to-white border-rose-200"
+        }`}>
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-5">
+            
+            <div className="flex items-start gap-4">
+              <div className={`w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 shadow-sm ${
+                admissionsOpen ? "bg-emerald-600 text-white" : "bg-rose-600 text-white"
+              }`}>
+                {admissionsOpen ? <CheckCircle size={24} /> : <ShieldAlert size={24} />}
+              </div>
+
+              <div className="space-y-1">
+                <div className="flex items-center gap-2">
+                  <span className={`w-2.5 h-2.5 rounded-full ${admissionsOpen ? "bg-emerald-500 animate-pulse" : "bg-rose-500"}`} />
+                  <span className={`text-xs font-black uppercase tracking-wider ${admissionsOpen ? "text-emerald-700" : "text-rose-700"}`}>
+                    STATUS: ONLINE ADMISSIONS ARE {admissionsOpen ? "OPEN & ACTIVE" : "CLOSED"} FOR SESSION {activeSessionYear || dynamicSession}
+                  </span>
+                </div>
+                <h3 className="text-base sm:text-lg font-bold text-slate-900">
+                  {admissionsOpen 
+                    ? `Parents & students can fill out and submit online admission forms for session ${activeSessionYear || dynamicSession}.` 
+                    : `Online application forms for session ${activeSessionYear || dynamicSession} are disabled. Applicants see a clear 'Admissions Closed' notice.`}
+                </h3>
+              </div>
+            </div>
+
+            <button
+              onClick={handleToggleAdmissions}
+              disabled={toggleLoading}
+              className={`px-6 py-3 rounded-2xl text-xs font-extrabold uppercase tracking-wider transition-all flex items-center gap-2 shrink-0 cursor-pointer shadow-md border-0 disabled:opacity-50 ${
+                admissionsOpen 
+                  ? "bg-rose-600 hover:bg-rose-700 text-white shadow-rose-600/20" 
+                  : "bg-emerald-600 hover:bg-emerald-700 text-white shadow-emerald-600/20"
+              }`}
+            >
+              {toggleLoading ? <Loader2 size={16} className="animate-spin" /> : <Power size={16} />}
+              <span>{admissionsOpen ? `Close Admissions (${activeSessionYear || dynamicSession})` : `Open Admissions (${activeSessionYear || dynamicSession})`}</span>
+            </button>
+
+          </div>
+        </div>
+      )}
+
+      {/* Tabs Header */}
       <div className="flex border-b border-slate-200">
         <button 
           onClick={() => setActiveTab("primary")}
-          className={`px-4 py-2.5 text-sm font-semibold border-b-2 transition ${activeTab === "primary" ? "border-brand-green text-brand-green" : "border-transparent text-slate-500 hover:text-slate-800"}`}
+          className={`px-5 py-3 text-sm font-bold border-b-2 transition cursor-pointer bg-transparent ${activeTab === "primary" ? "border-brand-green text-brand-green" : "border-transparent text-slate-500 hover:text-slate-800"}`}
         >
-          Primary & Secondary (Nursery - X)
+          Primary &amp; Secondary (Nursery - X) ({primaryApps.length})
         </button>
         <button 
           onClick={() => setActiveTab("senior")}
-          className={`px-4 py-2.5 text-sm font-semibold border-b-2 transition ${activeTab === "senior" ? "border-brand-green text-brand-green" : "border-transparent text-slate-500 hover:text-slate-800"}`}
+          className={`px-5 py-3 text-sm font-bold border-b-2 transition cursor-pointer bg-transparent ${activeTab === "senior" ? "border-brand-green text-brand-green" : "border-transparent text-slate-500 hover:text-slate-800"}`}
         >
-          Senior Secondary (XI - XII)
+          Senior Secondary (XI - XII) ({seniorApps.length})
         </button>
       </div>
 
       {error && (
-        <div className="bg-red-50 border border-red-200 text-red-700 text-xs px-4 py-3 rounded-xl flex items-center gap-2">
+        <div className="bg-rose-50 border border-rose-200 text-rose-700 text-xs px-4 py-3 rounded-xl flex items-center gap-2">
           <AlertTriangle size={15} />
           <span>{error}</span>
         </div>
       )}
 
-      <div className="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden overflow-x-auto">
+      {/* Applications Table */}
+      <div className="bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden overflow-x-auto">
         {loading ? (
           <div className="flex flex-col items-center justify-center py-16 gap-3">
             <Loader2 className="animate-spin text-brand-green-dark" size={24} />
@@ -221,12 +319,12 @@ export default function AdmissionsManager() {
           <table className="w-full text-left border-collapse min-w-[800px]">
             <thead>
               <tr className="bg-slate-50 border-b border-slate-100 text-[10px] font-bold uppercase tracking-wider text-slate-400">
-                <th className="p-4">App ID & Date</th>
+                <th className="p-4">App ID &amp; Date</th>
                 <th className="p-4">Student Info</th>
                 {activeTab === "primary" ? (
                   <th className="p-4">Parent Details</th>
                 ) : (
-                  <th className="p-4">Stream & Subjects</th>
+                  <th className="p-4">Stream &amp; Subjects</th>
                 )}
                 <th className="p-4">Status</th>
                 <th className="p-4 text-right">Actions</th>
@@ -263,14 +361,14 @@ export default function AdmissionsManager() {
                   </td>
                   <td className="p-4">
                     <div className="flex justify-end gap-2">
-                      <button onClick={() => setSelectedApp(app)} className="text-xs font-semibold text-slate-600 hover:text-slate-900 border border-slate-200 hover:bg-slate-100 transition px-2.5 py-1.5 rounded flex items-center gap-1.5 bg-transparent cursor-pointer">
+                      <button onClick={() => setSelectedApp(app)} className="text-xs font-semibold text-slate-600 hover:text-slate-900 border border-slate-200 hover:bg-slate-100 transition px-2.5 py-1.5 rounded-lg flex items-center gap-1.5 bg-transparent cursor-pointer">
                         <Eye size={14} /> View
                       </button>
                       {app.status === "PENDING" && (
                         <button 
                           onClick={() => handleApprove(app._id)}
                           disabled={actionLoading}
-                          className="text-xs font-semibold text-emerald-600 hover:text-white border border-emerald-200 hover:bg-emerald-500 transition px-2.5 py-1.5 rounded bg-emerald-50 cursor-pointer disabled:opacity-50"
+                          className="text-xs font-semibold text-emerald-600 hover:text-white border border-emerald-200 hover:bg-emerald-500 transition px-2.5 py-1.5 rounded-lg bg-emerald-50 cursor-pointer disabled:opacity-50"
                         >
                           Approve
                         </button>
@@ -281,7 +379,7 @@ export default function AdmissionsManager() {
               ))}
               {activeApps.length === 0 && (
                 <tr>
-                  <td colSpan={5} className="py-12 text-center text-slate-500 text-sm">
+                  <td colSpan={5} className="py-12 text-center text-slate-500 text-sm font-medium">
                     No applications found in this category.
                   </td>
                 </tr>

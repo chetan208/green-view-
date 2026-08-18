@@ -4,19 +4,23 @@ import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Image as ImageIcon } from "lucide-react";
 import { getMediaApi } from "@/lib/api";
+import { useRouter } from "next/navigation";
 
 export default function GallerySection() {
+  const router = useRouter();
   const [images, setImages] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     let isMounted = true;
-    getMediaApi({ limit: 9 })
+    getMediaApi({ limit: 6 })
       .then(res => {
         if (isMounted && res && res.media) {
           const mapped = res.media.map((m: any) => ({
             src: m.url,
-            alt: m.title || "Campus Gallery Media"
+            alt: m.title || "Campus Gallery Media",
+            folderId: m.folder?._id || m.folder,
+            mediaId: m._id || m.id
           }));
           setImages(mapped);
         }
@@ -46,11 +50,11 @@ export default function GallerySection() {
   } as const;
 
   return (
-    <section id="gallery" className="w-full py-8 md:py-10 px-6 md:px-12 flex justify-center overflow-hidden">
-      <div className="max-w-6xl w-full flex flex-col items-center">
+    <section id="gallery" className="w-full py-6 md:py-8 px-6 md:px-12 flex justify-center overflow-hidden">
+      <div className="max-w-5xl w-full flex flex-col items-center">
         
         {/* Section Header */}
-        <div className="flex flex-col items-center text-center mb-6 select-none">
+        <div className="flex flex-col items-center text-center mb-4 select-none">
           <motion.span 
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -90,7 +94,14 @@ export default function GallerySection() {
                 variants={imageCardVariants}
                 whileHover={{ scale: 1.025, y: -4 }}
                 transition={{ duration: 0.3 }}
-                className="relative aspect-[1.85] w-full rounded-xl md:rounded-[20px] overflow-hidden shadow-sm border border-slate-100/80 hover:shadow-md bg-slate-50"
+                onClick={() => {
+                  if (img.folderId && img.mediaId) {
+                    router.push(`/gallery/${img.folderId}?mediaId=${img.mediaId}`);
+                  } else {
+                    router.push('/gallery');
+                  }
+                }}
+                className="relative aspect-[16/9] sm:aspect-[2/1] md:aspect-[1.85] w-full rounded-xl md:rounded-2xl overflow-hidden shadow-sm border border-slate-100/80 hover:shadow-md bg-slate-50 cursor-pointer"
               >
                 <img
                   src={img.src}
@@ -120,7 +131,7 @@ export default function GallerySection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.5, delay: 0.2 }}
-          className="mt-10"
+          className="mt-6"
         >
           <a
             href="/gallery"

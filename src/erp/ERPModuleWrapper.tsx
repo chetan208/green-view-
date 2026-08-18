@@ -12,6 +12,7 @@ import AcademicsManager from "./modules/AcademicsManager";
 import AdmissionsManager from "@/components/admin/sections/AdmissionsManager";
 import ProfileSettings from "./modules/ProfileSettings";
 import WhatsAppSettings from "./modules/WhatsAppSettings";
+import ToppersManager from "./modules/ToppersManager";
 import { useAuth } from "@/hooks/useAuth";
 
 interface ERPModuleWrapperProps {
@@ -19,6 +20,8 @@ interface ERPModuleWrapperProps {
   currentModule: ModuleType | undefined;
   setActiveModule: (id: string | null) => void;
   selectedSession: string;
+  preselectedStudent?: any;
+  setPreselectedStudent?: (student: any) => void;
 }
 
 export default function ERPModuleWrapper({
@@ -26,8 +29,15 @@ export default function ERPModuleWrapper({
   currentModule,
   setActiveModule,
   selectedSession,
+  preselectedStudent,
+  setPreselectedStudent
 }: ERPModuleWrapperProps) {
   const { user } = useAuth();
+
+  const handleManageFees = (student: any) => {
+    if (setPreselectedStudent) setPreselectedStudent(student);
+    setActiveModule("fees");
+  };
 
   return (
     <div className="p-5 sm:p-7 mx-auto transition-all duration-300 max-w-6xl">
@@ -45,10 +55,12 @@ export default function ERPModuleWrapper({
 
       {activeModule === "staff" ? (
         <StaffManager />
+      ) : activeModule === "toppers" ? (
+        <ToppersManager selectedSession={selectedSession} />
       ) : activeModule === "students" ? (
-        <StudentManager />
+        <StudentManager selectedSession={selectedSession} onManageFees={handleManageFees} />
       ) : activeModule === "fees" ? (
-        <FeePortal selectedSession="2024-2025" />
+        <FeePortal selectedSession={selectedSession} preselectedStudent={preselectedStudent} clearPreselected={() => setPreselectedStudent?.(null)} setActiveModule={setActiveModule} />
       ) : activeModule === "transport" ? (
         <TransportPortal />
       ) : activeModule === "settings" ? (

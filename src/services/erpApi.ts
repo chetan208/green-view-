@@ -74,7 +74,7 @@ export interface StudentSession {
 
 // --- AUTH API ---
 export const authApi = {
-  sendOtp: async (phone: string, role: 'teacher' | 'student' = 'teacher') => {
+  sendOtp: async (phone: string, role: 'user' | 'student' = 'user') => {
     const res = await fetch(`${API_BASE}/api/auth/send-otp`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -83,7 +83,7 @@ export const authApi = {
     return res.json();
   },
   
-  verifyOtp: async (phone: string, otp: string, role: 'teacher' | 'student' = 'teacher') => {
+  verifyOtp: async (phone: string, otp: string, role: 'user' | 'student' = 'user') => {
     const res = await fetch(`${API_BASE}/api/auth/verify-otp`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -176,9 +176,11 @@ export const erpApi = {
       return res.json();
     },
     update: async (id: string, data: any) => {
+      const isFormData = data instanceof FormData;
       const res = await authFetch(`/api/erp/students/${id}`, {
         method: 'PUT',
-        body: JSON.stringify(data)
+        body: isFormData ? data : JSON.stringify(data),
+        // authFetch usually adds Content-Type automatically if not FormData. Wait, I should check authFetch.
       });
       return res.json();
     },
@@ -285,6 +287,17 @@ export const erpApi = {
         body: JSON.stringify({ year })
       });
       return res.json();
+    },
+    getAdmissionStatus: async () => {
+      const res = await fetch(`${API_BASE}/api/erp/sessions/public/admission-status`);
+      return res.json();
+    },
+    toggleAdmissionStatus: async (id: string, admissionsOpen: boolean) => {
+      const res = await authFetch(`/api/erp/sessions/${id}/toggle-admissions`, {
+        method: 'POST',
+        body: JSON.stringify({ admissionsOpen })
+      });
+      return res.json();
     }
   },
 
@@ -324,6 +337,30 @@ export const erpApi = {
   
   // Transport
   transport: {
+    routes: {
+      list: async () => {
+        const res = await authFetch('/api/erp/routes');
+        return res.json();
+      },
+      create: async (data: any) => {
+        const res = await authFetch('/api/erp/routes', {
+          method: 'POST',
+          body: JSON.stringify(data)
+        });
+        return res.json();
+      },
+      update: async (id: string, data: any) => {
+        const res = await authFetch(`/api/erp/routes/${id}`, {
+          method: 'PUT',
+          body: JSON.stringify(data)
+        });
+        return res.json();
+      },
+      delete: async (id: string) => {
+        const res = await authFetch(`/api/erp/routes/${id}`, { method: 'DELETE' });
+        return res.json();
+      }
+    },
     stations: {
       list: async () => {
         const res = await authFetch('/api/erp/stations');
@@ -388,6 +425,26 @@ export const erpApi = {
     },
     getStatus: async () => {
       const res = await authFetch('/api/erp/fee-automation/status');
+      return res.json();
+    }
+  },
+
+  // Top Results
+  topResults: {
+    list: async (session?: string) => {
+      const url = session ? `/api/top-results?session=${session}` : '/api/top-results';
+      const res = await authFetch(url);
+      return res.json();
+    },
+    create: async (formData: FormData) => {
+      const res = await authFetch('/api/admin/top-result', {
+        method: 'POST',
+        body: formData,
+      });
+      return res.json();
+    },
+    delete: async (id: string) => {
+      const res = await authFetch(`/api/admin/top-result/${id}`, { method: 'DELETE' });
       return res.json();
     }
   }

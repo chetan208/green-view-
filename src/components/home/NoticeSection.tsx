@@ -206,34 +206,44 @@ export default function BoardNotices() {
                 Loading official notices...
               </div>
             ) : notices.length > 0 ? (
-              notices.slice(0, 4).map((notice, idx) => (
-                <motion.div
-                  key={idx}
-                  variants={itemVariants}
-                  whileHover={{ y: -3, scale: 1.005 }}
-                  onClick={() => setSelectedNotice(notice)}
-                  className="group flex items-center justify-between bg-white p-4 px-6 rounded-2xl border border-slate-100 shadow-sm shadow-slate-100/40 transition-all duration-300 hover:shadow-md cursor-pointer"
-                >
-                  <div className="flex items-center gap-3 overflow-hidden">
-                    <span className="bg-red-500 text-white text-[8px] font-semibold md:font-bold px-1.5 py-0.5 rounded uppercase tracking-wider animate-pulse shrink-0">
-                      NEW
-                    </span>
-                    <p className="text-slate-800 font-medium md:font-semibold text-xs md:text-sm group-hover:text-brand-green transition-colors truncate">
-                      {notice.title}
-                    </p>
-                  </div>
+              <motion.div 
+                initial="hidden"
+                animate="show"
+                variants={{
+                  hidden: { opacity: 0 },
+                  show: { opacity: 1, transition: { staggerChildren: 0.1 } }
+                }}
+                className="flex flex-col w-full gap-4"
+              >
+                {notices.slice(0, 4).map((notice, idx) => (
+                  <motion.div
+                    key={idx}
+                    variants={itemVariants}
+                    whileHover={{ y: -3, scale: 1.005 }}
+                    onClick={() => setSelectedNotice(notice)}
+                    className="group flex items-center justify-between bg-white p-4 px-6 rounded-2xl border border-slate-100 shadow-sm shadow-slate-100/40 transition-all duration-300 hover:shadow-md cursor-pointer"
+                  >
+                    <div className="flex items-center gap-3 overflow-hidden">
+                      <span className="bg-red-500 text-white text-[8px] font-semibold md:font-bold px-1.5 py-0.5 rounded uppercase tracking-wider animate-pulse shrink-0">
+                        NEW
+                      </span>
+                      <p className="text-slate-800 font-medium md:font-semibold text-xs md:text-sm group-hover:text-brand-green transition-colors truncate">
+                        {notice.title}
+                      </p>
+                    </div>
 
-                  <div className="flex items-center gap-4 shrink-0 pl-4">
-                    <span className="text-[10px] font-semibold md:font-bold text-slate-400">
-                      {notice.date}
-                    </span>
-                    <ArrowUpRight className="w-4 h-4 text-brand-green group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                  </div>
-                </motion.div>
-              ))
+                    <div className="flex items-center gap-4 shrink-0 pl-4">
+                      <span className="text-[10px] font-semibold md:font-bold text-slate-400">
+                        {notice.date}
+                      </span>
+                      <ArrowUpRight className="w-4 h-4 text-brand-green group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                    </div>
+                  </motion.div>
+                ))}
+              </motion.div>
             ) : (
               /* Empty / Coming Soon Component */
-              <div className="bg-white border border-slate-100 rounded-2xl p-10 flex flex-col items-center text-center shadow-sm w-full">
+              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="bg-white border border-slate-100 rounded-2xl p-10 flex flex-col items-center text-center shadow-sm w-full">
                 <div className="w-12 h-12 rounded-full bg-emerald-50 text-brand-green flex items-center justify-center mb-3">
                   <Bell className="w-5 h-5" />
                 </div>
@@ -241,7 +251,7 @@ export default function BoardNotices() {
                 <p className="text-xs text-slate-400 max-w-sm leading-relaxed">
                   Official announcements will appear here once published from the admin control desk.
                 </p>
-              </div>
+              </motion.div>
             )}
           </div>
 

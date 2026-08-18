@@ -57,6 +57,15 @@ export const modules: ModuleType[] = [
     status: "active",
   },
   {
+    id: "toppers",
+    label: "Academic Toppers",
+    icon: BookOpen,
+    color: "#166534",
+    bg: "rgba(22,101,52,0.1)",
+    description: "Manage and showcase the top performing students.",
+    status: "active",
+  },
+  {
     id: "admissions",
     label: "Admissions",
     icon: Inbox,

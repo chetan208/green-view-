@@ -1,13 +1,14 @@
 'use client';
 
 import React, { useState, useEffect } from "react";
-import { Plus, Trash2, Image as ImageIcon, Upload, FolderHeart, Video, ArrowLeft, Play, Loader2, Files, X, AlertTriangle, CheckSquare, Square, ShieldAlert, CheckCircle2 } from "lucide-react";
+import { Plus, Trash2, Edit2, Image as ImageIcon, Upload, FolderHeart, Video, ArrowLeft, Play, Loader2, Files, X, AlertTriangle, CheckSquare, Square, ShieldAlert, CheckCircle2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { 
   getFoldersApi, 
   getFolderByIdApi, 
   createFolderApi, 
+  updateFolderApi,
   deleteFolderApi, 
   addMediaToFolderApi, 
   addMultipleMediaToFolderApi, 
@@ -76,6 +77,10 @@ export default function MediaManager() {
   // Custom Delete Modal States
   const [folderToDelete, setFolderToDelete] = useState<{ id: string; name: string } | null>(null);
   const [typedFolderName, setTypedFolderName] = useState("");
+  
+  // Custom Rename Modal States
+  const [folderToRename, setFolderToRename] = useState<{ id: string; name: string } | null>(null);
+  const [renameValue, setRenameValue] = useState("");
   
   const [mediaToDelete, setMediaToDelete] = useState<{ type: 'single' | 'batch'; id?: string; count?: number } | null>(null);
 
@@ -194,6 +199,13 @@ export default function MediaManager() {
     setTypedFolderName("");
   };
 
+  // Trigger Custom Folder Rename Modal
+  const openFolderRenameModal = (id: string, name: string, e: React.MouseEvent) => {
+    e.stopPropagation();
+    setFolderToRename({ id, name });
+    setRenameValue(name);
+  };
+
   // Confirm Folder Delete
   const confirmDeleteFolder = async () => {
     if (!folderToDelete) return;
@@ -209,6 +221,30 @@ export default function MediaManager() {
     } catch (err) {
       console.error("Error deleting folder:", err);
       alert("Failed to delete folder");
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  // Confirm Folder Rename
+  const confirmRenameFolder = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!folderToRename || !renameValue.trim() || renameValue.trim() === folderToRename.name) {
+      setFolderToRename(null);
+      return;
+    }
+
+    setSubmitting(true);
+    try {
+      await updateFolderApi(folderToRename.id, renameValue.trim());
+      await fetchAlbums();
+      if (activeAlbumId === folderToRename.id) {
+        await fetchSingleAlbum(folderToRename.id);
+      }
+      setFolderToRename(null);
+    } catch (err) {
+      console.error("Error renaming folder:", err);
+      alert("Failed to rename folder. Name might already exist.");
     } finally {
       setSubmitting(false);
     }
@@ -401,27 +437,31 @@ export default function MediaManager() {
               </div>
             ) : albums.length > 0 ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full">
-                {albums.map((album) => {
+                {albums.map((album: any) => {
                   const albumIdStr = (album._id || album.id) as string;
                   let coverUrl = "/images/hero.png";
-                  if (album.media && album.media.length > 0) {
-                    const first = album.media[0];
-                    coverUrl = first.mediaType === 'video' && first.url.includes('youtube') 
-                      ? getYoutubeEmbedThumbnailUrl(first.url) 
-                      : first.url;
+                  
+                  // Backend provides coverMedia or media
+                  const firstMedia = album.coverMedia || (album.media && album.media[0]);
+                  
+                  if (firstMedia) {
+                    coverUrl = firstMedia.mediaType === 'video' && firstMedia.url?.includes('youtube') 
+                      ? getYoutubeEmbedThumbnailUrl(firstMedia.url) 
+                      : firstMedia.url || "/images/hero.png";
                   }
+
                   return (
                     <div 
                       key={albumIdStr}
                       onClick={() => { setActiveAlbumId(albumIdStr); setShowAlbumForm(false); }}
-                      className="group bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-xl hover:border-brand-green/30 transition-all duration-300 cursor-pointer flex flex-col w-full"
+                      className="group bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm transition-all duration-300 cursor-pointer flex flex-col w-full"
                     >
                       <div className="relative aspect-video w-full bg-slate-100 overflow-hidden">
                         <Image 
                           src={coverUrl}
                           alt={album.name}
                           fill
-                          className="object-cover group-hover:scale-105 transition-transform duration-700"
+                          className="object-cover"
                           unoptimized
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -432,16 +472,25 @@ export default function MediaManager() {
                             {album.name}
                           </h3>
                           <span className="text-xs font-medium text-slate-400 mt-0.5">
-                            {album.media ? album.media.length : 0} Items
+                            {album.totalMediaCount !== undefined ? album.totalMediaCount : (album.media ? album.media.length : 0)} Items
                           </span>
                         </div>
-                        <button 
-                          onClick={(e) => openFolderDeleteModal(albumIdStr, album.name, e)}
-                          className="text-slate-300 hover:text-rose-600 transition bg-white border border-slate-100 hover:border-rose-200 hover:bg-rose-50 rounded p-2 cursor-pointer shadow-sm shrink-0"
-                          title="Delete Folder Album"
-                        >
-                          <Trash2 size={16} />
-                        </button>
+                        <div className="flex items-center">
+                          <button 
+                            onClick={(e) => openFolderRenameModal(albumIdStr, album.name, e)}
+                            className="text-slate-300 hover:text-brand-green transition bg-white border border-slate-100 hover:border-brand-green/30 hover:bg-emerald-50 rounded p-2 cursor-pointer shadow-sm shrink-0 mr-1"
+                            title="Rename Folder Album"
+                          >
+                            <Edit2 size={16} />
+                          </button>
+                          <button 
+                            onClick={(e) => openFolderDeleteModal(albumIdStr, album.name, e)}
+                            className="text-slate-300 hover:text-rose-600 transition bg-white border border-slate-100 hover:border-rose-200 hover:bg-rose-50 rounded p-2 cursor-pointer shadow-sm shrink-0"
+                            title="Delete Folder Album"
+                          >
+                            <Trash2 size={16} />
+                          </button>
+                        </div>
                       </div>
                     </div>
                   );
@@ -934,6 +983,60 @@ export default function MediaManager() {
                 </button>
               </div>
             </motion.div>
+          </div>
+        )}
+
+        {/* CUSTOM RENAME FOLDER MODAL */}
+        {folderToRename && (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-200">
+            <div className="bg-white rounded-3xl w-full max-w-md shadow-2xl overflow-hidden animate-in zoom-in-95 duration-200 border border-slate-100 relative">
+              
+              <button onClick={() => setFolderToRename(null)} className="absolute top-4 right-4 text-slate-400 hover:text-slate-600 bg-slate-100 hover:bg-slate-200 rounded-full p-1.5 transition-colors cursor-pointer border-0">
+                <X size={16} />
+              </button>
+
+              <div className="p-6">
+                <div className="w-12 h-12 rounded-2xl bg-emerald-100 flex items-center justify-center mb-5">
+                  <Edit2 size={24} className="text-brand-green" />
+                </div>
+                
+                <h3 className="text-xl font-bold text-slate-900 mb-2">Rename Folder</h3>
+                <p className="text-sm text-slate-500 mb-6">
+                  Enter a new name for <span className="font-semibold text-slate-700">"{folderToRename.name}"</span>.
+                </p>
+
+                <form onSubmit={confirmRenameFolder} className="space-y-6">
+                  <div>
+                    <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Folder Name</label>
+                    <input 
+                      type="text" 
+                      autoFocus 
+                      required 
+                      value={renameValue} 
+                      onChange={e => setRenameValue(e.target.value)} 
+                      className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 text-sm rounded-xl focus:outline-none focus:border-brand-green font-medium transition" 
+                    />
+                  </div>
+
+                  <div className="flex gap-3 pt-2">
+                    <button 
+                      type="button" 
+                      onClick={() => setFolderToRename(null)} 
+                      className="flex-1 px-4 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-sm rounded-xl transition border-0 cursor-pointer"
+                    >
+                      Cancel
+                    </button>
+                    <button 
+                      type="submit" 
+                      disabled={submitting || renameValue.trim() === folderToRename.name} 
+                      className="flex-1 px-4 py-3 bg-brand-green hover:bg-brand-green-dark text-white font-semibold text-sm rounded-xl transition flex items-center justify-center gap-2 border-0 cursor-pointer shadow-md shadow-brand-green/20 disabled:opacity-50"
+                    >
+                      {submitting ? <Loader2 size={16} className="animate-spin" /> : "Save Changes"}
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
           </div>
         )}
       </AnimatePresence>

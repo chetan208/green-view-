@@ -5,11 +5,12 @@ import { useRouter } from 'next/navigation';
 export interface User {
   _id: string;
   phone: string;
-  role: 'student' | 'teacher';
+  role: 'student' | 'user';
   name: string;
   photoUrl?: string;
-  teacherProfile?: {
-    accessRole: 'Teacher' | 'Admin' | 'Owner';
+  accessLevel?: 'staff' | 'admin' | 'superadmin' | 'student';
+  staffProfile?: {
+    post?: string;
     subject?: string;
     department?: string;
     isPrincipal?: boolean;

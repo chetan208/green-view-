@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { useParams } from "next/navigation";
+import { useParams, useSearchParams, useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight, Download, Share2, X, Image as ImageIcon, Sparkles } from "lucide-react";
 import { getFolderByIdApi } from "@/lib/api";
@@ -38,6 +38,16 @@ function SkeletonMediaCard() {
 export default function SingleFolderGalleryPage() {
   const params = useParams();
   const folderId = params?.folderId as string;
+  const searchParams = useSearchParams();
+  const queryMediaId = searchParams?.get('mediaId');
+  const router = useRouter();
+
+  const handleCloseLightbox = useCallback(() => {
+    setSelectedIndex(null);
+    if (queryMediaId) {
+      router.replace(`/gallery/${folderId}`, { scroll: false });
+    }
+  }, [queryMediaId, router, folderId]);
 
   const [folderName, setFolderName] = useState("");
   const [mediaItems, setMediaItems] = useState<MediaItem[]>([]);
@@ -111,6 +121,16 @@ export default function SingleFolderGalleryPage() {
     }
   }, [folderId, loadMediaBatch]);
 
+  // Auto-open lightbox if queryMediaId is present
+  useEffect(() => {
+    if (queryMediaId && mediaItems.length > 0 && selectedIndex === null) {
+      const idx = mediaItems.findIndex(m => m.id === queryMediaId);
+      if (idx !== -1) {
+        setSelectedIndex(idx);
+      }
+    }
+  }, [queryMediaId, mediaItems, selectedIndex]);
+
   // Fetch next page function
   const fetchNextPage = useCallback(() => {
     if (!hasMore || loadingMore || loadingInitial) return;
@@ -160,7 +180,7 @@ export default function SingleFolderGalleryPage() {
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (selectedIndex === null || mediaItems.length === 0) return;
-      if (e.key === "Escape") setSelectedIndex(null);
+      if (e.key === "Escape") handleCloseLightbox();
       if (e.key === "ArrowRight") handleNext();
       if (e.key === "ArrowLeft") handlePrev();
     };
@@ -246,7 +266,7 @@ export default function SingleFolderGalleryPage() {
                 </span>
               </div>
               <button 
-                onClick={() => setSelectedIndex(null)}
+                onClick={handleCloseLightbox}
                 className="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors cursor-pointer border-0 shadow-lg"
               >
                 <X className="w-5 h-5" />

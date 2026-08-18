@@ -25,13 +25,13 @@ export default function ProtectedRoute({ children, allowedRoles }: ProtectedRout
           router.push('/auth/teacher/login');
         }
       } else if (allowedRoles && allowedRoles.length > 0) {
-        // Check access role for teachers
-        const userAccessRole = user.teacherProfile?.accessRole;
-        if (user.role === 'teacher' && userAccessRole && !allowedRoles.includes(userAccessRole)) {
+        // Check access role for users
+        const userAccessRole = user.accessLevel;
+        if (user.role === 'user' && userAccessRole && !allowedRoles.includes(userAccessRole)) {
           // Access denied, redirect to appropriate default page
-          if (userAccessRole === 'Owner') router.push('/erp');
+          if (userAccessRole === 'superadmin') router.push('/erp');
           else router.push('/admin');
-        } else if (user.role === 'student' && !allowedRoles.includes('Student')) {
+        } else if (user.role === 'student' && !allowedRoles.includes('student')) {
           router.push('/student-portal');
         }
       }
@@ -55,10 +55,10 @@ export default function ProtectedRoute({ children, allowedRoles }: ProtectedRout
   }
   
   if (allowedRoles && allowedRoles.length > 0) {
-    if (user.role === 'teacher' && !allowedRoles.includes(user.teacherProfile?.accessRole || '')) {
+    if (user.role === 'user' && !allowedRoles.includes(user.accessLevel || '')) {
       return null;
     }
-    if (user.role === 'student' && !allowedRoles.includes('Student')) {
+    if (user.role === 'student' && !allowedRoles.includes('student')) {
       return null;
     }
   }

@@ -24,6 +24,13 @@ interface StudentType {
   motherTongue?: string;
   address?: string;
   prevSchool?: string;
+  photoUrl?: string;
+  discountTuition?: number;
+  discountBus?: number;
+  discountAdmission?: number;
+  discountAnnual?: number;
+  discountExam?: number;
+  discountComputer?: number;
   studentclass?: {
     className: string;
     _id?: string;
@@ -46,7 +53,7 @@ const CLASSES_LIST = [
   "Class 11", "Class 12"
 ];
 
-const inputCls = "w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold text-brand-green-dark focus:outline-none focus:ring-2 focus:ring-brand-green/15 focus:border-brand-green transition-all";
+const inputCls = "w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold text-slate-800 focus:outline-none focus:ring-2 focus:ring-slate-200 focus:border-slate-400 transition-all";
 
 export default function StudentManager({ onManageFees, selectedSession = "2026-27" }: StudentManagerProps) {
   const [students, setStudents] = useState<StudentType[]>([]);
@@ -55,6 +62,8 @@ export default function StudentManager({ onManageFees, selectedSession = "2026-2
   
   const [loading, setLoading] = useState(true);
   const [submitLoading, setSubmitLoading] = useState(false);
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [editImageFile, setEditImageFile] = useState<File | null>(null);
   const [showForm, setShowForm] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedClass, setSelectedClass] = useState("All");
@@ -96,7 +105,14 @@ export default function StudentManager({ onManageFees, selectedSession = "2026-2
 
       const res = await erpApi.students.list(filters);
       if (res.success) {
-        setStudents(res.students);
+        const mappedStudents = res.students.map((s: any) => ({
+          ...s.userId,
+          ...s,
+          studentclass: s.classId,
+          session: s.sessionId,
+          contactNo: (s.userId?.phone || s.contactNo || "N/A").split('_')[0]
+        }));
+        setStudents(mappedStudents);
       } else {
         setError(res.message || "Failed to fetch students");
       }
@@ -177,7 +193,13 @@ export default function StudentManager({ onManageFees, selectedSession = "2026-2
     socialCategory: "",
     motherTongue: "",
     address: "",
-    prevSchool: ""
+    prevSchool: "",
+    discountTuition: 0,
+    discountBus: 0,
+    discountAdmission: 0,
+    discountAnnual: 0,
+    discountExam: 0,
+    discountComputer: 0
   });
 
   const resetForm = () => {
@@ -188,6 +210,7 @@ export default function StudentManager({ onManageFees, selectedSession = "2026-2
       motherTongue: "", address: "", prevSchool: "",
       initialAmountPaid: "", paymentMode: "CASH"
     });
+    setImageFile(null);
     setError(null);
     setSuccess(null);
   };
@@ -214,7 +237,7 @@ export default function StudentManager({ onManageFees, selectedSession = "2026-2
     submitData.append("contactNo", formData.contactNo);
     
     if (formData.station) {
-      const stationObj = stationsList.find(s => s.stationName === formData.station);
+      const stationObj = stationsList.find(s => s.station === formData.station);
       if (stationObj) submitData.append("transportStationId", stationObj._id);
     }
     
@@ -225,6 +248,7 @@ export default function StudentManager({ onManageFees, selectedSession = "2026-2
     if (formData.address) submitData.append("address", formData.address);
     if (formData.prevSchool) submitData.append("prevSchool", formData.prevSchool);
     submitData.append("session", selectedSession);
+    if (imageFile) submitData.append("profileImage", imageFile);
 
     try {
       const res = await erpApi.students.create(submitData);
@@ -253,7 +277,7 @@ export default function StudentManager({ onManageFees, selectedSession = "2026-2
 
     setEditFormData({
       name: student.name || "",
-      studentClass: student.studentclass?.className || student.studentClass || "",
+      studentClass: student.studentclass?._id || student.studentClass || "",
       section: student.section || "",
       fatherName: student.fatherName || "",
       motherName: student.motherName || "",
@@ -267,10 +291,17 @@ export default function StudentManager({ onManageFees, selectedSession = "2026-2
       socialCategory: student.socialCategory || "",
       motherTongue: student.motherTongue || "",
       address: student.address || "",
-      prevSchool: student.prevSchool || ""
+      prevSchool: student.prevSchool || "",
+      discountTuition: student.discountTuition || 0,
+      discountBus: student.discountBus || 0,
+      discountAdmission: student.discountAdmission || 0,
+      discountAnnual: student.discountAnnual || 0,
+      discountExam: student.discountExam || 0,
+      discountComputer: student.discountComputer || 0
     });
     setError(null);
     setSuccess(null);
+    setEditImageFile(null);
     setShowEditModal(true);
   };
 
@@ -285,14 +316,21 @@ export default function StudentManager({ onManageFees, selectedSession = "2026-2
     if (editFormData.section) updateData.section = editFormData.section;
     
     if (editFormData.station) {
-      const stationObj = stationsList.find(s => s.stationName === editFormData.station);
+      const stationObj = stationsList.find(s => s.station === editFormData.station);
       if (stationObj) updateData.transportStationId = stationObj._id;
     } else {
       updateData.transportStationId = null;
     }
+    const finalUpdateData = new FormData();
+    Object.keys(updateData).forEach(key => {
+      if (updateData[key] !== null && updateData[key] !== undefined) {
+        finalUpdateData.append(key, updateData[key]);
+      }
+    });
+    if (editImageFile) finalUpdateData.append("profileImage", editImageFile);
 
     try {
-      const res = await erpApi.students.update(selectedStudentForDetail._id, updateData);
+      const res = await erpApi.students.update(selectedStudentForDetail._id, finalUpdateData);
       if (res.success) {
         setSuccess("Student information updated successfully!");
         setShowEditModal(false);
@@ -387,6 +425,23 @@ export default function StudentManager({ onManageFees, selectedSession = "2026-2
     }
   };
 
+  const renderStationOptions = () => {
+    const grouped: Record<string, any[]> = {};
+    stationsList.forEach(s => {
+      const routeName = s.routeId?.routeName || 'Unassigned Stations';
+      if (!grouped[routeName]) grouped[routeName] = [];
+      grouped[routeName].push(s);
+    });
+    
+    return Object.entries(grouped).map(([route, stations]) => (
+      <optgroup key={route} label={route}>
+        {stations.map(s => (
+          <option key={s._id} value={s.station}>{s.station} (₹{s.amount})</option>
+        ))}
+      </optgroup>
+    ));
+  };
+
   return (
     <div className="w-full space-y-6">
       {selectedStudentForDetail ? (
@@ -414,8 +469,12 @@ export default function StudentManager({ onManageFees, selectedSession = "2026-2
               <div className="absolute right-0 top-0 w-40 h-40 bg-white/5 rounded-full blur-2xl -mr-10 -mt-10" />
               <div className="absolute bottom-0 left-0 w-32 h-32 bg-white/10 rounded-full blur-xl -ml-16 -mb-16" />
 
-              <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-white/10 border border-white/20 flex items-center justify-center text-3xl font-bold uppercase text-white shadow-inner relative z-10 shrink-0">
-                {selectedStudentForDetail.name?.charAt(0)}
+              <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-white/10 border border-white/20 flex items-center justify-center text-3xl font-bold uppercase text-white shadow-inner relative z-10 shrink-0 overflow-hidden">
+                {selectedStudentForDetail.photoUrl ? (
+                  <img src={selectedStudentForDetail.photoUrl} alt={selectedStudentForDetail.name} className="w-full h-full object-cover" />
+                ) : (
+                  selectedStudentForDetail.name?.charAt(0) || "S"
+                )}
               </div>
 
               <div className="text-center sm:text-left relative z-10 space-y-2">
@@ -515,6 +574,41 @@ export default function StudentManager({ onManageFees, selectedSession = "2026-2
               </div>
             </div>
 
+            {/* Discounts Section */}
+            <div className="px-6 sm:px-8 pb-8">
+              <div className="space-y-5">
+                <h3 className="text-xs font-bold text-slate-700 uppercase tracking-widest border-b border-slate-100 pb-2">
+                  Discounts & Allowances
+                </h3>
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4 text-xs">
+                  <div>
+                    <p className="text-[9px] font-bold text-slate-400 uppercase tracking-wider">Tuition</p>
+                    <p className="font-semibold text-brand-green-dark mt-1">₹ {selectedStudentForDetail.discountTuition || 0}</p>
+                  </div>
+                  <div>
+                    <p className="text-[9px] font-bold text-slate-400 uppercase tracking-wider">Bus/Transport</p>
+                    <p className="font-semibold text-brand-green-dark mt-1">₹ {selectedStudentForDetail.discountBus || 0}</p>
+                  </div>
+                  <div>
+                    <p className="text-[9px] font-bold text-slate-400 uppercase tracking-wider">Admission</p>
+                    <p className="font-semibold text-brand-green-dark mt-1">₹ {selectedStudentForDetail.discountAdmission || 0}</p>
+                  </div>
+                  <div>
+                    <p className="text-[9px] font-bold text-slate-400 uppercase tracking-wider">Annual Charges</p>
+                    <p className="font-semibold text-brand-green-dark mt-1">₹ {selectedStudentForDetail.discountAnnual || 0}</p>
+                  </div>
+                  <div>
+                    <p className="text-[9px] font-bold text-slate-400 uppercase tracking-wider">Exam Fee</p>
+                    <p className="font-semibold text-brand-green-dark mt-1">₹ {selectedStudentForDetail.discountExam || 0}</p>
+                  </div>
+                  <div>
+                    <p className="text-[9px] font-bold text-slate-400 uppercase tracking-wider">Computer Fee</p>
+                    <p className="font-semibold text-brand-green-dark mt-1">₹ {selectedStudentForDetail.discountComputer || 0}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             {/* Actions Footer */}
             <div className="px-6 py-5 bg-slate-50 border-t border-slate-100 flex flex-col sm:flex-row justify-between items-center gap-4">
               <div className="flex flex-wrap items-center gap-2.5 w-full sm:w-auto justify-start">
@@ -540,7 +634,7 @@ export default function StudentManager({ onManageFees, selectedSession = "2026-2
                 >
                   Promote Student
                 </button>
-                {user?.teacherProfile?.accessRole === 'Owner' && (
+                {(user?.accessLevel === 'admin' || user?.accessLevel === 'superadmin') && (
                   <button
                     type="button"
                     onClick={() => setShowDeleteConfirm(true)}
@@ -582,8 +676,8 @@ export default function StudentManager({ onManageFees, selectedSession = "2026-2
           {/* Expandable Registration Form */}
           {showForm && (
             <div className="bg-white rounded-2xl border border-slate-200/60 p-5 shadow-xs animate-in slide-in-from-top-4 duration-300">
-              <h3 className="text-sm font-bold text-brand-green-dark mb-4 flex items-center gap-2">
-                <UserPlus size={16} className="text-brand-green" />
+              <h3 className="text-sm font-bold text-slate-800 mb-4 flex items-center gap-2">
+                <UserPlus size={16} className="text-slate-500" />
                 Student Admission Form
               </h3>
 
@@ -620,8 +714,12 @@ export default function StudentManager({ onManageFees, selectedSession = "2026-2
                       <option value="" disabled>Select Gender</option>
                       <option value="Male">Male</option>
                       <option value="Female">Female</option>
-                      <option value="Other">Other</option>
                     </select>
+                  </div>
+                  <div>
+                    <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Profile Image (Optional)</label>
+                    <input type="file" accept="image/*"
+                      onChange={(e) => setImageFile(e.target.files?.[0] || null)} className={`${inputCls} py-1.5`} />
                   </div>
                 </div>
 
@@ -691,7 +789,7 @@ export default function StudentManager({ onManageFees, selectedSession = "2026-2
                     <select value={formData.station}
                       onChange={(e) => setFormData({ ...formData, station: e.target.value })} className={inputCls}>
                       <option value="">None / Day Scholar</option>
-                      {stationsList.map(s => (<option key={s._id} value={s.stationName}>{s.stationName}</option>))}
+                      {renderStationOptions()}
                     </select>
                   </div>
                 </div>
@@ -792,6 +890,7 @@ export default function StudentManager({ onManageFees, selectedSession = "2026-2
                 <table className="w-full border-collapse text-left text-xs">
                   <thead>
                     <tr className="bg-slate-50 border-b border-slate-100 text-slate-400">
+                      <th className="px-5 py-3 font-semibold uppercase tracking-wider text-[10px]">#</th>
                       <th className="px-5 py-3 font-semibold uppercase tracking-wider text-[10px]">Student Details</th>
                       <th className="px-5 py-3 font-semibold uppercase tracking-wider text-[10px]">Card Number</th>
                       <th className="px-5 py-3 font-semibold uppercase tracking-wider text-[10px]">Family Details</th>
@@ -801,8 +900,11 @@ export default function StudentManager({ onManageFees, selectedSession = "2026-2
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-slate-100 text-slate-600">
-                    {students.map((student) => (
+                    {students.map((student, idx) => (
                       <tr key={student._id} className="hover:bg-slate-50/50 transition duration-150">
+                        <td className="px-5 py-3.5 font-mono text-[11px] font-medium text-slate-400">
+                          {idx + 1}
+                        </td>
                         <td className="px-5 py-3.5">
                           <button
                             onClick={() => setSelectedStudentForDetail(student)}
@@ -868,16 +970,16 @@ export default function StudentManager({ onManageFees, selectedSession = "2026-2
       {/* Edit Student Modal */}
       {showEditModal && (
         <div className="fixed inset-0 bg-slate-900/40 backdrop-blur-xs flex items-center justify-center p-4 z-50 overflow-y-auto">
-          <div className="bg-white rounded-2xl border border-slate-200 max-w-lg w-full p-6 shadow-xl relative my-8 animate-in zoom-in-95 duration-200">
+          <div className="bg-white rounded-2xl border border-slate-200 max-w-3xl w-full p-5 sm:p-6 shadow-xl relative my-8 animate-in zoom-in-95 duration-200">
             <button onClick={() => setShowEditModal(false)}
               className="absolute right-4 top-4 text-slate-400 hover:text-slate-600 bg-transparent border-0 cursor-pointer">
               <X size={18} />
             </button>
-            <h3 className="text-sm font-bold text-brand-green-dark mb-4 flex items-center gap-2">
+            <h3 className="text-sm font-bold text-slate-800 mb-4 flex items-center gap-2">
               Edit Student Details
             </h3>
-            <form onSubmit={handleEditSubmit} className="space-y-4">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <form onSubmit={handleEditSubmit} className="space-y-3">
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                 <div>
                   <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Full Name</label>
                   <input type="text" required value={editFormData.name}
@@ -885,10 +987,10 @@ export default function StudentManager({ onManageFees, selectedSession = "2026-2
                 </div>
                 <div>
                   <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Student Class</label>
-                  <select required value={editFormData.studentClass}
-                    onChange={(e) => setEditFormData({ ...editFormData, studentClass: e.target.value })} className={inputCls}>
+                  <select disabled value={editFormData.studentClass}
+                    className={`${inputCls} bg-slate-100 cursor-not-allowed opacity-70`}>
                     <option value="" disabled>Select Class</option>
-                    {classesList.map(c => (<option key={c._id} value={c.className}>{c.className}</option>))}
+                    {classesList.map(c => (<option key={c._id} value={c._id}>{c.className}</option>))}
                     {classesList.length === 0 && CLASSES_LIST.map((c) => (<option key={c} value={c}>{c}</option>))}
                   </select>
                 </div>
@@ -932,14 +1034,54 @@ export default function StudentManager({ onManageFees, selectedSession = "2026-2
                   <input type="tel" required value={editFormData.contactNo}
                     onChange={(e) => setEditFormData({ ...editFormData, contactNo: e.target.value })} className={inputCls} />
                 </div>
-                <div className="sm:col-span-2">
+                <div>
+                  <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Profile Image (Optional)</label>
+                  <input type="file" accept="image/*"
+                    onChange={(e) => setEditImageFile(e.target.files?.[0] || null)} className={`${inputCls} py-1.5`} />
+                </div>
+                <div className="col-span-2 md:col-span-3">
                   <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Bus Station (Optional)</label>
                   <select value={editFormData.station}
                     onChange={(e) => setEditFormData({ ...editFormData, station: e.target.value })} className={inputCls}>
                     <option value="">None / Day Scholar</option>
-                    {stationsList.map(s => (<option key={s._id} value={s.stationName}>{s.stationName}</option>))}
+                    {renderStationOptions()}
                   </select>
                 </div>
+              </div>
+              <div className="pt-2 border-t border-slate-100">
+                  <h4 className="text-[11px] font-bold text-slate-700 uppercase tracking-wider mb-2">Discounts & Allowances</h4>
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                    <div>
+                      <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Tuition Discount</label>
+                      <input type="number" min="0" value={editFormData.discountTuition}
+                        onChange={(e) => setEditFormData({ ...editFormData, discountTuition: Number(e.target.value) })} className={inputCls} />
+                    </div>
+                    <div>
+                      <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Bus Discount</label>
+                      <input type="number" min="0" value={editFormData.discountBus}
+                        onChange={(e) => setEditFormData({ ...editFormData, discountBus: Number(e.target.value) })} className={inputCls} />
+                    </div>
+                    <div>
+                      <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Admission Discount</label>
+                      <input type="number" min="0" value={editFormData.discountAdmission}
+                        onChange={(e) => setEditFormData({ ...editFormData, discountAdmission: Number(e.target.value) })} className={inputCls} />
+                    </div>
+                    <div>
+                      <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Annual Discount</label>
+                      <input type="number" min="0" value={editFormData.discountAnnual}
+                        onChange={(e) => setEditFormData({ ...editFormData, discountAnnual: Number(e.target.value) })} className={inputCls} />
+                    </div>
+                    <div>
+                      <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Exam Discount</label>
+                      <input type="number" min="0" value={editFormData.discountExam}
+                        onChange={(e) => setEditFormData({ ...editFormData, discountExam: Number(e.target.value) })} className={inputCls} />
+                    </div>
+                    <div>
+                      <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Computer Discount</label>
+                      <input type="number" min="0" value={editFormData.discountComputer}
+                        onChange={(e) => setEditFormData({ ...editFormData, discountComputer: Number(e.target.value) })} className={inputCls} />
+                    </div>
+                  </div>
               </div>
               {error && (
                 <div className="bg-red-50 border border-red-200 text-red-700 text-xs px-3.5 py-2.5 rounded-xl flex items-center gap-2">
