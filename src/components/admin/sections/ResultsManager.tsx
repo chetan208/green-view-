@@ -20,10 +20,8 @@ export default function ResultsManager({ selectedSession }: ResultsManagerProps)
 
   const [sessionFilter, setSessionFilter] = useState<string>('all');
 
-  const defaultYear = selectedSession || `${new Date().getFullYear()}-${new Date().getFullYear() + 1}`;
-
   const [newResult, setNewResult] = useState({
-    studentName: "", grade: "", percentage: "", year: defaultYear
+    studentName: "", grade: "", percentage: "", year: ""
   });
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
@@ -54,12 +52,6 @@ export default function ResultsManager({ selectedSession }: ResultsManagerProps)
     fetchResults();
   }, [sessionFilter]);
 
-  useEffect(() => {
-    if (selectedSession) {
-      setNewResult(prev => ({ ...prev, year: selectedSession }));
-    }
-  }, [selectedSession]);
-
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
@@ -83,14 +75,14 @@ export default function ResultsManager({ selectedSession }: ResultsManagerProps)
     formData.append("name", newResult.studentName);
     formData.append("className", newResult.grade);
     formData.append("percentage", newResult.percentage);
-    formData.append("session", newResult.year || defaultYear);
+    formData.append("session", newResult.year);
     formData.append("image", selectedFile);
 
     try {
       const res = await erpApi.topResults.create(formData);
       if (res.success) {
         setSuccess("Topper added successfully!");
-        setNewResult({ studentName: "", grade: "", percentage: "", year: defaultYear });
+        setNewResult({ studentName: "", grade: "", percentage: "", year: "" });
         setSelectedFile(null);
         setPreviewUrl(null);
         setShowForm(false);

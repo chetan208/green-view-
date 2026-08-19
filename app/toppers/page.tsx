@@ -14,7 +14,7 @@ export const revalidate = 60; // Revalidate every minute
 
 export default async function ToppersPage() {
   let toppers: Topper[] = [];
-  const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:8000";
+  const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL || process.env.NEXT_PUBLIC_API_URL || "https://api.greenviewschool.in";
 
   try {
     const res = await axios.get(`${SERVER_URL}/api/top-results`);
@@ -29,33 +29,36 @@ export default async function ToppersPage() {
     <div className="min-h-screen flex flex-col bg-[#F8F9FF]">
       <Header />
       
-      <main className="flex-grow pt-24 pb-24 relative overflow-hidden">
+      <main className="flex-grow pt-14 sm:pt-20 md:pt-28 pb-12 md:pb-20 relative overflow-hidden">
         {/* Background decorations */}
         <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-[#006a37]/5 rounded-full blur-[100px] pointer-events-none" />
         <div className="absolute top-40 left-0 w-1/4 h-1/4 bg-[#0fa958]/5 rounded-full blur-[100px] pointer-events-none" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="text-center mb-16 max-w-3xl mx-auto">
-            <div className="inline-flex items-center gap-2 bg-[#E6F4EA] text-[#006a37] px-4 py-2 rounded-full font-bold text-sm mb-6 border border-[#006a37]/10 shadow-sm">
-              <Trophy size={16} />
+          
+          {/* Compact Header Section */}
+          <div className="text-center mb-6 sm:mb-8 md:mb-12 max-w-2xl mx-auto">
+            <div className="inline-flex items-center gap-1.5 bg-[#E6F4EA] text-[#006a37] px-3 py-1 rounded-full font-bold text-xs mb-2.5 sm:mb-3 border border-[#006a37]/10 shadow-xs">
+              <Trophy size={14} />
               HALL OF FAME
             </div>
-            <h1 className="text-4xl md:text-6xl font-black text-slate-900 tracking-tight leading-[1.1] mb-6">
-              Our Academic <span className="text-[#006a37] inline-block relative">Achievers<svg className="absolute -bottom-2 left-0 w-full" viewBox="0 0 100 10" preserveAspectRatio="none"><path d="M0 5 Q 50 10 100 5" stroke="#0fa958" strokeWidth="3" fill="transparent"/></svg></span>
+            <h1 className="text-2xl sm:text-4xl md:text-5xl font-black text-slate-900 tracking-tight leading-[1.1] mb-2 sm:mb-3">
+              Our Academic <span className="text-[#006a37] inline-block relative">Achievers<svg className="absolute -bottom-1.5 left-0 w-full" viewBox="0 0 100 10" preserveAspectRatio="none"><path d="M0 5 Q 50 10 100 5" stroke="#0fa958" strokeWidth="3" fill="transparent"/></svg></span>
             </h1>
-            <p className="text-slate-600 text-lg md:text-xl font-medium">
-              We take immense pride in our students who have set benchmarks of excellence. Their hard work and dedication continue to inspire generations of Green View students.
+            <p className="text-slate-600 text-xs sm:text-base md:text-lg font-medium leading-relaxed">
+              We take immense pride in our students who have set benchmarks of excellence in board examinations.
             </p>
           </div>
 
           {toppers.length === 0 ? (
-            <div className="text-center py-20 bg-white rounded-3xl border border-slate-100 shadow-sm">
-              <Trophy size={64} className="mx-auto text-slate-200 mb-4" />
-              <h3 className="text-2xl font-bold text-slate-400">No records found</h3>
-              <p className="text-slate-500 mt-2">Achievers list is currently being updated.</p>
+            <div className="text-center py-12 md:py-16 bg-white rounded-3xl border border-slate-100 shadow-xs">
+              <Trophy size={40} className="mx-auto text-slate-300 mb-3" />
+              <h3 className="text-base sm:text-lg font-bold text-slate-500">No records found</h3>
+              <p className="text-xs text-slate-400 mt-1">Achievers list is currently being updated.</p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            /* 2 Cards per row on mobile (grid-cols-2), 4 on desktop */
+            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 md:gap-8">
               {toppers.map((topper, index) => (
                 <TopperCard key={topper._id} topper={topper} index={index} />
               ))}
