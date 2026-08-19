@@ -91,21 +91,21 @@ export default function HeroSection() {
           {/* Action Buttons */}
           <motion.div 
             variants={itemVariants}
-            className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3 sm:gap-4 mb-4 sm:mb-6 w-full sm:w-auto"
+            className="flex flex-row items-center justify-center lg:justify-start gap-2.5 sm:gap-4 mb-4 sm:mb-6 w-full sm:w-auto"
           >
-            <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="w-full sm:w-auto">
+            <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="flex-1 sm:flex-none">
               <Link
                 href="/admissions"
-                className="inline-flex items-center justify-center gap-2 bg-brand-green text-white hover:bg-emerald-700 px-6 sm:px-8 py-3 sm:py-3.5 rounded-full font-semibold md:font-bold text-xs sm:text-sm tracking-wide transition-all duration-300 shadow-md shadow-emerald-600/10 w-full sm:w-auto cursor-pointer"
+                className="inline-flex items-center justify-center gap-1.5 bg-brand-green text-white hover:bg-emerald-700 px-4 sm:px-8 py-3 sm:py-3.5 rounded-full font-semibold md:font-bold text-[11px] sm:text-sm tracking-wide transition-all duration-300 shadow-md shadow-emerald-600/10 w-full sm:w-auto cursor-pointer text-center"
               >
                 Admission Enquiry
-                <ArrowRight className="w-4 h-4" />
+                <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
               </Link>
             </motion.div>
-            <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="w-full sm:w-auto">
+            <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="flex-1 sm:flex-none">
               <Link
                 href="/about"
-                className="inline-flex items-center justify-center bg-white border border-slate-200 hover:bg-slate-50 text-slate-800 px-6 sm:px-8 py-3 sm:py-3.5 rounded-full font-semibold md:font-bold text-xs sm:text-sm tracking-wide transition-all duration-300 text-center w-full sm:w-auto cursor-pointer"
+                className="inline-flex items-center justify-center bg-white border border-slate-200 hover:bg-slate-50 text-slate-800 px-4 sm:px-8 py-3 sm:py-3.5 rounded-full font-semibold md:font-bold text-[11px] sm:text-sm tracking-wide transition-all duration-300 text-center w-full sm:w-auto cursor-pointer"
               >
                 About Us
               </Link>

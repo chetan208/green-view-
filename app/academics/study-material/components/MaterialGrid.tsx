@@ -281,7 +281,7 @@ export default function MaterialGrid() {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+            <div className="grid grid-cols-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-5">
               {CLASSES_LIST.map((clsName, idx) => {
                 const classNum = idx + 1;
                 const IconComponent = getIconForClass(classNum);
@@ -299,20 +299,20 @@ export default function MaterialGrid() {
                       setActiveVideo(null);
                       window.scrollTo({ top: 0, behavior: "smooth" });
                     }}
-                    className="group bg-white rounded-3xl border border-slate-100/90 p-7 flex flex-col items-center text-center shadow-[0_2px_12px_-3px_rgba(0,0,0,0.03)] hover:shadow-[0_12px_30px_-6px_rgba(15,169,88,0.12)] hover:border-brand-green/30 hover:-translate-y-1 transition-all duration-300 cursor-pointer w-full relative overflow-hidden text-left"
+                    className="group bg-white rounded-xl sm:rounded-3xl border border-slate-200 sm:border-slate-100/90 py-3 sm:p-7 flex flex-col items-center justify-center sm:text-left text-center shadow-sm sm:shadow-[0_2px_12px_-3px_rgba(0,0,0,0.03)] hover:shadow-md hover:border-brand-green/30 sm:hover:-translate-y-1 transition-all duration-300 cursor-pointer w-full relative overflow-hidden"
                   >
-                    <div className="w-14 h-14 rounded-2xl bg-emerald-50 text-brand-green flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 shadow-sm">
+                    <div className="hidden sm:flex w-14 h-14 rounded-2xl bg-emerald-50 text-brand-green items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 shadow-sm">
                       <IconComponent className="w-7 h-7 stroke-[1.75]" />
                     </div>
 
-                    <h3 className="text-lg font-bold text-slate-900 mb-1.5 group-hover:text-brand-green transition-colors">
+                    <h3 className="text-[13px] sm:text-lg font-bold text-slate-800 sm:text-slate-900 sm:mb-1.5 group-hover:text-brand-green transition-colors">
                       {clsName}
                     </h3>
-                    <p className="text-slate-500 text-xs font-normal leading-relaxed line-clamp-2 mb-3">
+                    <p className="hidden sm:block text-slate-500 text-xs font-normal leading-relaxed line-clamp-2 mb-3">
                       {desc}
                     </p>
 
-                    <div className="mt-auto pt-3 border-t border-slate-50 w-full flex items-center justify-between text-[11px] font-semibold text-slate-400 group-hover:text-brand-green transition-colors">
+                    <div className="hidden sm:flex mt-auto pt-3 border-t border-slate-50 w-full items-center justify-between text-[11px] font-semibold text-slate-400 group-hover:text-brand-green transition-colors">
                       <span>Explore Resources</span>
                       {classMaterialCount > 0 && (
                         <span className="px-2 py-0.5 rounded-full bg-emerald-50 text-brand-green text-[10px] font-bold">

@@ -5,8 +5,12 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 
 export default function FacilitiesSection() {
-  // Facilities cards directly integrated from Academics sections
+  // Facilities cards styled like the Hero Section FeatureScroll cards
   const cards = [
+    {
+      title: "Smart Classrooms",
+      image: "/images/smart_classroom.png",
+    },
     {
       title: "Science Laboratories",
       image: "/images/science_lab.png",
@@ -16,12 +20,24 @@ export default function FacilitiesSection() {
       image: "/images/computer_lab.png",
     },
     {
-      title: "Sports Complex",
-      image: "https://images.unsplash.com/photo-1576624302685-618a38525b68?auto=format&fit=crop&q=80&w=500",
-    },
-    {
       title: "Digital Library",
       image: "/images/library.png",
+    },
+    {
+      title: "Sports Complex",
+      image: "https://images.unsplash.com/photo-1505322747495-6afdd3b70760?auto=format&fit=crop&q=80&w=500",
+    },
+    {
+      title: "STEM & Robotics",
+      image: "/images/robotics.png",
+    },
+    {
+      title: "Transport Fleet",
+      image: "/images/school_bus.png",
+    },
+    {
+      title: "Creative Arts Studio",
+      image: "/images/art.png",
     },
   ];
 
@@ -30,19 +46,19 @@ export default function FacilitiesSection() {
     show: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.08,
+        staggerChildren: 0.06,
       },
     },
   } as const;
 
   const cardVariants = {
-    hidden: { opacity: 0, y: 25 },
-    show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } },
+    hidden: { opacity: 0, y: 20 },
+    show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] } },
   } as const;
 
   return (
     <section id="facilities" className="w-full py-12 md:py-16 px-4 sm:px-6 md:px-12 lg:px-24 bg-[#ebfbf1] flex justify-center overflow-hidden">
-      <div className="max-w-[1200px] w-full flex flex-col">
+      <div className="max-w-[1240px] w-full flex flex-col">
         
         {/* Subtitle */}
         <motion.span 
@@ -81,7 +97,7 @@ export default function FacilitiesSection() {
           </motion.div>
         </div>
 
-        {/* Cards Grid */}
+        {/* Cards Grid - Hero Section Capsule Pill Style */}
         <motion.div 
           variants={gridVariants}
           initial="hidden"
@@ -93,26 +109,24 @@ export default function FacilitiesSection() {
             <motion.div
               key={idx}
               variants={cardVariants}
-              whileHover={{ y: -6, scale: 1.01 }}
-              transition={{ duration: 0.3 }}
-              className="group flex flex-col bg-white border border-slate-100/50 rounded-[20px] overflow-hidden hover:shadow-lg transition-all duration-300 shadow-[0_4px_20px_-10px_rgba(0,0,0,0.08)]"
+              whileHover={{ y: -3, scale: 1.01 }}
+              transition={{ duration: 0.25 }}
+              className="group flex-none w-full h-[63px] bg-[#F9FAFB] border border-zinc-200 rounded-[30px] p-[5px] pr-4 flex items-center gap-3 shadow-[0px_1px_2px_0px_rgba(0,0,0,0.05)] hover:border-[#0B9E50] hover:bg-white hover:shadow-md transition-all duration-300 cursor-pointer"
             >
-              {/* Image Container */}
-              <div className="relative aspect-[4/3] w-full overflow-hidden bg-slate-100">
+              {/* Thumbnail Image */}
+              <div className="w-[50px] h-[50px] relative rounded-full overflow-hidden border border-white shrink-0 shadow-xs">
                 <img
                   src={card.image}
                   alt={card.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                   loading="lazy"
                 />
               </div>
 
-              {/* Text Container */}
-              <div className="py-4 md:py-5 px-4 text-center select-none flex items-center justify-center bg-white min-h-[60px] md:min-h-[70px]">
-                <span className="text-[#0B1A28] font-bold text-sm md:text-[15px] tracking-tight group-hover:text-[#0B9E50] transition-colors">
-                  {card.title}
-                </span>
-              </div>
+              {/* Feature Title */}
+              <span className="font-poppins font-semibold md:font-bold text-[12px] md:text-[13px] text-zinc-800 leading-tight group-hover:text-[#0B9E50] transition-colors">
+                {card.title}
+              </span>
             </motion.div>
           ))}
         </motion.div>
