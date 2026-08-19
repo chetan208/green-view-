@@ -36,12 +36,8 @@ export default function ToppersSection() {
     { _id: "4", name: "Divya Sharma", fatherName: "Ramesh Sharma", class: "10th", marks: 658, percentage: 94, imageUrl: "", session: "2021-2022" },
   ];
 
-<<<<<<< HEAD
-  const displayToppers = toppers.length > 0 ? toppers : fallbackToppers;
-=======
   // Only show top 8 on home page
   const displayedToppers = toppers.slice(0, 8);
->>>>>>> 166d41025b345d62754fa7041de81076b6e3caa3
 
   return (
     <section className="py-8 md:py-12 bg-white relative overflow-hidden">
@@ -67,17 +63,11 @@ export default function ToppersSection() {
              <div className="animate-pulse flex gap-2 items-center text-slate-400 font-bold text-sm"><Trophy className="animate-bounce" size={16} /> Loading Toppers...</div>
           </div>
         ) : (
-<<<<<<< HEAD
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {displayToppers.map((topper, index) => (
-              <TopperCard key={topper._id} topper={topper} index={index} />
-=======
           <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
             {displayedToppers.map((topper, index) => (
               <div key={topper._id} className={index >= 4 ? "hidden sm:block" : "block"}>
                 <TopperCard topper={topper} index={index} />
               </div>
->>>>>>> 166d41025b345d62754fa7041de81076b6e3caa3
             ))}
           </div>
         )}
