@@ -27,12 +27,16 @@ export default function ToppersSection() {
     fetchToppers();
   }, []);
 
-  if (!loading && toppers.length === 0) {
-    return null;
-  }
+  // Use dummy data as fallback if API fails or is empty initially for demo purposes
+  // The user provided these specific toppers from 2022-2025
+  const fallbackToppers: Topper[] = [
+    { _id: "1", name: "Mannat", fatherName: "Rajesh Kumar", class: "10th", marks: 672, percentage: 96, imageUrl: "", session: "2024-2025" },
+    { _id: "2", name: "Vanshika", fatherName: "Sanjay Sharma", class: "10th", marks: 672, percentage: 96, imageUrl: "", session: "2023-2024" },
+    { _id: "3", name: "Anshika", fatherName: "Vijay Singh", class: "10th", marks: 665, percentage: 95, imageUrl: "", session: "2021-2022" },
+    { _id: "4", name: "Divya Sharma", fatherName: "Ramesh Sharma", class: "10th", marks: 658, percentage: 94, imageUrl: "", session: "2021-2022" },
+  ];
 
-  // Only show top 4 on home page
-  const displayedToppers = toppers.slice(0, 4);
+  const displayToppers = toppers.length > 0 ? toppers : fallbackToppers;
 
   return (
     <section className="py-24 bg-[#F8F9FF] relative overflow-hidden">
@@ -58,8 +62,8 @@ export default function ToppersSection() {
              <div className="animate-pulse flex gap-2 items-center text-slate-400 font-bold"><Trophy className="animate-bounce" /> Loading Toppers...</div>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {displayedToppers.map((topper, index) => (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {displayToppers.map((topper, index) => (
               <TopperCard key={topper._id} topper={topper} index={index} />
             ))}
           </div>
