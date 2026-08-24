@@ -11,6 +11,7 @@ export default function AdminLayoutShell({ children }: { children: React.ReactNo
 
   const menuItems = [
     { href: "/admin", label: "Dashboard Home", icon: <LayoutDashboard size={15} /> },
+    { href: "/admin/hero-images", label: "Website Banner", icon: <Image size={15} /> },
     { href: "/admin/contact", label: "Contact Inquiries", icon: <Mail size={15} /> },
     { href: "/admin/calendar", label: "Manage Calendar", icon: <Calendar size={15} /> },
     { href: "/admin/results", label: "Top Results", icon: <Trophy size={15} /> },

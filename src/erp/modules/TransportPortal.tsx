@@ -57,7 +57,7 @@ export default function TransportPortal() {
   
   // Station Modal States
   const [stationFormOpen, setStationFormOpen] = useState<{isEdit: boolean, stationId?: string, defaultRouteId?: string} | null>(null);
-  const [stationFormData, setStationFormData] = useState({ name: "", fee: 0, routeId: "" });
+  const [stationFormData, setStationFormData] = useState<{name: string, fee: number | string, routeId: string}>({ name: "", fee: "", routeId: "" });
   
   const [deleteStationModal, setDeleteStationModal] = useState<string | null>(null);
 
@@ -133,7 +133,7 @@ export default function TransportPortal() {
       setStationFormData({ name: station.station, fee: station.amount, routeId: sRouteId || routeId });
       setStationFormOpen({ isEdit: true, stationId: station._id });
     } else {
-      setStationFormData({ name: "", fee: 0, routeId: routeId });
+      setStationFormData({ name: "", fee: "", routeId: routeId });
       setStationFormOpen({ isEdit: false, defaultRouteId: routeId });
     }
     setError(null);
@@ -149,7 +149,7 @@ export default function TransportPortal() {
     try {
       const payload = {
         station: stationFormData.name,
-        amount: stationFormData.fee,
+        amount: Number(stationFormData.fee),
         routeId: stationFormData.routeId
       };
 
@@ -189,6 +189,81 @@ export default function TransportPortal() {
     } catch (err: any) {
       setError(err.message || "Failed to delete station");
       setDeleteStationModal(null);
+    }
+  };
+
+  const [deleteRouteModal, setDeleteRouteModal] = useState<string | null>(null);
+
+  const handleDeleteRoute = async () => {
+    if (!deleteRouteModal) return;
+    try {
+      const res = await erpApi.transport.routes.delete(deleteRouteModal);
+      if (res.success) {
+        setSuccess("Route deleted successfully");
+        setDeleteRouteModal(null);
+        fetchData();
+      } else {
+        setError(res.message || "Failed to delete route");
+        setDeleteRouteModal(null);
+      }
+    } catch (err: any) {
+      setError(err.message || "Failed to delete route");
+      setDeleteRouteModal(null);
+    }
+  };
+
+  const [draggedStation, setDraggedStation] = useState<{ id: string; routeId: string; index: number } | null>(null);
+
+  const handleDragStart = (e: React.DragEvent, id: string, routeId: string, index: number) => {
+    setDraggedStation({ id, routeId, index });
+    e.dataTransfer.effectAllowed = "move";
+  };
+
+  const handleDragOver = (e: React.DragEvent, targetRouteId: string) => {
+    e.preventDefault();
+    if (draggedStation && draggedStation.routeId === targetRouteId) {
+      e.dataTransfer.dropEffect = "move";
+    } else {
+      e.dataTransfer.dropEffect = "none";
+    }
+  };
+
+  const handleDrop = async (e: React.DragEvent, targetId: string, targetRouteId: string, targetIndex: number) => {
+    e.preventDefault();
+    if (!draggedStation || draggedStation.routeId !== targetRouteId || draggedStation.index === targetIndex) {
+      setDraggedStation(null);
+      return;
+    }
+
+    // Get current stations for this route
+    const routeStations = stations.filter(s => {
+      if (typeof s.routeId === 'object' && s.routeId !== null) return s.routeId._id === targetRouteId;
+      return s.routeId === targetRouteId;
+    });
+
+    // Reorder locally
+    const newOrder = [...routeStations];
+    const [movedItem] = newOrder.splice(draggedStation.index, 1);
+    newOrder.splice(targetIndex, 0, movedItem);
+
+    // Update locally for instant feedback
+    setStations(prev => {
+      const otherStations = prev.filter(s => {
+        if (typeof s.routeId === 'object' && s.routeId !== null) return s.routeId._id !== targetRouteId;
+        return s.routeId !== targetRouteId;
+      });
+      return [...otherStations, ...newOrder];
+    });
+
+    setDraggedStation(null);
+
+    // Sync to backend
+    try {
+      const orderedIds = newOrder.map(s => s._id);
+      await erpApi.transport.stations.reorder(orderedIds);
+    } catch (err: any) {
+      setError("Failed to save new station order");
+      fetchData(); // revert
     }
   };
 
@@ -291,6 +366,11 @@ export default function TransportPortal() {
                         <button onClick={() => handleToggleRouteStatus(route)} className="p-1.5 bg-white border border-slate-200 text-slate-500 hover:text-amber-500 rounded shadow-sm cursor-pointer" title={route.isActive ? "Pause Route" : "Resume Route"}>
                           {route.isActive ? <PauseCircle size={14} /> : <PlayCircle size={14} />}
                         </button>
+                        {routeStations.length === 0 && (
+                          <button onClick={() => setDeleteRouteModal(route._id)} className="p-1.5 bg-white border border-slate-200 text-slate-500 hover:text-rose-600 rounded shadow-sm cursor-pointer" title="Delete Route">
+                            <Trash2 size={14} />
+                          </button>
+                        )}
                       </div>
                     )}
                     <button 
@@ -313,9 +393,29 @@ export default function TransportPortal() {
                       </thead>
                       <tbody className="divide-y divide-slate-100 text-[13px] bg-white">
                         {routeStations.map((station, idx) => (
-                          <tr key={station._id} className="hover:bg-slate-50/50 group">
+                          <tr 
+                            key={station._id} 
+                            className={`hover:bg-slate-50/50 group ${isAdmin ? 'cursor-grab active:cursor-grabbing' : ''}`}
+                            draggable={isAdmin}
+                            onDragStart={(e) => isAdmin && handleDragStart(e, station._id, route._id, idx)}
+                            onDragOver={(e) => isAdmin && handleDragOver(e, route._id)}
+                            onDrop={(e) => isAdmin && handleDrop(e, station._id, route._id, idx)}
+                            onDragEnd={() => setDraggedStation(null)}
+                          >
                             <td className="px-6 py-3">
                               <div className="flex items-center gap-3">
+                                {isAdmin && (
+                                  <div className="text-slate-300 group-hover:text-slate-400 cursor-grab px-1 -ml-2">
+                                    <svg width="12" height="20" viewBox="0 0 12 20" fill="currentColor">
+                                      <circle cx="4" cy="4" r="1.5" />
+                                      <circle cx="4" cy="10" r="1.5" />
+                                      <circle cx="4" cy="16" r="1.5" />
+                                      <circle cx="8" cy="4" r="1.5" />
+                                      <circle cx="8" cy="10" r="1.5" />
+                                      <circle cx="8" cy="16" r="1.5" />
+                                    </svg>
+                                  </div>
+                                )}
                                 <div className="w-6 h-6 rounded-full bg-brand-green/10 flex items-center justify-center text-[10px] font-semibold text-brand-green-dark shrink-0">
                                   {idx + 1}
                                 </div>
@@ -439,7 +539,7 @@ export default function TransportPortal() {
                 </div>
                 <div>
                   <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-1.5">Monthly Fee (₹) *</label>
-                  <input type="number" required min="0" value={stationFormData.fee} onChange={(e) => setStationFormData({...stationFormData, fee: Number(e.target.value)})} className={inputCls} placeholder="E.g., 1000" />
+                  <input type="number" required min="0" value={stationFormData.fee} onChange={(e) => setStationFormData({...stationFormData, fee: e.target.value === '' ? '' : Number(e.target.value)})} className={inputCls} placeholder="E.g., 1000" />
                 </div>
               </div>
 
@@ -470,6 +570,27 @@ export default function TransportPortal() {
                 Cancel
               </button>
               <button onClick={handleDeleteStation} className="flex-1 py-2 text-xs font-semibold text-white bg-rose-600 hover:bg-rose-700 rounded-lg shadow-sm transition border-0 cursor-pointer">
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      {/* --- Custom Confirm Modal for Route Deletion --- */}
+      {deleteRouteModal && (
+        <div className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl shadow-xl w-full max-w-xs overflow-hidden animate-in fade-in zoom-in-95 duration-200 p-6 text-center">
+            <div className="w-12 h-12 rounded-full bg-rose-100 flex items-center justify-center mx-auto mb-4 text-rose-600">
+              <AlertTriangle size={24} />
+            </div>
+            <h3 className="text-base font-bold text-slate-800 mb-2">Delete Route?</h3>
+            <p className="text-xs text-slate-500 mb-6">Are you sure you want to delete this route? This action cannot be undone.</p>
+            
+            <div className="flex gap-3">
+              <button onClick={() => setDeleteRouteModal(null)} className="flex-1 py-2 text-xs font-semibold text-slate-600 bg-slate-100 hover:bg-slate-200 rounded-lg transition border-0 cursor-pointer">
+                Cancel
+              </button>
+              <button onClick={handleDeleteRoute} className="flex-1 py-2 text-xs font-semibold text-white bg-rose-600 hover:bg-rose-700 rounded-lg shadow-sm transition border-0 cursor-pointer">
                 Delete
               </button>
             </div>

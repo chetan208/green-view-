@@ -7,19 +7,28 @@ import { motion, AnimatePresence } from "framer-motion";
 import { erpApi } from "@/services/erpApi";
 
 export default function HeroSection() {
-  const images = [
-    "/images/hero/hero1.png",
-    "/images/hero/hero2.png",
-    "/images/hero/hero3.png",
-    "/images/hero/hero4.png",
-    "/images/hero/hero5.png",
-    "/images/hero/hero6.png",
-  ];
+  const [images, setImages] = useState<string[]>([
+    "https://res.cloudinary.com/zigjpvty/image/upload/v1787598135/hero_carousel/miru5cshg71lagctfoap.jpg",
+    "https://res.cloudinary.com/w3mqdubg/image/upload/v1787598137/hero_carousel/xwebnezvc1cdhqmtcvhb.jpg",
+    "https://res.cloudinary.com/twmwdzfx/image/upload/v1787598142/hero_carousel/idho4yfebzsfmff24vy1.jpg",
+    "https://res.cloudinary.com/ovr8rwih/image/upload/v1787598145/hero_carousel/xakqs0y7mnmzrpwokjge.jpg",
+    "https://res.cloudinary.com/mysbzufb/image/upload/v1787598151/hero_carousel/r9g4tnhpuitjtzep7zsr.jpg",
+    "https://res.cloudinary.com/zigjpvty/image/upload/v1787598163/hero_carousel/calrqbbc7rcoypkkgzhn.png"
+  ]);
 
   const [currentImageIdx, setCurrentImageIdx] = useState(0);
   const [isAdmissionsOpen, setIsAdmissionsOpen] = useState(false);
 
   useEffect(() => {
+    erpApi.heroImages.list().then(res => {
+      if (res.success && res.images && res.images.length > 0) {
+        setImages(res.images.map((img: any) => img.imageUrl));
+      }
+    }).catch(err => console.error("Failed to load dynamic hero images", err));
+  }, []);
+
+  useEffect(() => {
+    if (images.length === 0) return;
     const interval = setInterval(() => {
       setCurrentImageIdx((prev) => (prev + 1) % images.length);
     }, 4000);

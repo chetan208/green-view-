@@ -16,7 +16,7 @@ export default function SeniorCta() {
           Admissions Now <span className="text-[#34d399]">Open</span>
         </h2>
         <p className="text-slate-300 md:text-lg font-medium max-w-2xl mx-auto mb-10 leading-relaxed">
-          Classes open from Nursery to Class XII. Limited seats available — apply early to secure your child&apos;s place at Green View.
+          Admissions open for Class XI and XII. Specialized streams in Science, Commerce, and Humanities. Apply early to secure your future at Green View.
         </p>
         <div className="flex flex-col sm:flex-row items-center gap-4">
           <Link

@@ -1,56 +1,95 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { motion } from "framer-motion";
-
-const teachers = [
-  {
-    name: "Mr. Rajat Kumar",
-    role: "High School Faculty",
-    experience: "12+ years experience",
-    subjects: "Mathematics",
-    image: "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?q=80&w=400&auto=format&fit=crop"
-  },
-  {
-    name: "Mrs. Kavya Singh",
-    role: "High School Faculty",
-    experience: "10+ years experience",
-    subjects: "Science",
-    image: "https://images.unsplash.com/photo-1544717302-de2939b7ef71?q=80&w=400&auto=format&fit=crop"
-  },
-  {
-    name: "Ms. Shalini",
-    role: "High School Faculty",
-    experience: "8+ years experience",
-    subjects: "Social Studies",
-    image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=400&auto=format&fit=crop"
-  },
-  {
-    name: "Mr. Deepak",
-    role: "High School Faculty",
-    experience: "7+ years experience",
-    subjects: "English",
-    image: "https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?q=80&w=400&auto=format&fit=crop"
-  },
-  {
-    name: "Mrs. Meena",
-    role: "High School Faculty",
-    experience: "15+ years experience",
-    subjects: "Hindi, Sanskrit",
-    image: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?q=80&w=400&auto=format&fit=crop"
-  },
-  {
-    name: "Mr. Rakesh",
-    role: "High School Faculty",
-    experience: "9+ years experience",
-    subjects: "Computer Science",
-    image: "https://images.unsplash.com/photo-1580894732444-8ecded7900cd?q=80&w=400&auto=format&fit=crop"
-  }
-];
+import { erpApi } from "@/services/erpApi";
 
 export default function HighSchoolTeachers() {
+  const [teachers, setTeachers] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
+  const [loadingMore, setLoadingMore] = useState(false);
+  const observerTargetRef = useRef<HTMLDivElement | null>(null);
+
+  const fetchTeachers = async (pageToFetch: number, isInitial = false) => {
+    try {
+      if (isInitial) setLoading(true);
+      else setLoadingMore(true);
+
+      const res = await erpApi.teachers.list({ category: 'high', isTeacher: true, page: pageToFetch, limit: 12 });
+      if (res.success && res.teachers) {
+        const mapped = res.teachers.map((teacher: any) => {
+          const getExperienceYears = (joinDate: string | Date | undefined) => {
+            if (!joinDate) return "8+ years experience";
+            const diffMs = Date.now() - new Date(joinDate).getTime();
+            const diffYears = Math.floor(diffMs / (1000 * 60 * 60 * 24 * 365.25));
+            return diffYears > 0 ? `${diffYears}+ years experience` : "1+ years experience";
+          };
+
+          const qualification = teacher.staffProfile?.qualification || "B.Ed.";
+          const experienceText = teacher.staffProfile?.experience || getExperienceYears(teacher.staffProfile?.joinDate);
+          const qualExp = `${qualification} ${experienceText}`.trim();
+
+          return {
+            name: teacher.name,
+            role: "High School Teacher",
+            bio: teacher.staffProfile?.bio || "Dedicated educator committed to student success.",
+            experience: qualExp,
+            subjects: teacher.staffProfile?.subject || "",
+            image: teacher.photoUrl || "https://images.unsplash.com/photo-1544717302-de2939b7ef71?q=80&w=400&auto=format&fit=crop"
+          };
+        });
+        
+        if (isInitial) setTeachers(mapped);
+        else setTeachers(prev => [...prev, ...mapped]);
+
+        setHasMore(res.teachers.length === 12);
+      }
+    } catch (error) {
+      console.error("Failed to fetch high school teachers:", error);
+    } finally {
+      setLoading(false);
+      setLoadingMore(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchTeachers(1, true);
+  }, []);
+
+  const fetchNextPage = useCallback(() => {
+    if (!hasMore || loadingMore || loading) return;
+    const nextPage = page + 1;
+    setPage(nextPage);
+    fetchTeachers(nextPage, false);
+  }, [page, hasMore, loadingMore, loading]);
+
+  useEffect(() => {
+    const target = observerTargetRef.current;
+    if (!target) return;
+    const observer = new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting && hasMore && !loadingMore && !loading) {
+        fetchNextPage();
+      }
+    }, { threshold: 0.1, rootMargin: '100px' });
+    observer.observe(target);
+    return () => { if (target) observer.unobserve(target); };
+  }, [observerTargetRef, hasMore, loadingMore, loading, fetchNextPage]);
+
+  if (loading) {
+    return (
+      <div className="flex justify-center py-12">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-brand-green"></div>
+      </div>
+    );
+  }
+
+  if (teachers.length === 0) return null;
+
   return (
-    <section className="w-full py-10 md:py-16 max-w-7xl mx-auto px-4 md:px-8">
+    <section className="w-full py-10 md:py-16 max-w-7xl mx-auto px-6 md:px-12 lg:px-16">
       <motion.h2 
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -58,32 +97,48 @@ export default function HighSchoolTeachers() {
         transition={{ duration: 0.5 }}
         className="text-3xl md:text-4xl font-medium md:font-semibold text-center text-slate-900 mb-12"
       >
-        High School Faculty
+        High School <span className="text-brand-green">Teachers</span>
       </motion.h2>
       
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
         {teachers.map((teacher, index) => (
           <motion.div 
             key={index} 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 0.5, delay: index * 0.1 }}
-            className="group bg-white rounded-2xl border border-slate-100 p-5 md:p-6 flex flex-col items-center text-center shadow-[0_2px_10px_-3px_rgba(6,81,237,0.06)] hover:shadow-[0_8px_25px_-4px_rgba(6,81,237,0.1)] hover:-translate-y-1 transition-all duration-300"
+            transition={{ duration: 0.5, delay: (index % 12) * 0.05 }}
+            className="group bg-white rounded-[24px] border border-slate-100 p-5 flex flex-col items-start text-left shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300"
           >
-            <div className="w-40 h-40 sm:w-32 sm:h-32 md:w-40 md:h-40 mb-4 overflow-hidden rounded-2xl border-[4px] border-slate-50 group-hover:border-emerald-50 transition-colors duration-300">
-              <img src={teacher.image} alt={teacher.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+            <div className="w-full aspect-[1.15] mb-4 overflow-hidden rounded-[20px] bg-slate-50 relative">
+              <img 
+                src={teacher.image} 
+                alt={teacher.name} 
+                className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-300" 
+              />
             </div>
-            <h3 className="text-lg font-medium md:font-bold text-slate-900 mb-2">{teacher.name}</h3>
-            <div className="flex flex-wrap justify-center items-center gap-1.5 mb-3">
-              <span className="text-[10px] font-medium md:font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full">{teacher.role}</span>
-              <span className="text-[10px] font-medium md:font-semibold text-slate-600 bg-slate-100 px-2.5 py-0.5 rounded-full">{teacher.experience}</span>
-            </div>
-            <p className="text-xs font-normal md:font-medium text-slate-500">
-              Subjects: <span className="text-slate-700">{teacher.subjects}</span>
+            <h3 className="text-lg font-bold text-slate-900 leading-tight mb-1">{teacher.name}</h3>
+            <span className="text-xs font-semibold text-blue-600 mb-1.5 block tracking-wide">{teacher.role}</span>
+            <p className="text-xs font-normal text-slate-500 leading-relaxed mb-1 line-clamp-2 min-h-[34px]">
+              {teacher.bio}
             </p>
+            <p className="text-xs font-medium text-slate-400 mb-3">{teacher.experience}</p>
+            {teacher.subjects && (
+              <p className="text-xs font-normal text-slate-500 mt-auto">
+                Subjects: <span className="font-bold text-slate-800">{teacher.subjects}</span>
+              </p>
+            )}
           </motion.div>
         ))}
+      </div>
+
+      <div ref={observerTargetRef} className="py-6 flex flex-col items-center justify-center w-full min-h-[60px]">
+        {loadingMore && (
+          <div className="flex flex-col items-center gap-3">
+            <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-brand-green"></div>
+            <span className="text-xs font-semibold text-slate-400 uppercase tracking-widest">Loading more...</span>
+          </div>
+        )}
       </div>
     </section>
   );

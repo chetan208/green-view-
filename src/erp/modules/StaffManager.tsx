@@ -22,6 +22,9 @@ type Staff = {
     dateOfJoining?: string;
     qualification?: string;
     bio?: string;
+    teacherCategory?: string[];
+    subject?: string;
+    experience?: string;
   };
   email?: string;
   avatar?: string;
@@ -55,9 +58,9 @@ export default function StaffManager() {
   const { user } = useAuth();
 
   const [newStaff, setNewStaff] = useState<{
-    name: string; accessLevel: string; post: string; qualification: string; bio: string; phone: string; email: string; isTeacher: boolean; photo: File | null;
+    name: string; accessLevel: string; post: string; qualification: string; bio: string; phone: string; email: string; isTeacher: boolean; photo: File | null; existingPhotoUrl?: string; teacherCategory: string[]; subject: string; experience: string;
   }>({
-    name: "", accessLevel: "staff", post: "", qualification: "", bio: "", phone: "", email: "", isTeacher: true, photo: null
+    name: "", accessLevel: "staff", post: "", qualification: "", bio: "", phone: "", email: "", isTeacher: true, photo: null, existingPhotoUrl: "", teacherCategory: [], subject: "", experience: ""
   });
 
   const departments = ["All", "Administration", "Science Faculty", "Primary Faculty", "Transport", "Support Staff"];
@@ -101,7 +104,11 @@ export default function StaffManager() {
       phone: staff.phone || "",
       email: staff.email || "",
       isTeacher: staff.staffProfile?.isTeacher ?? true,
-      photo: null
+      photo: null,
+      existingPhotoUrl: staff.photoUrl || staff.avatar || "",
+      teacherCategory: staff.staffProfile?.teacherCategory || [],
+      subject: staff.staffProfile?.subject || "",
+      experience: staff.staffProfile?.experience || ""
     });
     setShowForm(true);
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -118,8 +125,6 @@ export default function StaffManager() {
       return;
     }
 
-    
-
     try {
       let res;
       const formData = new FormData();
@@ -132,6 +137,13 @@ export default function StaffManager() {
       if (newStaff.bio) formData.append("bio", newStaff.bio);
       if (newStaff.email) formData.append("email", newStaff.email);
       if (newStaff.photo) formData.append("photo", newStaff.photo);
+      formData.append("teacherCategory", JSON.stringify(newStaff.teacherCategory));
+      if (newStaff.isTeacher && newStaff.subject) {
+        formData.append("subject", newStaff.subject);
+      }
+      if (newStaff.experience) {
+        formData.append("experience", newStaff.experience);
+      }
 
       if (editingId) {
         res = await erpApi.teachers.update(editingId, formData);
@@ -141,7 +153,7 @@ export default function StaffManager() {
       
       if (res.success) {
         setSuccess(editingId ? "Staff updated successfully!" : "Staff added successfully!");
-        setNewStaff({ name: "", accessLevel: "staff", post: "", qualification: "", bio: "", phone: "", email: "", isTeacher: true, photo: null });
+        setNewStaff({ name: "", accessLevel: "staff", post: "", qualification: "", bio: "", phone: "", email: "", isTeacher: true, photo: null, existingPhotoUrl: "", teacherCategory: [], subject: "", experience: "" });
         setEditingId(null);
         setShowForm(false);
         fetchStaff();
@@ -215,7 +227,7 @@ export default function StaffManager() {
         
         {!showForm && user?.accessLevel === 'superadmin' && (
           <button 
-            onClick={() => { setEditingId(null); setNewStaff({ name: "", accessLevel: "staff", post: "", qualification: "", bio: "", phone: "", email: "", isTeacher: true, photo: null }); setShowForm(true); }}
+            onClick={() => { setEditingId(null); setNewStaff({ name: "", accessLevel: "staff", post: "", qualification: "", bio: "", phone: "", email: "", isTeacher: true, photo: null, existingPhotoUrl: "", teacherCategory: [], subject: "", experience: "" }); setShowForm(true); }}
             className="w-full md:w-auto bg-brand-green hover:bg-brand-green-dark text-white px-5 py-2.5 rounded-lg text-sm font-semibold flex items-center justify-center gap-2 transition shadow-sm border-0 cursor-pointer"
           >
             <Plus size={16} /> Add Staff
@@ -273,6 +285,8 @@ export default function StaffManager() {
                   <label className="flex flex-col items-center justify-center w-full aspect-square border-2 border-slate-200 border-dashed rounded-xl cursor-pointer bg-slate-50 hover:bg-brand-green/5 hover:border-brand-green/30 transition-all group overflow-hidden relative">
                     {newStaff.photo ? (
                       <img src={URL.createObjectURL(newStaff.photo)} alt="Preview" className="w-full h-full object-cover" />
+                    ) : newStaff.existingPhotoUrl ? (
+                      <img src={newStaff.existingPhotoUrl} alt="Existing Photo" className="w-full h-full object-cover" />
                     ) : (
                       <>
                         <Upload size={24} className="text-slate-300 group-hover:text-brand-green mb-2 transition-colors" />
@@ -312,6 +326,10 @@ export default function StaffManager() {
                   <input type="text" value={newStaff.qualification} onChange={e => setNewStaff({...newStaff, qualification: e.target.value})} placeholder="e.g., M.Sc. Mathematics, B.Ed." className="w-full px-4 py-2 bg-slate-50 border border-slate-200 text-sm rounded-lg focus:outline-none focus:border-brand-green focus:bg-white font-medium transition" />
                 </div>
                 <div>
+                  <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Experience (Optional)</label>
+                  <input type="text" value={newStaff.experience} onChange={e => setNewStaff({...newStaff, experience: e.target.value})} placeholder="e.g., 8+ years experience, 5 years" className="w-full px-4 py-2 bg-slate-50 border border-slate-200 text-sm rounded-lg focus:outline-none focus:border-brand-green focus:bg-white font-medium transition" />
+                </div>
+                <div>
                   <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Short Bio</label>
                   <input type="text" value={newStaff.bio} onChange={e => setNewStaff({...newStaff, bio: e.target.value})} placeholder="e.g., 5 years of teaching experience..." className="w-full px-4 py-2 bg-slate-50 border border-slate-200 text-sm rounded-lg focus:outline-none focus:border-brand-green focus:bg-white font-medium transition" />
                 </div>
@@ -323,6 +341,61 @@ export default function StaffManager() {
                   <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Email Address</label>
                   <input type="email" value={newStaff.email} onChange={e => setNewStaff({...newStaff, email: e.target.value})} placeholder="teacher@example.com" className="w-full px-4 py-2 bg-slate-50 border border-slate-200 text-sm rounded-lg focus:outline-none focus:border-brand-green focus:bg-white font-medium transition" />
                 </div>
+                {newStaff.isTeacher && (
+                  <div>
+                    <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Subject Taught</label>
+                    <input type="text" value={newStaff.subject} onChange={e => setNewStaff({...newStaff, subject: e.target.value})} placeholder="e.g., Mathematics, Physics" className="w-full px-4 py-2 bg-slate-50 border border-slate-200 text-sm rounded-lg focus:outline-none focus:border-brand-green focus:bg-white font-medium transition" />
+                  </div>
+                )}
+                {newStaff.isTeacher && (
+                  <div className="col-span-1 sm:col-span-2">
+                    <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Teacher Categories</label>
+                    <div className="flex flex-wrap gap-4 mt-2">
+                      <label className="flex items-center gap-2 cursor-pointer bg-slate-50 px-4 py-2 rounded-lg border border-slate-200 hover:bg-slate-100">
+                        <input
+                          type="checkbox"
+                          checked={newStaff.teacherCategory.includes('primary')}
+                          onChange={(e) => {
+                            const updated = e.target.checked
+                              ? [...newStaff.teacherCategory, 'primary']
+                              : newStaff.teacherCategory.filter(c => c !== 'primary');
+                            setNewStaff({ ...newStaff, teacherCategory: updated });
+                          }}
+                          className="w-4 h-4 text-brand-green rounded border-slate-300 focus:ring-brand-green"
+                        />
+                        <span className="text-sm font-semibold text-slate-700">Primary Teacher</span>
+                      </label>
+                      <label className="flex items-center gap-2 cursor-pointer bg-slate-50 px-4 py-2 rounded-lg border border-slate-200 hover:bg-slate-100">
+                        <input
+                          type="checkbox"
+                          checked={newStaff.teacherCategory.includes('high')}
+                          onChange={(e) => {
+                            const updated = e.target.checked
+                              ? [...newStaff.teacherCategory, 'high']
+                              : newStaff.teacherCategory.filter(c => c !== 'high');
+                            setNewStaff({ ...newStaff, teacherCategory: updated });
+                          }}
+                          className="w-4 h-4 text-brand-green rounded border-slate-300 focus:ring-brand-green"
+                        />
+                        <span className="text-sm font-semibold text-slate-700">High School Teacher</span>
+                      </label>
+                      <label className="flex items-center gap-2 cursor-pointer bg-slate-50 px-4 py-2 rounded-lg border border-slate-200 hover:bg-slate-100">
+                        <input
+                          type="checkbox"
+                          checked={newStaff.teacherCategory.includes('senior')}
+                          onChange={(e) => {
+                            const updated = e.target.checked
+                              ? [...newStaff.teacherCategory, 'senior']
+                              : newStaff.teacherCategory.filter(c => c !== 'senior');
+                            setNewStaff({ ...newStaff, teacherCategory: updated });
+                          }}
+                          className="w-4 h-4 text-brand-green rounded border-slate-300 focus:ring-brand-green"
+                        />
+                        <span className="text-sm font-semibold text-slate-700">Senior Teacher</span>
+                      </label>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
 
@@ -348,13 +421,13 @@ export default function StaffManager() {
             <table className="w-full text-left border-collapse">
               <thead>
                 <tr className="bg-slate-50 border-b border-slate-200">
-                  <th className="px-6 py-3 text-[10px] font-bold uppercase tracking-wider text-slate-500 whitespace-nowrap">Staff</th>
-                  <th className="px-6 py-3 text-[10px] font-bold uppercase tracking-wider text-slate-500 whitespace-nowrap">Designation</th>
-                  <th className="px-6 py-3 text-[10px] font-bold uppercase tracking-wider text-slate-500 whitespace-nowrap">Access Level</th>
-                  <th className="px-6 py-3 text-[10px] font-bold uppercase tracking-wider text-slate-500 whitespace-nowrap">Qualification</th>
-                  <th className="px-6 py-3 text-[10px] font-bold uppercase tracking-wider text-slate-500 whitespace-nowrap">Contact</th>
+                  <th className="px-4 py-3 text-[10px] font-bold uppercase tracking-wider text-slate-500">Staff Details</th>
+                  <th className="px-4 py-3 text-[10px] font-bold uppercase tracking-wider text-slate-500">Designation</th>
+                  <th className="px-4 py-3 text-[10px] font-bold uppercase tracking-wider text-slate-500">Subject</th>
+                  <th className="px-4 py-3 text-[10px] font-bold uppercase tracking-wider text-slate-500">Qualification</th>
+                  <th className="px-4 py-3 text-[10px] font-bold uppercase tracking-wider text-slate-500">Access</th>
                   {user?.accessLevel === 'superadmin' && (
-                    <th className="px-6 py-3 text-[10px] font-bold uppercase tracking-wider text-slate-500 whitespace-nowrap text-right">Actions</th>
+                    <th className="px-4 py-3 text-[10px] font-bold uppercase tracking-wider text-slate-500 text-right">Actions</th>
                   )}
                 </tr>
               </thead>
@@ -369,52 +442,65 @@ export default function StaffManager() {
                       exit={{ opacity: 0, backgroundColor: "#fef2f2" }}
                       className="hover:bg-slate-50 transition-colors group"
                     >
-                      <td className="px-6 py-4">
+                      <td className="px-4 py-3">
                         <div className="flex items-center gap-3">
                           <div className="w-10 h-10 rounded-full border border-slate-200 overflow-hidden bg-slate-100 flex items-center justify-center shrink-0">
-                            {staff.avatar ? (
-                              <Image src={staff.avatar} alt={staff.name} width={40} height={40} className="object-cover w-full h-full" />
+                            {staff.photoUrl || staff.avatar ? (
+                              <img src={staff.photoUrl || staff.avatar} alt={staff.name} className="object-cover w-full h-full" />
                             ) : (
                               <UserCircle size={24} className="text-slate-300" />
                             )}
                           </div>
                           <div>
-                            <p className="text-sm font-semibold text-slate-900 leading-none mb-1">{staff.name}</p>
-                            <p className="text-[10px] font-bold text-brand-green uppercase tracking-wider">{staff.staffProfile?.post || staff.accessLevel || 'Staff'}</p>
+                            <p className="text-sm font-bold text-slate-900 leading-tight">{staff.name}</p>
+                            <div className="flex items-center gap-1.5 mt-1 text-[11px] font-medium text-slate-500">
+                              <Phone size={10} /> {staff.phone || "N/A"}
+                            </div>
+                            {staff.email && (
+                              <div className="flex items-center gap-1.5 mt-0.5 text-[11px] font-medium text-slate-500">
+                                <Mail size={10} /> {staff.email}
+                              </div>
+                            )}
                           </div>
                         </div>
                       </td>
-                      <td className="px-6 py-4">
-                        <p className="text-sm font-semibold text-slate-700">
-                          {staff.staffProfile?.post || "Not Assigned"}
+                      <td className="px-4 py-3 align-top pt-4">
+                        <p className="text-[11px] font-bold text-brand-green uppercase tracking-wider mb-0.5">
+                          {staff.staffProfile?.post || 'Staff'}
+                        </p>
+                        {staff.staffProfile?.teacherCategory && staff.staffProfile.teacherCategory.length > 0 && (
+                          <div className="flex flex-wrap gap-1 mt-1">
+                            {staff.staffProfile.teacherCategory.map((cat) => (
+                              <span key={cat} className="text-[9px] font-semibold bg-emerald-50 text-emerald-700 px-1.5 py-0.5 rounded uppercase tracking-wider">
+                                {cat === 'primary' ? 'Primary' : cat === 'high' ? 'High' : 'Senior'}
+                              </span>
+                            ))}
+                          </div>
+                        )}
+                      </td>
+                      <td className="px-4 py-3 align-top pt-4">
+                        <p className="text-xs font-semibold text-slate-700">
+                          {staff.staffProfile?.subject || "-"}
                         </p>
                       </td>
-                      <td className="px-6 py-4">
+                      <td className="px-4 py-3 align-top pt-4">
+                        <p className="text-xs font-medium text-slate-700 max-w-[150px] truncate" title={staff.staffProfile?.qualification || ""}>
+                          {staff.staffProfile?.qualification || "-"}
+                        </p>
+                      </td>
+                      <td className="px-4 py-3 align-top pt-4">
                         <select 
                           value={staff.accessLevel || "staff"}
                           onChange={(e) => updateRole(staff._id, e.target.value)}
-                          className="text-sm font-semibold text-slate-700 bg-transparent border-b border-dashed border-slate-300 hover:border-brand-green focus:border-brand-green focus:outline-none cursor-pointer pb-0.5 block w-fit"
+                          className="text-[11px] font-bold uppercase tracking-wider text-slate-700 bg-transparent border-b border-dashed border-slate-300 hover:border-brand-green focus:border-brand-green focus:outline-none cursor-pointer pb-0.5 block w-fit"
                         >
                           <option value="staff">Staff</option>
                           <option value="admin">Admin</option>
                           <option value="superadmin">Super Admin</option>
                         </select>
                       </td>
-                      <td className="px-6 py-4">
-                        <p className="text-sm font-medium text-slate-600 max-w-[200px] truncate" title={staff.staffProfile?.qualification || ""}>
-                          {staff.staffProfile?.qualification || "Not Specified"}
-                        </p>
-                      </td>
-                      <td className="px-6 py-4">
-                        <div className="flex items-center gap-2 text-xs font-medium text-slate-600 mb-1">
-                          <Mail size={12} className="text-slate-400" /> {staff.email || "N/A"}
-                        </div>
-                        <div className="flex items-center gap-2 text-xs font-medium text-slate-600">
-                          <Phone size={12} className="text-slate-400" /> {staff.phone || "N/A"}
-                        </div>
-                      </td>
                       {user?.accessLevel === 'superadmin' && (
-                        <td className="px-6 py-4 text-right">
+                        <td className="px-4 py-3 text-right align-middle">
                           <div className="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                             <button 
                               onClick={() => handleEdit(staff)}

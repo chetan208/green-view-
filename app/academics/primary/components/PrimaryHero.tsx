@@ -5,8 +5,8 @@ import Link from "next/link";
 import { ArrowRight, Download } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
-export default function PrimaryHero() {
-  const images = [
+export default function PrimaryHero({ images: propImages }: { images?: string[] }) {
+  const images = propImages || [
     "/images/classroom.png",
     "/images/study.png",
     "/images/art.png",
@@ -23,26 +23,27 @@ export default function PrimaryHero() {
   }, [images.length]);
 
   return (
-    <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-16 pt-12 md:pt-16 pb-6 md:pb-8 flex flex-col gap-6">
+    <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-16 pt-12 md:pt-16 pb-6 md:pb-8 flex flex-col">
       
-      {/* Top Breadcrumb & Tiny Header */}
-      <div className="flex flex-col gap-1.5">
-        <div className="text-sm font-medium text-slate-500">
-          <Link href="/" className="text-brand-green hover:underline">Home</Link> / <span>Primary</span>
-        </div>
-        <h1 className="text-3xl md:text-4xl font-medium md:font-bold text-slate-900 tracking-tight" style={{ fontFamily: "Georgia, serif" }}>
-          Nursey - class <span className="text-brand-green-dark">V</span>
-        </h1>
-        <p className="text-slate-500 font-medium text-xs md:text-sm">
-          We&apos;d love to hear from you. Reach out to us for any queries.
-        </p>
-      </div>
-
       {/* Hero Section Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 xl:gap-24 items-center mt-2">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 xl:gap-24 items-center">
         
         {/* Left Content Column */}
         <div className="flex flex-col items-start text-left">
+          
+          {/* Top Breadcrumb & Tiny Header */}
+          <div className="flex flex-col gap-1.5 mb-8">
+            <div className="text-sm font-medium text-slate-500">
+              <Link href="/" className="text-brand-green hover:underline">Home</Link> / <span>Primary</span>
+            </div>
+            <h1 className="text-3xl md:text-4xl font-medium md:font-bold text-slate-900 tracking-tight" style={{ fontFamily: "Georgia, serif" }}>
+              Nursey - class <span className="text-brand-green-dark">V</span>
+            </h1>
+            <p className="text-slate-500 font-medium text-xs md:text-sm">
+              Nurturing young minds in a caring and joyful environment.
+            </p>
+          </div>
+
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-medium md:font-bold text-slate-900 tracking-tight leading-[1.1] mb-4">
             Your child&apos;s <br />
             story <br />
