@@ -32,20 +32,20 @@ export default function StatsSection() {
       whileInView="show"
       viewport={{ once: true, margin: "-50px" }}
       variants={containerVariants}
-      className="w-full bg-brand-green py-5 px-6 flex justify-center border-y border-emerald-400/20 shadow-inner overflow-hidden"
+      className="w-full bg-brand-green py-4 md:py-5 px-4 md:px-6 flex justify-center border-y border-emerald-400/20 shadow-inner overflow-hidden"
     >
-      <div className="max-w-7xl w-full grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-4 text-center">
+      <div className="max-w-7xl w-full grid grid-cols-2 md:grid-cols-4 gap-y-4 gap-x-2 md:gap-4 text-center">
         {stats.map((stat, i) => (
           <motion.div
             key={i}
             variants={itemVariants}
             whileHover={{ scale: 1.03 }}
-            className="flex flex-col items-center justify-center py-3 px-4 border-white/20 md:border-r last:border-r-0 max-md:border-b max-md:[&:nth-child(even)]:border-r-0 max-md:[&:nth-child(odd)]:border-r max-md:[&:nth-child(3)]:border-b-0 max-md:[&:nth-child(4)]:border-b-0"
+            className="flex flex-col items-center justify-center py-2 md:py-3 px-2 md:px-4 border-white/20 md:border-r last:border-r-0 max-md:border-b max-md:[&:nth-child(even)]:border-r-0 max-md:[&:nth-child(odd)]:border-r max-md:[&:nth-child(3)]:border-b-0 max-md:[&:nth-child(4)]:border-b-0"
           >
-            <span className="text-2xl md:text-3xl lg:text-4xl font-semibold md:font-black text-white tracking-tight mb-1">
+            <span className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold md:font-black text-white tracking-tight mb-1">
               {stat.value}
             </span>
-            <span className="text-[10px] md:text-xs font-semibold md:font-bold text-emerald-50 uppercase tracking-widest">
+            <span className="text-[9px] sm:text-[10px] md:text-xs font-semibold md:font-bold text-emerald-50 uppercase tracking-widest">
               {stat.label}
             </span>
           </motion.div>

@@ -404,8 +404,6 @@ export default function AcademicCalendarComponent({
                           hasEvent ? <span className="w-1.5 h-1.5 rounded-full absolute -top-0.5 right-1 bg-white" /> : null
                         ) : hasHolidayEvent ? (
                           <span className="w-1.5 h-1.5 rounded-full absolute -top-0.5 right-1 bg-rose-500" />
-                        ) : isScheduledEvent ? (
-                          <span className="w-1.5 h-1.5 rounded-full absolute -top-0.5 right-1 bg-sky-500" />
                         ) : null}
                       </motion.button>
                     );

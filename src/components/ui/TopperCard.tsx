@@ -8,6 +8,7 @@ import { Trash2 } from "lucide-react";
 export interface Topper {
   _id: string;
   name: string;
+  fatherName?: string;
   class: string;
   percentage: number;
   imageUrl: string;
@@ -17,7 +18,7 @@ export interface Topper {
 
 interface TopperCardProps {
   topper: Topper;
-  index: number;
+  index?: number;
   onDelete?: (id: string) => void;
 }
 
