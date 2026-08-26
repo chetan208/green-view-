@@ -9,8 +9,9 @@ import AdmissionsManager from "./sections/AdmissionsManager";
 import ContactManager from "./sections/ContactManager";
 import CalendarManager from "./sections/CalendarManager";
 import ResultsManager from "./sections/ResultsManager";
+import HeroManager from "./sections/HeroManager";
 
-type TabIdType = "notices" | "papers" | "media" | "admissions" | "contact" | "calendar" | "results";
+type TabIdType = "notices" | "papers" | "media" | "admissions" | "contact" | "calendar" | "results" | "heroImages";
 
 export default function AdminDashboard() {
   const [activeTab, setActiveTab] = useState<TabIdType>("notices");
@@ -23,12 +24,14 @@ export default function AdminDashboard() {
     admissions: <AdmissionsManager />,
     contact: <ContactManager />,
     calendar: <CalendarManager />,
-    results: <ResultsManager />
+    results: <ResultsManager />,
+    heroImages: <HeroManager />
   };
 
   const menuItems = [
     { id: "contact", label: "Contact Inquiries", icon: <Mail size={15} /> },
     { id: "calendar", label: "Manage Calendar", icon: <Calendar size={15} /> },
+    { id: "heroImages", label: "Website Banner", icon: <Image size={15} /> },
     { id: "results", label: "Top Results", icon: <Trophy size={15} /> },
     { id: "notices", label: "Notices Archive", icon: <FileText size={15} /> },
     { id: "papers", label: "Study Materials", icon: <BookOpen size={15} /> },

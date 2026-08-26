@@ -16,11 +16,11 @@ export default function PrimaryCta() {
           Admissions Now <span className="text-[#34d399]">Open</span>
         </h2>
         <p className="text-slate-300 md:text-lg font-medium max-w-2xl mx-auto mb-10 leading-relaxed">
-          Classes open from Nursery to Class XII. Limited seats available — apply early to secure your child&apos;s place at Green View.
+          Classes open from Nursery to Class V. Limited seats available — apply early to secure your child&apos;s place in our primary section at Green View.
         </p>
         <div className="flex flex-col sm:flex-row items-center gap-4">
           <Link
-            href="#admission"
+            href="/admissions/primary-secondary"
             className="bg-white text-emerald-800 hover:bg-emerald-50 px-8 py-3.5 rounded-full font-medium md:font-semibold text-sm tracking-wide transition-all duration-300 shadow-xl shadow-emerald-900/20 flex items-center gap-2 group"
           >
             Apply for Admission

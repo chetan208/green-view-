@@ -1,13 +1,105 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import TeacherCard from "@/components/common/TeacherCard";
-
-import { allTeachers } from "@/data/teachers";
+import { erpApi } from "@/services/erpApi";
 
 export default function TeachersPage() {
+  const [teachers, setTeachers] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
+  const [loadingMore, setLoadingMore] = useState(false);
+  
+  const observerTargetRef = useRef<HTMLDivElement | null>(null);
+
+  const mapTeacher = (teacher: any) => {
+    const categories = teacher.staffProfile?.teacherCategory && teacher.staffProfile.teacherCategory.length > 0
+      ? teacher.staffProfile.teacherCategory.map((cat: string) => {
+          if (cat === 'primary') return 'Primary Teacher';
+          if (cat === 'high') return 'High School Teacher';
+          if (cat === 'senior') return 'Senior Teacher';
+          return cat.charAt(0).toUpperCase() + cat.slice(1);
+        }).join(', ')
+      : (teacher.staffProfile?.post || "Teacher");
+
+    const getExperienceYears = (joinDate: string | Date | undefined) => {
+      if (!joinDate) return "8+ years experience";
+      const diffMs = Date.now() - new Date(joinDate).getTime();
+      const diffYears = Math.floor(diffMs / (1000 * 60 * 60 * 24 * 365.25));
+      return diffYears > 0 ? `${diffYears}+ years experience` : "1+ years experience";
+    };
+
+    const qualification = teacher.staffProfile?.qualification || "B.Ed.";
+    const experienceText = teacher.staffProfile?.experience || getExperienceYears(teacher.staffProfile?.joinDate);
+    const qualExp = `${qualification} ${experienceText}`.trim();
+
+    return {
+      name: teacher.name,
+      role: categories,
+      bio: teacher.staffProfile?.bio || "Dedicated educator committed to student success.",
+      experience: qualExp,
+      subjects: teacher.staffProfile?.subject || "",
+      image: teacher.photoUrl || "https://images.unsplash.com/photo-1544717302-de2939b7ef71?q=80&w=400&auto=format&fit=crop"
+    };
+  };
+
+  const fetchTeachers = async (pageToFetch: number, isInitial = false) => {
+    try {
+      if (isInitial) setLoading(true);
+      else setLoadingMore(true);
+
+      const res = await erpApi.teachers.list({ isTeacher: true, page: pageToFetch, limit: 12 });
+      if (res.success && res.teachers) {
+        const mapped = res.teachers.map(mapTeacher);
+        
+        if (isInitial) {
+          setTeachers(mapped);
+        } else {
+          setTeachers(prev => [...prev, ...mapped]);
+        }
+        
+        setHasMore(res.teachers.length === 12);
+      }
+    } catch (error) {
+      console.error("Failed to fetch teachers list:", error);
+    } finally {
+      setLoading(false);
+      setLoadingMore(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchTeachers(1, true);
+  }, []);
+
+  const fetchNextPage = useCallback(() => {
+    if (!hasMore || loadingMore || loading) return;
+    const nextPage = page + 1;
+    setPage(nextPage);
+    fetchTeachers(nextPage, false);
+  }, [page, hasMore, loadingMore, loading]);
+
+  useEffect(() => {
+    const target = observerTargetRef.current;
+    if (!target) return;
+    
+    const observer = new IntersectionObserver(
+      entries => {
+        if (entries[0].isIntersecting && hasMore && !loadingMore && !loading) {
+          fetchNextPage();
+        }
+      },
+      { threshold: 0.1, rootMargin: '100px' }
+    );
+    observer.observe(target);
+    return () => {
+      if (target) observer.unobserve(target);
+    };
+  }, [observerTargetRef, hasMore, loadingMore, loading, fetchNextPage]);
+
   return (
     <div className="w-full min-h-screen overflow-hidden pb-20 bg-[#f8f9fa]">
       <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-16 py-8 md:py-12 flex flex-col gap-12">
@@ -18,7 +110,7 @@ export default function TeachersPage() {
             <Link href="/" className="text-brand-green hover:underline">Home</Link> / <span>Our Teachers</span>
           </div>
           <h1 className="text-3xl md:text-4xl font-medium md:font-bold text-slate-900 tracking-tight" style={{ fontFamily: "Georgia, serif" }}>
-            Our <span className="text-brand-green-dark">Teachers</span>
+            Our <span className="text-brand-green">Teachers</span>
           </h1>
           <p className="text-slate-600 font-medium text-sm md:text-base max-w-2xl">
             Meet our dedicated and experienced faculty members who are committed to nurturing and guiding our students towards excellence.
@@ -27,25 +119,52 @@ export default function TeachersPage() {
 
         {/* Teachers Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
-          {allTeachers.map((teacher, index) => (
+          {teachers.map((teacher, index) => (
             <motion.div 
               key={index} 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.05 }}
+              transition={{ duration: 0.5, delay: (index % 12) * 0.05 }}
+              className="group bg-white rounded-[24px] border border-slate-100 p-5 flex flex-col items-start text-left shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300"
             >
-              <TeacherCard
-                name={teacher.name}
-                role={teacher.role}
-                designation={teacher.designation}
-                quote={teacher.quote}
-                qualification={teacher.qualification}
-                experience={teacher.experience}
-                subjects={teacher.subjects}
-                image={teacher.image}
-              />
+              <div className="w-full aspect-[1.15] mb-4 overflow-hidden rounded-[20px] bg-slate-50 relative">
+                <img 
+                  src={teacher.image} 
+                  alt={teacher.name} 
+                  className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-300" 
+                />
+              </div>
+              <h3 className="text-lg font-bold text-slate-900 leading-tight mb-1">{teacher.name}</h3>
+              <span className="text-xs font-semibold text-blue-600 mb-1.5 block tracking-wide">{teacher.role}</span>
+              <p className="text-xs font-normal text-slate-500 leading-relaxed mb-1 line-clamp-2 min-h-[34px]">
+                {teacher.bio}
+              </p>
+              <p className="text-xs font-medium text-slate-400 mb-3">{teacher.experience}</p>
+              {teacher.subjects && (
+                <p className="text-xs font-normal text-slate-500 mt-auto">
+                  Subjects: <span className="font-bold text-slate-800">{teacher.subjects}</span>
+                </p>
+              )}
             </motion.div>
           ))}
+        </div>
+        
+        {loading && teachers.length === 0 && (
+          <div className="flex justify-center py-16">
+            <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-brand-green"></div>
+          </div>
+        )}
+
+        <div ref={observerTargetRef} className="py-6 flex flex-col items-center justify-center w-full min-h-[60px]">
+          {loadingMore && (
+            <div className="flex flex-col items-center gap-3">
+              <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-brand-green"></div>
+              <span className="text-xs font-semibold text-slate-400 uppercase tracking-widest">Loading more...</span>
+            </div>
+          )}
+          {!hasMore && teachers.length > 0 && (
+            <span className="text-xs font-semibold text-slate-400 uppercase tracking-widest">End of results</span>
+          )}
         </div>
 
       </div>

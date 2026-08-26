@@ -3,7 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowRight, Sparkles } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { facilitiesData } from "@/data/facilitiesData";
 
 export default function FacilitiesSection() {
@@ -34,9 +34,6 @@ export default function FacilitiesSection() {
           transition={{ duration: 0.5 }}
           className="flex flex-col items-center text-center mb-10 select-none"
         >
-          <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-emerald-100/80 text-[#006a37] font-bold text-xs uppercase tracking-widest border border-emerald-200/60 mb-3">
-            <Sparkles className="w-3.5 h-3.5" /> Campus Infrastructure
-          </span>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-slate-900 tracking-tight uppercase">
             World-Class <span className="text-[#0B9E50]">Facilities</span>
           </h2>
@@ -57,31 +54,24 @@ export default function FacilitiesSection() {
             <motion.div
               key={item.id}
               variants={cardVariants}
-              whileHover={{ y: -6 }}
               transition={{ duration: 0.3 }}
-              className="group flex flex-col bg-white border border-slate-200/70 rounded-3xl overflow-hidden shadow-xs hover:shadow-xl hover:border-emerald-500/30 transition-all duration-300 cursor-pointer"
+              className="flex flex-col bg-white border border-slate-200/80 rounded-2xl overflow-hidden shadow-xs hover:border-slate-300 transition-colors duration-150 cursor-pointer"
             >
-              {/* Image Header with Badge */}
+              {/* Image Header */}
               <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-100">
                 <img
                   src={item.image}
                   alt={item.title}
-                  className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700 ease-out"
+                  className="w-full h-full object-cover"
                   loading="lazy"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950/50 via-transparent to-transparent" />
-                
-                {item.badge && (
-                  <span className="absolute top-3 right-3 bg-white/90 backdrop-blur-md text-[#006a37] font-bold text-[10px] uppercase tracking-wider px-2.5 py-1 rounded-full border border-white/40 shadow-xs">
-                    {item.badge}
-                  </span>
-                )}
               </div>
 
               {/* Content Body */}
               <div className="p-5 flex flex-col flex-1 justify-between bg-white">
                 <div>
-                  <h3 className="font-poppins font-bold text-base md:text-lg text-slate-900 group-hover:text-[#0B9E50] transition-colors leading-snug mb-2">
+                  <h3 className="font-poppins font-bold text-base md:text-lg text-slate-900 leading-snug mb-2">
                     {item.title}
                   </h3>
                   <p className="font-sans text-xs md:text-sm text-slate-600 line-clamp-3 leading-relaxed">
@@ -93,10 +83,10 @@ export default function FacilitiesSection() {
                 <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
                   <Link
                     href={`/facilities#${item.id}`}
-                    className="inline-flex items-center gap-1.5 font-bold text-xs text-[#0B9E50] group-hover:text-[#098744] transition-colors"
+                    className="inline-flex items-center gap-1.5 font-bold text-xs text-[#0B9E50] hover:text-[#098744] transition-colors"
                   >
                     <span>Explore Facility</span>
-                    <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                    <ArrowRight className="w-3.5 h-3.5" />
                   </Link>
                 </div>
               </div>
@@ -108,7 +98,7 @@ export default function FacilitiesSection() {
         <div className="mt-12 text-center select-none">
           <Link
             href="/facilities"
-            className="inline-flex items-center gap-2 bg-[#0B9E50] hover:bg-[#098744] text-white font-bold text-sm md:text-base px-8 py-3.5 rounded-full shadow-lg shadow-emerald-600/25 hover:shadow-xl hover:shadow-emerald-600/35 hover:-translate-y-0.5 transition-all duration-300"
+            className="inline-flex items-center gap-2 bg-[#0B9E50] hover:bg-[#098744] text-white font-bold text-sm md:text-base px-8 py-3.5 rounded-full shadow-md transition-colors"
           >
             <span>View All Facilities in Detail</span>
             <ArrowRight className="w-4 h-4" />

@@ -4,8 +4,11 @@ import React, { useState, useEffect } from "react";
 import { Award, Database, Scale } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
-export default function WelcomeSection() {
-  const images = ["/images/hero/hero2.png", "/images/hero/hero1.png"];
+export default function WelcomeSection({
+  images = ["/images/about/about1.jpg", "/images/about/about2.jpg"]
+}: {
+  images?: string[]
+}) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   useEffect(() => {

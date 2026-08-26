@@ -55,7 +55,20 @@ const CLASSES_LIST = [
 
 const inputCls = "w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold text-slate-800 focus:outline-none focus:ring-2 focus:ring-slate-200 focus:border-slate-400 transition-all";
 
+// Utility to calculate current academic session based on date
+const getCurrentAcademicSession = () => {
+  const now = new Date();
+  const currentMonth = now.getMonth(); // 0 is January
+  let startYear = now.getFullYear();
+  if (currentMonth < 3) {
+    startYear = startYear - 1;
+  }
+  const endYearStr = (startYear + 1).toString().slice(-2);
+  return `${startYear}-${endYearStr}`;
+};
+
 export default function StudentManager({ onManageFees, selectedSession = "2026-27" }: StudentManagerProps) {
+  const dynamicSession = getCurrentAcademicSession();
   const [students, setStudents] = useState<StudentType[]>([]);
   const [classesList, setClassesList] = useState<any[]>([]);
   const [stationsList, setStationsList] = useState<any[]>([]);
@@ -226,6 +239,8 @@ export default function StudentManager({ onManageFees, selectedSession = "2026-2
     const classObj = classesList.find(c => c.className === formData.studentClass);
     if (classObj) submitData.append("classId", classObj._id);
     else submitData.append("classId", formData.studentClass);
+    
+    submitData.append("sessionYear", dynamicSession);
     
     if (formData.section) submitData.append("section", formData.section);
 
@@ -706,6 +721,10 @@ export default function StudentManager({ onManageFees, selectedSession = "2026-2
                         <option key={s} value={s}>{s}</option>
                       ))}
                     </select>
+                  </div>
+                  <div>
+                    <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Academic Session</label>
+                    <input type="text" readOnly value={dynamicSession} className={`${inputCls} bg-slate-100 text-slate-500 cursor-not-allowed`} />
                   </div>
                   <div>
                     <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Gender *</label>

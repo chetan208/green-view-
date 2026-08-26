@@ -54,10 +54,12 @@ export interface Class {
   tuitionFee: number;
   examFee: number;
   computerFee: number;
+  smartClassFee: number;
+  sportsFee: number;
   ptmFine: number;
-  buildingFund: number;
+  lateFee: number;
   annualCharges: number;
-  tieBeltBooks: number;
+  otherCharges: number;
 }
 
 export interface StudentSession {
@@ -142,8 +144,11 @@ export const admissionsApi = {
     return res.json();
   },
   
-  approve: async (id: string) => {
-    const res = await authFetch(`/api/admissions/${id}/approve`, { method: 'POST' });
+  approve: async (id: string, sessionYear?: string) => {
+    const res = await authFetch(`/api/admissions/${id}/approve`, {
+      method: 'POST',
+      body: JSON.stringify({ sessionYear })
+    });
     return res.json();
   },
   reject: async (id: string, reason: string) => {
@@ -165,7 +170,7 @@ export const erpApi = {
       return res.json();
     },
     create: async (formData: FormData) => {
-      const res = await authFetch('/api/erp/student', {
+      const res = await authFetch('/api/erp/students', {
         method: 'POST',
         body: formData,
       });
@@ -209,7 +214,7 @@ export const erpApi = {
       return res.json();
     },
     create: async (formData: FormData) => {
-      const res = await authFetch('/api/erp/teacher', {
+      const res = await authFetch('/api/erp/teachers', {
         method: 'POST',
         body: formData,
       });
@@ -222,7 +227,7 @@ export const erpApi = {
     update: async (id: string, data: any) => {
       const res = await authFetch(`/api/erp/teachers/${id}`, {
         method: 'PUT',
-        body: JSON.stringify(data)
+        body: data instanceof FormData ? data : JSON.stringify(data)
       });
       return res.json();
     },
@@ -366,6 +371,13 @@ export const erpApi = {
         const res = await authFetch('/api/erp/stations');
         return res.json();
       },
+      reorder: async (orderedIds: string[]) => {
+        const res = await authFetch('/api/erp/stations/reorder', {
+          method: 'POST',
+          body: JSON.stringify({ orderedIds })
+        });
+        return res.json();
+      },
       create: async (data: any) => {
         const res = await authFetch('/api/erp/stations', {
           method: 'POST',
@@ -425,6 +437,33 @@ export const erpApi = {
     },
     getStatus: async () => {
       const res = await authFetch('/api/erp/fee-automation/status');
+      return res.json();
+    }
+  },
+
+  // Top Results
+  heroImages: {
+    list: async () => {
+      const res = await authFetch('/api/hero-images');
+      return res.json();
+    },
+    create: async (formData: FormData) => {
+      const res = await authFetch('/api/admin/hero-image', {
+        method: 'POST',
+        body: formData,
+      });
+      return res.json();
+    },
+    delete: async (id: string) => {
+      const res = await authFetch(`/api/admin/hero-image/${id}`, { method: 'DELETE' });
+      return res.json();
+    },
+    reorder: async (updates: {id: string, order: number}[]) => {
+      const res = await authFetch('/api/admin/hero-image/reorder', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ updates })
+      });
       return res.json();
     }
   },

@@ -29,6 +29,17 @@ import { printInvoice } from "./printInvoice";
 import FeeDefaultsSettings from "./FeeDefaultsSettings";
 import FeeAutomationSettings from "./FeeAutomationSettings";
 
+// Utility to calculate current academic session based on date
+const getCurrentAcademicSession = () => {
+  const now = new Date();
+  const currentMonth = now.getMonth(); // 0 is January
+  let startYear = now.getFullYear();
+  if (currentMonth < 3) {
+    startYear = startYear - 1;
+  }
+  return `${startYear}-${startYear + 1}`;
+};
+
 export default function FeePortal({ 
   preselectedStudent, 
   clearPreselected, 
@@ -83,10 +94,12 @@ export default function FeePortal({
     schoolBusCharges: "",
     examFee: "",
     computerFee: "",
+    smartClassFee: "",
+    sportsFee: "",
     ptmFine: "",
-    tieBeltBooks: "",
-    buildingFund: "",
+    lateFee: "",
     annualCharges: "",
+    otherCharges: "",
     previousSessionDues: ""
   });
 
@@ -101,7 +114,7 @@ export default function FeePortal({
     cardNo: "",
     contactNo: "",
     station: "",
-    sessionYear: "2026-2027",
+    sessionYear: getCurrentAcademicSession(),
     initialAmountPaid: "",
     paymentMode: "CASH" as "CASH" | "UPI"
   });
@@ -114,7 +127,10 @@ export default function FeePortal({
     tuitionFee: "",
     examFee: "",
     computerFee: "",
-    tieBeltBooks: ""
+    smartClassFee: "",
+    sportsFee: "",
+    lateFee: "",
+    otherCharges: ""
   });
 
   const [monthlyClassFees, setMonthlyClassFees] = useState<any[]>([]);
@@ -144,7 +160,10 @@ export default function FeePortal({
             tuitionFee: config.tuitionFee.toString(),
             examFee: config.examFee.toString(),
             computerFee: config.computerFee.toString(),
-            tieBeltBooks: (config.tieBeltBooks || 0).toString()
+            smartClassFee: (config.smartClassFee || 0).toString(),
+            sportsFee: (config.sportsFee || 0).toString(),
+            lateFee: (config.lateFee || 0).toString(),
+            otherCharges: (config.otherCharges || 0).toString()
           }));
         } else {
           setClassForm(prev => ({
@@ -153,7 +172,10 @@ export default function FeePortal({
             tuitionFee: "",
             examFee: "",
             computerFee: "",
-            tieBeltBooks: ""
+            smartClassFee: "",
+            sportsFee: "",
+            lateFee: "",
+            otherCharges: ""
           }));
         }
       } catch (err) {
@@ -165,7 +187,6 @@ export default function FeePortal({
 
   useEffect(() => {
     fetchStats();
-    setStudentForm(prev => ({ ...prev, sessionYear: selectedSession }));
   }, [selectedSession]);
 
   useEffect(() => {
@@ -280,17 +301,35 @@ export default function FeePortal({
   };
 
   const handleSelectStudent = async (student: any) => {
+    if (!student) return;
     setSelectedStudent(student);
-    setSearchQuery(student.name);
+    setSearchQuery(student.name || "");
     setShowDropdown(false);
     setFeesLoading(true);
     try {
-      const res = await axios.get(`${SERVER_URL}/api/fees/students/${student.id}`, { withCredentials: true });
+      const studentId = student.id || student._id || student.studentSessionId;
+      const res = await axios.get(`${SERVER_URL}/api/fees/students/${studentId}`, { withCredentials: true });
       if (res.data.success) {
-        setStudentFees(res.data.student.feeStructures);
+        let feesList = res.data.fees || res.data.feeStructures || res.data.student?.feeStructures || [];
+        
+        // Sort feesList by academic month order (April to March)
+        const academicMonths = [
+          "April", "May", "June", "July", "August", "September", 
+          "October", "November", "December", "January", "February", "March"
+        ];
+        feesList.sort((a: any, b: any) => {
+          const aMonth = a.month.split("-")[0];
+          const bMonth = b.month.split("-")[0];
+          const aIdx = academicMonths.indexOf(aMonth);
+          const bIdx = academicMonths.indexOf(bMonth);
+          return (aIdx === -1 ? 99 : aIdx) - (bIdx === -1 ? 99 : bIdx);
+        });
+
+        setStudentFees(feesList);
       }
     } catch (err) {
       console.error("Error loading student fees:", err);
+      setStudentFees([]);
     } finally {
       setFeesLoading(false);
     }
@@ -305,8 +344,10 @@ export default function FeePortal({
     setSuccess(null);
 
     try {
+      const studentId = selectedStudent.id || selectedStudent._id || selectedStudent.studentSessionId;
       const res = await axios.post(`${SERVER_URL}/api/payments/make-payment`, {
-        studentId: selectedStudent.id,
+        studentSessionId: studentId,
+        studentId: studentId,
         amountPaid: parseFloat(paymentForm.amountPaid),
         paymentMode: paymentForm.paymentMode
       }, { withCredentials: true });
@@ -316,10 +357,11 @@ export default function FeePortal({
         setShowPaymentModal(false);
         setPaymentForm({ amountPaid: "", paymentMode: "CASH" });
         // Reload student data & stats
-        handleSelectStudent(selectedStudent);
+        await handleSelectStudent(selectedStudent);
         fetchStats();
       }
     } catch (err: any) {
+      console.error("Payment error:", err);
       setError(err.response?.data?.message || "Failed to make payment.");
     } finally {
       setSubmitLoading(false);
@@ -381,7 +423,10 @@ export default function FeePortal({
         tuitionFee: parseFloat(classForm.tuitionFee || "0"),
         examFee: parseFloat(classForm.examFee || "0"),
         computerFee: parseFloat(classForm.computerFee || "0"),
-        tieBeltBooks: parseFloat(classForm.tieBeltBooks || "0")
+        smartClassFee: parseFloat(classForm.smartClassFee || "0"),
+        sportsFee: parseFloat(classForm.sportsFee || "0"),
+        lateFee: parseFloat(classForm.lateFee || "0"),
+        otherCharges: parseFloat(classForm.otherCharges || "0")
       };
       const res = await axios.post(`${SERVER_URL}/api/erp/classes/monthly-fees`, payload, { withCredentials: true });
       if (res.data.success) {
@@ -393,7 +438,10 @@ export default function FeePortal({
           tuitionFee: "",
           examFee: "",
           computerFee: "",
-          tieBeltBooks: ""
+          smartClassFee: "",
+          sportsFee: "",
+          lateFee: "",
+          otherCharges: ""
         });
         fetchMonthlyClassFees();
       }
@@ -405,18 +453,21 @@ export default function FeePortal({
   };
 
   const handleOpenEditFee = (fee: any) => {
+    if (!fee) return;
     setEditingFee(fee);
     setEditFeeForm({
-      admissionFee: fee.admissionFee.toString(),
-      tuitionFee: fee.tuitionFee.toString(),
-      schoolBusCharges: fee.schoolBusCharges.toString(),
-      examFee: fee.examFee.toString(),
-      computerFee: fee.computerFee.toString(),
-      ptmFine: fee.ptmFine.toString(),
-      tieBeltBooks: fee.tieBeltBooks.toString(),
-      buildingFund: fee.buildingFund.toString(),
-      annualCharges: fee.annualCharges.toString(),
-      previousSessionDues: (fee.previousSessionDues || 0).toString()
+      admissionFee: (fee.admissionFee ?? 0).toString(),
+      tuitionFee: (fee.tuitionFee ?? 0).toString(),
+      schoolBusCharges: (fee.schoolBusCharges ?? 0).toString(),
+      examFee: (fee.examFee ?? 0).toString(),
+      computerFee: (fee.computerFee ?? 0).toString(),
+      smartClassFee: (fee.smartClassFee ?? 0).toString(),
+      sportsFee: (fee.sportsFee ?? 0).toString(),
+      ptmFine: (fee.ptmFine ?? 0).toString(),
+      lateFee: (fee.lateFee ?? 0).toString(),
+      annualCharges: (fee.annualCharges ?? 0).toString(),
+      otherCharges: (fee.otherCharges ?? 0).toString(),
+      previousSessionDues: (fee.previousSessionDues ?? 0).toString()
     });
   };
 
@@ -428,31 +479,53 @@ export default function FeePortal({
     setSuccess(null);
 
     try {
-      const res = await axios.put(`${SERVER_URL}/api/fees/${editingFee.id}`, {
+      const targetId = editingFee._id || editingFee.id;
+      const res = await axios.put(`${SERVER_URL}/api/fees/${targetId}`, {
         admissionFee: parseFloat(editFeeForm.admissionFee || "0"),
         tuitionFee: parseFloat(editFeeForm.tuitionFee || "0"),
         schoolBusCharges: parseFloat(editFeeForm.schoolBusCharges || "0"),
         examFee: parseFloat(editFeeForm.examFee || "0"),
         computerFee: parseFloat(editFeeForm.computerFee || "0"),
+        smartClassFee: parseFloat(editFeeForm.smartClassFee || "0"),
+        sportsFee: parseFloat(editFeeForm.sportsFee || "0"),
         ptmFine: parseFloat(editFeeForm.ptmFine || "0"),
-        tieBeltBooks: parseFloat(editFeeForm.tieBeltBooks || "0"),
-        buildingFund: parseFloat(editFeeForm.buildingFund || "0"),
+        lateFee: parseFloat(editFeeForm.lateFee || "0"),
         annualCharges: parseFloat(editFeeForm.annualCharges || "0"),
+        otherCharges: parseFloat(editFeeForm.otherCharges || "0"),
         previousSessionDues: parseFloat(editFeeForm.previousSessionDues || "0")
       }, { withCredentials: true });
 
       if (res.data.success) {
+        const updatedFee = res.data.fee || res.data.feeStructure;
+        if (updatedFee) {
+          setStudentFees(prev => prev.map(f => (f._id === targetId || f.id === targetId) ? { ...f, ...updatedFee } : f));
+        }
         setSuccess(`Fee structure for ${editingFee.month} updated successfully.`);
         setEditingFee(null);
         // Refresh student data & stats
-        handleSelectStudent(selectedStudent);
+        await handleSelectStudent(selectedStudent);
         fetchStats();
       }
     } catch (err: any) {
+      console.error("Update fee error:", err);
       setError(err.response?.data?.message || "Failed to update fee structure.");
     } finally {
       setSubmitLoading(false);
     }
+  };
+
+  const formatMonthWithYear = (monthName: string, session: string) => {
+    if (!monthName || monthName.includes("-")) return monthName;
+    const academicMonths = [
+      "April", "May", "June", "July", "August", "September", 
+      "October", "November", "December", "January", "February", "March"
+    ];
+    const idx = academicMonths.indexOf(monthName);
+    if (idx === -1 || !session) return monthName;
+    let [startYear, endYear] = session.split("-");
+    if (endYear && endYear.length === 2) endYear = `20${endYear}`;
+    const year = idx < 9 ? startYear : endYear;
+    return `${monthName} ${year}`;
   };
 
   return (
@@ -593,9 +666,9 @@ export default function FeePortal({
                       {/* Dropdown Suggestions */}
                       {showDropdown && students.length > 0 && (
                         <div className="absolute left-0 right-0 z-20 mt-1 bg-white border border-slate-200 rounded-xl shadow-lg max-h-48 overflow-y-auto">
-                          {students.map((st) => (
+                          {students.map((st, idx) => (
                             <button
-                              key={st.id}
+                              key={st.id ? `suggest-${st.id}-${idx}` : `suggest-${idx}`}
                               onClick={() => handleSelectStudent(st)}
                               className="w-full text-left px-4 py-2.5 hover:bg-slate-50 transition border-0 border-b border-slate-100 last:border-b-0 cursor-pointer flex items-center justify-between text-xs"
                             >
@@ -636,9 +709,9 @@ export default function FeePortal({
                           <div className="text-center py-8 text-xs font-medium text-slate-400">Loading pending lists...</div>
                         ) : (pendingListTab === "prev" ? stats?.prevPendingList : stats?.currentPendingList)?.length === 0 ? (
                           <div className="text-center py-8 text-xs font-medium text-slate-400">No pending student records found.</div>
-                        ) : (pendingListTab === "prev" ? stats?.prevPendingList : stats?.currentPendingList)?.map((st: any) => (
+                        ) : (pendingListTab === "prev" ? stats?.prevPendingList : stats?.currentPendingList)?.map((st: any, idx: number) => (
                           <button
-                            key={st.id}
+                            key={st.id ? `pending-${st.id}-${idx}` : `pending-${idx}`}
                             onClick={() => handleSelectStudent(st)}
                             className="w-full text-left p-3 hover:bg-white border border-transparent hover:border-slate-200 rounded-xl transition flex justify-between items-center cursor-pointer bg-transparent"
                           >
@@ -776,13 +849,17 @@ export default function FeePortal({
                             {showDetailedFees && <th className="p-3 text-[10px] font-bold uppercase tracking-wider">Exam</th>}
                             {showDetailedFees && <th className="p-3 text-[10px] font-bold uppercase tracking-wider">Computer</th>}
                             <th className="p-3 text-[10px] font-bold uppercase tracking-wider">Transport</th>
+                            {showDetailedFees && <th className="p-3 text-[10px] font-bold uppercase tracking-wider">Smart Class</th>}
+                            {showDetailedFees && <th className="p-3 text-[10px] font-bold uppercase tracking-wider">Sports</th>}
                             {showDetailedFees && <th className="p-3 text-[10px] font-bold uppercase tracking-wider">PTM Fine</th>}
-                            {showDetailedFees && <th className="p-3 text-[10px] font-bold uppercase tracking-wider">Tie & Belt</th>}
-                            {showDetailedFees && <th className="p-3 text-[10px] font-bold uppercase tracking-wider">Building</th>}
+                            {showDetailedFees && <th className="p-3 text-[10px] font-bold uppercase tracking-wider">Late Fee</th>}
                             {showDetailedFees && <th className="p-3 text-[10px] font-bold uppercase tracking-wider">Annual</th>}
+                            {showDetailedFees && <th className="p-3 text-[10px] font-bold uppercase tracking-wider">Other Charges</th>}
                             {showDetailedFees && <th className="p-3 text-[10px] font-bold uppercase tracking-wider">Prev Dues</th>}
                             {!showDetailedFees && <th className="p-3 text-[10px] font-bold uppercase tracking-wider">Other</th>}
-                            <th className="p-3 text-[10px] font-bold uppercase tracking-wider font-serif">Total</th>
+                            <th className="p-3 text-[10px] font-bold uppercase tracking-wider font-semibold">Prev Due</th>
+                            <th className="p-3 text-[10px] font-bold uppercase tracking-wider font-semibold">Curr Month Due</th>
+                            <th className="p-3 text-[10px] font-bold uppercase tracking-wider font-semibold bg-slate-100">Total</th>
                             <th className="p-3 text-[10px] font-bold uppercase tracking-wider">Paid</th>
                             <th className="p-3 text-[10px] font-bold uppercase tracking-wider">Remaining</th>
                             <th className="p-3 text-[10px] font-bold uppercase tracking-wider">Status</th>
@@ -792,39 +869,52 @@ export default function FeePortal({
                         <tbody className="divide-y divide-slate-100 text-slate-600">
                           {feesLoading ? (
                             <tr>
-                              <td colSpan={showDetailedFees ? 16 : 9} className="text-center py-10 text-slate-400">Loading ledger data...</td>
+                              <td colSpan={showDetailedFees ? 21 : 12} className="text-center py-10 text-slate-400">Loading ledger data...</td>
                             </tr>
                           ) : studentFees.length === 0 ? (
                             <tr>
-                              <td colSpan={showDetailedFees ? 16 : 9} className="text-center py-10 text-slate-400">No generated fee structures found.</td>
+                              <td colSpan={showDetailedFees ? 21 : 12} className="text-center py-10 text-slate-400">No generated fee structures found.</td>
                             </tr>
-                          ) : studentFees.map((fee) => {
+                          ) : (() => {
+                            let cumulativeArrears = 0;
+                            return studentFees.map((fee) => {
                             const paid = fee.payments?.reduce((s: number, p: any) => s + parseFloat(p.amountPaid), 0) ?? 0;
-                            const remaining = parseFloat(fee.total) - paid;
+                            const currentMonthDue = parseFloat(fee.total || "0");
+                            const prevMonthDue = cumulativeArrears;
+                            const totalBilling = currentMonthDue + prevMonthDue;
+                            const remaining = totalBilling - paid;
+                            cumulativeArrears = remaining;
+                            
                             const other = 
                               parseFloat(fee.admissionFee || "0") + 
                               parseFloat(fee.examFee || "0") + 
                               parseFloat(fee.computerFee || "0") + 
+                              parseFloat(fee.smartClassFee || "0") + 
+                              parseFloat(fee.sportsFee || "0") + 
                               parseFloat(fee.ptmFine || "0") + 
-                              parseFloat(fee.tieBeltBooks || "0") + 
-                              parseFloat(fee.buildingFund || "0") + 
+                              parseFloat(fee.lateFee || "0") + 
                               parseFloat(fee.annualCharges || "0") +
+                              parseFloat(fee.otherCharges || "0") +
                               parseFloat(fee.previousSessionDues || "0");
                             return (
                               <tr key={fee.id} className="hover:bg-slate-50/50 transition">
-                                <td className="p-3 font-semibold text-slate-800">{fee.month}</td>
+                                <td className="p-3 font-semibold text-slate-800">{formatMonthWithYear(fee.month, selectedSession)}</td>
                                 {showDetailedFees && <td className="p-3">₹{fee.admissionFee}</td>}
                                 <td className="p-3">₹{fee.tuitionFee}</td>
                                 {showDetailedFees && <td className="p-3">₹{fee.examFee}</td>}
                                 {showDetailedFees && <td className="p-3">₹{fee.computerFee}</td>}
                                 <td className="p-3">₹{fee.schoolBusCharges}</td>
+                                {showDetailedFees && <td className="p-3">₹{fee.smartClassFee || 0}</td>}
+                                {showDetailedFees && <td className="p-3">₹{fee.sportsFee || 0}</td>}
                                 {showDetailedFees && <td className="p-3">₹{fee.ptmFine}</td>}
-                                {showDetailedFees && <td className="p-3">₹{fee.tieBeltBooks}</td>}
-                                {showDetailedFees && <td className="p-3">₹{fee.buildingFund}</td>}
+                                {showDetailedFees && <td className="p-3">₹{fee.lateFee || 0}</td>}
                                 {showDetailedFees && <td className="p-3">₹{fee.annualCharges}</td>}
+                                {showDetailedFees && <td className="p-3">₹{fee.otherCharges || 0}</td>}
                                 {showDetailedFees && <td className="p-3">₹{fee.previousSessionDues || 0}</td>}
                                 {!showDetailedFees && <td className="p-3">₹{other.toFixed(2)}</td>}
-                                <td className="p-3 font-semibold text-slate-700">₹{fee.total}</td>
+                                <td className="p-3 font-semibold text-slate-700">₹{prevMonthDue.toFixed(2)}</td>
+                                <td className="p-3 font-semibold text-slate-700">₹{currentMonthDue.toFixed(2)}</td>
+                                <td className="p-3 font-semibold bg-slate-50 text-slate-900">₹{totalBilling.toFixed(2)}</td>
                                 <td className="p-3 text-emerald-600 font-semibold">₹{paid.toFixed(2)}</td>
                                 <td className="p-3 text-rose-600 font-semibold">₹{remaining.toFixed(2)}</td>
                                 <td className="p-3">
@@ -850,7 +940,7 @@ export default function FeePortal({
                                     </button>
                                     <button
                                       type="button"
-                                      onClick={() => printInvoice(selectedStudent, fee, studentFees)}
+                                      onClick={() => printInvoice(selectedStudent, fee, studentFees, selectedSession)}
                                       className="p-1.5 rounded-lg border border-slate-200 text-slate-500 hover:text-brand-green hover:bg-slate-100 transition cursor-pointer bg-white"
                                     >
                                       <Printer size={13} />
@@ -859,7 +949,8 @@ export default function FeePortal({
                                 </td>
                               </tr>
                             );
-                          })}
+                          });
+                          })()}
                         </tbody>
                       </table>
                     </div>
@@ -946,6 +1037,16 @@ export default function FeePortal({
                   value={studentForm.admissionDate}
                   onChange={(e) => setStudentForm(prev => ({ ...prev, admissionDate: e.target.value }))}
                   className="w-full px-3 py-2 text-xs font-semibold text-slate-800 border border-slate-200 rounded-xl focus:outline-none focus:border-brand-green"
+                />
+              </div>
+
+              <div className="space-y-1">
+                <label className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Academic Session (Auto-calculated)</label>
+                <input
+                  type="text"
+                  readOnly
+                  value={studentForm.sessionYear}
+                  className="w-full px-3 py-2 text-xs font-semibold text-slate-500 bg-slate-100 border border-slate-200 rounded-xl cursor-not-allowed"
                 />
               </div>
 
@@ -1210,23 +1311,45 @@ export default function FeePortal({
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-[9px] font-bold uppercase tracking-wider text-slate-400">Tie & Belt (₹)</label>
+                  <label className="text-[9px] font-bold uppercase tracking-wider text-slate-400">Smart Class Fee (₹)</label>
                   <input
                     type="number"
                     step="any"
-                    value={editFeeForm.tieBeltBooks}
-                    onChange={(e) => setEditFeeForm(prev => ({ ...prev, tieBeltBooks: e.target.value }))}
+                    value={editFeeForm.smartClassFee}
+                    onChange={(e) => setEditFeeForm(prev => ({ ...prev, smartClassFee: e.target.value }))}
                     className="w-full px-3 py-1.5 text-xs font-semibold text-slate-800 border border-slate-200 rounded-xl focus:outline-none focus:border-brand-green"
                   />
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-[9px] font-bold uppercase tracking-wider text-slate-400">Building Fund (₹)</label>
+                  <label className="text-[9px] font-bold uppercase tracking-wider text-slate-400">Sports Fee (₹)</label>
                   <input
                     type="number"
                     step="any"
-                    value={editFeeForm.buildingFund}
-                    onChange={(e) => setEditFeeForm(prev => ({ ...prev, buildingFund: e.target.value }))}
+                    value={editFeeForm.sportsFee}
+                    onChange={(e) => setEditFeeForm(prev => ({ ...prev, sportsFee: e.target.value }))}
+                    className="w-full px-3 py-1.5 text-xs font-semibold text-slate-800 border border-slate-200 rounded-xl focus:outline-none focus:border-brand-green"
+                  />
+                </div>
+
+                <div className="space-y-1">
+                  <label className="text-[9px] font-bold uppercase tracking-wider text-slate-400">Late Fee (₹)</label>
+                  <input
+                    type="number"
+                    step="any"
+                    value={editFeeForm.lateFee}
+                    onChange={(e) => setEditFeeForm(prev => ({ ...prev, lateFee: e.target.value }))}
+                    className="w-full px-3 py-1.5 text-xs font-semibold text-slate-800 border border-slate-200 rounded-xl focus:outline-none focus:border-brand-green"
+                  />
+                </div>
+
+                <div className="space-y-1">
+                  <label className="text-[9px] font-bold uppercase tracking-wider text-slate-400">Other Charges (₹)</label>
+                  <input
+                    type="number"
+                    step="any"
+                    value={editFeeForm.otherCharges}
+                    onChange={(e) => setEditFeeForm(prev => ({ ...prev, otherCharges: e.target.value }))}
                     className="w-full px-3 py-1.5 text-xs font-semibold text-slate-800 border border-slate-200 rounded-xl focus:outline-none focus:border-brand-green"
                   />
                 </div>

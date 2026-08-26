@@ -31,10 +31,12 @@ export default function ManageFeeStructures({ selectedSession, onRefreshStats }:
     schoolBusCharges: 0,
     examFee: 0,
     computerFee: 0,
+    smartClassFee: 0,
+    sportsFee: 0,
     ptmFine: 0,
-    tieBeltBooks: 0,
-    buildingFund: 0,
-    annualCharges: 0
+    lateFee: 0,
+    annualCharges: 0,
+    otherCharges: 0
   });
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -103,10 +105,12 @@ export default function ManageFeeStructures({ selectedSession, onRefreshStats }:
       schoolBusCharges: Number(fs.schoolBusCharges) || 0,
       examFee: Number(fs.examFee) || 0,
       computerFee: Number(fs.computerFee) || 0,
+      smartClassFee: Number(fs.smartClassFee) || 0,
+      sportsFee: Number(fs.sportsFee) || 0,
       ptmFine: Number(fs.ptmFine) || 0,
-      tieBeltBooks: Number(fs.tieBeltBooks) || 0,
-      buildingFund: Number(fs.buildingFund) || 0,
-      annualCharges: Number(fs.annualCharges) || 0
+      lateFee: Number(fs.lateFee) || 0,
+      annualCharges: Number(fs.annualCharges) || 0,
+      otherCharges: Number(fs.otherCharges) || 0
     });
     setError(null);
     setSuccess(null);
@@ -225,7 +229,8 @@ export default function ManageFeeStructures({ selectedSession, onRefreshStats }:
                   <th className="py-2.5 px-4 text-right">Bus</th>
                   <th className="py-2.5 px-4 text-right">Exam</th>
                   <th className="py-2.5 px-4 text-right">Computer</th>
-                  <th className="py-2.5 px-4 text-right">Building</th>
+                  <th className="py-2.5 px-4 text-right">Smart Class</th>
+                  <th className="py-2.5 px-4 text-right">Sports</th>
                   <th className="py-2.5 px-4 text-right">Annual</th>
                   <th className="py-2.5 px-4 text-right">Other/Prev</th>
                   <th className="py-2.5 px-4 text-right font-semibold bg-slate-100/50">Net Total</th>
@@ -235,7 +240,7 @@ export default function ManageFeeStructures({ selectedSession, onRefreshStats }:
               </thead>
               <tbody>
                 {filteredList.map((fs) => {
-                  const otherPrev = Number(fs.admissionFee) + Number(fs.ptmFine) + Number(fs.tieBeltBooks) + Number(fs.previousBalance);
+                  const otherPrev = Number(fs.admissionFee) + Number(fs.ptmFine) + Number(fs.lateFee) + Number(fs.otherCharges) + Number(fs.previousBalance);
                   return (
                     <tr key={fs.id} className="border-b border-slate-100 hover:bg-slate-50/50">
                       <td className="py-2.5 px-4 font-mono font-semibold text-brand-green-dark">{fs.student.cardNo}</td>
@@ -245,9 +250,10 @@ export default function ManageFeeStructures({ selectedSession, onRefreshStats }:
                       <td className="py-2.5 px-4 text-right font-mono text-slate-600">₹{fs.schoolBusCharges}</td>
                       <td className="py-2.5 px-4 text-right font-mono text-slate-500">₹{fs.examFee}</td>
                       <td className="py-2.5 px-4 text-right font-mono text-slate-500">₹{fs.computerFee}</td>
-                      <td className="py-2.5 px-4 text-right font-mono text-slate-500">₹{fs.buildingFund}</td>
+                      <td className="py-2.5 px-4 text-right font-mono text-slate-500">₹{fs.smartClassFee || 0}</td>
+                      <td className="py-2.5 px-4 text-right font-mono text-slate-500">₹{fs.sportsFee || 0}</td>
                       <td className="py-2.5 px-4 text-right font-mono text-slate-500">₹{fs.annualCharges}</td>
-                      <td className="py-2.5 px-4 text-right font-mono text-slate-500" title="Admission, PTM Fine, Books & Prev Balance">₹{otherPrev}</td>
+                      <td className="py-2.5 px-4 text-right font-mono text-slate-500" title="Admission, PTM Fine, Late Fee, Other Charges & Prev Balance">₹{otherPrev}</td>
                       <td className="py-2.5 px-4 text-right font-mono font-semibold text-slate-800 bg-slate-55/30">₹{fs.totalDemand}</td>
                       <td className="py-2.5 px-4 text-center">
                         <span className={`inline-flex px-2 py-0.5 rounded text-[9px] font-bold uppercase tracking-widest border ${
@@ -356,13 +362,25 @@ export default function ManageFeeStructures({ selectedSession, onRefreshStats }:
                   </div>
 
                   <div>
-                    <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Building Fund</label>
+                    <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Smart Class Fee</label>
                     <input
                       type="number"
                       min="0"
                       disabled={!isOwner}
-                      value={editForm.buildingFund}
-                      onChange={(e) => setEditForm(prev => ({ ...prev, buildingFund: Number(e.target.value) || 0 }))}
+                      value={editForm.smartClassFee}
+                      onChange={(e) => setEditForm(prev => ({ ...prev, smartClassFee: Number(e.target.value) || 0 }))}
+                      className={inputCls}
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Sports Fee</label>
+                    <input
+                      type="number"
+                      min="0"
+                      disabled={!isOwner}
+                      value={editForm.sportsFee}
+                      onChange={(e) => setEditForm(prev => ({ ...prev, sportsFee: Number(e.target.value) || 0 }))}
                       className={inputCls}
                     />
                   </div>
@@ -380,13 +398,25 @@ export default function ManageFeeStructures({ selectedSession, onRefreshStats }:
                   </div>
 
                   <div>
-                    <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Tie, Belt & Books</label>
+                    <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Late Fee</label>
                     <input
                       type="number"
                       min="0"
                       disabled={!isOwner}
-                      value={editForm.tieBeltBooks}
-                      onChange={(e) => setEditForm(prev => ({ ...prev, tieBeltBooks: Number(e.target.value) || 0 }))}
+                      value={editForm.lateFee}
+                      onChange={(e) => setEditForm(prev => ({ ...prev, lateFee: Number(e.target.value) || 0 }))}
+                      className={inputCls}
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Other Charges</label>
+                    <input
+                      type="number"
+                      min="0"
+                      disabled={!isOwner}
+                      value={editForm.otherCharges}
+                      onChange={(e) => setEditForm(prev => ({ ...prev, otherCharges: Number(e.target.value) || 0 }))}
                       className={inputCls}
                     />
                   </div>

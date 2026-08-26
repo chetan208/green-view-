@@ -12,9 +12,11 @@ interface BulkDemandRolloutProps {
     examFee: string;
     ptmFine: string;
     computerFee: string;
-    tieBeltBooks: string;
-    buildingFund: string;
+    smartClassFee: string;
+    sportsFee: string;
+    lateFee: string;
     annualCharges: string;
+    otherCharges: string;
   };
   setBulkForm: React.Dispatch<React.SetStateAction<{
     month: string;
@@ -24,9 +26,11 @@ interface BulkDemandRolloutProps {
     examFee: string;
     ptmFine: string;
     computerFee: string;
-    tieBeltBooks: string;
-    buildingFund: string;
+    smartClassFee: string;
+    sportsFee: string;
+    lateFee: string;
     annualCharges: string;
+    otherCharges: string;
   }>>;
   onSubmit: (e: React.FormEvent) => void;
   submitLoading: boolean;
@@ -153,9 +157,23 @@ export default function BulkDemandRollout({
             />
           </div>
           <div>
-            <label className={labelCls}>Building Fund</label>
-            <input type="number" placeholder="0.00" value={bulkForm.buildingFund}
-              onChange={(e) => setBulkForm({ ...bulkForm, buildingFund: e.target.value })}
+            <label className={labelCls}>Smart Class Fee</label>
+            <input type="number" placeholder="0.00" value={bulkForm.smartClassFee}
+              onChange={(e) => setBulkForm({ ...bulkForm, smartClassFee: e.target.value })}
+              className={inputCls}
+            />
+          </div>
+          <div>
+            <label className={labelCls}>Sports Fee</label>
+            <input type="number" placeholder="0.00" value={bulkForm.sportsFee}
+              onChange={(e) => setBulkForm({ ...bulkForm, sportsFee: e.target.value })}
+              className={inputCls}
+            />
+          </div>
+          <div>
+            <label className={labelCls}>Late Fee</label>
+            <input type="number" placeholder="0.00" value={bulkForm.lateFee}
+              onChange={(e) => setBulkForm({ ...bulkForm, lateFee: e.target.value })}
               className={inputCls}
             />
           </div>
@@ -167,9 +185,9 @@ export default function BulkDemandRollout({
             />
           </div>
           <div>
-            <label className={labelCls}>Tie, Belt and Books</label>
-            <input type="number" placeholder="0.00" value={bulkForm.tieBeltBooks}
-              onChange={(e) => setBulkForm({ ...bulkForm, tieBeltBooks: e.target.value })}
+            <label className={labelCls}>Other Charges</label>
+            <input type="number" placeholder="0.00" value={bulkForm.otherCharges}
+              onChange={(e) => setBulkForm({ ...bulkForm, otherCharges: e.target.value })}
               className={inputCls}
             />
           </div>

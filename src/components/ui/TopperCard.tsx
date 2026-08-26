@@ -30,7 +30,7 @@ export default function TopperCard({ topper, index, onDelete }: TopperCardProps)
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, scale: 0.9 }}
       transition={{ duration: 0.4, ease: "easeOut" }}
-      className="relative w-full max-w-[200px] sm:max-w-[240px] mx-auto aspect-[4/5] rounded-lg sm:rounded-2xl md:rounded-[24px] bg-white shadow-sm sm:shadow-lg isolate overflow-hidden"
+      className="relative w-full max-w-[180px] sm:max-w-[200px] md:max-w-[220px] mx-auto aspect-[4/5] rounded-lg sm:rounded-[20px] bg-white shadow-sm sm:shadow-md isolate overflow-hidden"
     >
       {/* Background Image / Fallback */}
       <div className="absolute inset-0 pb-[38px] sm:pb-[56px] md:pb-[72px]">

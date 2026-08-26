@@ -14,20 +14,38 @@ import FaqSection from "@/components/home/FaqSection";
 import CtaSection from "@/components/home/CtaSection";
 
 
+import fs from "fs";
+import path from "path";
+
 export default function Home() {
+  let aboutImages: string[] = [];
+  try {
+    const aboutDir = path.join(process.cwd(), "public", "images", "about");
+    if (fs.existsSync(aboutDir)) {
+      const files = fs.readdirSync(aboutDir);
+      aboutImages = files
+        .filter((file) => /\.(png|jpe?g|webp|gif)$/i.test(file))
+        .map((file) => `/images/about/${file}`);
+    }
+  } catch (error) {
+    console.error("Failed to read about images:", error);
+  }
+
   return (
     <div className="w-full flex flex-col overflow-x-hidden">
       <HeroSection />
       <CategoryBar />
       <StatsSection />
       <BoardNotices />
-      <WelcomeSection />
-      <ToppersSection />
+      <WelcomeSection images={aboutImages.length > 0 ? aboutImages : undefined} />
+      
       
       <PrincipalMessage />
       <FacilitiesSection />
       <AcademicCalendar />
+
       <GallerySection />
+      <ToppersSection />
 
       <TestimonialsSection />
       <FaqSection />

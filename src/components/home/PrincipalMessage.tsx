@@ -36,7 +36,7 @@ export default function LeadershipMessages() {
             <span className="text-[9px] md:text-[10px] font-semibold md:font-black text-brand-green uppercase tracking-[0.2em] block mb-2">
               FROM THE DESK OF DIRECTOR
             </span>
-            <h2 className="text-3xl md:text-4xl font-semibold md:font-extrabold text-slate-900 tracking-tight leading-none">
+            <h2 className="text-3xl md:text-4xl font-semibold md:font-extrabold text-slate-900 tracking-tight leading-none text-balance">
               Director&apos;s <span className="text-brand-green">Message</span>
             </h2>
           </motion.div>
@@ -102,7 +102,7 @@ export default function LeadershipMessages() {
             <span className="text-[9px] md:text-[10px] font-semibold md:font-black text-brand-green uppercase tracking-[0.2em] block mb-2">
               FROM THE DESK OF PRINCIPAL
             </span>
-            <h2 className="text-3xl md:text-4xl font-semibold md:font-extrabold text-slate-900 tracking-tight leading-none">
+            <h2 className="text-3xl md:text-4xl font-semibold md:font-extrabold text-slate-900 tracking-tight leading-none text-balance">
               Principal&apos;s <span className="text-brand-green">Message</span>
             </h2>
           </motion.div>
