@@ -3,7 +3,7 @@ import fs from "fs";
 import path from "path";
 import PrimaryHero from "./components/PrimaryHero";
 import PrimaryTeachers from "./components/PrimaryTeachers";
-import PrimaryFacilities from "./components/PrimaryFacilities";
+import FacilitiesSection from "@/components/home/FacilitiesSection";
 import GallerySection from "@/components/home/GallerySection";
 import PrimaryCta from "./components/PrimaryCta";
 import TestimonialsSection from "@/components/home/TestimonialsSection";
@@ -26,7 +26,7 @@ export default function PrimaryPage() {
     <div className="w-full min-h-screen overflow-hidden pb-20">
       <PrimaryHero images={primaryImages.length > 0 ? primaryImages : undefined} />
       <PrimaryTeachers />
-      <PrimaryFacilities />
+      <FacilitiesSection />
       <GallerySection />
       <PrimaryCta />
       <TestimonialsSection />

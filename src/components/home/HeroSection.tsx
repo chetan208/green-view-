@@ -86,7 +86,7 @@ export default function HeroSection() {
             variants={itemVariants}
             className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold md:font-black text-slate-900 tracking-tight leading-[1.1] sm:leading-[1.05] mb-4 sm:mb-6"
           >
-            <span className="text-brand-green">Green view</span> <br />
+            <span className="text-brand-green">Green View</span> <br />
             Sr. Sec. School
           </motion.h1>
 

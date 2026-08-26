@@ -50,28 +50,19 @@ export default function GallerySection() {
   } as const;
 
   return (
-    <section id="gallery" className="w-full py-6 md:py-8 px-6 md:px-12 flex justify-center overflow-hidden">
-      <div className="max-w-5xl w-full flex flex-col items-center">
+    <section id="gallery" className="w-full py-6 md:py-12 px-6 md:px-12 lg:px-24 flex flex-col items-center overflow-hidden">
+      <div className="max-w-6xl w-full flex flex-col items-center">
         
         {/* Section Header */}
-        <div className="flex flex-col items-center text-center mb-4 select-none">
-          <motion.span 
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="text-[10px] md:text-xs font-semibold md:font-bold text-brand-green uppercase tracking-[0.25em] mb-1.5"
-          >
-            Our Campus
-          </motion.span>
+        <div className="flex flex-col items-start w-full mb-8 select-none">
           <motion.h2 
             initial={{ opacity: 0, y: 15 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, ease: "easeOut" }}
-            className="text-2xl md:text-3xl font-semibold md:font-extrabold text-slate-800 tracking-tight leading-tight"
+            className="text-2xl md:text-3xl font-bold text-slate-900 uppercase tracking-tight"
           >
-            Explore Our <span className="text-brand-green">World-Class Campus</span>
+            Explore Our <span className="text-[#0B9E50]">Campus</span>
           </motion.h2>
         </div>
 

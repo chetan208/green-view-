@@ -3,7 +3,7 @@ import fs from "fs";
 import path from "path";
 import HighSchoolHero from "./components/HighSchoolHero";
 import HighSchoolTeachers from "./components/HighSchoolTeachers";
-import HighSchoolFacilities from "./components/HighSchoolFacilities";
+import FacilitiesSection from "@/components/home/FacilitiesSection";
 import GallerySection from "@/components/home/GallerySection";
 import HighSchoolCta from "./components/HighSchoolCta";
 import TestimonialsSection from "@/components/home/TestimonialsSection";
@@ -26,7 +26,7 @@ export default function HighSchoolPage() {
     <div className="w-full min-h-screen overflow-hidden pb-20">
       <HighSchoolHero images={highImages.length > 0 ? highImages : undefined} />
       <HighSchoolTeachers />
-      <HighSchoolFacilities />
+      <FacilitiesSection />
       <GallerySection />
       <HighSchoolCta />
       <TestimonialsSection />

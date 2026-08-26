@@ -71,14 +71,14 @@ export const facilitiesData: FacilityItem[] = [
   //   highlights: ["Robotics & IoT Kits", "3D Modeling Workspace", "Innovation Workshops"]
   // },
   {
-    id: "transport-fleet",
-    title: "Safe Transport Fleet",
+    id: "transport",
+    title: "Safe Transport Facility",
     category: "Safety",
-    shortDesc: "GPS-enabled fleet of safe buses covering all major routes across Kangra and nearby areas.",
-    fullDesc: "A dedicated fleet of well-maintained school buses equipped with real-time GPS tracking, speed governors, first aid kits, and trained drivers and attendants. Ensures safe, comfortable, and timely commute for students across Kangra and surrounding regions.",
+    shortDesc: "Safe and comfortable school buses covering all major routes across Kangra and nearby areas.",
+    fullDesc: "Dedicated and well-maintained school buses equipped with speed governors, first aid kits, and accompanied by trained drivers and attendants. Ensures a safe, comfortable, and timely commute for students across Kangra and surrounding regions.",
     image: "/images/facilities/school_bus.png",
     badge: "Safety First",
-    highlights: ["Real-Time GPS Tracking", "Speed Governors", "Trained Drivers & Staff"]
+    highlights: ["Speed Governors", "First Aid Kits", "Trained Drivers & Staff"]
   },
   {
     id: "creative-arts",

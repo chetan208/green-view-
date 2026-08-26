@@ -31,39 +31,39 @@ export default function SeniorHero({ images: propImages }: { images?: string[] }
   }, [images.length]);
 
   return (
-    <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-16 pt-12 md:pt-16 pb-6 md:pb-8 flex flex-col">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 lg:px-16 pt-6 sm:pt-8 md:pt-12 lg:pt-16 pb-6 md:pb-8 flex flex-col">
       
       {/* Hero Section Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 xl:gap-24 items-center">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 lg:gap-16 xl:gap-24 items-center">
         
         {/* Left Content Column */}
-        <div className="flex flex-col items-start text-left">
+        <div className="flex flex-col items-start text-left w-full">
           
           {/* Top Breadcrumb & Tiny Header */}
-          <div className="flex flex-col gap-1.5 mb-8">
-            <div className="text-sm font-medium text-slate-500">
+          <div className="flex flex-col gap-1 sm:gap-1.5 mb-6 sm:mb-8">
+            <div className="text-xs sm:text-sm font-medium text-slate-500">
               <Link href="/" className="text-brand-green hover:underline">Home</Link> / <span>Senior Secondary</span>
             </div>
-            <h1 className="text-3xl md:text-4xl font-medium md:font-bold text-slate-900 tracking-tight" style={{ fontFamily: "Georgia, serif" }}>
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-semibold md:font-bold text-slate-900 tracking-tight" style={{ fontFamily: "Georgia, serif" }}>
               Class XI - <span className="text-brand-green-dark">XII</span>
             </h1>
-            <p className="text-slate-500 font-medium text-xs md:text-sm">
+            <p className="text-slate-500 font-medium text-xs sm:text-sm">
               Preparing students for higher education and beyond.
             </p>
           </div>
 
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-medium md:font-bold text-slate-900 tracking-tight leading-[1.1] mb-4">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold md:font-bold text-slate-900 tracking-tight leading-[1.15] sm:leading-[1.1] mb-3 sm:mb-4">
             Achieving <br />
             excellence in <br />
-            <span className="text-brand-green relative inline-block pb-2">
+            <span className="text-brand-green relative inline-block pb-1 sm:pb-2">
               education.
-              <svg className="absolute left-0 bottom-0 w-full h-[12px] text-brand-green" viewBox="0 0 100 10" preserveAspectRatio="none">
+              <svg className="absolute left-0 bottom-0 w-full h-[8px] sm:h-[12px] text-brand-green" viewBox="0 0 100 10" preserveAspectRatio="none">
                 <path d="M0,5 C30,10 70,0 100,5" stroke="currentColor" strokeWidth="3" fill="none" strokeLinecap="round" />
               </svg>
             </span>
           </h2>
 
-          <p className="text-slate-500 text-xs md:text-sm font-normal md:font-medium max-w-lg mb-6 leading-relaxed">
+          <p className="text-slate-500 text-xs sm:text-sm md:text-base font-normal md:font-medium max-w-lg mb-6 leading-relaxed text-balance">
             Specialized streams in Science, Commerce, and Humanities. Preparing students in classes XI and XII for board exams and competitive career paths. Limited seats available for Session 2026–27.
           </p>
 

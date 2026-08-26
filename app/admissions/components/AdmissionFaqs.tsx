@@ -28,7 +28,7 @@ export default function AdmissionFaqs() {
     },
     {
       question: "Does the school provide transportation?",
-      answer: "Yes, we provide safe and secure school bus facilities covering all major routes across the city. The buses are equipped with GPS tracking for safety."
+      answer: "Yes, we provide safe and secure school bus facilities covering all major routes across the city. The buses are equipped with essential safety measures for a secure commute."
     },
     {
       question: "What are the school timings?",

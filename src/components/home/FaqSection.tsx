@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import React, { useState } from "react";
 import { ChevronDown } from "lucide-react";
@@ -18,7 +18,7 @@ export default function FaqSection() {
     },
     {
       q: "Does the school provide transportation?",
-      a: "Yes, the school maintains a fleet of modern, GPS-enabled buses covering major residential routes. Each bus has a trained driver, a lady attendant, and first-aid kits to ensure complete security.",
+      a: "Yes, the school provides modern buses covering major residential routes. Each bus has a trained driver, a lady attendant, and first-aid kits to ensure complete security.",
     },
     {
       q: "What extracurricular activities are offered?",

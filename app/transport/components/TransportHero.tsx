@@ -13,7 +13,7 @@ export default function TransportHero() {
         School <span className="text-brand-green-dark">Transport</span>
       </h1>
       <p className="text-slate-500 font-medium text-xs md:text-sm max-w-2xl leading-relaxed">
-        Providing safe, reliable, and convenient GPS-enabled school bus services across all major routes.
+        Providing safe, reliable, and convenient school bus services across all major routes.
       </p>
     </div>
   );

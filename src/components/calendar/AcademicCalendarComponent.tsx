@@ -252,8 +252,8 @@ export default function AcademicCalendarComponent({
   const selectedEvents = currentMonthEvents.filter(e => !selectedDay || e.days?.includes(selectedDay));
 
   return (
-    <section className={`w-full ${isAdmin ? 'space-y-6' : 'py-8 md:py-12 px-4 md:px-6 flex flex-col items-center justify-center overflow-hidden'}`}>
-      
+    <section className={`w-full ${isAdmin ? 'space-y-6' : 'py-8 md:py-12 px-6 md:px-12 lg:px-24 flex flex-col items-center justify-center overflow-hidden'}`}>
+      <div className={`${isAdmin ? '' : 'max-w-6xl w-full flex flex-col items-center'}`}>
       {/* Title Header */}
       {isAdmin ? (
         <div className="flex justify-between items-center">
@@ -281,64 +281,85 @@ export default function AcademicCalendarComponent({
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.6, ease: "easeOut" }}
-          className="text-center mb-6 md:mb-8 select-none"
+          className="mb-6 md:mb-8 select-none self-start w-full"
         >
-          <h2 className="text-2xl md:text-3xl lg:text-4xl font-normal md:font-bold text-slate-800 tracking-tight leading-tight">
-            Academic <span className="text-[#0fa958]">Calendar</span>
+          <h2 className="text-2xl md:text-3xl font-bold text-slate-900 uppercase tracking-tight">
+            Academic <span className="text-[#0B9E50]">Calendar</span>
           </h2>
         </motion.div>
       )}
 
-      {/* Main Redesigned Calendar Card - Reduced Size by 10% */}
-      <div className="w-full max-w-4xl bg-white border border-slate-100 rounded-[24px] overflow-hidden shadow-xl flex flex-col md:flex-row min-h-[420px]">
+      {/* Layout Wrapper: Split screen for public, centered for admin */}
+      <div className={`w-full ${isAdmin ? 'max-w-4xl mx-auto' : 'flex flex-col lg:flex-row gap-8 lg:gap-12 items-start'}`}>
         
+        {/* Decorative Side Panel for Public View */}
+        {!isAdmin && (
+          <motion.div 
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="hidden lg:flex w-full lg:w-1/3 flex-col"
+          >
+            <p className="text-slate-600 text-sm md:text-base leading-relaxed mb-8">
+              Stay up-to-date with our comprehensive academic schedule. Track upcoming examinations, cultural events, sports meets, and important holidays all in one place.
+            </p>
+            
+            <div className="bg-gradient-to-br from-emerald-50 to-teal-50/30 border border-emerald-100 rounded-2xl p-6 shadow-sm">
+              <div className="w-10 h-10 bg-white rounded-xl shadow-sm flex items-center justify-center mb-4 text-[#0B9E50]">
+                <CalendarIcon className="w-5 h-5" />
+              </div>
+              <h4 className="text-base font-bold text-slate-900 mb-2">How to use</h4>
+              <ul className="space-y-3">
+                <li className="flex items-start gap-2 text-sm text-slate-600">
+                  <span className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-1.5 shrink-0" />
+                  <span>Blue circles indicate scheduled school events.</span>
+                </li>
+                <li className="flex items-start gap-2 text-sm text-slate-600">
+                  <span className="w-1.5 h-1.5 rounded-full bg-rose-500 mt-1.5 shrink-0" />
+                  <span>Red text indicates Sundays or official holidays.</span>
+                </li>
+                <li className="flex items-start gap-2 text-sm text-slate-600">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#0B9E50] mt-1.5 shrink-0" />
+                  <span>Click on any highlighted date to view details.</span>
+                </li>
+              </ul>
+            </div>
+          </motion.div>
+        )}
+
+        {/* Main Redesigned Calendar Card */}
+        <div className={`w-full bg-white border border-slate-100 rounded-[24px] overflow-hidden shadow-xl flex flex-col md:flex-row min-h-[380px] ${isAdmin ? '' : 'lg:w-2/3'}`}>
         {/* Left Column: Clean White Calendar Grid */}
-        <div className="flex-1 p-4 sm:p-6 md:p-7 flex flex-col justify-between relative z-10 bg-white">
+        <div className="flex-1 min-w-0 p-4 sm:p-6 md:p-7 flex flex-col justify-between relative z-10 bg-white">
           
           <div>
-            {/* Top Row: Year Switcher & Reset Today */}
-            <div className="flex items-center justify-between select-none pb-2">
-              <div className="flex items-center gap-2">
-                <button onClick={handlePrevMonth} className="p-1 text-slate-400 hover:text-slate-700 bg-transparent border-0 cursor-pointer" aria-label="Previous Month">
-                  <ChevronLeft className="w-4 h-4" />
+            {/* Top Row: Month/Year Switcher & Reset Today */}
+            <div className="flex items-center justify-center sm:justify-between select-none pb-3 sm:pb-2 mt-1 mb-2 border-b border-slate-100 relative">
+              
+              <div className="flex items-center gap-2 sm:gap-3 w-full justify-between sm:justify-start">
+                <button onClick={handlePrevMonth} className="p-2 sm:p-1.5 text-slate-400 hover:text-slate-800 bg-slate-50 hover:bg-slate-100 rounded-lg cursor-pointer transition-colors border-0" aria-label="Previous Month">
+                  <ChevronLeft className="w-5 h-5 sm:w-4 sm:h-4" />
                 </button>
-                <span className="text-sm font-bold text-slate-400 tracking-widest">{year}</span>
-                <button onClick={handleNextMonth} className="p-1 text-slate-400 hover:text-slate-700 bg-transparent border-0 cursor-pointer" aria-label="Next Month">
-                  <ChevronRight className="w-4 h-4" />
+                <span className="text-base sm:text-sm md:text-base font-bold text-slate-800 sm:text-slate-600 tracking-wide w-32 sm:w-24 md:w-28 text-center uppercase">
+                  {shortMonths[month]} {year}
+                </span>
+                <button onClick={handleNextMonth} className="p-2 sm:p-1.5 text-slate-400 hover:text-slate-800 bg-slate-50 hover:bg-slate-100 rounded-lg cursor-pointer transition-colors border-0" aria-label="Next Month">
+                  <ChevronRight className="w-5 h-5 sm:w-4 sm:h-4" />
                 </button>
               </div>
 
               <button
                 onClick={resetToToday}
-                className="text-[11px] font-normal text-slate-500 hover:text-[#0fa958] transition cursor-pointer flex items-center gap-1 border-0 bg-transparent"
+                className="hidden sm:flex text-[11px] font-medium text-slate-500 hover:text-[#0fa958] transition cursor-pointer items-center gap-1 border border-slate-200 hover:border-[#0fa958] bg-white px-2.5 py-1.5 rounded-full shadow-sm shrink-0"
               >
-                <Sparkles size={12} className="text-[#0fa958]" /> Today: {todayDateNum} {monthNames[today.getMonth()].slice(0, 3)}
+                <Sparkles size={12} className={isTodayMonth && todayDateNum === today.getDate() ? "text-[#0fa958]" : "text-slate-400"} /> 
+                Today: {today.getDate()} {monthNames[today.getMonth()].slice(0, 3)}
               </button>
             </div>
-
-            {/* Month Selector Horizontal Pills (Jan..Dec) */}
-            <div className="flex items-center gap-1 sm:gap-1.5 overflow-x-auto no-scrollbar py-1.5 my-1.5 border-b border-slate-100 select-none">
-              {shortMonths.map((mName, idx) => (
-                <button
-                  key={mName}
-                  onClick={() => {
-                    setDirection(idx > month ? 1 : -1);
-                    setCurrentDate(new Date(year, idx, 1));
-                    setSelectedDay(null);
-                  }}
-                  className={`px-2.5 py-0.5 text-[11px] font-normal rounded-full transition-all cursor-pointer border-0 shrink-0 ${
-                    idx === month
-                      ? "bg-[#0fa958] text-white shadow-xs font-bold"
-                      : "text-slate-400 hover:text-slate-800 hover:bg-slate-50"
-                  }`}
-                >
-                  {mName}
-                </button>
-              ))}
-            </div>
-
-            {/* Weekday Header */}
-            <div className="grid grid-cols-7 gap-y-1.5 text-center text-[11px] font-bold text-slate-400 my-1.5 select-none uppercase tracking-wider">
+            
+            {/* Days Header */}
+            <div className="grid grid-cols-7 text-center text-[10px] sm:text-[11px] font-black text-slate-400 tracking-widest mb-3 mt-4 sm:mt-5 select-none">
               <span>SUN</span>
               <span>MON</span>
               <span>TUE</span>
@@ -361,7 +382,7 @@ export default function AcademicCalendarComponent({
                   className="grid grid-cols-7 gap-y-2.5 gap-x-1 text-center items-center justify-items-center w-full"
                 >
                   {daysGrid.map((dayNum, idx) => {
-                    if (dayNum === null) return <div key={`empty-${idx}`} className="w-7 h-7 sm:w-8 sm:h-8" />;
+                    if (dayNum === null) return <div key={`empty-${idx}`} className="w-7 h-7 sm:w-8 sm:h-8 md:w-9 md:h-9" />;
 
                     const isSelected = selectedDay === dayNum;
                     const isToday = isTodayMonth && dayNum === todayDateNum;
@@ -385,7 +406,7 @@ export default function AcademicCalendarComponent({
                         onClick={() => { setSelectedDay(dayNum); if (isAdmin) setShowForm(false); }}
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.95 }}
-                        className={`relative w-7 h-7 sm:w-8 sm:h-8 md:w-9 md:h-9 flex items-center justify-center font-bold text-xs rounded-full transition-all select-none cursor-pointer ${
+                        className={`relative w-7 h-7 sm:w-8 sm:h-8 md:w-9 md:h-9 flex items-center justify-center font-bold text-[11px] sm:text-xs rounded-full transition-all select-none cursor-pointer ${
                           isSelected
                             ? "bg-[#0fa958] text-white shadow-md shadow-emerald-600/30 ring-2 ring-[#0fa958] ring-offset-2 border-0"
                             : isToday
@@ -414,20 +435,20 @@ export default function AcademicCalendarComponent({
           </div>
 
           {/* Color Legend Bar */}
-          <div className="mt-3 pt-3 border-t border-slate-100 flex flex-wrap items-center justify-center gap-2.5 sm:gap-5 text-[11px] font-normal text-slate-600 select-none">
+          <div className="mt-3 sm:mt-4 pt-3 sm:pt-4 border-t border-slate-100 flex flex-wrap items-center justify-center gap-3 sm:gap-5 text-[11px] font-normal text-slate-600 select-none">
             <div className="flex items-center gap-1.5">
               <span className="w-3 h-3 rounded-full border-2 border-rose-500 bg-rose-50 shrink-0" />
-              <span className="text-rose-700 font-normal text-[10.5px]">Sunday / Holiday (Red)</span>
+              <span className="text-rose-700 font-normal text-[10px] sm:text-[10.5px]">Sunday/Holiday</span>
             </div>
             <div className="flex items-center gap-1.5">
               <span className="w-3 h-3 rounded-full border-2 border-sky-500 bg-sky-50 shrink-0" />
-              <span className="text-sky-700 font-normal text-[10.5px]">Scheduled Event (Blue)</span>
+              <span className="text-sky-700 font-normal text-[10px] sm:text-[10.5px]">Scheduled Event</span>
             </div>
-            <div className="flex items-center gap-1.5">
+            <div className="hidden sm:flex items-center gap-1.5">
               <span className="w-3 h-3 rounded-full border-2 border-indigo-500 bg-indigo-50 shrink-0" />
               <span className="text-indigo-700 font-normal text-[10.5px]">Today&apos;s Date</span>
             </div>
-            <div className="flex items-center gap-1.5">
+            <div className="hidden sm:flex items-center gap-1.5">
               <span className="w-3 h-3 rounded-full bg-[#0fa958] shrink-0" />
               <span className="text-[#0fa958] font-normal text-[10.5px]">Selected Day</span>
             </div>
@@ -436,7 +457,7 @@ export default function AcademicCalendarComponent({
         </div>
 
         {/* Right Column: Vibrant Emerald Sidebar */}
-        <div className="w-full md:w-[280px] lg:w-[320px] bg-gradient-to-br from-[#0fa958] via-[#10a856] to-[#0c8243] text-white p-5 sm:p-6 lg:p-7 shrink-0 flex flex-col justify-between relative select-none">
+        <div className="w-full md:w-[240px] lg:w-[260px] bg-gradient-to-br from-[#0fa958] via-[#10a856] to-[#0c8243] text-white p-5 sm:p-6 shrink-0 flex flex-col justify-between relative select-none">
           
           {isAdmin && showForm ? (
             <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="flex-1 flex flex-col text-slate-800 bg-white p-5 rounded-2xl">
@@ -566,6 +587,7 @@ export default function AcademicCalendarComponent({
           )}
         </div>
 
+        </div>
       </div>
 
       {/* Detailed Events List Below Calendar (for Academic Calendar Page) */}
@@ -701,7 +723,7 @@ export default function AcademicCalendarComponent({
           </div>
         )}
       </AnimatePresence>
-
+      </div>
     </section>
   );
 }
