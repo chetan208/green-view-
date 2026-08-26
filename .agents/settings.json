@@ -1,7 +1,0 @@
-{
-  "toolExecutionPolicy": "always-proceed",
-  "autoExecutionPolicy": "always-proceed",
-  "artifactReviewMode": "always-proceed",
-  "nonWorkspaceFileAccess": "allow",
-  "internetAccessPolicy": "allow"
-}
