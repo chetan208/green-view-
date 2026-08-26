@@ -338,54 +338,35 @@ export function Hero() {
 /* ==========================================================================
    3. FEATURE SCROLL COMPONENT
    ========================================================================== */
+import { facilitiesData } from "@/data/facilitiesData";
+
 export function FeatureScroll() {
-  const features = [
-    {
-      name: "Smart Classrooms",
-      image: "/images/classroom.png",
-    },
-    {
-      name: "Holistic Education",
-      image: "/images/about.png",
-    },
-    {
-      name: "STEM & Robotics",
-      image: "/images/robotics.png",
-    },
-    {
-      name: "World-Class Library",
-      image: "/images/library.png",
-    },
-    {
-      name: "Collaborative Spaces",
-      image: "/images/study.png",
-    },
-  ];
+  const features = facilitiesData;
 
   return (
     <section className="w-full bg-white py-8 overflow-hidden">
       {/* Horizontal marquee container with scroll support on mobile */}
       <div className="max-w-[1240px] mx-auto px-4">
         <div className="flex overflow-x-auto gap-4 md:gap-6 pb-2 no-scrollbar scroll-smooth snap-x snap-mandatory">
-          {features.map((feature, index) => (
-            <div 
-              key={index} 
-              className="flex-none snap-start w-[210px] h-[63px] bg-[#F9FAFB] border border-zinc-200 rounded-[30px] p-[5px] pr-4 flex items-center gap-3 shadow-[0px_1px_2px_0px_rgba(0,0,0,0.05)] hover:border-[#0B9E50] hover:bg-white hover:shadow-md transition-all duration-300 cursor-pointer"
+          {features.map((feature) => (
+            <a 
+              key={feature.id} 
+              href={`/facilities#${feature.id}`}
+              className="flex-none snap-start w-[220px] h-[63px] bg-[#F9FAFB] border border-zinc-200 rounded-[30px] p-[5px] pr-4 flex items-center gap-3 shadow-[0px_1px_2px_0px_rgba(0,0,0,0.05)] hover:border-[#0B9E50] hover:bg-white hover:shadow-md transition-all duration-300 cursor-pointer group"
             >
               {/* Thumbnail Image */}
               <div className="w-[50px] h-[50px] relative rounded-full overflow-hidden border border-white shrink-0">
-                <Image
+                <img
                   src={feature.image}
-                  alt={feature.name}
-                  fill
-                  className="object-cover"
+                  alt={feature.title}
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                 />
               </div>
               {/* Feature Title */}
-              <span className="font-poppins font-semibold md:font-bold text-[12px] md:text-[13px] text-zinc-800 leading-tight">
-                {feature.name}
+              <span className="font-poppins font-semibold md:font-bold text-[12px] md:text-[13px] text-zinc-800 leading-tight group-hover:text-[#0B9E50] transition-colors line-clamp-2">
+                {feature.title}
               </span>
-            </div>
+            </a>
           ))}
         </div>
       </div>

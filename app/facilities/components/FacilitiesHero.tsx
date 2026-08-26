@@ -2,91 +2,167 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { Sparkles, ArrowDown } from "lucide-react";
+import { Sparkles, ArrowDown, ShieldCheck, Cpu, Trophy, Bus, BookOpen } from "lucide-react";
 import Image from "next/image";
 
-export default function FacilitiesHero() {
+interface FacilitiesHeroProps {
+  activeCategory?: string;
+  onSelectCategory?: (category: string) => void;
+}
+
+export default function FacilitiesHero({ activeCategory = "All", onSelectCategory }: FacilitiesHeroProps) {
   const scrollToGrid = () => {
-    window.scrollBy({ top: 600, behavior: "smooth" });
+    const el = document.getElementById("facilities-grid");
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth" });
+    } else {
+      window.scrollBy({ top: 500, behavior: "smooth" });
+    }
   };
 
+  const categories = [
+    { name: "All", label: "All Facilities", icon: Sparkles },
+    { name: "Academic", label: "Academics & Labs", icon: Cpu },
+    { name: "Sports", label: "Sports & Fitness", icon: Trophy },
+    { name: "Safety", label: "Safety & Transport", icon: Bus },
+    { name: "Arts", label: "Arts & Culture", icon: BookOpen },
+  ];
+
   return (
-    <section className="relative w-full pt-24 pb-16 md:pt-32 md:pb-24 overflow-hidden bg-white">
-      {/* Background Ornaments */}
-      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-        <div className="absolute -top-40 -right-40 w-96 h-96 rounded-full bg-brand-green/5 blur-3xl" />
-        <div className="absolute top-20 -left-20 w-72 h-72 rounded-full bg-brand-navy/5 blur-3xl" />
-        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent" />
+    <section className="relative w-full pt-20 md:pt-28 pb-16 md:pb-20 overflow-hidden bg-gradient-to-b from-[#0a1e14] via-[#0f2d1e] to-[#0a1e14] text-white">
+      {/* Background Ambient Glow & Mesh Ornaments */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden select-none">
+        <div className="absolute -top-32 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-[#0fa958]/20 rounded-full blur-[140px]" />
+        <div className="absolute top-1/3 -left-32 w-80 h-80 bg-emerald-500/10 rounded-full blur-[100px]" />
+        <div className="absolute bottom-10 -right-32 w-96 h-96 bg-teal-500/10 rounded-full blur-[120px]" />
+        <div className="absolute inset-0 bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:24px_24px] opacity-[0.04]" />
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8 items-center">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center">
         
-        {/* Left Content Area */}
-        <div className="flex flex-col items-center lg:items-start text-center lg:text-left">
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-50 border border-slate-100 mb-8"
-          >
-            <Sparkles className="w-4 h-4 text-brand-green" />
-            <span className="text-xs font-semibold text-slate-600 tracking-widest uppercase">World-Class Infrastructure</span>
-          </motion.div>
+        {/* Top Floating Badge */}
+        <motion.div 
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 text-xs font-bold uppercase tracking-widest mb-6 backdrop-blur-md shadow-lg"
+        >
+          <Sparkles className="w-4 h-4 text-emerald-400 animate-pulse" />
+          <span>World-Class School Infrastructure</span>
+        </motion.div>
 
-          <motion.h1 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-slate-900 tracking-tight leading-[1.1] mb-6"
-          >
-            Experience <br className="hidden md:block" />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-green to-brand-navy">Excellence</span> at Every Corner
-          </motion.h1>
+        {/* Main Title & Subtitle */}
+        <motion.h1 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.1 }}
+          className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-center text-white tracking-tight leading-[1.15] max-w-4xl mb-6 uppercase"
+        >
+          Empowering Education Through <br className="hidden sm:inline" />
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-green-400">
+            Modern Facilities
+          </span>
+        </motion.h1>
 
-          <motion.p 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-base md:text-lg text-slate-500 font-medium max-w-xl leading-relaxed mb-10"
-          >
-            Our campus is designed to foster creativity, innovation, and holistic development. From smart classrooms to advanced sports complexes, we provide the perfect environment for your child to thrive.
-          </motion.p>
+        <motion.p 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="text-slate-300 text-sm sm:text-base md:text-lg font-normal text-center max-w-2xl leading-relaxed mb-10"
+        >
+          From interactive smart classrooms and high-tech science labs to expansive athletic grounds and GPS-tracked transport, we provide a safe and inspiring environment for holistic development.
+        </motion.p>
 
-          <motion.button 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            onClick={scrollToGrid}
-            className="w-14 h-14 rounded-full bg-white border border-slate-200 shadow-sm flex items-center justify-center text-slate-400 hover:text-brand-green hover:border-brand-green hover:shadow-md transition-all group cursor-pointer"
-          >
-            <ArrowDown className="w-5 h-5 group-hover:translate-y-1 transition-transform" />
-          </motion.button>
-        </div>
+        {/* Floating Quick Feature Stats Pills */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+          className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 w-full max-w-4xl mb-10"
+        >
+          <div className="flex items-center gap-3 p-3.5 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md">
+            <div className="w-10 h-10 rounded-xl bg-emerald-500/20 flex items-center justify-center text-emerald-400 shrink-0">
+              <Cpu className="w-5 h-5" />
+            </div>
+            <div className="flex flex-col text-left">
+              <span className="font-extrabold text-base sm:text-lg text-white leading-none">100%</span>
+              <span className="text-[11px] text-slate-400 font-medium leading-tight mt-1">Smart Classrooms</span>
+            </div>
+          </div>
 
-        {/* Right Image Composition */}
+          <div className="flex items-center gap-3 p-3.5 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md">
+            <div className="w-10 h-10 rounded-xl bg-emerald-500/20 flex items-center justify-center text-emerald-400 shrink-0">
+              <Trophy className="w-5 h-5" />
+            </div>
+            <div className="flex flex-col text-left">
+              <span className="font-extrabold text-base sm:text-lg text-white leading-none">Multi-Sport</span>
+              <span className="text-[11px] text-slate-400 font-medium leading-tight mt-1">Athletics Complex</span>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-3 p-3.5 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md">
+            <div className="w-10 h-10 rounded-xl bg-emerald-500/20 flex items-center justify-center text-emerald-400 shrink-0">
+              <Bus className="w-5 h-5" />
+            </div>
+            <div className="flex flex-col text-left">
+              <span className="font-extrabold text-base sm:text-lg text-white leading-none">GPS Tracked</span>
+              <span className="text-[11px] text-slate-400 font-medium leading-tight mt-1">Transport Fleet</span>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-3 p-3.5 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md">
+            <div className="w-10 h-10 rounded-xl bg-emerald-500/20 flex items-center justify-center text-emerald-400 shrink-0">
+              <ShieldCheck className="w-5 h-5" />
+            </div>
+            <div className="flex flex-col text-left">
+              <span className="font-extrabold text-base sm:text-lg text-white leading-none">24/7 CCTV</span>
+              <span className="text-[11px] text-slate-400 font-medium leading-tight mt-1">Safe & Secure Campus</span>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Interactive Category Selector Pills */}
         <motion.div 
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.7, delay: 0.2 }}
-          className="hidden lg:flex relative w-full h-[500px] justify-center items-center"
+          transition={{ duration: 0.6, delay: 0.4 }}
+          className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 p-2 rounded-2xl sm:rounded-full bg-white/10 border border-white/15 backdrop-blur-xl mb-8 select-none"
         >
-          {/* Main Image Container */}
-          <div className="relative w-full max-w-[550px] h-[500px] rounded-[2rem] overflow-hidden shadow-2xl shadow-brand-navy/10 border-8 border-white/50 z-10 bg-slate-100">
-            <Image 
-              src="/images/facilities-hero.png" 
-              alt="Green View Campus Facilities"
-              fill
-              className="object-cover"
-              priority
-            />
-          </div>
-          
-          {/* Decorative shapes behind image */}
-          <div className="absolute top-10 right-10 w-full max-w-[400px] aspect-square rounded-full bg-brand-green/10 -z-10 blur-2xl" />
-          <div className="absolute bottom-10 left-10 w-full max-w-[300px] aspect-square rounded-full bg-brand-navy/10 -z-10 blur-2xl" />
-          
+          {categories.map((cat) => {
+            const Icon = cat.icon;
+            const isSelected = activeCategory === cat.name;
+            return (
+              <button
+                key={cat.name}
+                onClick={() => {
+                  if (onSelectCategory) onSelectCategory(cat.name);
+                  scrollToGrid();
+                }}
+                className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold transition-all cursor-pointer border ${
+                  isSelected
+                    ? "bg-[#0fa958] text-white border-emerald-400 shadow-md shadow-emerald-900/40"
+                    : "bg-transparent text-slate-300 border-transparent hover:text-white hover:bg-white/10"
+                }`}
+              >
+                <Icon className="w-3.5 h-3.5" />
+                <span>{cat.label}</span>
+              </button>
+            );
+          })}
         </motion.div>
-        
+
+        {/* Scroll Down Button */}
+        <motion.button 
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.5 }}
+          onClick={scrollToGrid}
+          className="w-12 h-12 rounded-full bg-white/10 hover:bg-[#0fa958] border border-white/20 text-white flex items-center justify-center shadow-lg transition-all group cursor-pointer"
+          aria-label="Scroll to Facilities Grid"
+        >
+          <ArrowDown className="w-5 h-5 group-hover:translate-y-1 transition-transform" />
+        </motion.button>
+
       </div>
     </section>
   );

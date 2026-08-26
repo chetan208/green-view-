@@ -1,32 +1,10 @@
 import React from "react";
+import Link from "next/link";
+import { facilitiesData } from "@/data/facilitiesData";
 
 export default function CategoryBar() {
-  const items = [
-    {
-      title: "Smart Classrooms",
-      image: "/images/smart_classroom.png",
-    },
-    {
-      title: "Science & Chemistry Labs",
-      image: "/images/science_lab.png",
-    },
-    {
-      title: "Computer & IT Lab",
-      image: "/images/computer_lab.png",
-    },
-    {
-      title: "World-Class Library",
-      image: "/images/library.png",
-    },
-    {
-      title: "Art & Creative Studio",
-      image: "/images/art.png",
-    },
-    {
-      title: "Safe Transport",
-      image: "/images/school_bus.png",
-    },
-  ];
+  // Use real facilities directly from facilitiesData
+  const items = facilitiesData;
 
   // Duplicate scrolling items to ensure a seamless infinite loop
   const scrollingItems = [...items, ...items, ...items, ...items];
@@ -40,7 +18,7 @@ export default function CategoryBar() {
           100% { transform: translateX(-25%); }
         }
         .animate-marquee-cat {
-          animation: marquee-cat 30s linear infinite;
+          animation: marquee-cat 35s linear infinite;
         }
         .animate-marquee-cat:hover {
           animation-play-state: paused;
@@ -50,23 +28,24 @@ export default function CategoryBar() {
       {/* Scrolling Inner Container */}
       <div className="flex gap-3 sm:gap-6 whitespace-nowrap animate-marquee-cat pl-3 sm:pl-6">
         {scrollingItems.map((item, idx) => (
-          <div
-            key={idx}
-            className="flex items-center gap-2 sm:gap-3 bg-white p-1.5 sm:p-2.5 pr-4 sm:pr-6 rounded-full border border-slate-100/80 shadow-sm shadow-slate-100/50 hover:shadow-md hover:border-emerald-100 transition-all duration-300 whitespace-nowrap cursor-pointer"
+          <Link
+            key={`${item.id}-${idx}`}
+            href={`/facilities#${item.id}`}
+            className="flex items-center gap-2 sm:gap-3 bg-white p-1.5 sm:p-2.5 pr-4 sm:pr-6 rounded-full border border-slate-100/80 shadow-xs shadow-slate-100/50 hover:shadow-md hover:border-[#0B9E50] transition-all duration-300 whitespace-nowrap cursor-pointer group"
           >
             {/* Circular Image */}
             <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full overflow-hidden bg-slate-100 border border-slate-100 shrink-0">
               <img
                 src={item.image}
                 alt={item.title}
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
               />
             </div>
             {/* Title */}
-            <span className="font-semibold md:font-extrabold text-slate-800 text-[10px] sm:text-xs md:text-sm tracking-tight">
+            <span className="font-semibold md:font-extrabold text-slate-800 text-[10px] sm:text-xs md:text-sm tracking-tight group-hover:text-[#0B9E50] transition-colors">
               {item.title}
             </span>
-          </div>
+          </Link>
         ))}
       </div>
     </div>

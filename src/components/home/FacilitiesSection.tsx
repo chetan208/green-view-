@@ -3,133 +3,117 @@
 import React from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { ArrowRight, Sparkles } from "lucide-react";
+import { facilitiesData } from "@/data/facilitiesData";
 
 export default function FacilitiesSection() {
-  // Facilities cards styled like the Hero Section FeatureScroll cards
-  const cards = [
-    {
-      title: "Smart Classrooms",
-      image: "/images/smart_classroom.png",
-    },
-    {
-      title: "Science Laboratories",
-      image: "/images/science_lab.png",
-    },
-    {
-      title: "Computer Center",
-      image: "/images/computer_lab.png",
-    },
-    {
-      title: "Digital Library",
-      image: "/images/library.png",
-    },
-    {
-      title: "Sports Complex",
-      image: "https://images.unsplash.com/photo-1505322747495-6afdd3b70760?auto=format&fit=crop&q=80&w=500",
-    },
-    {
-      title: "STEM & Robotics",
-      image: "/images/robotics.png",
-    },
-    {
-      title: "Transport Fleet",
-      image: "/images/school_bus.png",
-    },
-    {
-      title: "Creative Arts Studio",
-      image: "/images/art.png",
-    },
-  ];
-
   const gridVariants = {
     hidden: { opacity: 0 },
     show: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.06,
+        staggerChildren: 0.08,
       },
     },
   } as const;
 
   const cardVariants = {
-    hidden: { opacity: 0, y: 20 },
+    hidden: { opacity: 0, y: 25 },
     show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] } },
   } as const;
 
   return (
-    <section id="facilities" className="w-full py-12 md:py-16 px-4 sm:px-6 md:px-12 lg:px-24 bg-[#ebfbf1] flex justify-center overflow-hidden">
+    <section id="facilities" className="w-full py-16 md:py-20 px-4 sm:px-6 md:px-12 lg:px-20 bg-gradient-to-b from-[#f4fbf6] via-[#ebfbf1] to-[#f4fbf6] flex justify-center overflow-hidden">
       <div className="max-w-[1240px] w-full flex flex-col">
         
-        {/* Subtitle */}
-        <motion.span 
-          initial={{ opacity: 0, y: 10 }}
+        {/* Section Header */}
+        <motion.div 
+          initial={{ opacity: 0, y: 15 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="text-[10px] md:text-xs font-semibold md:font-bold text-slate-800 uppercase tracking-[0.15em] text-center mb-2 select-none"
+          className="flex flex-col items-center text-center mb-10 select-none"
         >
-          Choose Green View?
-        </motion.span>
+          <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-emerald-100/80 text-[#006a37] font-bold text-xs uppercase tracking-widest border border-emerald-200/60 mb-3">
+            <Sparkles className="w-3.5 h-3.5" /> Campus Infrastructure
+          </span>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-slate-900 tracking-tight uppercase">
+            World-Class <span className="text-[#0B9E50]">Facilities</span>
+          </h2>
+          <p className="text-slate-600 text-sm md:text-base max-w-xl mt-3 font-normal">
+            Equipping our students with state-of-the-art resources, modern laboratories, and vibrant spaces for holistic growth.
+          </p>
+        </motion.div>
 
-        {/* Title and See All row */}
-        <div className="flex items-center justify-between mb-8 relative select-none">
-          {/* Empty spacer on the left to help centering on desktop */}
-          <div className="hidden md:block w-20" />
-          
-          <motion.h2 
-            initial={{ opacity: 0, y: 15 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-            className="text-3xl md:text-[40px] font-bold md:font-extrabold text-[#0B1A28] tracking-tight text-center flex-1 uppercase"
-          >
-            FACILITIES
-          </motion.h2>
-
-          <motion.div whileHover={{ scale: 1.05 }}>
-            <Link
-              href="/facilities"
-              className="flex items-center gap-1 font-semibold md:font-bold text-slate-900 hover:text-emerald-700 text-sm md:text-base transition-colors"
-            >
-              See All
-              <span className="text-xs">▸</span>
-            </Link>
-          </motion.div>
-        </div>
-
-        {/* Cards Grid - Hero Section Capsule Pill Style */}
+        {/* Cards Grid */}
         <motion.div 
           variants={gridVariants}
           initial="hidden"
           whileInView="show"
-          viewport={{ once: true, margin: "-100px" }}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5 w-full"
+          viewport={{ once: true, margin: "-80px" }}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 w-full"
         >
-          {cards.map((card, idx) => (
+          {facilitiesData.map((item) => (
             <motion.div
-              key={idx}
+              key={item.id}
               variants={cardVariants}
-              whileHover={{ y: -3, scale: 1.01 }}
-              transition={{ duration: 0.25 }}
-              className="group flex-none w-full h-[63px] bg-[#F9FAFB] border border-zinc-200 rounded-[30px] p-[5px] pr-4 flex items-center gap-3 shadow-[0px_1px_2px_0px_rgba(0,0,0,0.05)] hover:border-[#0B9E50] hover:bg-white hover:shadow-md transition-all duration-300 cursor-pointer"
+              whileHover={{ y: -6 }}
+              transition={{ duration: 0.3 }}
+              className="group flex flex-col bg-white border border-slate-200/70 rounded-3xl overflow-hidden shadow-xs hover:shadow-xl hover:border-emerald-500/30 transition-all duration-300 cursor-pointer"
             >
-              {/* Thumbnail Image */}
-              <div className="w-[50px] h-[50px] relative rounded-full overflow-hidden border border-white shrink-0 shadow-xs">
+              {/* Image Header with Badge */}
+              <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-100">
                 <img
-                  src={card.image}
-                  alt={card.title}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                  src={item.image}
+                  alt={item.title}
+                  className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700 ease-out"
                   loading="lazy"
                 />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/50 via-transparent to-transparent" />
+                
+                {item.badge && (
+                  <span className="absolute top-3 right-3 bg-white/90 backdrop-blur-md text-[#006a37] font-bold text-[10px] uppercase tracking-wider px-2.5 py-1 rounded-full border border-white/40 shadow-xs">
+                    {item.badge}
+                  </span>
+                )}
               </div>
 
-              {/* Feature Title */}
-              <span className="font-poppins font-semibold md:font-bold text-[12px] md:text-[13px] text-zinc-800 leading-tight group-hover:text-[#0B9E50] transition-colors">
-                {card.title}
-              </span>
+              {/* Content Body */}
+              <div className="p-5 flex flex-col flex-1 justify-between bg-white">
+                <div>
+                  <h3 className="font-poppins font-bold text-base md:text-lg text-slate-900 group-hover:text-[#0B9E50] transition-colors leading-snug mb-2">
+                    {item.title}
+                  </h3>
+                  <p className="font-sans text-xs md:text-sm text-slate-600 line-clamp-3 leading-relaxed">
+                    {item.shortDesc}
+                  </p>
+                </div>
+
+                {/* Read More Redirect Link */}
+                <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+                  <Link
+                    href={`/facilities#${item.id}`}
+                    className="inline-flex items-center gap-1.5 font-bold text-xs text-[#0B9E50] group-hover:text-[#098744] transition-colors"
+                  >
+                    <span>Explore Facility</span>
+                    <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                  </Link>
+                </div>
+              </div>
             </motion.div>
           ))}
         </motion.div>
+
+        {/* View All Facilities CTA Button */}
+        <div className="mt-12 text-center select-none">
+          <Link
+            href="/facilities"
+            className="inline-flex items-center gap-2 bg-[#0B9E50] hover:bg-[#098744] text-white font-bold text-sm md:text-base px-8 py-3.5 rounded-full shadow-lg shadow-emerald-600/25 hover:shadow-xl hover:shadow-emerald-600/35 hover:-translate-y-0.5 transition-all duration-300"
+          >
+            <span>View All Facilities in Detail</span>
+            <ArrowRight className="w-4 h-4" />
+          </Link>
+        </div>
 
       </div>
     </section>
