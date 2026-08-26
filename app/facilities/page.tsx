@@ -1,24 +1,27 @@
-import React from "react";
+"use client";
+
+import React, { useState } from "react";
 import FacilitiesHero from "./components/FacilitiesHero";
 import FacilitiesGrid from "./components/FacilitiesGrid";
-import Header from "@/components/header/Header";
-import Footer from "@/components/footer/Footer";
 
 export default function FacilitiesPage() {
+  const [activeCategory, setActiveCategory] = useState("All");
+
   return (
     <div className="min-h-screen bg-white">
-      
-      
       <main className="flex flex-col items-center">
-        <FacilitiesHero />
+        <FacilitiesHero 
+          activeCategory={activeCategory} 
+          onSelectCategory={setActiveCategory} 
+        />
         
-        {/* Negative margin to pull grid slightly over the hero section if desired, but we'll use normal flow here */}
-        <div className="w-full relative z-20">
-          <FacilitiesGrid />
+        <div id="facilities-grid" className="w-full relative z-20">
+          <FacilitiesGrid 
+            activeCategory={activeCategory} 
+            onSelectCategory={setActiveCategory} 
+          />
         </div>
       </main>
-
-      
     </div>
   );
 }

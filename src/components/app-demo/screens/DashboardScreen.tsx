@@ -2,7 +2,15 @@
 
 import React, { useState, useEffect } from "react";
 import { Bell, User, Clock, FileText, CheckCircle2, ChevronRight, AlertCircle, Info } from "lucide-react";
-import { format } from "date-fns";
+
+const formatDate = (dateStr: string | Date) => {
+  try {
+    const d = new Date(dateStr);
+    return d.toLocaleDateString("en-US", { day: "2-digit", month: "short" });
+  } catch {
+    return "";
+  }
+};
 
 const fallbackNotices = [
   {
@@ -101,7 +109,7 @@ export default function DashboardScreen() {
                           {notice.category || 'Update'}
                         </span>
                         <span className="text-[10px] text-slate-400 font-medium">
-                          {format(new Date(notice.date), "dd MMM")}
+                          {formatDate(notice.date)}
                         </span>
                       </div>
                       <h4 className="text-sm font-bold text-slate-900 leading-snug mb-1 truncate">{notice.title}</h4>

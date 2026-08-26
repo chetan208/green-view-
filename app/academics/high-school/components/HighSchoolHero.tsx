@@ -4,21 +4,29 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { ArrowRight, Download } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { erpApi } from "@/services/erpApi";
 
 export default function HighSchoolHero({ images: propImages }: { images?: string[] }) {
-  const images = propImages || [
-    "/images/classroom.png",
-    "/images/study.png",
-    "/images/art.png",
-    "/images/library.png",
-  ];
-
+  const [images, setImages] = useState<string[]>(propImages || []);
   const [currentImageIdx, setCurrentImageIdx] = useState(0);
 
   useEffect(() => {
+    erpApi.heroImages.list()
+      .then((res) => {
+        if (res.success && res.images && res.images.length > 0) {
+          setImages(res.images.map((img: any) => img.imageUrl));
+        }
+      })
+      .catch((err) => {
+        console.error("Failed to load hero images for high school hero", err);
+      });
+  }, []);
+
+  useEffect(() => {
+    if (images.length === 0) return;
     const interval = setInterval(() => {
       setCurrentImageIdx((prev) => (prev + 1) % images.length);
-    }, 3500); // changes image every 3.5 seconds
+    }, 4000);
     return () => clearInterval(interval);
   }, [images.length]);
 
@@ -80,7 +88,6 @@ export default function HighSchoolHero({ images: propImages }: { images?: string
             </motion.div>
           </div>
 
-
         </div>
 
         {/* Right Layout with Image Slideshow */}
@@ -89,19 +96,25 @@ export default function HighSchoolHero({ images: propImages }: { images?: string
           <div className="absolute bottom-[-8px] right-[-8px] w-[80%] h-[90%] bg-[#bbf7d0]/40 rounded-[3rem] -z-10 pointer-events-none" />
           
           {/* Framed Image Container */}
-          <div className="relative w-full max-w-lg aspect-[4/3] rounded-[2rem] overflow-hidden border-[10px] border-white shadow-xl bg-slate-50 z-10 lg:-translate-y-6">
-            <AnimatePresence mode="wait">
-              <motion.img 
-                key={currentImageIdx}
-                src={images[currentImageIdx]} 
-                alt="Nursery Classroom"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.6 }}
-                className="absolute inset-0 w-full h-full object-cover"
-              />
-            </AnimatePresence>
+          <div className="relative w-full max-w-lg aspect-[4/3] rounded-[2rem] overflow-hidden border-[10px] border-white shadow-xl bg-slate-50 z-10 lg:-translate-y-6 flex items-center justify-center">
+            {images.length > 0 ? (
+              <AnimatePresence mode="wait">
+                <motion.img 
+                  key={currentImageIdx}
+                  src={images[currentImageIdx]} 
+                  alt="Green View School High School"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.6 }}
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
+              </AnimatePresence>
+            ) : (
+              <div className="w-full h-full bg-slate-100 animate-pulse flex items-center justify-center text-slate-400 text-xs font-medium">
+                Loading...
+              </div>
+            )}
           </div>
         </div>
 
