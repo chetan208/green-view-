@@ -7,15 +7,9 @@ import { motion, AnimatePresence } from "framer-motion";
 import { erpApi } from "@/services/erpApi";
 
 export default function HeroSection() {
-  const [images, setImages] = useState<string[]>([
-    "https://res.cloudinary.com/zigjpvty/image/upload/v1787598135/hero_carousel/miru5cshg71lagctfoap.jpg",
-    "https://res.cloudinary.com/w3mqdubg/image/upload/v1787598137/hero_carousel/xwebnezvc1cdhqmtcvhb.jpg",
-    "https://res.cloudinary.com/twmwdzfx/image/upload/v1787598142/hero_carousel/idho4yfebzsfmff24vy1.jpg",
-    "https://res.cloudinary.com/ovr8rwih/image/upload/v1787598145/hero_carousel/xakqs0y7mnmzrpwokjge.jpg",
-    "https://res.cloudinary.com/mysbzufb/image/upload/v1787598151/hero_carousel/r9g4tnhpuitjtzep7zsr.jpg",
-    "https://res.cloudinary.com/zigjpvty/image/upload/v1787598163/hero_carousel/calrqbbc7rcoypkkgzhn.png"
-  ]);
-
+  const [images, setImages] = useState<string[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [currentImageIdx, setCurrentImageIdx] = useState(0);
   const [isAdmissionsOpen, setIsAdmissionsOpen] = useState(false);
 
@@ -23,8 +17,15 @@ export default function HeroSection() {
     erpApi.heroImages.list().then(res => {
       if (res.success && res.images && res.images.length > 0) {
         setImages(res.images.map((img: any) => img.imageUrl));
+      } else {
+        setError("Failed to load hero images. Please check your connection or database.");
       }
-    }).catch(err => console.error("Failed to load dynamic hero images", err));
+      setLoading(false);
+    }).catch(err => {
+      console.error("Failed to load dynamic hero images", err);
+      setError("Failed to load hero images. Please check your connection or database.");
+      setLoading(false);
+    });
   }, []);
 
   useEffect(() => {
@@ -92,7 +93,7 @@ export default function HeroSection() {
           {/* Subheading */}
           <motion.p 
             variants={itemVariants}
-            className="text-slate-600 text-sm sm:text-base md:text-lg max-w-xl mb-6 sm:mb-8 leading-relaxed font-normal md:font-medium text-center lg:text-left"
+            className="text-slate-600 text-sm sm:text-base md:text-lg max-w-xl mb-6 sm:mb-8 leading-relaxed font-normal md:font-medium text-center lg:text-left text-balance"
           >
             We believe in nurturing intelligence, knowledge, and humility while inspiring every student to strive for excellence through honest effort, strong values, and faith in God.
           </motion.p>
@@ -105,7 +106,7 @@ export default function HeroSection() {
             <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="flex-1 sm:flex-none">
               <Link
                 href="/admissions"
-                className="inline-flex items-center justify-center gap-1.5 bg-brand-green text-white hover:bg-emerald-700 px-4 sm:px-8 py-3 sm:py-3.5 rounded-full font-semibold md:font-bold text-[11px] sm:text-sm tracking-wide transition-all duration-300 shadow-md shadow-emerald-600/10 w-full sm:w-auto cursor-pointer text-center"
+                className="inline-flex items-center justify-center gap-1.5 bg-brand-green text-white hover:bg-emerald-700 px-4 sm:px-8 py-3 sm:py-3.5 rounded-full font-semibold md:font-bold text-[11px] sm:text-sm tracking-wide transition-all duration-300 shadow-md shadow-emerald-600/10 w-full sm:w-auto cursor-pointer text-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2"
               >
                 Admission Enquiry
                 <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
@@ -114,7 +115,7 @@ export default function HeroSection() {
             <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="flex-1 sm:flex-none">
               <Link
                 href="/about"
-                className="inline-flex items-center justify-center bg-white border border-slate-200 hover:bg-slate-50 text-slate-800 px-4 sm:px-8 py-3 sm:py-3.5 rounded-full font-semibold md:font-bold text-[11px] sm:text-sm tracking-wide transition-all duration-300 text-center w-full sm:w-auto cursor-pointer"
+                className="inline-flex items-center justify-center bg-white border border-slate-200 hover:bg-slate-50 text-slate-800 px-4 sm:px-8 py-3 sm:py-3.5 rounded-full font-semibold md:font-bold text-[11px] sm:text-sm tracking-wide transition-all duration-300 text-center w-full sm:w-auto cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-500 focus-visible:ring-offset-2"
               >
                 About Us
               </Link>
@@ -131,20 +132,30 @@ export default function HeroSection() {
             initial={{ scale: 0.95, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="relative w-full max-w-lg sm:max-w-xl lg:max-w-2xl aspect-[4/3] sm:aspect-[14/10] md:aspect-[4/3] rounded-[1.5rem] sm:rounded-[2rem] md:rounded-[2.75rem] overflow-hidden border-4 sm:border-8 md:border-[12px] border-white shadow-xl sm:shadow-2xl bg-slate-50"
+            className="relative w-full max-w-lg sm:max-w-xl lg:max-w-2xl aspect-[4/3] sm:aspect-[14/10] md:aspect-[4/3] rounded-[1.5rem] sm:rounded-[2rem] md:rounded-[2.75rem] overflow-hidden border-4 sm:border-8 md:border-[12px] border-white shadow-xl sm:shadow-2xl bg-slate-50 flex items-center justify-center"
           >
-            <AnimatePresence mode="wait">
-              <motion.img
-                key={currentImageIdx}
-                src={images[currentImageIdx]}
-                alt="Green View School Campus"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.6 }}
-                className="absolute inset-0 w-full h-full object-cover"
-              />
-            </AnimatePresence>
+            {loading ? (
+              <div className="w-full h-full flex items-center justify-center bg-slate-100 animate-pulse text-slate-400 font-medium">
+                Loading Images...
+              </div>
+            ) : error ? (
+              <div className="w-full h-full flex items-center justify-center bg-red-50 text-red-500 font-medium px-6 text-center">
+                {error}
+              </div>
+            ) : (
+              <AnimatePresence mode="wait">
+                <motion.img
+                  key={currentImageIdx}
+                  src={images[currentImageIdx]}
+                  alt="Green View School Campus"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.6 }}
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
+              </AnimatePresence>
+            )}
           </motion.div>
 
           {/* Overlapping Badge: Admissions Open (Bottom-Left) */}

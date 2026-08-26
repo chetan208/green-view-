@@ -81,7 +81,7 @@ export default function FacilitiesSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, ease: "easeOut" }}
-            className="text-3xl md:text-[40px] font-bold md:font-extrabold text-[#0B1A28] tracking-tight text-center flex-1 uppercase"
+            className="text-3xl md:text-[40px] font-bold md:font-extrabold text-[#0B1A28] tracking-tight text-center flex-1 uppercase text-balance"
           >
             FACILITIES
           </motion.h2>
@@ -89,7 +89,7 @@ export default function FacilitiesSection() {
           <motion.div whileHover={{ scale: 1.05 }}>
             <Link
               href="/facilities"
-              className="flex items-center gap-1 font-semibold md:font-bold text-slate-900 hover:text-emerald-700 text-sm md:text-base transition-colors"
+              className="flex items-center gap-1 font-semibold md:font-bold text-slate-900 hover:text-emerald-700 text-sm md:text-base transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-green focus-visible:ring-offset-2 rounded-sm"
             >
               See All
               <span className="text-xs">▸</span>

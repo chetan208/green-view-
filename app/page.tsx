@@ -38,12 +38,14 @@ export default function Home() {
       <StatsSection />
       <BoardNotices />
       <WelcomeSection images={aboutImages.length > 0 ? aboutImages : undefined} />
-      <ToppersSection />
+      
       
       <PrincipalMessage />
       <FacilitiesSection />
       <AcademicCalendar />
+
       <GallerySection />
+      <ToppersSection />
 
       <TestimonialsSection />
       <FaqSection />
