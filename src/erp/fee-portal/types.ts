@@ -26,9 +26,11 @@ export interface FeeStructureType {
   schoolBusCharges: string | number;
   ptmFine: string | number;
   computerFee: string | number;
-  tieBeltBooks: string | number;
-  buildingFund: string | number;
+  smartClassFee?: string | number;
+  sportsFee?: string | number;
+  lateFee?: string | number;
   annualCharges: string | number;
+  otherCharges?: string | number;
   previousBalance: string | number;
   previousSessionDues?: string | number;
   totalDemand: string | number;

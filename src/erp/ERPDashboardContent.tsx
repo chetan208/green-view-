@@ -35,11 +35,37 @@ export default function ERPDashboardContent() {
     window.history.pushState({}, "", url.toString());
   };
   
-  const [sessions] = useState([
-    { id: "1", year: "2026-2027" },
-    { id: "2", year: "2025-2026" }
-  ]);
-  const [selectedSession, setSelectedSession] = useState("2026-2027");
+  const [sessions, setSessions] = useState<{id: string, year: string, isActive?: boolean}[]>([]);
+  const [selectedSession, setSelectedSession] = useState("");
+
+  useEffect(() => {
+    // Fetch sessions from API
+    const fetchSessions = async () => {
+      try {
+        const { erpApi } = await import('@/services/erpApi');
+        const res = await erpApi.sessions.list();
+        if (res.sessions && res.sessions.length > 0) {
+          const formattedSessions = res.sessions.map((s: any) => ({
+            id: s._id,
+            year: s.year,
+            isActive: s.isActive
+          }));
+          setSessions(formattedSessions);
+          
+          // Set active session by default
+          const active = formattedSessions.find((s: any) => s.isActive);
+          if (active) {
+            setSelectedSession(active.year);
+          } else {
+            setSelectedSession(formattedSessions[0].year);
+          }
+        }
+      } catch (error) {
+        console.error("Failed to load sessions:", error);
+      }
+    };
+    fetchSessions();
+  }, []);
 
   const currentModule = modules.find(m => m.id === activeModule);
 

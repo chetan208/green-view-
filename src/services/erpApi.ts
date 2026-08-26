@@ -54,10 +54,12 @@ export interface Class {
   tuitionFee: number;
   examFee: number;
   computerFee: number;
+  smartClassFee: number;
+  sportsFee: number;
   ptmFine: number;
-  buildingFund: number;
+  lateFee: number;
   annualCharges: number;
-  tieBeltBooks: number;
+  otherCharges: number;
 }
 
 export interface StudentSession {
@@ -142,8 +144,11 @@ export const admissionsApi = {
     return res.json();
   },
   
-  approve: async (id: string) => {
-    const res = await authFetch(`/api/admissions/${id}/approve`, { method: 'POST' });
+  approve: async (id: string, sessionYear?: string) => {
+    const res = await authFetch(`/api/admissions/${id}/approve`, {
+      method: 'POST',
+      body: JSON.stringify({ sessionYear })
+    });
     return res.json();
   },
   reject: async (id: string, reason: string) => {

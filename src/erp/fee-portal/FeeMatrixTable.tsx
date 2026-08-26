@@ -22,10 +22,12 @@ const FEE_HEADS = [
   { key: "schoolBusCharges",    label: "Bus" },
   { key: "examFee",             label: "Exam" },
   { key: "computerFee",         label: "Computer" },
+  { key: "smartClassFee",       label: "Smart Class" },
+  { key: "sportsFee",           label: "Sports" },
   { key: "ptmFine",             label: "PTM Fine" },
-  { key: "tieBeltBooks",        label: "Tie/Belt/Books" },
-  { key: "buildingFund",        label: "Building Fund" },
+  { key: "lateFee",             label: "Late Fee" },
   { key: "annualCharges",       label: "Annual" },
+  { key: "otherCharges",        label: "Other Charges" },
   { key: "previousSessionDues", label: "Prev Dues" },
 ] as const;
 

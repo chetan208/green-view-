@@ -11,21 +11,25 @@ interface FeeDefaults {
   admissionFee: number;
   tuitionFee: number;
   examFee: number;
-  ptmFine: number;
   computerFee: number;
-  tieBeltBooks: number;
-  buildingFund: number;
+  smartClassFee: number;
+  sportsFee: number;
+  ptmFine: number;
+  lateFee: number;
   annualCharges: number;
+  otherCharges: number;
 }
 
 const FIELDS: { key: keyof FeeDefaults; label: string }[] = [
   { key: "tuitionFee",    label: "Tuition Fee" },
   { key: "examFee",       label: "Exam Fee" },
   { key: "computerFee",   label: "Computer Fee" },
+  { key: "smartClassFee", label: "Smart Class Fee" },
+  { key: "sportsFee",     label: "Sports Fee" },
   { key: "ptmFine",       label: "PTM Fine" },
-  { key: "buildingFund",  label: "Building Fund" },
+  { key: "lateFee",       label: "Late Fee" },
   { key: "annualCharges", label: "Annual Charges" },
-  { key: "tieBeltBooks",  label: "Tie, Belt and Books" },
+  { key: "otherCharges",  label: "Other Charges" },
   { key: "admissionFee",  label: "Admission Fee" },
 ];
 
@@ -52,7 +56,7 @@ export default function FeeDefaultsSettings({ selectedSession }: { selectedSessi
 
   const [form, setForm] = useState<FeeDefaults>({
     admissionFee: 0, tuitionFee: 0, examFee: 0, ptmFine: 0,
-    computerFee: 0, tieBeltBooks: 0, buildingFund: 0, annualCharges: 0,
+    computerFee: 0, smartClassFee: 0, sportsFee: 0, lateFee: 0, annualCharges: 0, otherCharges: 0,
   });
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -86,14 +90,16 @@ export default function FeeDefaultsSettings({ selectedSession }: { selectedSessi
         examFee: Number(finalData.examFee) || 0,
         ptmFine: Number(finalData.ptmFine) || 0,
         computerFee: Number(finalData.computerFee) || 0,
-        tieBeltBooks: Number(finalData.tieBeltBooks) || 0,
-        buildingFund: Number(finalData.buildingFund) || 0,
+        smartClassFee: Number(finalData.smartClassFee) || 0,
+        sportsFee: Number(finalData.sportsFee) || 0,
+        lateFee: Number(finalData.lateFee) || 0,
         annualCharges: Number(finalData.annualCharges) || 0,
+        otherCharges: Number(finalData.otherCharges) || 0,
       });
     } catch {
       setForm({
         admissionFee: 0, tuitionFee: 0, examFee: 0, ptmFine: 0,
-        computerFee: 0, tieBeltBooks: 0, buildingFund: 0, annualCharges: 0,
+        computerFee: 0, smartClassFee: 0, sportsFee: 0, lateFee: 0, annualCharges: 0, otherCharges: 0,
       });
     } finally {
       setLoading(false);

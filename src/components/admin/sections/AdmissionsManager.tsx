@@ -3,9 +3,19 @@
 import React, { useState, useEffect } from "react";
 import { GraduationCap, CheckCircle2, Clock, XCircle, Search, Eye, X, Download, User, Loader2, AlertTriangle, Power, ShieldAlert, CheckCircle, Info } from "lucide-react";
 import { admissionsApi, erpApi } from "@/services/erpApi";
-import { getCurrentAcademicSession } from "@/lib/sessionUtils";
 
+// Utility to calculate current academic session based on date
 type AppStatus = "PENDING" | "APPROVED" | "REJECTED";
+const getCurrentAcademicSession = () => {
+  const now = new Date();
+  const currentMonth = now.getMonth(); // 0 is January
+  let startYear = now.getFullYear();
+  if (currentMonth < 3) {
+    startYear = startYear - 1;
+  }
+  const endYearStr = (startYear + 1).toString().slice(-2);
+  return `${startYear}-${endYearStr}`;
+};
 
 export default function AdmissionsManager() {
   const dynamicSession = getCurrentAcademicSession();
@@ -141,7 +151,7 @@ export default function AdmissionsManager() {
   const handleApprove = async (id: string) => {
     setActionLoading(true);
     try {
-      const res = await admissionsApi.approve(id);
+      const res = await admissionsApi.approve(id, dynamicSession);
       if (res.success) {
         fetchAdmissions();
         if (selectedApp && selectedApp._id === id) {
@@ -414,6 +424,10 @@ export default function AdmissionsManager() {
                 <div className="flex-1 w-full">
                   <DetailSection title="Course Details">
                     <Field label="Applied Class" value={selectedApp.course?.class} />
+                    <Field 
+                      label="Admitting to Session" 
+                      value={<span className="text-brand-green font-bold bg-brand-green/10 px-2 py-0.5 rounded text-xs">{dynamicSession}</span>} 
+                    />
                     {activeTab === "senior" && (
                       <>
                         <Field label="Stream" value={selectedApp.course?.stream} />
