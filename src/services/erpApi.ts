@@ -107,6 +107,14 @@ export const authApi = {
     });
     return res.json();
   },
+
+  updateProfilePhoto: async (formData: FormData) => {
+    const res = await authFetch('/api/auth/me/photo', {
+      method: 'PUT',
+      body: formData
+    });
+    return res.json();
+  },
   
   logout: async () => {
     const res = await authFetch('/api/auth/logout', { method: 'POST' });

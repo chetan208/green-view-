@@ -3,7 +3,6 @@ import { ModuleType } from "./types";
 import { LucideIcon, RefreshCw, GraduationCap, Users, CreditCard, Banknote, ClipboardList, Calendar } from "lucide-react";
 import { erpApi, admissionsApi } from "@/services/erpApi";
 import { useAuth } from "@/hooks/useAuth";
-import ProfileSettings from "./modules/ProfileSettings";
 
 interface ERPOverviewProps {
   modules: ModuleType[];

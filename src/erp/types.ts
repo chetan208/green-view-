@@ -84,15 +84,6 @@ export const modules: ModuleType[] = [
     status: "active",
   },
   {
-    id: "settings",
-    label: "Settings",
-    icon: Settings,
-    color: "#64748B",
-    bg: "rgba(100,116,139,0.10)",
-    description: "School info, session, academic year, and configurations.",
-    status: "active",
-  },
-  {
     id: "whatsapp",
     label: "WhatsApp",
     icon: Settings, // Re-use settings icon or import a new one

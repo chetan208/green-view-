@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { ArrowRight, Sparkles, Award } from "lucide-react";
+import { ArrowRight, Sparkles, Award, Image as ImageIcon } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { erpApi } from "@/services/erpApi";
 
@@ -135,12 +135,10 @@ export default function HeroSection() {
             className="relative w-full max-w-lg sm:max-w-xl lg:max-w-2xl aspect-[4/3] sm:aspect-[14/10] md:aspect-[4/3] rounded-[1.5rem] sm:rounded-[2rem] md:rounded-[2.75rem] overflow-hidden border-4 sm:border-8 md:border-[12px] border-white shadow-xl sm:shadow-2xl bg-slate-50 flex items-center justify-center"
           >
             {loading ? (
-              <div className="w-full h-full flex items-center justify-center bg-slate-100 animate-pulse text-slate-400 font-medium">
-                Loading Images...
-              </div>
+              <div className="w-full h-full absolute inset-0 bg-slate-200 animate-pulse" />
             ) : error ? (
-              <div className="w-full h-full flex items-center justify-center bg-red-50 text-red-500 font-medium px-6 text-center">
-                {error}
+              <div className="w-full h-full absolute inset-0 bg-slate-100 flex items-center justify-center">
+                <ImageIcon className="w-12 h-12 text-slate-300" strokeWidth={1.5} />
               </div>
             ) : (
               <AnimatePresence mode="wait">

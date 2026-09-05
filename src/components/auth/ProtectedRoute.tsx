@@ -1,9 +1,9 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAuth } from '@/hooks/useAuth';
 import { useRouter, usePathname } from 'next/navigation';
-import { Loader2 } from 'lucide-react';
+import { Loader2, ShieldAlert } from 'lucide-react';
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
@@ -14,6 +14,7 @@ export default function ProtectedRoute({ children, allowedRoles }: ProtectedRout
   const { user, isLoading, isAuthenticated } = useAuth();
   const router = useRouter();
   const pathname = usePathname();
+  const [authError, setAuthError] = useState(false);
 
   useEffect(() => {
     if (!isLoading) {
@@ -26,13 +27,19 @@ export default function ProtectedRoute({ children, allowedRoles }: ProtectedRout
         }
       } else if (allowedRoles && allowedRoles.length > 0) {
         // Check access role for users
-        const userAccessRole = user.accessLevel;
-        if (user.role === 'user' && userAccessRole && !allowedRoles.includes(userAccessRole)) {
-          // Access denied, redirect to appropriate default page
-          if (userAccessRole === 'superadmin') router.push('/erp');
-          else router.push('/admin');
-        } else if (user.role === 'student' && !allowedRoles.includes('student')) {
-          router.push('/student-portal');
+        let hasAccess = false;
+        
+        if (user.role === 'user') {
+          hasAccess = allowedRoles.includes(user.accessLevel || '');
+        } else if (user.role === 'student') {
+          hasAccess = allowedRoles.includes('student');
+        }
+
+        if (!hasAccess) {
+          setAuthError(true);
+          setTimeout(() => {
+            router.push('/');
+          }, 2500);
         }
       }
     }
@@ -49,7 +56,24 @@ export default function ProtectedRoute({ children, allowedRoles }: ProtectedRout
     );
   }
 
-  // If not authenticated or wrong role, render nothing while redirecting
+  if (authError) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-slate-50">
+        <div className="flex flex-col items-center gap-4 bg-white p-8 rounded-2xl shadow-xl border border-rose-100 max-w-sm text-center animate-in fade-in zoom-in duration-300">
+          <div className="w-16 h-16 bg-rose-100 text-rose-600 rounded-full flex items-center justify-center shadow-inner">
+            <ShieldAlert className="w-8 h-8" />
+          </div>
+          <div>
+            <h2 className="text-xl font-bold text-slate-800 mb-2">Access Denied</h2>
+            <p className="text-sm text-slate-600">You do not have permission to view this page. Redirecting to home...</p>
+          </div>
+          <Loader2 className="w-5 h-5 animate-spin text-rose-400 mt-2" />
+        </div>
+      </div>
+    );
+  }
+
+  // If not authenticated, render nothing while redirecting
   if (!isAuthenticated || !user) {
     return null;
   }

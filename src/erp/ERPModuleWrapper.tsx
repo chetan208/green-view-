@@ -7,10 +7,8 @@ import StudentManager from "./modules/StudentManager";
 import StaffManager from "./modules/StaffManager";
 import FeePortal from "./fee-portal/FeePortal";
 import TransportPortal from "./modules/TransportPortal";
-import SettingsPortal from "./modules/SettingsPortal";
 import AcademicsManager from "./modules/AcademicsManager";
 import AdmissionsManager from "@/components/admin/sections/AdmissionsManager";
-import ProfileSettings from "./modules/ProfileSettings";
 import WhatsAppSettings from "./modules/WhatsAppSettings";
 import ToppersManager from "./modules/ToppersManager";
 import { useAuth } from "@/hooks/useAuth";
@@ -63,16 +61,12 @@ export default function ERPModuleWrapper({
         <FeePortal selectedSession={selectedSession} preselectedStudent={preselectedStudent} clearPreselected={() => setPreselectedStudent?.(null)} setActiveModule={setActiveModule} />
       ) : activeModule === "transport" ? (
         <TransportPortal />
-      ) : activeModule === "settings" ? (
-        <SettingsPortal />
       ) : activeModule === "whatsapp" ? (
         <WhatsAppSettings />
       ) : activeModule === "academics" ? (
         <AcademicsManager />
       ) : activeModule === "admissions" ? (
         <AdmissionsManager />
-      ) : activeModule === "profile" ? (
-        <ProfileSettings user={user} onProfileUpdated={() => window.location.reload()} />
       ) : (
         <DummyModule title={currentModule?.label || "Module"} />
       )}

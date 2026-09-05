@@ -20,7 +20,13 @@ export default function WhatsAppSettings() {
     const [sending, setSending] = useState(false);
     
     // Automation settings
-    const [automation, setAutomation] = useState({ isEnabled: false, startDay: 1, windowDays: 3 });
+    const [automation, setAutomation] = useState({ 
+        isEnabled: false, // Now mapped to sendFeeNotices
+        sendPaymentMessages: true,
+        sendFeeNotices: false,
+        startDay: 1, 
+        windowDays: 3 
+    });
     const [savingSettings, setSavingSettings] = useState(false);
 
     const fetchStatus = async () => {
@@ -50,6 +56,8 @@ export default function WhatsAppSettings() {
             if (res.data.success && res.data.settings) {
                 setAutomation({
                     isEnabled: res.data.settings.isEnabled,
+                    sendPaymentMessages: res.data.settings.sendPaymentMessages ?? true,
+                    sendFeeNotices: res.data.settings.sendFeeNotices ?? res.data.settings.isEnabled ?? false,
                     startDay: res.data.settings.startDay,
                     windowDays: res.data.settings.windowDays
                 });
@@ -296,51 +304,79 @@ export default function WhatsAppSettings() {
                             </button>
                         </h2>
 
-                        <div className="space-y-4">
+                        <div className="space-y-6">
+                            <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg border border-gray-100">
+                                <div>
+                                    <label className="font-medium text-gray-900">OTP Authentication</label>
+                                    <p className="text-sm text-gray-500">Allow sending login OTPs via WhatsApp</p>
+                                </div>
+                                <label className="relative inline-flex items-center cursor-not-allowed">
+                                    <input type="checkbox" className="sr-only peer" checked disabled />
+                                    <div className="w-11 h-6 bg-green-600 outline-none rounded-full peer after:content-[''] after:absolute after:top-[2px] after:left-[22px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all"></div>
+                                </label>
+                            </div>
+
                             <div className="flex items-center justify-between">
                                 <div>
-                                    <label className="font-medium text-gray-900">Enable Automation</label>
-                                    <p className="text-sm text-gray-500">Send automated monthly fee reminders</p>
+                                    <label className="font-medium text-gray-900">Payment Messages</label>
+                                    <p className="text-sm text-gray-500">Send WhatsApp receipts instantly upon fee payment</p>
                                 </div>
                                 <label className="relative inline-flex items-center cursor-pointer">
                                     <input 
                                         type="checkbox" 
                                         className="sr-only peer"
-                                        checked={automation.isEnabled}
-                                        onChange={(e) => setAutomation({...automation, isEnabled: e.target.checked})}
+                                        checked={automation.sendPaymentMessages}
+                                        onChange={(e) => setAutomation({...automation, sendPaymentMessages: e.target.checked})}
                                     />
                                     <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-600"></div>
                                 </label>
                             </div>
 
-                            <div className="grid grid-cols-2 gap-4">
+                            <div className="flex items-center justify-between border-t pt-4">
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">Start Day</label>
-                                    <input
-                                        type="number"
-                                        min="1"
-                                        max="28"
-                                        value={automation.startDay}
-                                        onChange={(e) => setAutomation({...automation, startDay: parseInt(e.target.value)})}
-                                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500"
-                                    />
+                                    <label className="font-medium text-gray-900">Fee Notices Automation</label>
+                                    <p className="text-sm text-gray-500">Send monthly fee reminders automatically</p>
                                 </div>
-                                <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">Window (Days)</label>
-                                    <input
-                                        type="number"
-                                        min="1"
-                                        max="15"
-                                        value={automation.windowDays}
-                                        onChange={(e) => setAutomation({...automation, windowDays: parseInt(e.target.value)})}
-                                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500"
+                                <label className="relative inline-flex items-center cursor-pointer">
+                                    <input 
+                                        type="checkbox" 
+                                        className="sr-only peer"
+                                        checked={automation.sendFeeNotices}
+                                        onChange={(e) => setAutomation({...automation, sendFeeNotices: e.target.checked, isEnabled: e.target.checked})}
                                     />
-                                </div>
+                                    <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-600"></div>
+                                </label>
                             </div>
-                            
-                            <p className="text-xs text-gray-500 mt-2">
-                                Reminders will be distributed evenly over {automation.windowDays} days starting on the {automation.startDay}th of each month to avoid WhatsApp spam detection.
-                            </p>
+
+                            {automation.sendFeeNotices && (
+                                <div className="grid grid-cols-2 gap-4 bg-slate-50 p-4 rounded-lg">
+                                    <div>
+                                        <label className="block text-sm font-medium text-gray-700 mb-1">Start Day of Month</label>
+                                        <input
+                                            type="number"
+                                            min="1"
+                                            max="28"
+                                            value={automation.startDay}
+                                            onChange={(e) => setAutomation({...automation, startDay: parseInt(e.target.value)})}
+                                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500"
+                                        />
+                                    </div>
+                                    <div>
+                                        <label className="block text-sm font-medium text-gray-700 mb-1">Spread Over (Days)</label>
+                                        <input
+                                            type="number"
+                                            min="1"
+                                            max="15"
+                                            value={automation.windowDays}
+                                            onChange={(e) => setAutomation({...automation, windowDays: parseInt(e.target.value)})}
+                                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500"
+                                        />
+                                    </div>
+                                    <p className="text-xs text-gray-500 mt-2 col-span-2">
+                                        Reminders will be distributed evenly over {automation.windowDays} days starting on the {automation.startDay}th of each month to avoid WhatsApp spam detection.
+                                    </p>
+                                </div>
+                            )}
 
                             <button
                                 onClick={handleSaveSettings}
